@@ -1,0 +1,37 @@
+{
+  "scope": "PostgreSQL 17.4 ordinary/partitioned table record up-classification with qualified identity and exact capture-text recovery; views refused; composite/DDL/down bindings unfinished",
+  "commands": [
+    "bun test tests/core-ideals/field-postgresql.test.ts tests/core-ideals/record-postgresql.test.ts",
+    "bun test tests/core-ideals/record-postgresql.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-postgresql-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-browser.ts"
+  ],
+  "results": {
+    "initialCombinedTests": 7,
+    "initialCombinedAssertions": 135,
+    "subsequentRecordTests": 4,
+    "subsequentRecordAssertions": 34,
+    "typecheck": "passed",
+    "schemasPassed": 184,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9774093,
+    "liveNativeRecords": 4,
+    "liveNativeRecordRecoveries": 8,
+    "browserRecords": 4,
+    "browserRecordRecoveries": 8,
+    "viewBlocked": true
+  },
+  "sha256": {
+    "src/core-ideals/postgresql-record.ts": "8da66948774fd48793a394ae4783615f100a02869a541baa2e8e10d1443dae6a",
+    "spec/core/postgresql-record-classification.schema.json": "f6cc0a427a2b6a0be2a4b7b4968840a2fdd17a04647b195ee2e3aa99402d6990",
+    "scripts/core-ideals/postgresql-record-schema.ts": "e58edb34a33b00d1fe57e3f50a351faf69fa3dc0d38ca7e60d55eb848cda2121",
+    "tests/core-ideals/record-postgresql.test.ts": "d4f12e890fe7a91ee1fe48b27261e72996a8dde1af96ec5a46badb2debf12022",
+    "scripts/core-ideals/field-postgresql-oracle.ts": "9223887f4ebbe856b23632e52eac752904bfee189ae7ce20b5f7f66be992d731",
+    "scripts/core-ideals/field-postgresql-browser.ts": "e5ce6e9f03ad3e9fa913e6f903afafbf055ab6af05285910ef51edc6b895b812",
+    "fixtures/validation/field-postgresql-native.json": "06b498db95f8c0ab5471664c4bcd7cb794fb3ea9fae3f4be7d976e551d43a988",
+    "fixtures/validation/field-postgresql-browser.json": "35f56fefefe8b5b146658cf060a0623ae4d10e9239b6140582924964f8d21830"
+  }
+}

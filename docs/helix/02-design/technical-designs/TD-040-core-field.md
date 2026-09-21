@@ -410,3 +410,38 @@ schemas / 32 packages pass. See
 This adds a second up-classification foundation, not a second complete binding.
 PostgreSQL record/DDL/down-projection and ideal recovery remain required, as do
 SQL Server, Avro and Parquet ideal bindings and the full Field conformance gate.
+
+## PostgreSQL catalog record classification
+
+`classifyPostgresqlRecord` classifies one captured ordinary or partitioned table
+by qualified schema/name and creates a record in a caller-selected absent module.
+The record retains the native schema as its namespace and references the original
+column identities in captured order. Only that table's columns gain Field kinds;
+equal relation names in other schemas remain distinct. Empty tables have empty
+member lists. Views and other relation kinds are explicitly blocked in this binding;
+composite types and raw DDL require separate handling.
+
+The `umf.postgresql.catalog.record` 1.0.0 binding is pinned to PostgreSQL 17.4.
+It checks capture text, derived metadata, unique nonempty column names and positive,
+strictly increasing captured positions. Gaps for dropped columns are permitted.
+Duplicate/ambiguous relation identity, existing record-module identity, stale or
+unrelated author receipts and any conflicting member block atomic publication.
+Strict and report both retain diagnostics/residuals without a partial target.
+The schema is `spec/core/postgresql-record-classification.schema.json`.
+
+`recoverPostgresqlRecordCapture` verifies the whole receipt by recomputation and
+checks the current target before returning the original capture text. It refuses
+changed references/native content or tampered receipts. This does not reconstruct
+a database or infer native key, nullability, type-domain or execution equivalence.
+
+Evidence: initial combined PostgreSQL Field/record regression passed seven tests
+and 135 assertions. Additional member-integrity guards pass four record tests and
+34 assertions. A fresh pinned PostgreSQL 17.4 run and Chromium 148 both confirm four
+records (same-named tables in separate schemas, empty table, partitioned table),
+eight record capture recoveries and explicit view refusal. Existing 20-column / 40
+recovery evidence also passes. Typecheck/build and audits of 184 schemas / 32
+packages pass. See [record evidence](../../../../fixtures/validation/record-postgresql-evidence.json).
+
+PostgreSQL down-projection, raw DDL/composite mappings, shared conformance and the
+remaining three native bindings remain unfinished. Neither this record classifier
+nor the earlier TableSpec work completes the Field admission gate.
