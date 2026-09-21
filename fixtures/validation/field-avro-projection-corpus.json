@@ -1,0 +1,3839 @@
+{
+  "rows": [
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "null",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "null",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"null\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "boolean",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "boolean",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "boolean"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "int",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "int",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "int"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"int\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "long",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "long",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"long\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "float",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "float",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "float"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "float",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"float\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "double",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "double",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "double"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "float",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"double\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "bytes",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "bytes",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "bytes"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "binary",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "string",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "string",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":\"string\",\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "date",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "date",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "int"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "date"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "date",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "time-millis",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "time-millis",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "int"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "time-millis"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "time",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"time-millis\"},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "time-micros",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "time-micros",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "time-micros"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "time",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"time-micros\"},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "timestamp-millis",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "timestamp-millis",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-millis"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "timestamp-micros",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "timestamp-micros",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "local-timestamp-micros",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "local-timestamp-micros",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "local-timestamp-micros"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native",
+        "namespace": "sales",
+        "recordName": "Example",
+        "fieldName": "value",
+        "nativeType": "decimal(38,9)",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-avro",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "description": "Unicode 雪 and \"quoted\"\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native",
+          "namespace": "sales",
+          "recordName": "Example",
+          "fieldName": "value",
+          "nativeType": "decimal(38,9)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.avro",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Single authored Field with explicit primitive/logical carrier in a record; no presence, execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/fields/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Example"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "value"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "38"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "9"
+                                      }
+                                    }
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unicode 雪 and \"quoted\"\nline"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "value",
+                  "description": "Unicode 雪 and \"quoted\"\nline",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":38,\"scale\":9},\"doc\":\"Unicode 雪 and \\\"quoted\\\"\\nline\"}]}\n"
+    }
+  ]
+}

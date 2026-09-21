@@ -1,0 +1,99 @@
+{
+  "version": "1.12.0",
+  "checks": [
+    {
+      "nativeType": "null",
+      "binaryBytes": 0,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "boolean",
+      "binaryBytes": 1,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "int",
+      "binaryBytes": 5,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "long",
+      "binaryBytes": 8,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "float",
+      "binaryBytes": 4,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": true
+    },
+    {
+      "nativeType": "double",
+      "binaryBytes": 8,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "bytes",
+      "binaryBytes": 3,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "string",
+      "binaryBytes": 12,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "date",
+      "binaryBytes": 3,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "time-millis",
+      "binaryBytes": 4,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "time-micros",
+      "binaryBytes": 6,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "timestamp-millis",
+      "binaryBytes": 6,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "timestamp-micros",
+      "binaryBytes": 8,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "local-timestamp-micros",
+      "binaryBytes": 4,
+      "scope": "underlying long only; Python ignores local logical type",
+      "floatNarrowing": false
+    },
+    {
+      "nativeType": "decimal(38,9)",
+      "binaryBytes": 6,
+      "scope": "native sample encode/decode",
+      "floatNarrowing": false
+    }
+  ],
+  "limitations": [
+    "local-timestamp-micros semantics are not validated by this Python implementation",
+    "sample value checks do not prove general value-domain equivalence"
+  ]
+}

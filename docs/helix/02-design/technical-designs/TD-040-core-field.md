@@ -909,3 +909,34 @@ checks pass. See [Avro record evidence](../../../../fixtures/validation/record-a
 This adds declaration membership, not automatic record-valued type references or
 value-domain equivalence. Avro authored projection, Parquet bindings and complete
 mapping/residual metadata remain unfinished; no admission or delivery gate closes.
+
+## Avro authored Field down-projection
+
+`projectFieldToAvro` emits a complete single-field record with explicit namespace,
+record name, field name and primitive/logical carrier. Fifteen choices include
+native null, boolean, integer and float widths, bytes/string, date/time/timestamp
+carriers and bytes decimal(38,9). These choices do not promote widths, precision,
+scale, presence, defaults or logical execution into core equivalence. Native null
+has no inferred core scalar family. Unsupported source assertions and mismatched
+families become residuals; strict blocks, while report retains source meaning.
+Record/group kinds cannot become single fields under either mode.
+
+The request schema checks Avro simple names and dotted namespaces, including
+terminal-newline rejection. Field descriptions become native doc annotations.
+Every generated schema passes the existing Avro adapter validation. Recovery
+recomputes the report and requires exact emitted-schema text before returning the
+authored model. Native-only reimport does not recreate author provenance.
+
+Two tests pass 81 assertions. Apache Avro 1.12 accepts all fifteen generated
+schemas and exercises one binary encode/decode sample for each. The local-timestamp
+sample establishes only its long carrier: this Python implementation warns that
+it ignores that logical type. Native float encoding confirms the permanent
+counterexample: binary64 1.0000000000000002 becomes binary32 1.0. This binding makes
+no exactness claim for an unqualified float. Chromium 148 matches fifteen
+projections, thirty JSON/YAML ideal recoveries, both loss modes and four invalid
+name refusals. Typechecking, browser build and all 195 schema / 32 package checks
+pass. See [Avro Field projection evidence](../../../../fixtures/validation/field-avro-projection-evidence.json).
+
+Authored Avro records, Parquet bindings, structured references and complete common
+mapping/residual metadata remain required. The native logical-type caveat is not
+waived by schema acceptance or round-trip recovery.

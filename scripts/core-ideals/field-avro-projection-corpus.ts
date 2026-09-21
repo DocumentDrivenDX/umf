@@ -1,0 +1,2 @@
+import {avroProjectionCases} from './field-avro-projection-cases';import {projectFieldToAvro} from '../../src/core-ideals/field-avro-projection';import {exportAvroSchema} from '../../src/adapters/avro';
+const rows=avroProjectionCases().map(c=>{const result=projectFieldToAvro(c.author,c.request);return {...c,result,text:exportAvroSchema(result.target!)};});await Bun.write('fixtures/validation/field-avro-projection-corpus.json',JSON.stringify({rows},null,2)+'\n');

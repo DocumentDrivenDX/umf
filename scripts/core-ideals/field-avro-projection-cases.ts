@@ -1,0 +1,4 @@
+import {declareCoreElementKind} from '../../src/model/field-kind';import {type Document} from '../../src/model/types';import {type FieldAvroRequest} from '../../src/core-ideals/field-avro-projection';
+export function avroProjectionCases(){return (['null','boolean','int','long','float','double','bytes','string','date','time-millis','time-micros','timestamp-millis','timestamp-micros','local-timestamp-micros','decimal(38,9)'] as const).map(nativeType=>{
+ const source:Document={umf:'0.2.0',id:'field',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'e',name:'value',description:'Unicode 雪 and "quoted"\nline',extensions:{}}]}]};const author=declareCoreElementKind(source,{module:'m',element:'e'},'field'),request:FieldAvroRequest={id:'native',namespace:'sales',recordName:'Example',fieldName:'value',nativeType,mode:'strict'};return {author,request};
+});}
