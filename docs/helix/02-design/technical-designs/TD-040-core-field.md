@@ -999,3 +999,35 @@ as do structured references and complete common mapping/residual metadata. The
 existing Field work item and five-system exit gate remain open; no new ideal or
 native-equivalence graduation is claimed. Queue validation retains 36 beads and
 54 dependency edges, with the Field core item the sole ready dependency root.
+
+## Parquet record definitions and member roles
+
+`classifyParquetRecord` now creates a separate record definition for an unannotated
+root or interpreted struct node, with ordered references to its direct named
+members. A structured or container-valued member remains a Field slot; the
+operation does not flatten it or assign scalar cardinality. Checked two-level LIST
+struct elements can supply record definitions. LIST/MAP outer nodes and encoding
+wrappers cannot: native grouping does not assert either an ideal record or an
+organizational group. Primitive selections, uninterpreted annotations/ancestor
+annotations, unknown group metadata and duplicate member names block safely.
+
+The operation preserves the source and creates a complete candidate only after
+checking module identity collisions and all supplied member author receipts.
+Conflicting, duplicate, unrelated or stale receipts block both policies. Recovery
+requires recomputation and an unchanged target, then returns exact native bytes.
+Nested record-valued member type references remain native; resolving and linking
+those definitions is still required before the Field delivery gate can close.
+
+Three Bun tests pass 149 assertions. Across the shared 16-file corpus, PyArrow
+21.0.0 independently checks root names and nested Arrow struct member lists for
+21 classified records, plus unchanged native schemas and bytes. The oracle also
+checks that every nested Arrow struct in these fixtures has a classified record.
+Twenty-two group selections block. Chromium 148 matches these results and performs
+42 JSON/YAML record recoveries, alongside the previous 26 primitive Field
+classifications and 52 recoveries. No external requests or host globals appear.
+Typechecking, browser build and all 198 schema / 32 package audits pass.
+See [Parquet record evidence](../../../../fixtures/validation/record-parquet-evidence.json).
+
+This does not implement authored Parquet projections, general organizational-group
+classification, nested type-reference resolution, or complete common residual
+metadata. Field and the overall implementation goal remain open.

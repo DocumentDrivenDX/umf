@@ -1,5 +1,7 @@
 {
   "runtime": "PyArrow 21.0.0",
+  "records": 21,
+  "blockedRecords": 22,
   "files": 16,
   "fields": 26,
   "results": [
@@ -84,5 +86,5 @@
       "sha256": "14382f56d16bce646aa7eb9e341eba5f4f8c94e1f48b2be261abf7bb40ffe9aa"
     }
   ],
-  "scope": "Physical schema leaf roles, paths, definition/repetition levels and byte recovery; no value-domain or cardinality equivalence"
+  "scope": "Physical leaf roles/levels, Arrow root and nested struct member names, and byte recovery; no value-domain or cardinality equivalence"
 }

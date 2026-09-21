@@ -1,0 +1,36 @@
+{
+  "scope": "Parquet root and interpreted struct record roles, direct member slots and native-byte recovery; nested type-reference resolution and authored projections remain open",
+  "commands": [
+    "bun test tests/core-ideals/record-parquet.test.ts",
+    "bun scripts/core-ideals/field-parquet-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-parquet-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-parquet-browser.ts"
+  ],
+  "results": {
+    "tests": 3,
+    "assertions": 149,
+    "nativeFiles": 16,
+    "records": 21,
+    "blockedRecords": 22,
+    "browserRecordRecoveries": 42,
+    "typecheck": "passed",
+    "schemasPassed": 198,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10004855
+  },
+  "sha256": {
+    "src/core-ideals/parquet-record.ts": "ab58fa68e3dab1dce2cf48a61a84ee05276e8408e16acd75e4ca48bc0ed9b3af",
+    "spec/core/parquet-record-classification.schema.json": "8f9b7bfec8f136e1ba91c9236c3e3a1deeb080fe123d4aa75ea5be70cda63882",
+    "scripts/core-ideals/parquet-record-schema.ts": "52a3b409429c298e7e7ec8b7099bf26997b129c980265aae5c4eb4552e568519",
+    "tests/core-ideals/record-parquet.test.ts": "00610b994cf9d5faec2d81837131fcade978b88619c1ae099e2071b04864acd6",
+    "scripts/core-ideals/field-parquet-corpus.ts": "b5545126e5a891478ffbe578b3248da81e517b688c76cd92f1c28f66240d389a",
+    "scripts/core-ideals/field-parquet-oracle.py": "fdb13de44da17b1c9f18d7b703b74e29ef4b172e034398c9ba1cc8614336dccb",
+    "scripts/core-ideals/field-parquet-browser.ts": "198391e8df9a07b38f1ef6b01b444aac89e768084f8d60b56b7c552837314cdc",
+    "fixtures/validation/field-parquet-corpus.json": "b00fdc611f609e080598729441a6b2f1c3ba34d2392cb9fbb0d19ab2e111701c",
+    "fixtures/validation/field-parquet-native.json": "b80cbe9662cba57bcf7bd6d7f2bfc20ee088625e60796ad48205846c25d8d540",
+    "fixtures/validation/field-parquet-browser.json": "9ed91311a978bc792778c384c1616e4424fe4bda9c4a7bb0ec3e28420ce7149b"
+  }
+}
