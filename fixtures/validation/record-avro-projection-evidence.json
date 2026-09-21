@@ -1,0 +1,37 @@
+{
+  "scope": "Authored flat Avro record/member projection and retained-report recovery; no nested/dependency or value-domain equivalence claim",
+  "commands": [
+    "bun test tests/core-ideals/record-avro-projection.test.ts tests/core-ideals/field-avro-projection.test.ts",
+    "bun scripts/core-ideals/field-avro-projection-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-avro-projection-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-avro-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 4,
+    "assertions": 116,
+    "typecheck": "passed",
+    "schemasPassed": 196,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9976416,
+    "recordCases": 7,
+    "nativeAcceptedRecords": 4,
+    "blockedRecords": 3,
+    "browserRecordRecoveries": 8
+  },
+  "sha256": {
+    "src/core-ideals/record-avro-projection.ts": "7049e3b4a12cedeb361866991978fa48367187a36d69b51ebb6e00fed17e1708",
+    "spec/core/record-avro-projection.schema.json": "232bf15e88580495e253735f12a30de5556c7a56884062f26e8da227325cc566",
+    "scripts/core-ideals/record-avro-projection-schema.ts": "f15a4cab6c7efbad3b06fe00ec68bc945cb1e3f97716c206149a1936c589363f",
+    "scripts/core-ideals/record-avro-projection-cases.ts": "798a5fcd6695d31eb62a2a43aa8c59fdc431ce0a49e8a3292126b121957dc94f",
+    "scripts/core-ideals/field-avro-projection-corpus.ts": "0ce8d72af24415d0894a34605b84657fe86c144d1bc2ecbc8734c91f73e9e540",
+    "scripts/core-ideals/field-avro-projection-oracle.py": "0e1f2ff1d8300363beea14e647839bbdaa66063d9bf7f889fbd02b93d2be99ea",
+    "scripts/core-ideals/field-avro-projection-browser.ts": "f2afbaa6bed5cbb904b674555b1916ca1728f681e99f6bfce32ead38ed89be7c",
+    "tests/core-ideals/record-avro-projection.test.ts": "aa3760607af40365c4a5036e94424424c59051aa45e6dc223d6b1401a8b6acf0",
+    "fixtures/validation/field-avro-projection-corpus.json": "7b8173a5fe43f5cc400fa33f9ecbadd7ac75ffd6b48ba25db4fb20c32c441144",
+    "fixtures/validation/field-avro-projection-native.json": "6b5ad7625008c65323d965cf29b7e27ca39954b16c1087febc22b85d9e1a360b",
+    "fixtures/validation/field-avro-projection-browser.json": "d8208cf0d134ccfb4d0d699af8d89eb283f7575e17b6e4fbe08db5f5ddfbf789"
+  }
+}

@@ -11,4 +11,14 @@ for row in rows:
  if kind=='float':assert back==1.0 and back!=value
  else:assert back==value,(kind,back,value)
  checks.append({'nativeType':kind,'binaryBytes':len(out.getvalue()),'scope':'underlying long only; Python ignores local logical type' if kind=='local-timestamp-micros' else 'native sample encode/decode','floatNarrowing':kind=='float'})
-Path('fixtures/validation/field-avro-projection-native.json').write_text(json.dumps({'version':avro.__version__,'checks':checks,'limitations':['local-timestamp-micros semantics are not validated by this Python implementation','sample value checks do not prove general value-domain equivalence']},indent=2)+'\n');print(json.dumps({'schemas':len(checks),'sampleRoundTrips':len(checks),'floatNarrowingConfirmed':True}))
+record_checks=[]
+for row in json.loads(Path('fixtures/validation/field-avro-projection-corpus.json').read_text())['records']:
+ if row['result']['status']=='blocked':
+  assert 'target' not in row['result'] and 'text' not in row
+  record_checks.append({'variant':row['variant'],'mode':row['request']['mode'],'status':'blocked'});continue
+ schema=avro.schema.parse(row['text']);expected=[] if row['variant']=='empty' else ['id','label','active'];assert [f.name for f in schema.fields]==expected
+ if row['variant']!='empty':assert schema.doc=='Order record'
+ datum={} if not expected else {'id':42,'label':'Unicode 雪','active':1 if row['variant']=='mismatch' else True}
+ out=io.BytesIO();avro.io.DatumWriter(schema).write(datum,avro.io.BinaryEncoder(out));back=avro.io.DatumReader(schema).read(avro.io.BinaryDecoder(io.BytesIO(out.getvalue())));assert back==datum
+ record_checks.append({'variant':row['variant'],'mode':row['request']['mode'],'status':'accepted','fields':expected,'binaryBytes':len(out.getvalue())})
+Path('fixtures/validation/field-avro-projection-native.json').write_text(json.dumps({'version':avro.__version__,'checks':checks,'recordChecks':record_checks,'limitations':['local-timestamp-micros semantics are not validated by this Python implementation','sample value checks do not prove general value-domain equivalence']},indent=2)+'\n');print(json.dumps({'schemas':len(checks),'sampleRoundTrips':len(checks),'floatNarrowingConfirmed':True,'recordCases':len(record_checks),'recordsAccepted':sum(c['status']=='accepted' for c in record_checks)}))

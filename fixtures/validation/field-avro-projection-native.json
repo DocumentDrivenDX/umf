@@ -92,6 +92,63 @@
       "floatNarrowing": false
     }
   ],
+  "recordChecks": [
+    {
+      "variant": "clean",
+      "mode": "strict",
+      "status": "accepted",
+      "fields": [
+        "id",
+        "label",
+        "active"
+      ],
+      "binaryBytes": 14
+    },
+    {
+      "variant": "mismatch",
+      "mode": "strict",
+      "status": "blocked"
+    },
+    {
+      "variant": "missing",
+      "mode": "strict",
+      "status": "blocked"
+    },
+    {
+      "variant": "clean",
+      "mode": "report",
+      "status": "accepted",
+      "fields": [
+        "id",
+        "label",
+        "active"
+      ],
+      "binaryBytes": 14
+    },
+    {
+      "variant": "mismatch",
+      "mode": "report",
+      "status": "accepted",
+      "fields": [
+        "id",
+        "label",
+        "active"
+      ],
+      "binaryBytes": 14
+    },
+    {
+      "variant": "missing",
+      "mode": "report",
+      "status": "blocked"
+    },
+    {
+      "variant": "empty",
+      "mode": "strict",
+      "status": "accepted",
+      "fields": [],
+      "binaryBytes": 0
+    }
+  ],
   "limitations": [
     "local-timestamp-micros semantics are not validated by this Python implementation",
     "sample value checks do not prove general value-domain equivalence"

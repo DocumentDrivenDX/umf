@@ -1,0 +1,6 @@
+import {enforceProjectionPolicy} from './projection-policy-schema';
+const schema=await Bun.file('spec/core/record-tablespec-projection.schema.json').json(),field=await Bun.file('spec/core/field-avro-projection.schema.json').json();
+schema.$id='urn:umf:core:record-avro-projection:1.0.0';schema.title='Authored record to explicit Avro record fields';schema.properties.operation.const='project-record-avro';
+const request=schema.properties.request;delete request.properties.tableName;request.properties.recordName=field.properties.request.properties.recordName;request.properties.namespace=field.properties.request.properties.namespace;request.required=['id','recordName','namespace','mode','fields'];const member=request.properties.fields.items;delete member.properties.columnName;member.properties.fieldName=field.properties.request.properties.fieldName;member.properties.nativeType=field.properties.request.properties.nativeType;member.required=['author','fieldName','nativeType'];
+schema.properties.binding.const={id:'umf.core.record.avro',version:'1.0.0',nativeVersion:'1.12.0',subset:'Authored flat record with explicit primitive/logical field carriers; no presence, execution or value-domain equivalence'};enforceProjectionPolicy(schema);
+await Bun.write('spec/core/record-avro-projection.schema.json',JSON.stringify(schema,null,2)+'\n');

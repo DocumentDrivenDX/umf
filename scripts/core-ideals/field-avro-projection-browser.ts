@@ -9,6 +9,8 @@ try{
   const row=f.rows[0],source=u.copyJson(row.author.source);source.modules[0].elements[0].future={constraint:'unknown'};const author=u.declareCoreElementKind(source,{module:'m',element:'e'},'field');
   const strict=u.projectFieldToAvro(author,{...row.request,mode:'strict'}),report=u.projectFieldToAvro(author,{...row.request,mode:'report'});if(strict.status!=='blocked'||'target'in strict||'nativeSql'in strict||report.status!=='projected'||!report.residuals.length)throw Error('Loss policy');
   let refusals=0;for(const fieldName of ['bad-name','x\n','\0','雪']){try{u.projectFieldToAvro(row.author,{...row.request,fieldName});}catch{refusals++;continue;}throw Error('Unsafe identifier');}
-  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {projections:f.rows.length,recoveries,lossPolicies:2,identifierRefusals:refusals};
+  let recordRecoveries=0,recordBlocks=0;
+  for(const row of f.records){const result=u.projectRecordToAvro(row.author,row.request);if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Record parity');if(!result.target){recordBlocks++;continue;}for(const format of ['json','yaml']){const receipt=u.readJsonValue(u.writeJsonValue(result,format),format);if(JSON.stringify(u.recoverRecordFromAvro(receipt,row.text))!==JSON.stringify(row.author.target))throw Error('Record recovery');recordRecoveries++;}}
+  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {recordCases:f.records.length,recordRecoveries,recordBlocks,projections:f.rows.length,recoveries,lossPolicies:2,identifierRefusals:refusals};
  });if(external.length)throw Error('External requests');await Bun.write('fixtures/validation/field-avro-projection-browser.json',JSON.stringify({browser:browser.version(),checks,externalRequests:external},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

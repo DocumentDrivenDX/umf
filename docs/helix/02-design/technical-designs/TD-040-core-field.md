@@ -940,3 +940,32 @@ pass. See [Avro Field projection evidence](../../../../fixtures/validation/field
 Authored Avro records, Parquet bindings, structured references and complete common
 mapping/residual metadata remain required. The native logical-type caveat is not
 waived by schema acceptance or round-trip recovery.
+
+## Avro authored records
+
+`projectRecordToAvro` now emits a complete flat record from verified authored
+record/member declarations and explicit primitive/logical field carriers. Native
+fields follow authored member-reference order rather than request order; empty
+records are supported. Record and member descriptions become Avro doc annotations.
+The request schema uses the same name/namespace checks as single-Field projection.
+
+Missing, duplicate, non-member, non-field or colliding bindings block both policies
+without a partial target. Unsupported metadata and mismatched scalar families are
+retained as residuals: strict blocks; report can emit a complete record. Receipt
+recovery recomputes the projection and requires exact generated schema text before
+returning the authored source. This flat binding does not silently introduce named
+dependencies, nested record definitions, nullable unions or executable defaults.
+
+Four Field/record tests pass 116 assertions. Apache Avro 1.12 accepts and binary
+round-trips sample data for four emitted records across seven policy cases,
+including the empty record; three cases are blocked. The native oracle checks
+ordered field names and record docs independently. Chromium 148 matches all seven
+cases and eight JSON/YAML record recoveries, alongside fifteen Field projections
+and thirty Field recoveries. Typechecking, browser build and all 196 schema /
+32 package checks pass. See [Avro record projection evidence](../../../../fixtures/validation/record-avro-projection-evidence.json).
+The earlier local-timestamp logical-type caveat and float-narrowing counterexample
+remain in the shared native oracle.
+
+Parquet Field/record bindings, structured reference resolution and complete common
+mapping/residual metadata remain required. This scoped flat-record projection does
+not close the Field admission or five-system delivery gates.
