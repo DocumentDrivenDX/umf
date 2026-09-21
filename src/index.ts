@@ -237,3 +237,4 @@ export * from './core-ideals/postgresql-ddl-kinds';
 export * from './core-ideals/postgresql-composite';
 
 export * from './core-ideals/sqlserver-field';
+export * from './core-ideals/sqlserver-record';

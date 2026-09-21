@@ -736,3 +736,36 @@ SQL Server record classification and authored down-projection remain unfinished,
 along with Avro/Parquet Field bindings, common mapping/residual metadata and
 structured references. This scoped up-classifier does not close the SQL Server
 binding or the overall Field admission gate.
+
+## SQL Server captured records
+
+`classifySqlServerRecord` now selects a table by captured schema/name and publishes
+one record with ordered member references into the existing column module. Only
+selected members receive Field kind. Its separate versioned binding and JSON
+Schema share the classification policy. Equal table names in different schemas
+remain distinct, and dropped column IDs may leave gaps while retained IDs must
+increase strictly.
+
+The operation validates source/archive correspondence and build 16.0.4295.3 before
+using column observations. A module collision, member-kind conflict, stale or
+unrelated author receipt, duplicate author receipt, or invalid member order blocks
+the whole record. No partial target is published. Recovery recomputes the complete
+receipt and rejects edited member references or native archives. Captured index,
+constraint and type content remains untouched; a record label asserts neither
+portable identity nor constraint equivalence.
+
+The native/browser corpus now contains three records and 34 fields, including
+sales.Types and support.Types and a dropped-column ID gap. A fresh pinned SQL
+Server instance verifies member order through an independent sys.tables/sys.columns
+query and passes six record / 68 Field JSON/YAML recoveries. Chromium 148 matches
+those recoveries. This remains permission-limited captured membership, not a claim
+of complete database structure or native equivalence.
+
+SQL Server authored Field/Record down-projection, Avro/Parquet Field bindings,
+structured references and complete common mapping/residual metadata remain open.
+
+Validation for this slice: seven SQL Server Field/record tests pass 262 assertions;
+the full-capture record tests use explicit 30-second limits after exceeding Bun's
+default five seconds. Typechecking, browser build and all 190 schema / 32 package
+checks pass. [Record evidence](../../../../fixtures/validation/record-sqlserver-evidence.json)
+records the source and native/browser fingerprints. No bead is closed by this slice.

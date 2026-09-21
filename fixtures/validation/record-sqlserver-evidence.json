@@ -1,0 +1,35 @@
+{
+  "scope": "SQL Server 16.0.4295.3 captured table/member record roles and exact capture recovery; no native identity or constraint equivalence",
+  "commands": [
+    "bun test tests/core-ideals/record-sqlserver.test.ts tests/core-ideals/field-sqlserver.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-sqlserver-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-sqlserver-browser.ts"
+  ],
+  "results": {
+    "tests": 7,
+    "assertions": 262,
+    "typecheck": "passed",
+    "schemasPassed": 190,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9882517,
+    "nativeRecords": 3,
+    "nativeRecordRecoveries": 6,
+    "browserRecords": 3,
+    "browserRecordRecoveries": 6,
+    "nativeAndBrowserColumns": 34,
+    "fieldRecoveriesEach": 68
+  },
+  "sha256": {
+    "src/core-ideals/sqlserver-record.ts": "af02c83a574d16b88722a038570ab33cb952ba171384fbf7e2f71ea5b7e4adfc",
+    "spec/core/sqlserver-record-classification.schema.json": "470252f52e8d2a31b1b5c957e2ce893567de40caed414ab9e240b8d6da46c064",
+    "scripts/core-ideals/sqlserver-record-schema.ts": "6251112f3c96b1ded9a328757773e972c56542d581088ebaa38fdcb12796ab16",
+    "scripts/core-ideals/field-sqlserver-oracle.ts": "453f7477e9b188af984d868dbf8411f7bf956568a616647b93aa571da7945939",
+    "scripts/core-ideals/field-sqlserver-browser.ts": "641edce4601df478c073f55e0c35dfe6f2165d1dae9fce0981febd7c87032b0d",
+    "tests/core-ideals/record-sqlserver.test.ts": "50dd70059a3cbccef7b1c518d33f0019c6c8a35ba471acb1525a7b3173bfdad1",
+    "fixtures/validation/field-sqlserver-native.json": "8527d58fb7e180e8a19dd1fbd8b3ec8db684d51030fc3f639c44aea89b7fcbc3",
+    "fixtures/validation/field-sqlserver-browser.json": "902d5e6dc609e9d203ab725072d01712bc504e7b9a495feb22350392fb96822d"
+  }
+}

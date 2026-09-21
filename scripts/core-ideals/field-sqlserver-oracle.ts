@@ -1,4 +1,4 @@
-import {upgradeFieldEnvelope,classifySqlServerField,recoverSqlServerFieldCapture,readJsonValue,writeJsonValue,copyJson} from '../../src';
+import {classifySqlServerRecord,recoverSqlServerRecordCapture,upgradeFieldEnvelope,classifySqlServerField,recoverSqlServerFieldCapture,readJsonValue,writeJsonValue,copyJson} from '../../src';
 import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-sqlserver-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}
@@ -14,7 +14,7 @@ try{
  }
  if(!ready)throw Error('SQL Server startup did not complete');
  await sql('master','CREATE DATABASE umf_source; CREATE DATABASE umf_replayed;');
- const ddl=await Bun.file('fixtures/sqlserver/schema.sql').text(),query=await Bun.file('native/sqlserver/catalog.sql').text();
+ const ddl=(await Bun.file('fixtures/sqlserver/schema.sql').text())+'\nGO\nCREATE SCHEMA support;\nGO\nCREATE TABLE support.Types(id int, removed int, note varchar(30)); ALTER TABLE support.Types DROP COLUMN removed;\n',query=await Bun.file('native/sqlserver/catalog.sql').text();
  for(const db of ['umf_source','umf_replayed'])await sql(db,ddl);
  const capture=JSON.parse((await sql('umf_source',query)).split(/\r?\n/).join('').trim());capture.query=query;
  const second=JSON.parse((await sql('umf_replayed',query)).split(/\r?\n/).join('').trim());second.query=query;
@@ -31,5 +31,12 @@ try{
  }
  const independent=JSON.parse((await sql('umf_source',"SET NOCOUNT ON; SELECT SCHEMA_NAME(t.schema_id) AS [schema],t.name AS [table],c.name AS [column] FROM sys.tables t JOIN sys.columns c ON c.object_id=t.object_id WHERE t.is_ms_shipped=0 ORDER BY SCHEMA_NAME(t.schema_id),t.name,c.column_id FOR JSON PATH;")).split(/\r?\n/).join('').trim());
  if(JSON.stringify(rows.map(r=>({schema:r.table.schema,table:r.table.name,column:r.name})))!==JSON.stringify(independent))throw Error('Independent native membership differs');
- await Bun.write('fixtures/validation/field-sqlserver-native.json',JSON.stringify({image,version:capture.serverVersion,nativeSource:source,rows,recoveries:rows.length*2,scope:'Captured native member roles; permission-limited, no ideal identity/constraint inference'},null,2)+'\n');console.log(JSON.stringify({columns:rows.length,recoveries:rows.length*2,version:capture.serverVersion}));
+ const records=[];
+ for(const table of capture.tables){const relation={schema:table.schema,name:table.name},result=classifySqlServerRecord(fields,{recordModule:'records',recordId:'record',nativeSource:source,relation,mode:'strict'});if(!result.target)throw Error('Record blocked');
+  const record=result.target.modules.at(-1)!.elements[0]!,names=record.references!.map(ref=>result.target!.modules.find(m=>m.id===ref.module)!.elements.find(e=>e.id===ref.element)!.name);
+  if(JSON.stringify(names)!==JSON.stringify(independent.filter((r:any)=>r.schema===relation.schema&&r.table===relation.name).map((r:any)=>r.column)))throw Error('Independent record membership differs');
+  for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;if(recoverSqlServerRecordCapture(receipt,receipt.target!)!==source)throw Error('Record capture lost');}
+  records.push({relation,names,recoveries:2});
+ }
+ await Bun.write('fixtures/validation/field-sqlserver-native.json',JSON.stringify({image,version:capture.serverVersion,nativeSource:source,rows,records,recoveries:rows.length*2,scope:'Captured native member roles; permission-limited, no ideal identity/constraint inference'},null,2)+'\n');console.log(JSON.stringify({columns:rows.length,recoveries:rows.length*2,records:records.length,recordRecoveries:records.length*2,version:capture.serverVersion}));
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}
