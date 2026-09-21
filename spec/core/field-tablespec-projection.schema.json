@@ -206,6 +206,123 @@
           "target": false
         }
       }
+    },
+    {
+      "$comment": "UMF projection policy",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "warning"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              },
+              "diagnostics": {
+                "type": "array",
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "error"
+                    }
+                  },
+                  "required": [
+                    "severity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "request": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "const": "strict"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "const": "exact"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "unknown",
+                      "approximated",
+                      "not-expressible"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

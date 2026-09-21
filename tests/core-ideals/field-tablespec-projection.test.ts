@@ -45,5 +45,5 @@ test('diagnostics mirror disclosed loss and legacy receipts still recover withou
  const report=projectFieldToTableSpec(author({future:'retain'}),{...request,mode:'report'}),native=exportTableSpec(report.target!);
  const legacy:import('../../src/core-ideals/field-tablespec-projection').FieldTableSpecProjection=copyJson(report) as unknown as typeof report;delete legacy.diagnostics;expect(recoverFieldFromTableSpec(legacy,native)).toEqual(report.source);
  legacy.mapping.idealPath='/tampered';expect(()=>recoverFieldFromTableSpec(legacy,native)).toThrow('does not match');
- report.diagnostics[0]!.severity='error';expect(()=>recoverFieldFromTableSpec(report,native)).toThrow('does not match');
+ report.diagnostics[0]!.severity='error';expect(()=>recoverFieldFromTableSpec(report,native)).toThrow('Expected projected receipt');
 });

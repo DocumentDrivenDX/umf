@@ -1,0 +1,39 @@
+{
+  "scope": "Structural strict/report conformance of TableSpec and PostgreSQL Field/Record projection receipts; runtime/native correctness remains separately checked",
+  "commands": [
+    "bun test tests/core-ideals/projection-policy.test.ts tests/core-ideals/field-tablespec-projection.test.ts tests/core-ideals/record-tablespec-projection.test.ts tests/core-ideals/field-postgresql-projection.test.ts tests/core-ideals/record-postgresql-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-projection-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 22,
+    "assertions": 415,
+    "typecheck": "passed",
+    "schemasPassed": 188,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9838048,
+    "tablespecFieldRecoveries": 40,
+    "postgresqlFieldRecoveries": 30,
+    "tablespecRecordRecoveries": 6,
+    "postgresqlRecordRecoveries": 8
+  },
+  "sha256": {
+    "scripts/core-ideals/projection-policy-schema.ts": "ef3de6376830cde8febf8ba4f618baf7640e755ac15a33f5cf5a6fa5168e26ce",
+    "tests/core-ideals/projection-policy.test.ts": "f5f4fdc9d7623ec307b22fdcc0542bab5525341925ce37c5173e5b324a379941",
+    "tests/core-ideals/field-tablespec-projection.test.ts": "1fefcab54596276a644250df682d3e17a9baddaa5f5f714d3e8db06a164026ed",
+    "fixtures/validation/field-tablespec-projection.json": "ed4102d75186315e8ae87d26bae237df25c05ff101a9f1f89517a49974d2a228",
+    "fixtures/validation/field-postgresql-projection-browser.json": "d62e23e187c3dee6de46b375286e63e6b560702189ea8d1d8adaade0e139ec20",
+    "spec/core/field-tablespec-projection.schema.json": "6fdfe6d4c4a8828ab445b93455c5bb282161c054b29925d3c8247784f122a33f",
+    "scripts/core-ideals/field-tablespec-projection-schema.ts": "808f7b9583fd67212b281fb00322cb82f14aed1f9ae933a10e38de853e6b600c",
+    "spec/core/field-postgresql-projection.schema.json": "5363061a61a258cd846ca78ca7be94dd032d8fc800585db45672d7d4a1b029a5",
+    "scripts/core-ideals/field-postgresql-projection-schema.ts": "d4562f45eee9b237dd84e3aaaa212a4ce53dcbdd998e2d0aa88a7b2fcbde8acd",
+    "spec/core/record-tablespec-projection.schema.json": "6136c23cc1f1e4c6c613f391095ed706fdc74c5e841fecf664333419c76d0291",
+    "scripts/core-ideals/record-tablespec-projection-schema.ts": "07904ef4535a4b47389e98fb70d5f8ce94d140aa362ba54f3feb46f40c67eba4",
+    "spec/core/record-postgresql-projection.schema.json": "be227b2b7f6f5936516d1bff60f9b8102d39e73734a7416fc4a16d5612ba2822",
+    "scripts/core-ideals/record-postgresql-projection-schema.ts": "87aa77a50a891ddfbb3b078a721661dc8db2c2740d83d73c144e2cc70f79791a"
+  }
+}

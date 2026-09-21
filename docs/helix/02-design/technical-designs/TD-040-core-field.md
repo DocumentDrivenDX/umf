@@ -646,3 +646,31 @@ native execution run.
 This closes the missing-diagnostics gap in these two operations. Common mapping
 basis, residual locations/binding metadata, structured type references and remaining
 priority-system Field bindings still require work; the Field bead remains open.
+
+## Projection receipt policy validation
+
+All four authored Field/Record projection schemas (TableSpec and PostgreSQL) now
+share generated structural rules for the strict/report contract. Strict success
+requires zero residuals and exact mapping outcomes. Any successful non-exact
+mapping requires a retained residual. Successful results cannot carry error
+diagnostics; blocked results require residuals and, when diagnostics are present,
+at least one error. Existing atomicity rules continue to forbid target/native SQL
+on blocked results. Historical TableSpec Field receipts may still omit diagnostics.
+
+The shared generator replaces its policy branch when a derived schema changes
+from a single mapping to a mapping array. It does not infer semantic correctness
+from schema validity: runtime source/receipt recomputation and native recovery
+checks remain required. A schema-valid report is not proof of native equivalence.
+
+Twenty-two tests pass 415 assertions across the four projectors and the negative
+receipt matrix. Chromium 148 passes twenty TableSpec Field projections/forty ideal
+recoveries and six record cases; PostgreSQL WASM passes fifteen Field projections/
+thirty recoveries and seven record cases. Both record suites preserve their
+existing atomic blocks and report recoveries. Typechecking, browser/WASM builds
+and all 188 schemas / 32 packages pass. See
+[policy evidence](../../../../fixtures/validation/projection-policy-evidence.json).
+Native output generation is unchanged; no new native-engine execution is claimed.
+
+This addresses structural policy consistency. Complete common mapping/residual
+metadata, structured references and remaining priority-system bindings are still
+required before the Field work can close.

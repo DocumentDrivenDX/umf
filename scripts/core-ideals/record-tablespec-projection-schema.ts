@@ -1,3 +1,4 @@
+import {enforceProjectionPolicy} from './projection-policy-schema';
 export {};
 const base=await Bun.file('spec/core/field-tablespec-projection.schema.json').json();
 base.$id='urn:umf:core:record-tablespec-projection:1.0.0';base.title='Authored record and explicit member bindings to TableSpec';
@@ -8,4 +9,5 @@ base.properties.binding.const={id:'umf.core.record.tablespec',version:'1.0.0',na
 base.required=base.required.filter((key:string)=>key!=='mapping');base.required.push('mappings','diagnostics');delete base.properties.mapping;
 base.properties.mappings={type:'array',items:{type:'object',additionalProperties:false,required:['origin','kind','idealPath','nativePath','outcome'],properties:{origin:{const:'authored'},kind:{enum:['record','field']},idealPath:{type:'string'},nativePath:{type:'string'},outcome:{enum:['exact','unknown','not-expressible']}}}};
 base.properties.diagnostics={type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{enum:['error','warning']}}}};
+enforceProjectionPolicy(base);
 await Bun.write('spec/core/record-tablespec-projection.schema.json',JSON.stringify(base,null,2)+'\n');
