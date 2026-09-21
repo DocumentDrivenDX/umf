@@ -1,0 +1,40 @@
+{
+  "scope": "Checked primitive Parquet Field roles and exact retained-file recovery; no group/record, authored projection, cardinality or native-equivalence graduation",
+  "commands": [
+    "bun test tests/core-ideals/field-parquet.test.ts",
+    "bun scripts/core-ideals/field-parquet-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-parquet-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-parquet-browser.ts",
+    "python3 .cache/verify-core-ideal-queue.py"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 649,
+    "nativeFiles": 16,
+    "nativeLeaves": 26,
+    "browserRecoveries": 52,
+    "browserBlockedGroups": 27,
+    "typecheck": "passed",
+    "schemasPassed": 197,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9989095,
+    "queueBeads": 36,
+    "queueEdges": 54
+  },
+  "sha256": {
+    "src/core-ideals/parquet-field.ts": "67e3500e9956e761e86d03eff089e984610d01c016d9a2c172c215695843c3a3",
+    "spec/core/parquet-field-classification.schema.json": "edf20b952abd2a1b1a69a079244792a2612dacd7fc718f5ada436cea041339be",
+    "scripts/core-ideals/parquet-field-schema.ts": "9230845d7e07b20564220fde3816d851c2edc9fa62c3f9de6502b8da5f31e623",
+    "scripts/core-ideals/parquet-field-cases.ts": "76699585b1d393f2e8aac4b4764fc385a20dbbced69f4e4202e021c506b5681b",
+    "scripts/core-ideals/field-parquet-corpus.ts": "34e69a56affc14239fac108594ee99e16dac56d72060d0c74e1630858d05ada6",
+    "scripts/core-ideals/field-parquet-oracle.py": "e26e1006c57d09f38abf2c7ce69438cb46d9cbbc2c909c67ddaf16de5bfbf82f",
+    "scripts/core-ideals/field-parquet-browser.ts": "a611d57f25b0b40c25cd6407e1fb2166fc90d84df86582ef823c55fafbcc4297",
+    "tests/core-ideals/field-parquet.test.ts": "1919c5ebe6325b95aeb10c2505c664128716c8d54c727d143b647e02ca234ee4",
+    "fixtures/validation/field-parquet-corpus.json": "02ceb4a3f9bf9105f37738c10c69c20ebba3bb342a4d1fb6b85ada5e9552292b",
+    "fixtures/validation/field-parquet-native.json": "0fe4d30daf8c2a8f806d5f08990f2f65efbc0edd62c65ec8ab3dc3a79a0ebd1e",
+    "fixtures/validation/field-parquet-browser.json": "efd5e6a03667ff3aa45e276c5378468d920b590fa5d80e7b4c93cd66d2e2fd0e"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "files": 16,
+  "fields": 26,
+  "results": [
+    {
+      "path": "fixtures/parquet/rename/none.parquet",
+      "fields": 8,
+      "sha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "path": "fixtures/parquet/logical/decimal32.parquet",
+      "fields": 1,
+      "sha256": "4fa1b51f40dda3a880476f21b77c148e9c7bbdf0f7deddba582d7a36dfb01e2c"
+    },
+    {
+      "path": "fixtures/parquet/logical/uint32.parquet",
+      "fields": 1,
+      "sha256": "727bf2f7220bf3086ecf3a6bd79b0f1f1a38a4104f4f9fba9d39250a388af932"
+    },
+    {
+      "path": "fixtures/parquet/logical/int8.parquet",
+      "fields": 1,
+      "sha256": "c174cbc6023a76ffa25b5dca9e5ebe55c35718e27748c18e01224cc7af6ad8e6"
+    },
+    {
+      "path": "fixtures/parquet/logical/timestamp-local.parquet",
+      "fields": 1,
+      "sha256": "e736ca849aabf197f18a910565986db1d29e2c710e59f069cd5c98dd0f4c6f7a"
+    },
+    {
+      "path": "fixtures/parquet/logical/uuid.parquet",
+      "fields": 1,
+      "sha256": "7f5d4b35df5cd5fd1df9764c21a106a5294071daa8c8a6ef7ee8177c7f64f02e"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-three-element.parquet",
+      "fields": 1,
+      "sha256": "58a190c2de19268f8111c042882952fa53806dfbbe3262f9b7fbf94840e60253"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-three-renamed.parquet",
+      "fields": 1,
+      "sha256": "a6c2a093d28aada7f5bfd0c779670a249c65554669e4b231a4eb655d86409cbf"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-primitive.parquet",
+      "fields": 1,
+      "sha256": "51a494063dd14ddb34443a8886a02a8a4e6668a3e6e7ca0567bc323263c8b407"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-tuple.parquet",
+      "fields": 2,
+      "sha256": "d865757dae18e11d4e0f071356aa3d8cac7e4a3b63269932404d39dbf3c6f5a5"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-array.parquet",
+      "fields": 1,
+      "sha256": "6df1f25f59236fcd69c98d68f919fb05068c398196f3ca46010a9f87d625c246"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-items_tuple.parquet",
+      "fields": 1,
+      "sha256": "2c018ed431f7ff0b1dcaab6782ae94050eb404c2043702a7f1c75278f3d5f144"
+    },
+    {
+      "path": "fixtures/parquet/containers/list-nested-repeated.parquet",
+      "fields": 1,
+      "sha256": "227ea54cfa79f10d7405ef6eb53ef3214cb3e6c210eead80940f0141671dbf9c"
+    },
+    {
+      "path": "fixtures/parquet/containers/map-canonical.parquet",
+      "fields": 2,
+      "sha256": "2c1ec4e20d355a6f85df8d12650c8524a43608d513abfd17d54d50ed66b35b31"
+    },
+    {
+      "path": "fixtures/parquet/containers/map-legacy-outer.parquet",
+      "fields": 2,
+      "sha256": "eb54e79d62549e6c7ef015fa4735266d1e9c17f4fbe197b45a93c0daac0a28f1"
+    },
+    {
+      "path": "fixtures/parquet/containers/map-key-only.parquet",
+      "fields": 1,
+      "sha256": "14382f56d16bce646aa7eb9e341eba5f4f8c94e1f48b2be261abf7bb40ffe9aa"
+    }
+  ],
+  "scope": "Physical schema leaf roles, paths, definition/repetition levels and byte recovery; no value-domain or cardinality equivalence"
+}

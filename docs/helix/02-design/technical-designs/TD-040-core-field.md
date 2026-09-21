@@ -969,3 +969,33 @@ remain in the shared native oracle.
 Parquet Field/record bindings, structured reference resolution and complete common
 mapping/residual metadata remain required. This scoped flat-record projection does
 not close the Field admission or five-system delivery gates.
+
+## Parquet primitive Field classification
+
+`classifyParquetField` classifies checked primitive schema leaves in the experimental
+0.2 envelope. It requires coherent materialized metadata and checked logical/container
+topology, selects by native schema index, and retains the complete native fragment
+and file bytes. Repeated leaves remain Field roles; their definition/repetition levels
+and LIST/MAP wrappers remain native. No cardinality, requiredness or scalar-domain
+exactness follows from this role classification.
+
+Group and container nodes block both policies without a partial target. Existing
+kind assertions require a verified author receipt; conflicting roles block. Native
+index, stale metadata, unsupported topology and receipt tampering are rejected.
+`recoverParquetFieldBytes` recomputes the classification and requires the unchanged
+classified target before recovering the original file bytes. This consistency check
+does not authenticate a receipt's author or origin.
+
+Two Bun tests pass 649 assertions. PyArrow 21.0.0 independently verifies leaf names,
+paths and definition/repetition levels for 26 leaves across 16 physical/logical and
+LIST/MAP fixtures; all restored files are byte-identical and accepted by PyArrow.
+Chromium 148 matches 26 classifications, 52 JSON/YAML byte recoveries and 27 blocked
+group/wrapper selections, with no external requests or Bun/Node globals.
+Typechecking, browser build and all 197 schema / 32 package audits pass.
+See [Parquet Field evidence](../../../../fixtures/validation/field-parquet-evidence.json).
+
+Parquet record/group interpretation and authored native projections remain open,
+as do structured references and complete common mapping/residual metadata. The
+existing Field work item and five-system exit gate remain open; no new ideal or
+native-equivalence graduation is claimed. Queue validation retains 36 beads and
+54 dependency edges, with the Field core item the sole ready dependency root.

@@ -1,0 +1,5 @@
+import {enforceProjectionPolicy} from './projection-policy-schema';
+const schema=await Bun.file('spec/core/tablespec-field-classification.schema.json').json();schema.$id='urn:umf:core:parquet-field-classification:1.0.0';schema.title='Checked Parquet primitive Field classification';schema.properties.operation.const='classify-parquet-field';
+schema.properties.request.properties.index=schema.properties.request.properties.column;delete schema.properties.request.properties.column;schema.properties.request.required=schema.properties.request.required.map((p:string)=>p==='column'?'index':p);
+schema.properties.binding.const={id:'umf.parquet.field',version:'1.0.0',nativeVersion:'parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017',subset:'Checked primitive schema leaves only; groups and container wrappers excluded; repetition remains native, not scalar cardinality'};schema.properties.mapping.properties.basis.const='checked-primitive-schema-leaf';schema.required.push('diagnostics');enforceProjectionPolicy(schema,'classified');
+await Bun.write('spec/core/parquet-field-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
