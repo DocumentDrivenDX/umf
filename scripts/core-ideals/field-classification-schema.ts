@@ -1,3 +1,4 @@
+import {enforceProjectionPolicy} from './projection-policy-schema';
 export {};
 const schema={
  $schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:tablespec-field-classification:1.0.0',
@@ -12,4 +13,5 @@ const schema={
 };
 // Optional only for receipt compatibility; every newly emitted result includes diagnostics.
 Object.assign(schema.properties,{diagnostics:{type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string',minLength:1},path:{type:'string'},message:{type:'string',minLength:1},severity:{enum:['error','warning']}}}}});
+enforceProjectionPolicy(schema,'classified');
 await Bun.write('spec/core/tablespec-field-classification.schema.json',JSON.stringify(schema,null,2)+'\n');

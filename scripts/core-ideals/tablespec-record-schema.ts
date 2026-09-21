@@ -1,3 +1,4 @@
+import {enforceProjectionPolicy} from './projection-policy-schema';
 export {};
 const schema={
  $schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:tablespec-record-classification:1.0.0',title:'Atomic TableSpec record and member classification',type:'object',additionalProperties:false,
@@ -10,4 +11,5 @@ const schema={
  diagnostics:{type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{const:'error'}}}}
  },allOf:[{if:{properties:{status:{const:'classified'}}},then:{required:['target'],properties:{target:true,residuals:{type:'array',maxItems:0},diagnostics:{type:'array',maxItems:0}}},else:{properties:{target:false,residuals:{type:'array',minItems:1},diagnostics:{type:'array',minItems:1}}}}]
 };
+enforceProjectionPolicy(schema,'classified');
 await Bun.write('spec/core/tablespec-record-classification.schema.json',JSON.stringify(schema,null,2)+'\n');

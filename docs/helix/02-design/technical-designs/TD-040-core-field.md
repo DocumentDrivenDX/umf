@@ -674,3 +674,31 @@ Native output generation is unchanged; no new native-engine execution is claimed
 This addresses structural policy consistency. Complete common mapping/residual
 metadata, structured references and remaining priority-system bindings are still
 required before the Field work can close.
+
+## Classification receipt policy validation
+
+The shared structural policy now also governs all six classification schemas:
+TableSpec Field/record and PostgreSQL catalog Field/record/composite plus raw DDL
+record/member classification. Strict successful classification requires exact
+mapping outcomes and zero residuals. A report-mode non-exact mapping requires an
+explicit residual. Classified results cannot carry error diagnostics; blocked
+results retain residuals, an error when diagnostics are present, and no target.
+Historical TableSpec Field receipts retain their diagnostics compatibility rule.
+
+DDL classification continues to admit warnings describing declared-only scope.
+Its unresolved-namespace report result remains valid with a residual and unknown
+record mapping; relabeling that receipt as strict fails schema validation. Merely
+changing a status cannot erase the conflict or expose a partial candidate.
+
+The six classification suites pass 25 tests / 520 assertions; classification and
+projection policy matrices pass another 10 tests / 154 assertions. Chromium 148
+passes the TableSpec classification corpus, PostgreSQL catalog corpus and 24 raw
+DDL policy cases with exact receipt recovery. Typechecking, browser/WASM builds
+and all 188 schema / 32 package checks pass. See
+[classification policy evidence](../../../../fixtures/validation/classification-policy-evidence.json).
+No native output semantics changed, and no new native-engine run is claimed.
+
+Structural policy conformance is now shared across these ten result schemas.
+Common mapping/residual metadata, structured type references, remaining native
+bindings and the full admission record remain required; this does not close the
+Field bead or the overall goal.

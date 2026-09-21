@@ -1,3 +1,4 @@
+import {enforceProjectionPolicy} from './projection-policy-schema';
 export {};
 const schema=await Bun.file('spec/core/postgresql-record-classification.schema.json').json();
 schema.$id='urn:umf:core:postgresql-ddl-kinds:1.0.0';schema.title='Declared PostgreSQL table/composite record/member roles';schema.properties.operation.const='classify-postgresql-ddl-record';
@@ -8,4 +9,5 @@ schema.required.push('scope','namespaceResolution');schema.properties.scope={con
 schema.properties.mappings.items.properties.basis.enum=['checked-raw-column-declaration','checked-raw-table-declaration','checked-raw-composite-declaration'];
 schema.properties.diagnostics.items.properties.severity={enum:['error','warning']};
 schema.allOf[0].then.properties.residuals={type:'array'};schema.allOf[0].then.properties.diagnostics={type:'array'};
+enforceProjectionPolicy(schema,'classified');
 await Bun.write('spec/core/postgresql-ddl-kinds.schema.json',JSON.stringify(schema,null,2)+'\n');

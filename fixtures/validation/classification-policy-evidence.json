@@ -1,0 +1,43 @@
+{
+  "scope": "Structural strict/report conformance across six classification schemas, with four projection schemas retained as regression coverage; not full semantic conformance",
+  "commands": [
+    "bun test tests/core-ideals/field-tablespec.test.ts tests/core-ideals/record-tablespec.test.ts tests/core-ideals/postgresql-ddl-kinds.test.ts tests/core-ideals/postgresql-composite.test.ts tests/core-ideals/field-postgresql.test.ts tests/core-ideals/record-postgresql.test.ts",
+    "bun test tests/core-ideals/classification-policy.test.ts tests/core-ideals/projection-policy.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+  ],
+  "results": {
+    "classificationTests": 25,
+    "classificationAssertions": 520,
+    "policyTests": 10,
+    "policyAssertions": 154,
+    "typecheck": "passed",
+    "schemasPassed": 188,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9854934
+  },
+  "sha256": {
+    "scripts/core-ideals/projection-policy-schema.ts": "53b926a2327a1508f83500ccc1932232710b1e91994778016c11ff187e32a99a",
+    "tests/core-ideals/classification-policy.test.ts": "4f6566c752ca6707c01a6ee6d41dbd81898868be4e76eb0b306c0bae67418bb1",
+    "scripts/core-ideals/field-classification-schema.ts": "4aab127d1f673511b3f8278ddc2af4007b5c5664cdeba37f0156e3ea0240e770",
+    "scripts/core-ideals/tablespec-record-schema.ts": "b3172da424c6cfe4052b8a0bd3651d09ad50d2e61ec8e18bf3ca0bc8427037ac",
+    "scripts/core-ideals/postgresql-field-schema.ts": "35bef9f192a1252290e4ac22baf6fa0e675dc9e7dc53ec3d16913b430d669852",
+    "scripts/core-ideals/postgresql-record-schema.ts": "e75f2fc5cdba6223bae48b6ecc4f129fb596f6c1c9d2b60c9988dfef65994d49",
+    "scripts/core-ideals/postgresql-composite-schema.ts": "9cf154d4ba30fa439f62befb2048c791a4e1f7377a96d2a4592e16e0fa9331ea",
+    "scripts/core-ideals/postgresql-ddl-kind-schema.ts": "e72bc875e05666eb9b3137a50c27d5e350e750175742615717b5a857427b0e46",
+    "spec/core/tablespec-field-classification.schema.json": "93fa06c201f728f7f333fd23f2731e466a68c344c4171ab770799fd77a13f22f",
+    "spec/core/tablespec-record-classification.schema.json": "57031cb3d4c6dc6bb50e757a476ceecd4bb22059dcf9c404ad5f5925ceeebb4c",
+    "spec/core/postgresql-field-classification.schema.json": "2a10dcf781f719b58f214aa26ccbb89c0bcfb19e0cd29eef88fbfd91be3182ac",
+    "spec/core/postgresql-record-classification.schema.json": "f94ca19d6154d983aea5f122e1c22fd318b798c6c939ef759fd0c8a5ac3d0640",
+    "spec/core/postgresql-composite-classification.schema.json": "a3530d6324f27ff9370f357b7dc60f0919d039ff584b26b054de234f725c1006",
+    "spec/core/postgresql-ddl-kinds.schema.json": "4ba3786e32c08c3c60e631e06e8ec394a5533b7ef04f468b639000fef2cc1c10",
+    "fixtures/validation/field-tablespec-classification.json": "8dfe824c2645dbfe77766decf25b76881c7f43908e260b9aa4636eae70712847",
+    "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e"
+  }
+}

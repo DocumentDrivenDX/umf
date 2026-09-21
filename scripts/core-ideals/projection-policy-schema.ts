@@ -1,5 +1,5 @@
-/** Shared structural policy for authored Field/Record projection receipts. */
-export function enforceProjectionPolicy(schema:any){
+/** Shared structural policy for authored projections and native classifications. */
+export function enforceProjectionPolicy(schema:any,success:'projected'|'classified'='projected'){
  const exact={type:'object',properties:{outcome:{const:'exact'}}};
  const mapping=schema.properties.mapping?{mapping:exact}:{mappings:{type:'array',items:exact}};
  const diagnostic={type:'object',properties:{severity:{const:'error'}},required:['severity']};
@@ -8,8 +8,8 @@ export function enforceProjectionPolicy(schema:any){
  // Derived schemas replace this branch after replacing their mapping shape.
  schema.allOf=schema.allOf.filter((rule:any)=>rule.$comment!=='UMF projection policy');
  schema.allOf.push({$comment:'UMF projection policy',allOf:[
-  {if:{properties:{status:{const:'projected'}}},then:{properties:{diagnostics:{type:'array',items:{type:'object',properties:{severity:{const:'warning'}}}}}},else:{properties:{residuals:{type:'array',minItems:1},diagnostics:{type:'array',minItems:1,contains:diagnostic}}}},
-  {if:{properties:{status:{const:'projected'},request:{type:'object',properties:{mode:{const:'strict'}}}}},then:{properties:{residuals:{type:'array',maxItems:0},...mapping}}},
-  {if:{properties:{status:{const:'projected'},...nonexactMapping}},then:{properties:{residuals:{type:'array',minItems:1}}}}
+  {if:{properties:{status:{const:success}}},then:{properties:{diagnostics:{type:'array',items:{type:'object',properties:{severity:{const:'warning'}}}}}},else:{properties:{residuals:{type:'array',minItems:1},diagnostics:{type:'array',minItems:1,contains:diagnostic}}}},
+  {if:{properties:{status:{const:success},request:{type:'object',properties:{mode:{const:'strict'}}}}},then:{properties:{residuals:{type:'array',maxItems:0},...mapping}}},
+  {if:{properties:{status:{const:success},...nonexactMapping}},then:{properties:{residuals:{type:'array',minItems:1}}}}
  ]});
 }
