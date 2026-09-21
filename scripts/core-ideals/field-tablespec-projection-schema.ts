@@ -9,4 +9,6 @@ const schema={
  residuals:{type:'array',items:{type:'object',additionalProperties:false,required:['path','value','reason','outcome','recovery'],properties:{path:{type:'string'},value:{},reason:{type:'string',minLength:1},outcome:{enum:['unknown','not-expressible']},recovery:{const:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}}}}
  },allOf:[{if:{properties:{status:{const:'projected'}}},then:{required:['target'],properties:{target:true}},else:{properties:{target:false}}}]
 };
+// Optional only for receipt compatibility; every newly emitted result includes diagnostics.
+Object.assign(schema.properties,{diagnostics:{type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string',minLength:1},path:{type:'string'},message:{type:'string',minLength:1},severity:{enum:['error','warning']}}}}});
 await Bun.write('spec/core/field-tablespec-projection.schema.json',JSON.stringify(schema,null,2)+'\n');

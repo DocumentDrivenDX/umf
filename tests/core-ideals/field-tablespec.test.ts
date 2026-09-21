@@ -47,3 +47,10 @@ test('native classification receipts reject tampering and subsequent native chan
  expect(()=>verifyTableSpecFieldClassification(result,changed)).toThrow();
  result.mapping.nativePath='/wrong';expect(()=>verifyTableSpecFieldClassification(result,result.target!)).toThrow();
 });
+test('new results always diagnose conflicts while historical receipts remain verifiable',()=>{
+ const result=classifyTableSpecField(source(),{column:0,mode:'strict'});expect(result.diagnostics).toEqual([]);
+ const legacy:import('../../src/core-ideals/tablespec-field').TableSpecFieldClassification=copyJson(result) as unknown as typeof result;delete legacy.diagnostics;
+ expect(verifyTableSpecFieldClassification(legacy,legacy.target!)).toEqual(legacy);
+ const changed=copyJson(result) as unknown as typeof result;changed.diagnostics.push({code:'fake',path:'',message:'fake',severity:'warning'});expect(()=>verifyTableSpecFieldClassification(changed,changed.target!)).toThrow('disagrees');
+ for(const mode of ['strict','report'] as const){const author=declareCoreElementKind(source(),identity,'record'),blocked=classifyTableSpecField(author.target,{column:0,mode,author});expect(blocked.diagnostics).toHaveLength(1);expect(blocked.diagnostics[0]!.severity).toBe('error');expect(blocked.diagnostics[0]!.path).toBe(blocked.residuals[0]!.path);expect(blocked.diagnostics[0]!.message).toBe(blocked.residuals[0]!.reason);}
+});

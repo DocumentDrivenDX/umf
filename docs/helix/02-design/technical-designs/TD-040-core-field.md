@@ -616,3 +616,33 @@ Resolved structured references require richer captured type identities and remai
 unfinished, as do shared result conformance and the other priority-system Field
 bindings. This completes neither Field admission nor native-equivalence graduation;
 existing bead scope and dependencies remain applicable.
+
+## TableSpec Field diagnostic conformance
+
+The two initial single-Field TableSpec operations now emit diagnostics on every
+result, including an empty list for exact success. Classification conflicts are
+errors in both policies. Projection residuals produce path-matched errors when
+blocked and warnings when report mode emits a candidate; record/group-to-column
+refusal remains an error even in report mode. The native outputs, source retention,
+residuals and strict/report decisions are unchanged.
+
+The existing receipt schemas accept an optional diagnostics array so historical
+receipts remain readable. Newly emitted TypeScript return types require the array.
+Verification recomputes every source/mapping/target claim; only when the original
+receipt has no diagnostics member does comparison omit the newly generated array.
+Supplied diagnostics are compared exactly. This compatibility rule does not waive
+native-text checks or permit altered residuals/mappings. Receipt consistency is
+not a cryptographic provenance/authenticity guarantee.
+
+Twenty-one TableSpec Field/record tests pass 253 assertions. Chromium 148 verifies
+32 classifications, 64 native recoveries, both conflict modes, 20 Field projections,
+40 ideal recoveries and historical receipt verification. Existing record browser
+cases still pass. Typechecking, browser build and all 188 schema / 32 package
+checks pass; [diagnostic evidence](../../../../fixtures/validation/tablespec-field-diagnostics-evidence.json)
+records the commands and fingerprints. Native schema output is unchanged, so this
+slice relies on the existing pinned native evidence rather than claiming a fresh
+native execution run.
+
+This closes the missing-diagnostics gap in these two operations. Common mapping
+basis, residual locations/binding metadata, structured type references and remaining
+priority-system Field bindings still require work; the Field bead remains open.

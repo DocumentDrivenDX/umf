@@ -1,0 +1,37 @@
+{
+  "scope": "Diagnostics for the two early TableSpec single-Field operations and historical receipt compatibility; no new native behavior claim",
+  "commands": [
+    "bun test tests/core-ideals/field-tablespec.test.ts tests/core-ideals/field-tablespec-projection.test.ts tests/core-ideals/record-tablespec.test.ts tests/core-ideals/record-tablespec-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 21,
+    "assertions": 253,
+    "typecheck": "passed",
+    "schemasPassed": 188,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9826930,
+    "browserClassifications": 32,
+    "browserProjections": 20,
+    "nativeRecoveries": 64,
+    "idealRecoveries": 40
+  },
+  "sha256": {
+    "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
+    "src/core-ideals/field-tablespec-projection.ts": "6a66cc4dafd21e06492309efa332017020b06d4e6807960185aa0c503af2edf5",
+    "spec/core/tablespec-field-classification.schema.json": "d4272b3917ada27ccb37e3d96f5e12a5583a2bb28f7bbb87238398d368ca9565",
+    "spec/core/field-tablespec-projection.schema.json": "fa418033ef95859deadc7ccbdb5fb66a7a3af4bc25a598d649b469692cc42de4",
+    "scripts/core-ideals/field-classification-schema.ts": "89f435c436d136325402c084edbdce637ff86c68c70434bd754549928ce212fd",
+    "scripts/core-ideals/field-tablespec-projection-schema.ts": "b5a8507420b319c2ecb9ae754d3128e3d0a2fea4e7a520dd243a37c68f9091fa",
+    "scripts/core-ideals/field-tablespec-browser.ts": "ff1ab6fcbaf325e4fa4d9d5f2e8a1b1c108205e60589b02f11984a5926a22f8e",
+    "scripts/core-ideals/field-tablespec-projection-browser.ts": "f7e793e41003e646d87eb3d3ca8c3009f03558df5c9e73c91f587445e95cbe2f",
+    "tests/core-ideals/field-tablespec.test.ts": "efc5862c8829b4ccb4d1a872e63e0bdf5e25870a5f846b62fc846e09b2278f0d",
+    "tests/core-ideals/field-tablespec-projection.test.ts": "24a7f0e53862a1275b06be0ae85e875414cb517653ce56ea88b10d75cf925eb4",
+    "fixtures/validation/field-tablespec-classification.json": "8dfe824c2645dbfe77766decf25b76881c7f43908e260b9aa4636eae70712847",
+    "fixtures/validation/field-tablespec-projection.json": "ed4102d75186315e8ae87d26bae237df25c05ff101a9f1f89517a49974d2a228"
+  }
+}

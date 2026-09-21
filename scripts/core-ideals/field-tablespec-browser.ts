@@ -29,12 +29,13 @@ try{
    const members=umf.selectCoreElements(record.target,{identities:[{module:'records',element:'table-record'}],references:'transitive'}).selection;
    if(members.length!==row.recordSummary.references.length+1)throw Error('Record reference closure');records++;
    const result=umf.classifyTableSpecField(row.result.source,{column:row.column,mode:row.mode});if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Classifier parity');umf.verifyTableSpecFieldClassification(result,result.target);
+   if(!Array.isArray(result.diagnostics)||result.diagnostics.length)throw Error('Success diagnostics');const legacy=umf.copyJson(result);delete legacy.diagnostics;umf.verifyTableSpecFieldClassification(legacy,legacy.target);
    const stale=umf.copyJson(result.target);stale.future='changed';let refused=false;try{umf.verifyTableSpecFieldClassification(result,stale);}catch{refused=true;}if(!refused)throw Error('Stale classification accepted');
    for(const format of ['json','yaml']){if(umf.exportTableSpec(umf.readDocument(umf.writeDocument(result.target,format),format))!==row.input)throw Error('Native recovery');recoveries++;}
   }
   const original='{"version":"1.0","table_name":"T","columns":[{"name":"x","data_type":"FUTURE"}]}';
   const source=umf.upgradeFieldEnvelope(umf.importTableSpec(original,{id:'conflict',format:'json'})).target;
-  for(const mode of ['strict','report']){const author=umf.declareCoreElementKind(source,{module:'table',element:'column:0'},'record');const result=umf.classifyTableSpecField(author.target,{column:0,mode,author});if(result.status!=='blocked'||'target'in result||result.source.modules[0].elements[0].kind!=='record')throw Error('Conflict overwritten');conflicts++;}
+  for(const mode of ['strict','report']){const author=umf.declareCoreElementKind(source,{module:'table',element:'column:0'},'record');const result=umf.classifyTableSpecField(author.target,{column:0,mode,author});if(result.status!=='blocked'||'target'in result||result.source.modules[0].elements[0].kind!=='record')throw Error('Conflict overwritten');if(result.diagnostics.length!==1||result.diagnostics[0].severity!=='error')throw Error('Conflict diagnostics');conflicts++;}
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {classifications:rows.length,recoveries,conflicts,records};
  });
  if(external.length)throw Error('External requests');

@@ -38,3 +38,12 @@ test('receipt tampering, stale native text, malformed policy and metadata omissi
  const rich=projectFieldToTableSpec(declareCoreElementKind(source,{module:'sales',element:'id'},'field'),{...request,mode:'report'});
  expect(rich.residuals.map(r=>r.path)).toEqual(['/future','/modules/0/future','/modules/1']);
 });
+test('diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks',()=>{
+ const clean=projectFieldToTableSpec(author(),request);expect(clean.diagnostics).toEqual([]);
+ for(const mode of ['strict','report'] as const){const result=projectFieldToTableSpec(author({future:{constraint:'retain'}}),{...request,mode});expect(result.diagnostics).toHaveLength(result.residuals.length);expect(result.diagnostics.map(d=>[d.path,d.message,d.severity])).toEqual(result.residuals.map(r=>[r.path,r.reason,mode==='strict'?'error':'warning']));}
+ for(const mode of ['strict','report'] as const){const a=declareCoreElementKind(doc(),{module:'sales',element:'id'},'record'),blocked=projectFieldToTableSpec(a,{...request,mode});expect(blocked.diagnostics.every(d=>d.severity==='error')).toBe(true);}
+ const report=projectFieldToTableSpec(author({future:'retain'}),{...request,mode:'report'}),native=exportTableSpec(report.target!);
+ const legacy:import('../../src/core-ideals/field-tablespec-projection').FieldTableSpecProjection=copyJson(report) as unknown as typeof report;delete legacy.diagnostics;expect(recoverFieldFromTableSpec(legacy,native)).toEqual(report.source);
+ legacy.mapping.idealPath='/tampered';expect(()=>recoverFieldFromTableSpec(legacy,native)).toThrow('does not match');
+ report.diagnostics[0]!.severity='error';expect(()=>recoverFieldFromTableSpec(report,native)).toThrow('does not match');
+});

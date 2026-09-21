@@ -25,6 +25,7 @@ try{
   const path='/umf.js',umf=await import(path),rows=await(await fetch('/cases')).json();let recoveries=0;
   for(const row of rows){
    const result=umf.projectFieldToTableSpec(row.author,row.request);if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Projection parity');
+   if(!Array.isArray(result.diagnostics)||result.diagnostics.length)throw Error('Success diagnostics');const legacy=umf.copyJson(result);delete legacy.diagnostics;if(JSON.stringify(umf.recoverFieldFromTableSpec(legacy,row.text))!==JSON.stringify(result.source))throw Error('Legacy recovery');
    for(const format of ['json','yaml']){const back=umf.readJsonValue(umf.writeJsonValue(result,format),format);if(JSON.stringify(umf.recoverFieldFromTableSpec(back,row.text))!==JSON.stringify(row.author.target))throw Error('Ideal recovery');recoveries++;}
    const nativeOnly=umf.upgradeFieldEnvelope(umf.importTableSpec(row.text,{id:'native-only',format:'json'})).target;
    if(umf.classifyTableSpecField(nativeOnly,{column:0,mode:'strict'}).mapping.origin!=='classified')throw Error('Author intent inferred');
@@ -34,6 +35,7 @@ try{
   const author=umf.declareCoreElementKind(source,{module:'m',element:'e'},'field');
   const strict=umf.projectFieldToTableSpec(author,{...rows[0].request,mode:'strict'}),report=umf.projectFieldToTableSpec(author,{...rows[0].request,mode:'report'});
   if(strict.status!=='blocked'||'target'in strict||report.status!=='projected'||!report.residuals.length)throw Error('Loss policy');
+  if(strict.diagnostics.length!==strict.residuals.length||strict.diagnostics.some((d:any)=>d.severity!=='error')||report.diagnostics.length!==report.residuals.length||report.diagnostics.some((d:any)=>d.severity!=='warning'))throw Error('Loss diagnostics');
   const records=await(await fetch('/records')).json();let recordRecoveries=0,recordBlocks=0;
   for(const row of records){
    const result=umf.projectRecordToTableSpec(row.author,row.request);if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Record parity');

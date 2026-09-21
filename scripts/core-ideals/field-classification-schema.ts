@@ -10,4 +10,6 @@ const schema={
  residuals:{type:'array',items:{type:'object',additionalProperties:false,required:['path','value','reason','recovery'],properties:{path:{type:'string'},value:{},reason:{type:'string',minLength:1},recovery:{const:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}}}}
  },allOf:[{if:{properties:{status:{const:'classified'}}},then:{required:['target'],properties:{target:true,mapping:{type:'object',properties:{outcome:{const:'exact'}}},residuals:{type:'array',maxItems:0}}},else:{properties:{target:false,mapping:{type:'object',properties:{outcome:{const:'unknown'}}},residuals:{type:'array',minItems:1}}}}]
 };
+// Optional only for receipt compatibility; every newly emitted result includes diagnostics.
+Object.assign(schema.properties,{diagnostics:{type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string',minLength:1},path:{type:'string'},message:{type:'string',minLength:1},severity:{enum:['error','warning']}}}}});
 await Bun.write('spec/core/tablespec-field-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
