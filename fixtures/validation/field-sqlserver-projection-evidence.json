@@ -1,0 +1,35 @@
+{
+  "scope": "Authored Field to SQL Server 16.0.4295.3 DDL with explicit builtin carrier and report-based ideal recovery; no value-domain or constraint equivalence",
+  "commands": [
+    "bun test tests/core-ideals/field-sqlserver-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-sqlserver-projection-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-sqlserver-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 102,
+    "typecheck": "passed",
+    "schemasPassed": 191,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9897601,
+    "nativeCarriers": 14,
+    "idealRecoveries": 28,
+    "nativeReclassifications": 14,
+    "browserRecoveries": 28
+  },
+  "sha256": {
+    "src/core-ideals/field-sqlserver-projection.ts": "45baa9f7475602448ebbe6139fbc186dfdb5b1342e2bc76f3f38ad4a95b0741d",
+    "src/core-ideals/sqlserver-syntax.ts": "5099fb29ea4672e70f155cb3e999f8c6eaa9a914831dc9c042e6887134a97ef9",
+    "spec/core/field-sqlserver-projection.schema.json": "d7283e5f6fa2f623f7d8cd158b0500c507bbe7db0d1ba91ffbe1a4ae834c5121",
+    "scripts/core-ideals/field-sqlserver-projection-schema.ts": "bc2966dff0f5788091a0ee0cc7ac88f2cecc7ee6fe63bd441ca306c41ca87471",
+    "scripts/core-ideals/field-sqlserver-projection-cases.ts": "a89e6ff0c94ffc5ad37beb6339698605e0ae61d09996435a7536d4049ae8185d",
+    "scripts/core-ideals/field-sqlserver-projection-oracle.ts": "3d3d87ac15d6a6e8b04b678acf29f59070ee5f6ce7ed274ee9fe1de9e0e35d7e",
+    "scripts/core-ideals/field-sqlserver-projection-browser.ts": "a7ae147f6485e51ee15d1b0c392e243fddde317e5140c14b66b9c17d68aea6a6",
+    "tests/core-ideals/field-sqlserver-projection.test.ts": "9ffec08645aeb9b331db457419d3538623eb6a880019023a110f5f5967b0a8cf",
+    "fixtures/validation/field-sqlserver-projection-native.json": "5080fbecbd1de6c0dd949afc54d82fde94433eb07273f2c6b3a57f895723e50e",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "a7e1a5f4897a45f6223c0ff53ac2d66f56929ba57953b5f79513b1edec09167e"
+  }
+}

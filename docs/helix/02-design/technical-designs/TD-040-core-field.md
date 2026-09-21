@@ -769,3 +769,40 @@ the full-capture record tests use explicit 30-second limits after exceeding Bun'
 default five seconds. Typechecking, browser build and all 190 schema / 32 package
 checks pass. [Record evidence](../../../../fixtures/validation/record-sqlserver-evidence.json)
 records the source and native/browser fingerprints. No bead is closed by this slice.
+
+## SQL Server authored Field down-projection
+
+`projectFieldToSqlServer` emits a complete SQL artifact for one authored Field and
+an explicit builtin carrier. Fourteen carriers cover the nine current scalar
+families; their native widths, precision, scale, temporal behavior and collation
+remain native choices rather than equivalence claims. The column is explicitly
+nullable. Author-stated nullability/facets/constraints outside this binding become
+residuals: strict blocks and report retains the source while emitting only the
+covered meaning. Records/groups cannot become single columns under either mode.
+
+The target is `{format: "sqlserver-ddl", sql}` rather than a fabricated catalog
+capture. The caller must provide an existing target schema and execute SQL outside
+the browser library. Bracket-quoted permanent identifiers and Unicode literals
+escape native delimiters; NUL, unpaired surrogates, overlong identifiers, edge
+whitespace and temporary-object names are rejected. Descriptions use extended
+properties within a conservative 3,750 UTF-16-unit limit; larger descriptions are
+explicit residuals. No source expression/default is executed or copied as code.
+
+`recoverFieldFromSqlServer` validates and recomputes the receipt, then requires
+exact equality with both retained SQL copies before returning the authored source.
+Native-only catalog import produces classified provenance and cannot recreate
+unencoded author intent. The dedicated result schema uses shared strict/report
+policy and exposes no SQL or target when blocked.
+
+Two targeted tests pass 102 assertions. A fresh pinned SQL Server 16.0.4295.3
+container executes all fourteen carrier cases and independently checks column
+names, system type IDs, nullable/nonidentity/noncomputed status and Unicode
+extended descriptions. All 28 authored JSON/YAML recoveries and fourteen native-only
+column classifications pass. Chromium 148 matches all fourteen emitted artifacts,
+28 recoveries, two loss policies and four unsafe-identifier refusals. Typechecking,
+browser build and all 191 schema / 32 package checks pass. See
+[Field projection evidence](../../../../fixtures/validation/field-sqlserver-projection-evidence.json).
+
+SQL Server authored records, structured references, Avro/Parquet Field bindings
+and complete mapping/residual metadata remain required. These carrier examples
+establish scoped behavior, not value-domain exactness or Field admission.

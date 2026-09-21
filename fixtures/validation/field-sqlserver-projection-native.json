@@ -1,0 +1,2514 @@
+{
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "version": "16.0.4295.3",
+  "rows": [
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-0",
+        "namespace": "sales",
+        "tableName": "field_0",
+        "columnName": "v]雪'",
+        "nativeType": "bit",
+        "mode": "strict"
+      },
+      "expectedTypeId": 104,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-0",
+          "namespace": "sales",
+          "tableName": "field_0",
+          "columnName": "v]雪'",
+          "nativeType": "bit",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_0] ([v]]雪'] bit NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_0', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_0] ([v]]雪'] bit NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_0', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-1",
+        "namespace": "sales",
+        "tableName": "field_1",
+        "columnName": "v]雪'",
+        "nativeType": "tinyint",
+        "mode": "strict"
+      },
+      "expectedTypeId": 48,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-1",
+          "namespace": "sales",
+          "tableName": "field_1",
+          "columnName": "v]雪'",
+          "nativeType": "tinyint",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_1] ([v]]雪'] tinyint NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_1', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_1] ([v]]雪'] tinyint NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_1', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-2",
+        "namespace": "sales",
+        "tableName": "field_2",
+        "columnName": "v]雪'",
+        "nativeType": "smallint",
+        "mode": "strict"
+      },
+      "expectedTypeId": 52,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-2",
+          "namespace": "sales",
+          "tableName": "field_2",
+          "columnName": "v]雪'",
+          "nativeType": "smallint",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_2] ([v]]雪'] smallint NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_2', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_2] ([v]]雪'] smallint NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_2', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-3",
+        "namespace": "sales",
+        "tableName": "field_3",
+        "columnName": "v]雪'",
+        "nativeType": "int",
+        "mode": "strict"
+      },
+      "expectedTypeId": 56,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-3",
+          "namespace": "sales",
+          "tableName": "field_3",
+          "columnName": "v]雪'",
+          "nativeType": "int",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_3] ([v]]雪'] int NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_3', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_3] ([v]]雪'] int NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_3', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-4",
+        "namespace": "sales",
+        "tableName": "field_4",
+        "columnName": "v]雪'",
+        "nativeType": "bigint",
+        "mode": "strict"
+      },
+      "expectedTypeId": 127,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-4",
+          "namespace": "sales",
+          "tableName": "field_4",
+          "columnName": "v]雪'",
+          "nativeType": "bigint",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_4] ([v]]雪'] bigint NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_4', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_4] ([v]]雪'] bigint NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_4', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-5",
+        "namespace": "sales",
+        "tableName": "field_5",
+        "columnName": "v]雪'",
+        "nativeType": "decimal(38,9)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 106,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-5",
+          "namespace": "sales",
+          "tableName": "field_5",
+          "columnName": "v]雪'",
+          "nativeType": "decimal(38,9)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_5] ([v]]雪'] decimal(38,9) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_5', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_5] ([v]]雪'] decimal(38,9) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_5', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-6",
+        "namespace": "sales",
+        "tableName": "field_6",
+        "columnName": "v]雪'",
+        "nativeType": "real",
+        "mode": "strict"
+      },
+      "expectedTypeId": 59,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-6",
+          "namespace": "sales",
+          "tableName": "field_6",
+          "columnName": "v]雪'",
+          "nativeType": "real",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_6] ([v]]雪'] real NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_6', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_6] ([v]]雪'] real NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_6', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-7",
+        "namespace": "sales",
+        "tableName": "field_7",
+        "columnName": "v]雪'",
+        "nativeType": "float(53)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 62,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-7",
+          "namespace": "sales",
+          "tableName": "field_7",
+          "columnName": "v]雪'",
+          "nativeType": "float(53)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_7] ([v]]雪'] float(53) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_7', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_7] ([v]]雪'] float(53) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_7', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-8",
+        "namespace": "sales",
+        "tableName": "field_8",
+        "columnName": "v]雪'",
+        "nativeType": "nvarchar(max)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 231,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-8",
+          "namespace": "sales",
+          "tableName": "field_8",
+          "columnName": "v]雪'",
+          "nativeType": "nvarchar(max)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_8] ([v]]雪'] nvarchar(max) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_8', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_8] ([v]]雪'] nvarchar(max) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_8', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-9",
+        "namespace": "sales",
+        "tableName": "field_9",
+        "columnName": "v]雪'",
+        "nativeType": "varbinary(max)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 165,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-9",
+          "namespace": "sales",
+          "tableName": "field_9",
+          "columnName": "v]雪'",
+          "nativeType": "varbinary(max)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_9] ([v]]雪'] varbinary(max) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_9', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_9] ([v]]雪'] varbinary(max) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_9', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-10",
+        "namespace": "sales",
+        "tableName": "field_10",
+        "columnName": "v]雪'",
+        "nativeType": "date",
+        "mode": "strict"
+      },
+      "expectedTypeId": 40,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-10",
+          "namespace": "sales",
+          "tableName": "field_10",
+          "columnName": "v]雪'",
+          "nativeType": "date",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_10] ([v]]雪'] date NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_10', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_10] ([v]]雪'] date NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_10', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-11",
+        "namespace": "sales",
+        "tableName": "field_11",
+        "columnName": "v]雪'",
+        "nativeType": "time(7)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 41,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-11",
+          "namespace": "sales",
+          "tableName": "field_11",
+          "columnName": "v]雪'",
+          "nativeType": "time(7)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_11] ([v]]雪'] time(7) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_11', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_11] ([v]]雪'] time(7) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_11', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-12",
+        "namespace": "sales",
+        "tableName": "field_12",
+        "columnName": "v]雪'",
+        "nativeType": "datetime2(7)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 42,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-12",
+          "namespace": "sales",
+          "tableName": "field_12",
+          "columnName": "v]雪'",
+          "nativeType": "datetime2(7)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_12] ([v]]雪'] datetime2(7) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_12', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_12] ([v]]雪'] datetime2(7) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_12', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-13",
+        "namespace": "sales",
+        "tableName": "field_13",
+        "columnName": "v]雪'",
+        "nativeType": "datetimeoffset(7)",
+        "mode": "strict"
+      },
+      "expectedTypeId": 43,
+      "result": {
+        "operation": "project-field-sqlserver",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "field",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "v]雪'",
+                  "description": "O'Brien ] 雪\nline",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "field",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "v]雪'",
+                    "description": "O'Brien ] 雪\nline",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-13",
+          "namespace": "sales",
+          "tableName": "field_13",
+          "columnName": "v]雪'",
+          "nativeType": "datetimeoffset(7)",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.sqlserver",
+          "version": "1.0.0",
+          "nativeVersion": "16.0.4295.3",
+          "subset": "Single authored Field to permanent table DDL with explicit builtin carrier and nullable column; no value-domain or constraint equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/sql",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "format": "sqlserver-ddl",
+          "sql": "CREATE TABLE [sales].[field_13] ([v]]雪'] datetimeoffset(7) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_13', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+        },
+        "nativeSql": "CREATE TABLE [sales].[field_13] ([v]]雪'] datetimeoffset(7) NULL);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O''Brien ] 雪\nline', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'field_13', @level2type=N'COLUMN', @level2name=N'v]雪''';\n"
+      }
+    }
+  ],
+  "nativeSource": "{\n  \"profile\": \"sqlserver-catalog-v1\",\n  \"state\": \"captured\",\n  \"serverVersion\": \"16.0.4295.3\",\n  \"query\": \"SET NOCOUNT ON;\\nSELECT 'sqlserver-catalog-v1' AS profile, 'captured' AS state,\\n CONVERT(nvarchar(128),SERVERPROPERTY('ProductVersion')) AS serverVersion,\\n 'native/sqlserver/catalog.sql' AS query,\\n JSON_QUERY(COALESCE((SELECT SCHEMA_NAME(t.schema_id) AS [schema],t.name,\\n  JSON_QUERY(COALESCE((SELECT c.name,c.column_id,c.system_type_id,c.user_type_id,\\n   SCHEMA_NAME(ty.schema_id) AS type_schema,ty.name AS type_name,bt.name AS base_type_name,\\n   ty.is_user_defined,ty.is_assembly_type,c.max_length,c.precision,c.scale,\\n   c.is_nullable,c.is_identity,c.is_computed,c.collation_name,\\n   OBJECT_DEFINITION(c.default_object_id) AS default_definition,cc.definition AS computed_definition,\\n   CONVERT(nvarchar(128),ic.seed_value) AS identity_seed,\\n   CONVERT(nvarchar(128),ic.increment_value) AS identity_increment,\\n   CONVERT(nvarchar(max),ep.value) AS description\\n   FROM sys.columns c JOIN sys.types ty ON ty.user_type_id=c.user_type_id\\n   LEFT JOIN sys.types bt ON bt.user_type_id=c.system_type_id AND bt.system_type_id=bt.user_type_id\\n   LEFT JOIN sys.computed_columns cc ON cc.object_id=c.object_id AND cc.column_id=c.column_id\\n   LEFT JOIN sys.identity_columns ic ON ic.object_id=c.object_id AND ic.column_id=c.column_id\\n   LEFT JOIN sys.extended_properties ep ON ep.class=1 AND ep.major_id=c.object_id AND ep.minor_id=c.column_id AND ep.name=N'MS_Description'\\n   WHERE c.object_id=t.object_id ORDER BY c.column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n  FROM sys.tables t WHERE t.is_ms_shipped=0 ORDER BY SCHEMA_NAME(t.schema_id),t.name\\n  FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS tables\\nFOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;\\n\",\n  \"tables\": [\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_0\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 104,\n          \"user_type_id\": 104,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bit\",\n          \"base_type_name\": \"bit\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 1,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_1\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 48,\n          \"user_type_id\": 48,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"tinyint\",\n          \"base_type_name\": \"tinyint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 3,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_10\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 40,\n          \"user_type_id\": 40,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"date\",\n          \"base_type_name\": \"date\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 3,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_11\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 41,\n          \"user_type_id\": 41,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"time\",\n          \"base_type_name\": \"time\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 16,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_12\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 42,\n          \"user_type_id\": 42,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"datetime2\",\n          \"base_type_name\": \"datetime2\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 27,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_13\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 43,\n          \"user_type_id\": 43,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"datetimeoffset\",\n          \"base_type_name\": \"datetimeoffset\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 10,\n          \"precision\": 34,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_2\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 52,\n          \"user_type_id\": 52,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"smallint\",\n          \"base_type_name\": \"smallint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 5,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_3\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_4\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 127,\n          \"user_type_id\": 127,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bigint\",\n          \"base_type_name\": \"bigint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 19,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_5\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 17,\n          \"precision\": 38,\n          \"scale\": 9,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_6\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 59,\n          \"user_type_id\": 59,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"real\",\n          \"base_type_name\": \"real\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 24,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_7\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 62,\n          \"user_type_id\": 62,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"float\",\n          \"base_type_name\": \"float\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 53,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_8\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"field_9\",\n      \"columns\": [\n        {\n          \"name\": \"v]雪'\",\n          \"column_id\": 1,\n          \"system_type_id\": 165,\n          \"user_type_id\": 165,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varbinary\",\n          \"base_type_name\": \"varbinary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"O'Brien ] 雪\\nline\"\n        }\n      ]\n    }\n  ]\n}\n",
+  "scope": "Explicit SQL Server Field carriers, names, descriptions, nullable storage and report-based ideal recovery"
+}
