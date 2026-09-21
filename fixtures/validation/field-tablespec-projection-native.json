@@ -1,8 +1,28 @@
 {
+  "records": [
+    {
+      "variant": "clean",
+      "mode": "strict",
+      "accepted": true,
+      "columns": 3
+    },
+    {
+      "variant": "clean",
+      "mode": "report",
+      "accepted": true,
+      "columns": 3
+    },
+    {
+      "variant": "mismatch",
+      "mode": "report",
+      "accepted": true,
+      "columns": 3
+    }
+  ],
   "scope": "Native schema model acceptance and column identity for explicit carriers; no row value or storage enforcement equivalence",
   "pydantic": "2.11.10",
   "sourceSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
-  "inputSha256": "0faab5ddf5b4e4a38869a59892f2fd98dca339722d81d77113d7ac58146ff526",
+  "inputSha256": "b3098bbfd865cccd8984e6f86e6c5b2eb62c7805ab42deb7f4a9f5db0376f96c",
   "cases": [
     {
       "nativeType": "BOOLEAN",

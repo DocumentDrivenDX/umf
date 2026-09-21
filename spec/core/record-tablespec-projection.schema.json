@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:record-tablespec-projection:1.0.0",
+  "title": "Authored record and explicit member bindings to TableSpec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "residuals",
+    "mappings",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-record-tablespec"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tableName",
+        "mode",
+        "fields"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "author",
+              "columnName",
+              "nativeType"
+            ],
+            "properties": {
+              "author": {
+                "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+              },
+              "columnName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nativeType": {
+                "enum": [
+                  "BOOLEAN",
+                  "INTEGER",
+                  "DECIMAL",
+                  "FLOAT",
+                  "TEXT",
+                  "VARCHAR",
+                  "CHAR",
+                  "DATE",
+                  "DATETIME",
+                  "TIMESTAMP"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.record.tablespec",
+        "version": "1.0.0",
+        "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Authored record with explicit flat field carriers; no value-domain or execution equivalence"
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "origin",
+          "kind",
+          "idealPath",
+          "nativePath",
+          "outcome"
+        ],
+        "properties": {
+          "origin": {
+            "const": "authored"
+          },
+          "kind": {
+            "enum": [
+              "record",
+              "field"
+            ]
+          },
+          "idealPath": {
+            "type": "string"
+          },
+          "nativePath": {
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "unknown",
+              "not-expressible"
+            ]
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    }
+  ]
+}

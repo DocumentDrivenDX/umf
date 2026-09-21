@@ -339,3 +339,37 @@ This completes the initial table-to-record up-classification path, not the full
 TableSpec binding. Full authored-record down-projection and general shared result
 conformance remain unfinished, as do the other four native Field bindings and
 admission gate. Historical evidence sections above retain their earlier scope.
+
+## Authored-record TableSpec down-projection
+
+`projectRecordToTableSpec` now accepts an authored record and explicit native
+bindings for its `member` references. Every member author receipt must match the
+same full source model. Native columns follow record-member order, independently
+of request order. Record/field descriptions carry into the table/columns. Native
+names and types are explicit; source identity and namespaces remain in the receipt.
+This is the flat member layout, not nested-record flattening or implicit grouping.
+
+Missing, duplicate, non-member, non-field or native-name-colliding bindings block
+the whole candidate under either policy. Record/group member roles cannot become
+columns by choosing report mode. Renames, incompatible scalar families and
+unprojected field/reference/module/document metadata produce path-qualified
+residuals and diagnostics. Strict refuses any such loss; report may return the
+complete table while retaining the original assertions. A matching scalar family
+still proves no native value-domain or execution equivalence.
+
+`record-tablespec-projection.schema.json` describes request/result shape.
+`recoverRecordFromTableSpec` recomputes the receipt and requires the unchanged
+emitted native text before returning the complete retained source. Native-only
+reimport establishes classified table membership; it does not reconstruct authored
+provenance. Stale member receipts, changed reports and changed native text fail.
+
+Evidence: 19 TableSpec ideal tests / 232 assertions pass; typecheck/build and audits
+of 182 schemas / 32 packages pass. Chromium 148 checks six record cases: three
+complete targets with six JSON/YAML ideal recoveries, and three atomic blocks.
+The pinned native TableSpec model accepts all three emitted multi-column tables
+and confirms ordered names/types. Existing single-Field cases also pass. See
+[record projection evidence](../../../../fixtures/validation/record-tablespec-projection-evidence.json).
+
+Field remains experimental. Shared operation-result conformance, explicit group
+refusal coverage, complete five-system bindings and the separate admission gate
+remain required. This result does not graduate any native meaning into equivalence.

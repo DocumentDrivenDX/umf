@@ -1,0 +1,34 @@
+{
+  "scope": "Authored flat record/member TableSpec down-projection and retained-report ideal recovery; no value-domain equivalence or other-system admission",
+  "commands": [
+    "bun test tests/core-ideals",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-projection-browser.ts",
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/field-tablespec-projection-oracle.py"
+  ],
+  "results": {
+    "tests": 19,
+    "assertions": 232,
+    "typecheck": "passed",
+    "schemasPassed": 182,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9751994,
+    "recordCases": 6,
+    "recordRecoveries": 6,
+    "recordBlocks": 3,
+    "nativeRecordsAccepted": 3
+  },
+  "sha256": {
+    "src/core-ideals/record-tablespec-projection.ts": "fadc09c01614e4f94aa0c28bf86ba99490f461ca6e92220aa00480f180dac9b5",
+    "spec/core/record-tablespec-projection.schema.json": "3ec9a95aa4c969339da7f9de78d8fcbe431563e3ce16fd0f430575c569f61c13",
+    "scripts/core-ideals/record-tablespec-projection-schema.ts": "fdc3134a8977c3913cf5c3c373cfa4a58f6cffb0518479ff34da48eef76d571b",
+    "scripts/core-ideals/record-tablespec-cases.ts": "0b9ebe6d14254aa8fb3d89c87478abcae13969d9c1f198bf515c579c5dec4be0",
+    "tests/core-ideals/record-tablespec-projection.test.ts": "92dc3ca67f8d03d087b202eff401cc98597b35e351df67858f9372a1976d95d8",
+    "scripts/core-ideals/field-tablespec-projection-browser.ts": "f421594e814bbae82e7307bc5fadf959010a691b3f1a05d9755b6f9d91ecbc45",
+    "scripts/core-ideals/field-tablespec-projection-oracle.py": "31298b96f6a46a5b3712e72dd7d1bd74f07f3f180f91c97afdb0a6156fc257f5",
+    "fixtures/validation/field-tablespec-projection.json": "b3098bbfd865cccd8984e6f86e6c5b2eb62c7805ab42deb7f4a9f5db0376f96c",
+    "fixtures/validation/field-tablespec-projection-native.json": "3480f61beb178f23bce8dfc7fd2f2ea08325bbc52d691d055ff095a8c09a475e"
+  }
+}
