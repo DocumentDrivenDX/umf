@@ -1,0 +1,4 @@
+import {recordCase} from './record-tablespec-cases';import {type RecordSqlServerRequest} from '../../src/core-ideals/record-sqlserver-projection';
+export function sqlServerRecordCases(){return (['strict','report'] as const).flatMap(mode=>(['clean','mismatch','missing','case-distinct'] as const).map(variant=>{
+ const c=recordCase(),request:RecordSqlServerRequest={...c.request,namespace:'sales',identifierCollation:'Latin1_General_100_BIN2',mode,fields:c.request.fields.map(f=>({...f,nativeType:f.nativeType==='INTEGER'?'int':f.nativeType==='BOOLEAN'?'bit':'nvarchar(max)'}))};if(variant==='mismatch')request.fields[0]!.nativeType='int';if(variant==='missing')request.fields.pop();if(variant==='case-distinct')request.fields.find(f=>f.columnName==='label')!.columnName='ID';return {author:c.author,request,variant};
+}));}

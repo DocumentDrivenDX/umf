@@ -239,3 +239,4 @@ export * from './core-ideals/postgresql-composite';
 export * from './core-ideals/sqlserver-field';
 export * from './core-ideals/sqlserver-record';
 export * from './core-ideals/field-sqlserver-projection';
+export * from './core-ideals/record-sqlserver-projection';

@@ -806,3 +806,39 @@ browser build and all 191 schema / 32 package checks pass. See
 SQL Server authored records, structured references, Avro/Parquet Field bindings
 and complete mapping/residual metadata remain required. These carrier examples
 establish scoped behavior, not value-domain exactness or Field admission.
+
+## SQL Server authored records
+
+`projectRecordToSqlServer` now emits a complete flat table from an authored record
+and explicitly bound authored members. Columns follow record-member order rather
+than request order. Source assertions, names, descriptions and unmatched metadata
+follow strict/report loss policy. Missing, duplicate, non-member or non-field
+bindings and exact native-name collisions block both modes. Empty records also
+block both modes because SQL Server cannot express a zero-column table.
+
+SQL Server identifier equality depends on database collation. This binding requires
+an explicit `identifierCollation: Latin1_General_100_BIN2` request and emits a guard
+that throws before execution in a database with a different collation. It does not
+change database collation. Within this supported context, distinct case-sensitive
+column names retain their identities. The target schema must already exist. Other
+collations need their own evidenced comparison/binding rules rather than a guessed
+case-folding implementation.
+
+Descriptions become bounded Unicode extended properties on the table and columns;
+larger values remain residuals. Native column carriers are explicitly nullable.
+The output remains a SQL artifact, never a fabricated catalog observation.
+Recovery recomputes the report and rejects changed SQL, mappings or member authors
+before returning the retained ideal. No native-only import can reconstruct author
+intent not encoded in the SQL.
+
+Evidence: four SQL Server Field/record tests pass 146 assertions. A fresh pinned
+16.0.4295.3 instance executes four of eight record cases, verifies ordered members
+and table descriptions, preserves distinct `id`/`ID` columns under BIN2, and
+refuses the wrong database collation. Four blocked cases expose no SQL. Chromium
+148 matches all eight cases and eight JSON/YAML ideal recoveries; fourteen Field
+cases and 28 Field recoveries also pass. Typechecking, browser build and all
+192 schema / 32 package checks pass. See
+[record projection evidence](../../../../fixtures/validation/record-sqlserver-projection-evidence.json).
+This is a collation-qualified flat-record binding; arbitrary collations, structured
+references, common mapping/residual metadata and Avro/Parquet Field bindings remain
+unfinished. The Field admission and five-system gates remain open.

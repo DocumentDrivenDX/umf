@@ -1,3 +1,5 @@
+import {sqlServerRecordCases} from './record-sqlserver-projection-cases';
+import {projectRecordToSqlServer,recoverRecordFromSqlServer} from '../../src';
 import {sqlServerFieldCases} from './field-sqlserver-projection-cases';
 import {projectFieldToSqlServer,recoverFieldFromSqlServer} from '../../src';
 import {classifySqlServerRecord,recoverSqlServerRecordCapture,upgradeFieldEnvelope,classifySqlServerField,recoverSqlServerFieldCapture,readJsonValue,writeJsonValue,copyJson} from '../../src';
@@ -26,5 +28,14 @@ try{
  for(const row of rows){const table=capture.tables.find((t:any)=>t.schema==='sales'&&t.name===row.request.tableName),column=table?.columns[0];if(table?.columns.length!==1||column.name!==row.request.columnName||column.system_type_id!==row.expectedTypeId||!column.is_nullable||column.is_identity||column.is_computed||column.description!==row.author.target.modules[0]!.elements[0]!.description)throw Error('Native column behavior differs');}
  const nativeSource=JSON.stringify(capture,null,2)+'\n',source=upgradeFieldEnvelope(importSqlServerCatalog(nativeSource,{id:'generated'})).target;
  for(const c of getSqlServerColumnMetadata(source)){const classified=classifySqlServerField(source,{column:c.path,nativeSource,mode:'strict'});if(!classified.target||recoverSqlServerFieldCapture(classified,classified.target)!==nativeSource)throw Error('Native-only recovery');}
- await Bun.write('fixtures/validation/field-sqlserver-projection-native.json',JSON.stringify({image,version:capture.serverVersion,rows,nativeSource,scope:'Explicit SQL Server Field carriers, names, descriptions, nullable storage and report-based ideal recovery'},null,2)+'\n');console.log(JSON.stringify({projections:rows.length,idealRecoveries:rows.length*2,nativeClassifications:rows.length}));
+ const recordRows=[];let guardChecked=false;
+ await sql('umf_replayed','CREATE SCHEMA sales;');
+ for(const [index,c] of sqlServerRecordCases().entries()){const result=projectRecordToSqlServer(c.author,c.request);recordRows.push({...c,result});if(!result.target)continue;
+  if(!guardChecked){let refused=false;try{await sql('umf_replayed',result.nativeSql!);}catch(error){if(!String(error).includes('UMF requires database identifier collation'))throw error;refused=true;}if(!refused)throw Error('Wrong collation accepted');guardChecked=true;}
+  const db='umf_record_'+index;await sql('master','CREATE DATABASE '+db+' COLLATE Latin1_General_100_BIN2;');await sql(db,'CREATE SCHEMA sales;');await sql(db,result.nativeSql!);
+  const native=JSON.parse((await sql(db,query)).split(/\r?\n/).join('').trim());if(JSON.stringify(native.tables[0].columns.map((c:any)=>c.name))!==JSON.stringify(['id',c.variant==='case-distinct'?'ID':'label','active']))throw Error('Member order changed');
+  const description=(await sql(db,"SET NOCOUNT ON; SELECT CONVERT(nvarchar(100),value) FROM sys.extended_properties WHERE major_id=OBJECT_ID(N'sales.Orders') AND minor_id=0 AND name=N'MS_Description';")).trim();if(description!=='Order record')throw Error('Record description lost');
+  for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;if(JSON.stringify(recoverRecordFromSqlServer(receipt,receipt.nativeSql!))!==JSON.stringify(c.author.target))throw Error('Record ideal loss');}
+ }
+ await Bun.write('fixtures/validation/field-sqlserver-projection-native.json',JSON.stringify({image,version:capture.serverVersion,rows,recordRows,guardChecked,nativeSource,scope:'Explicit SQL Server Field carriers, names, descriptions, nullable storage and report-based ideal recovery'},null,2)+'\n');console.log(JSON.stringify({projections:rows.length,idealRecoveries:rows.length*2,nativeClassifications:rows.length,recordCases:recordRows.length,recordEmitted:recordRows.filter(r=>r.result.target).length,guardChecked}));
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}

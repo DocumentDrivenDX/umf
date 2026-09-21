@@ -1,0 +1,36 @@
+{
+  "scope": "Authored flat record to SQL Server 16.0.4295.3 DDL; requires Latin1_General_100_BIN2 database identifier collation, no value-domain equivalence",
+  "commands": [
+    "bun test tests/core-ideals/record-sqlserver-projection.test.ts tests/core-ideals/field-sqlserver-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-sqlserver-projection-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-sqlserver-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 4,
+    "assertions": 146,
+    "typecheck": "passed",
+    "schemasPassed": 192,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9916597,
+    "recordCases": 8,
+    "nativeRecordsEmitted": 4,
+    "wrongCollationRefused": true,
+    "caseDistinctColumnsVerified": true,
+    "browserRecordRecoveries": 8,
+    "recordBlocks": 4
+  },
+  "sha256": {
+    "src/core-ideals/record-sqlserver-projection.ts": "2925a3f21dc3f73daf64984a70d191a0a9a6be008739442b57fb5e75a85c613d",
+    "spec/core/record-sqlserver-projection.schema.json": "fc6400d47ac9d21652bd5825c55eb0e27e86b560eeb8c24504a4272b21e7872f",
+    "scripts/core-ideals/record-sqlserver-projection-schema.ts": "9b05aeee433bc1d324aa80456b46461c5e194f0c50b37d13ad50d150ec89122a",
+    "scripts/core-ideals/record-sqlserver-projection-cases.ts": "77e9356a542805453c392fbcd1192bc71e7a7086cb5bbd574142c9a24a7d8eae",
+    "scripts/core-ideals/field-sqlserver-projection-oracle.ts": "da2f74debdf59d97e5046f96a4c0bcc3fadae1b39c8dcc2531e0100b00afc971",
+    "scripts/core-ideals/field-sqlserver-projection-browser.ts": "aad4ba6f89ed35bacb6cb1714b77bf288b7eec09c6fcc0dbe181785224dacd9f",
+    "tests/core-ideals/record-sqlserver-projection.test.ts": "f2afc5a8063c0b9fa6017685d4cd8e77a65e5ec608083fabf360c08c13c29aca",
+    "fixtures/validation/field-sqlserver-projection-native.json": "767e9a5bd9b32f534e669c84f9facd9ce8e3803a172292b32abf1b00fb6c8b8b",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "e1fc4af956427a9eded5b92bcfb771293d9053e827319521c20fef010753dd41"
+  }
+}
