@@ -270,3 +270,39 @@ This is partial up-classification evidence, not TableSpec binding completion.
 Table-to-record/group handling, down-projection and ideal-to-native-to-ideal
 recovery remain required, along with general reconciliation and the other four
 systems. The core Field task and its binding/admission tasks remain unfinished.
+
+## Single-Field TableSpec down-projection
+
+`projectFieldToTableSpec` consumes a verified author declaration plus explicit
+native table name, column name, type and strict/report policy. It emits a complete
+one-column TableSpec 1.0 schema. The declared kind must be field; record/group
+cannot be coerced into a column under either policy. Description is carried into
+the native column. A matching scalar family is only a family claim, not proof of
+native range, precision, absence or execution equivalence. The caller selects the
+native representation; this operation does not infer it from a missing facet.
+
+The projection enumerates unprojected field/document/module metadata, other
+modules/elements, native vocabularies, renamed fields and mismatched scalar
+families as path-qualified residuals. Strict blocks on any residual. Report may
+emit the complete candidate with retained source assertions. Source identities
+and namespace remain in the report, while the explicit target names establish
+new native identity; no cross-context equivalence is inferred. The result schema
+is `spec/core/field-tablespec-projection.schema.json`.
+
+`recoverFieldFromTableSpec` verifies the retained receipt by recomputation and
+checks the supplied native text against the exact emitted target. It then recovers
+the complete authored source from the report. Edited native text blocks this
+recovery; native-only import recovers classified column membership, not author
+intent. This is report-assisted ideal recovery, not reconstruction of metadata
+from native syntax alone. Native value conversion is outside this operation.
+
+Evidence: 49 core/Field tests, 743 assertions, zero failures; typecheck/build pass;
+180 schemas and 32 packages pass audits. Chromium 148 passes 20 projections,
+40 JSON/YAML report-assisted recoveries, native-only classification, stale-target
+refusal and strict/report loss-policy checks. The pinned TableSpec model accepts
+all 20 generated schemas across ten explicitly selected native types and confirms
+column identity. See [projection evidence](../../../../fixtures/validation/field-tablespec-projection-evidence.json).
+
+TableSpec table-to-record/group mappings and multi-field reconciliation remain
+required. PostgreSQL, SQL Server, Avro and Parquet Field bindings remain queued;
+this one-system subset is not ideal admission or completion of US-040.

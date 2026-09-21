@@ -1,0 +1,108 @@
+{
+  "scope": "Native schema model acceptance and column identity for explicit carriers; no row value or storage enforcement equivalence",
+  "pydantic": "2.11.10",
+  "sourceSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "inputSha256": "0faab5ddf5b4e4a38869a59892f2fd98dca339722d81d77113d7ac58146ff526",
+  "cases": [
+    {
+      "nativeType": "BOOLEAN",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "INTEGER",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "INTEGER",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "mode": "report",
+      "accepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "mode": "report",
+      "accepted": true
+    }
+  ]
+}

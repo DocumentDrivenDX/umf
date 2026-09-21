@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:field-tablespec-projection:1.0.0",
+  "title": "Single authored Field to explicit TableSpec column binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-field-tablespec"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tableName",
+        "columnName",
+        "nativeType",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "columnName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeType": {
+          "enum": [
+            "BOOLEAN",
+            "INTEGER",
+            "DECIMAL",
+            "FLOAT",
+            "TEXT",
+            "VARCHAR",
+            "CHAR",
+            "DATE",
+            "DATETIME",
+            "TIMESTAMP"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.field.tablespec",
+        "version": "1.0.0",
+        "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "outcome"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string"
+        },
+        "nativePath": {
+          "const": "/columns/0"
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "Single authored Field to explicit TableSpec column and report-assisted ideal recovery; no record/group mapping or value-domain equivalence",
+  "commands": [
+    "bun test tests/core tests/core-ideals",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-projection-browser.ts",
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/field-tablespec-projection-oracle.py"
+  ],
+  "results": {
+    "tests": 49,
+    "assertions": 743,
+    "typecheck": "passed",
+    "schemasPassed": 180,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9728028,
+    "browserProjections": 20,
+    "idealRecoveries": 40,
+    "nativeAccepted": 20
+  },
+  "sha256": {
+    "src/core-ideals/field-tablespec-projection.ts": "9ed454e950ef417d032717e71490518340e672ab53a5b42ca653c4f78f2b8366",
+    "spec/core/field-tablespec-projection.schema.json": "e9a903342612e115d9f4081fe478ddc994c08377665be82fd553fa7cf40d15bd",
+    "scripts/core-ideals/field-tablespec-projection-schema.ts": "26e4417e066e9cd93a8544dbb057440a20fff8df41ff90f9e553d95f8258b932",
+    "scripts/core-ideals/field-tablespec-projection-browser.ts": "67e3272a8923eabe9f4db9cc182b4d87ba291512883f0efc68214c8f322e82da",
+    "scripts/core-ideals/field-tablespec-projection-oracle.py": "9a8daf69758ea362fe8e15920c24a3ed477d6cded978777ac240319f4bcd44be",
+    "tests/core-ideals/field-tablespec-projection.test.ts": "accb0ed1b08e0542316d0b5fda72770498941ba1df62381967a9e41b6ae85a64",
+    "fixtures/validation/field-tablespec-projection.json": "0faab5ddf5b4e4a38869a59892f2fd98dca339722d81d77113d7ac58146ff526",
+    "fixtures/validation/field-tablespec-projection-native.json": "528fc386e782769a7d1809b691469970cfd8c73d5423e050a0a86894a487b80a"
+  }
+}

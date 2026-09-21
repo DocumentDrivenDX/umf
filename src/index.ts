@@ -226,3 +226,4 @@ export * from './adapters/owl/list-axioms';
 export * from './model/field-transition';
 export * from './model/field-kind';
 export * from './core-ideals/tablespec-field';
+export * from './core-ideals/field-tablespec-projection';

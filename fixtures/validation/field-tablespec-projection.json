@@ -1,0 +1,4552 @@
+{
+  "scope": "Single Field role projection only; chosen native types do not prove value-domain equivalence",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "projections": 20,
+    "idealRecoveries": 40,
+    "lossPolicies": 2
+  },
+  "externalRequests": [],
+  "rows": [
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "BOOLEAN",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "BOOLEAN",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "BOOLEAN"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "BOOLEAN",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "BOOLEAN",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "BOOLEAN"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "INTEGER",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "INTEGER",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "DECIMAL",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "DECIMAL",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "FLOAT",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "FLOAT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "float",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "FLOAT",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "FLOAT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "float",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "TEXT",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "TEXT",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "VARCHAR",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "VARCHAR",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "CHAR",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "CHAR",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "CHAR"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "CHAR",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "CHAR",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "CHAR"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "DATE",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "DATE",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATE"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "date",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "DATE",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "DATE",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATE"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "date",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "DATETIME",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "DATETIME",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATETIME"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "DATETIME",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "DATETIME",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATETIME"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "TIMESTAMP",
+        "mode": "strict"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "TIMESTAMP",
+          "mode": "strict"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TIMESTAMP"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\"}]}\n"
+    },
+    {
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "target",
+        "tableName": "Sample",
+        "columnName": "value",
+        "nativeType": "TIMESTAMP",
+        "mode": "report"
+      },
+      "result": {
+        "operation": "project-field-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "source",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "e",
+                  "name": "value",
+                  "extensions": {},
+                  "kind": "field"
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "source",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "e",
+                    "name": "value",
+                    "extensions": {},
+                    "kind": "field"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "target",
+          "tableName": "Sample",
+          "columnName": "value",
+          "nativeType": "TIMESTAMP",
+          "mode": "report"
+        },
+        "binding": {
+          "id": "umf.core.field.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Single authored named Field; explicit native type; no execution or value-domain equivalence"
+        },
+        "mapping": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "nativePath": "/columns/0",
+          "outcome": "exact"
+        },
+        "residuals": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TIMESTAMP"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\"}]}\n"
+    }
+  ]
+}
