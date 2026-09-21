@@ -1,0 +1,39 @@
+{
+  "scope": "Typed Field kind access and explicit author provenance; native classifiers, reconciliation and projection bindings remain incomplete",
+  "results": {
+    "coreTests": 40,
+    "assertions": 587,
+    "typecheck": "passed",
+    "schemasPassed": 178,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9710459,
+    "browser": {
+      "scope": "Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; authored provenance and typed lookup; no native classification or binding claim",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "decisions": 40,
+        "recoveries": 56,
+        "transitions": 40,
+        "kindLookups": 28,
+        "authorDeclarations": 40,
+        "hostGlobalsAbsent": true
+      },
+      "externalRequests": []
+    }
+  },
+  "commands": [
+    "bun test tests/core",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-field-browser.ts"
+  ],
+  "sha256": {
+    "src/model/field-kind.ts": "75d94abaa0b92815800561e11c899f03d431247902e4fc36ce10fea2339264d7",
+    "spec/core/kind-operation.schema.json": "a51355624e46e1ea7a285a2969814c812e698cd458cfe5f010ba7763b277211c",
+    "scripts/core-kind-schema.ts": "3f584d26fa53910a6ef0b602d809b5fb43216551489a2d384266ee24138d15c0",
+    "tests/core/field-kind.test.ts": "fbf07afa9fb71c51aa2b23d05cbd9b13308e3fc8035a49afdf7b938dc15c28da",
+    "scripts/core-field-browser.ts": "dcddf6d74ac5c4282438ce6bb3155dacfdfb24ebcbd13aa5c67f296295c53c3f",
+    "fixtures/validation/core-field-browser.json": "a0abde42a5e1932995559a0e74886549f81fb443171aed4582ee728c5f4b50f3"
+  }
+}

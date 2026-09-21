@@ -202,3 +202,31 @@ Field remains in progress: authored/classified provenance, typed consumer access
 and native projection result schemas are required next, followed by five-system
 binding and separate admission evidence. These transition operations do not
 establish native equivalence or native projection completeness.
+
+## Typed access and explicit author provenance
+
+`inspectCoreElementKind` now selects by module/element identity and returns known,
+unknown, unspecified or legacy meaning with a copied source and ideal path. A
+known kind alone does not prove where it came from: lookup reports provenance as
+unverified. Native classification cannot be inferred from a label or scalar type.
+`kind-operation.schema.json` describes lookup and declaration results.
+
+`declareCoreElementKind` requires 0.2.0, refuses unknown kind replacement and
+structured/scalar conflicts, and records explicit author provenance with the
+versioned authoring binding. It retains both source and target; nativePath is null
+because this operation makes no claim about a native binding. It does not classify
+or edit native content. `verifyCoreKindDeclaration` recomputes the declaration and
+requires the entire current model to match its target. Any model change, including
+native edits or unrelated changes, requires a fresh declaration; stale provenance
+never wins by overwrite. These are consistency receipts, not authentication.
+
+Current evidence: 40 core tests / 587 assertions; typecheck, build and audits of
+178 schemas / 32 packages pass. Chromium 148 adds 28 typed lookups and 40 authored
+receipt verification/rollback cases to the existing envelope matrix. Edited native
+content invalidates author receipts in that matrix. See
+[kind evidence](../../../../fixtures/validation/core-field-kind.json).
+
+The Field bead remains in progress. Native classification provenance and authored
+conflict reconciliation, strict/report projection result/residual schemas and the
+five native bindings remain required. No ideal admission or equivalence claim is
+made by the authoring API.
