@@ -1,0 +1,520 @@
+{
+  "scope": "Pinned native model outcomes and accepted column identity after classification; not native coercion equivalence or down-projection",
+  "pydantic": "2.11.10",
+  "modelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "inputSha256": "80d68429b793c2df162741365baad3396bc4f2912cdc02de98f6081d6372ff44",
+  "rows": [
+    {
+      "id": "providers",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 1,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 1,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 1,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 1,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 2,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 2,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 2,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 2,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 3,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 3,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 3,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "providers",
+      "column": 3,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "BOOLEAN",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "BOOLEAN",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "BOOLEAN",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "BOOLEAN",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "INTEGER",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "INTEGER",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "INTEGER",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "INTEGER",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DECIMAL",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DECIMAL",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DECIMAL",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DECIMAL",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "FLOAT",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "FLOAT",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "FLOAT",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "FLOAT",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "VARCHAR",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "VARCHAR",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "VARCHAR",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "VARCHAR",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TEXT",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TEXT",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TEXT",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TEXT",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "CHAR",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "CHAR",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "CHAR",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "CHAR",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATE",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATE",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATE",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATE",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATETIME",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATETIME",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATETIME",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "DATETIME",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TIMESTAMP",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TIMESTAMP",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TIMESTAMP",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "TIMESTAMP",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "EMBEDDING",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "EMBEDDING",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "EMBEDDING",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "EMBEDDING",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "edited",
+      "column": 0,
+      "mode": "strict",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "edited",
+      "column": 0,
+      "mode": "strict",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "edited",
+      "column": 0,
+      "mode": "report",
+      "format": "json",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    },
+    {
+      "id": "edited",
+      "column": 0,
+      "mode": "report",
+      "format": "yaml",
+      "nativeAccepted": true,
+      "recoveryAgrees": true
+    }
+  ]
+}

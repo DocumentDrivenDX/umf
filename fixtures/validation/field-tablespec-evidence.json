@@ -1,0 +1,41 @@
+{
+  "scope": "TableSpec column up-classification and authored conflict handling only. Record/group mapping, down-projection, general reconciliation and other four systems remain required.",
+  "results": {
+    "coreAndClassifierRegression": {
+      "tests": 44,
+      "assertions": 644
+    },
+    "subsequentClassifierReceiptRetest": {
+      "tests": 5,
+      "assertions": 60
+    },
+    "typecheck": "passed",
+    "schemasPassed": 179,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9718818,
+    "browserClassifications": 32,
+    "browserRecoveries": 64,
+    "browserConflictBlocks": 2,
+    "nativeComparisons": 64,
+    "nativeAccepted": 64
+  },
+  "commands": [
+    "bun test tests/core tests/core-ideals/field-tablespec.test.ts",
+    "bun test tests/core-ideals/field-tablespec.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-browser.ts",
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/field-tablespec-oracle.py"
+  ],
+  "sha256": {
+    "src/core-ideals/tablespec-field.ts": "de3258acdcff4eb83b2578180770dd0b517245467cb51c5bbb2e4df3003461ea",
+    "spec/core/tablespec-field-classification.schema.json": "2014e5555dd949ba836ee0cde64b1506c6f4bc3ed30691bd79226f95ff57b1cd",
+    "scripts/core-ideals/field-classification-schema.ts": "1cd71b7326229f3615b024b579d2eae7e36fc6844781ecd26ae7007cfd71ad9a",
+    "scripts/core-ideals/field-tablespec-browser.ts": "384e99d550c3447ec74a291c3d9835906900a319524693948b38216f4b044b74",
+    "scripts/core-ideals/field-tablespec-oracle.py": "4e60aba113917f017f54672832fccc506190d89fcbc3ac7b33f04f8a152a4adf",
+    "tests/core-ideals/field-tablespec.test.ts": "964b5e0914a3ab64b678dd0a33095a1bb508f88388af71b09164d880f0757e28",
+    "fixtures/validation/field-tablespec-classification.json": "80d68429b793c2df162741365baad3396bc4f2912cdc02de98f6081d6372ff44",
+    "fixtures/validation/field-tablespec-native.json": "90b02bcbc8d0c70b3a525925bc3b6d8f6161c1f1494caf0cc69e389abd21cf32"
+  }
+}

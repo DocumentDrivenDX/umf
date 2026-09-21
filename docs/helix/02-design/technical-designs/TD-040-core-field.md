@@ -230,3 +230,43 @@ The Field bead remains in progress. Native classification provenance and authore
 conflict reconciliation, strict/report projection result/residual schemas and the
 five native bindings remain required. No ideal admission or equivalence claim is
 made by the authoring API.
+
+## First native classifier and conflict checks
+
+`classifyTableSpecField` supplies the first checked native up-classification for a
+single TableSpec column in an explicitly migrated 0.2.0 envelope. The binding is
+`umf.tablespec.field` 1.0.0 against pinned source commit
+647e8e566ad78b864282ec65c0b0b2237aa63084, table version 1.0. It checks native export
+and derived column consistency before classifying membership, independently of
+scalar family. Unknown native types remain native; column membership alone does
+not prove that the native model accepts that type or determine container semantics.
+The native path identifies the captured tree, not a physical split-file location.
+
+Results have a copied source, request/policy, versioned binding, native fragment,
+classified provenance, ideal/native paths and exact/unknown outcome. A complete
+candidate appears only when reconciliation succeeds. Existing kinds require a
+verified author receipt; an incompatible authored kind, stale receipt or unknown
+kind produces a blocked result with retained source and residual in both strict
+and report modes. Report mode cannot override conflicting meaning. The result
+schema is `spec/core/tablespec-field-classification.schema.json`.
+
+`verifyTableSpecFieldClassification` recomputes the classification from its
+archived source and rejects edited receipts or any changed current target. This
+is a conservative consistency check; native changes require recomputation and
+are never reconciled by overwriting authored intent. Existing classified labels
+without verified author provenance also block this initial operation; incremental
+multi-assertion reconciliation remains follow-up work.
+
+Evidence: core plus initial classifier regression passed 44 tests/644 assertions;
+the subsequent classifier verification tests passed 5 tests/60 assertions.
+Chromium 148 passes 32 classification cases, 64 exact native-text recoveries,
+receipt/staleness checks and two authored conflict blocks. The pinned Python
+TableSpec model accepts all 64 original/recovered comparisons and confirms their
+column identities. Bun separately tests split sidecar/shadowed-content recovery.
+Typecheck/build and audits of 179 schemas/32 packages pass. Commands and source
+fingerprints are in [the classifier evidence](../../../../fixtures/validation/field-tablespec-evidence.json).
+
+This is partial up-classification evidence, not TableSpec binding completion.
+Table-to-record/group handling, down-projection and ideal-to-native-to-ideal
+recovery remain required, along with general reconciliation and the other four
+systems. The core Field task and its binding/admission tasks remain unfinished.

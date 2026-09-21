@@ -1,0 +1,13 @@
+export {};
+const schema={
+ $schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:tablespec-field-classification:1.0.0',
+ title:'TableSpec column role classification and authored conflict report',type:'object',additionalProperties:false,
+ required:['operation','version','status','source','request','binding','mapping','residuals'],
+ properties:{operation:{const:'classify-tablespec-field'},version:{const:'1.0.0'},status:{enum:['classified','blocked']},source:{$ref:'urn:umf:core:0.2.0'},target:{$ref:'urn:umf:core:0.2.0'},
+ request:{type:'object',additionalProperties:false,required:['column','mode'],properties:{column:{type:'integer',minimum:0},mode:{enum:['strict','report']},author:{$ref:'urn:umf:core:kind-operation:1.0.0#/$defs/declaration'}}},
+ binding:{const:{id:'umf.tablespec.field',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Table version 1.0 captured column member role; no scalar/container/native validation claim'}},
+ mapping:{type:'object',additionalProperties:false,required:['origin','kind','idealPath','nativePath','nativeFragment','basis','outcome'],properties:{origin:{const:'classified'},kind:{const:'field'},idealPath:{type:'string'},nativePath:{type:'string'},nativeFragment:{},basis:{const:'checked-native-column-membership'},outcome:{enum:['exact','unknown']}}},
+ residuals:{type:'array',items:{type:'object',additionalProperties:false,required:['path','value','reason','recovery'],properties:{path:{type:'string'},value:{},reason:{type:'string',minLength:1},recovery:{const:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}}}}
+ },allOf:[{if:{properties:{status:{const:'classified'}}},then:{required:['target'],properties:{target:true,mapping:{type:'object',properties:{outcome:{const:'exact'}}},residuals:{type:'array',maxItems:0}}},else:{properties:{target:false,mapping:{type:'object',properties:{outcome:{const:'unknown'}}},residuals:{type:'array',minItems:1}}}}]
+};
+await Bun.write('spec/core/tablespec-field-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
