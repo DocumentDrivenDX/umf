@@ -57,6 +57,29 @@ artifacts rather than tracker copies. The documentation commit precedes queue
 population. No implementation task is complete merely because its design was written.
 Older execution notes below are historical evidence, not contrary inclusion policy.
 
+
+### Core-ideal bead queue
+
+The documentation evolution is committed in `f2e29c5`. Epic `umf-97221618-b9969a6a`
+tracks 35 open tasks: one core implementation, five native bindings and one
+conformance gate per concept. Dependencies enforce this order; no implementation
+is marked complete. The portable CLI-managed queue is `.ddx/beads.jsonl`.
+
+| Concept | Core implementation | Five-system exit gate |
+| --- | --- | --- |
+| field | `umf-97221618-994aef58` | `umf-97221618-c4baf8f1` |
+| nullability | `umf-97221618-a91c451b` | `umf-97221618-a5ef534b` |
+| cardinality | `umf-97221618-231a08d7` | `umf-97221618-bdcf50d1` |
+| facets | `umf-97221618-c0b3f203` | `umf-97221618-21f0a415` |
+| key | `umf-97221618-bbefbb0a` | `umf-97221618-f4f9b4e8` |
+
+Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
+`ddx bead status` to inspect execution state. The first field task is the sole
+dependency-ready task. Existing untracked bootstrap implementation/evidence must
+be checkpointed before isolated-worktree dispatch; no worker is launched by this
+queue update. Queue lint verifies mechanically checkable acceptance criteria, not
+that those future implementation commands already pass.
+
 ### Current owner priority: tabular ingestion and usable core fields
 
 The owner's 2026-09-21 correction supersedes the earlier extension execution order.
