@@ -233,3 +233,4 @@ export * from './core-ideals/postgresql-field';
 export * from './core-ideals/postgresql-record';
 export * from './core-ideals/field-postgresql-projection';
 export * from './core-ideals/record-postgresql-projection';
+export * from './core-ideals/postgresql-ddl-kinds';

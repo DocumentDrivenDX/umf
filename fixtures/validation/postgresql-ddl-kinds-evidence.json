@@ -1,0 +1,38 @@
+{
+  "scope": "Declared-only PostgreSQL 17.4 CREATE TABLE record/member classification; no final catalog, execution replay or native equivalence claim",
+  "commands": [
+    "bun test tests/core-ideals/postgresql-ddl-kinds.test.ts tests/core-ideals/record-postgresql.test.ts tests/core-ideals/field-postgresql.test.ts tests/postgresql/declarations.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/postgresql-ddl-kinds-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/postgresql-ddl-kinds-browser.ts",
+    "python3 .cache/verify-core-ideal-queue.py"
+  ],
+  "results": {
+    "tests": 12,
+    "assertions": 277,
+    "nativeCases": 7,
+    "classifications": 7,
+    "blocks": 7,
+    "browserRecoveries": 14,
+    "typecheck": "passed",
+    "schemasPassed": 187,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9812222,
+    "queueBeads": 36,
+    "queueEdges": 54
+  },
+  "sha256": {
+    "src/core-ideals/postgresql-ddl-kinds.ts": "bf92786c2fd631ef2c91d9cd731c66ecaf14967ca3d2f59fb27885e94cdfaed5",
+    "spec/core/postgresql-ddl-kinds.schema.json": "9a6260da04a4478f8dad2f8c932867eeeda354a52867f0aff87a6c25f5d99593",
+    "scripts/core-ideals/postgresql-ddl-kind-schema.ts": "68b9e48556e815fda4ca92df3e5c7e259029a586cbf7ae1a1b898686b359ac16",
+    "scripts/core-ideals/postgresql-ddl-kind-cases.ts": "f17780e19acbe034895632e17ba4980bcb9f042d095839071d3012bb9cef8c57",
+    "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts": "191edc701ddf98b6dbeb7cc4777022e735936d8c6bc7a2734852a63b8407c7cd",
+    "scripts/core-ideals/postgresql-ddl-kinds-browser.ts": "30e082c214561dde06a432b4de7a60200a097b7570817f93f5282c89d9a7818a",
+    "tests/core-ideals/postgresql-ddl-kinds.test.ts": "16065ae33e260127297a54079905f385372adbab1d2764db788a4d2a1836be17",
+    "fixtures/validation/postgresql-ddl-kinds-native.json": "afd66f06c743a5277a0b60a1de93b43597bf0fc6e4502a63ef8a584eab207c07",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "4fabb99ea5b4255b859ace657c2790b2d532cfe0cdfd7bc261bcfdaedc58683a"
+  }
+}

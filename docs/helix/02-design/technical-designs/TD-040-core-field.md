@@ -519,3 +519,37 @@ run afterward before this browser harness.
 Raw-DDL/composite classification and shared result conformance remain required,
 along with the SQL Server, Avro and Parquet Field bindings and complete admission
 evidence. This flat-record path makes no value-domain or native-equivalence claim.
+
+## PostgreSQL raw declaration classification
+
+`classifyPostgresqlDdlRecord` classifies an explicit `CREATE TABLE` declaration
+into a new record module and ordered field members. The result always states
+`scope: declared-only`: it does not claim the final catalog after execution.
+Explicit schema names and enclosing `CREATE SCHEMA` context supply namespaces.
+An unresolved search path blocks strict mode; report mode retains an explicit
+residual and an empty namespace without asserting `public`.
+
+`LIKE`, inheritance, typed/partition-child expansion, unsupported declaration
+kinds, duplicate members and module collisions block both policies. Later
+`ALTER TABLE` statements stay in the original native payload and do not change
+the selected declaration's membership. Domains and arrays do not acquire an
+inferred scalar family. Edited ASTs whose archived source differs must be
+reimported from reviewed emitted SQL before classification. Recovery recomputes
+the complete receipt and checks the current model before returning the exact
+original SQL, including comments and whitespace.
+
+The request/result has a dedicated JSON Schema. Twelve Bun tests pass 277
+assertions across raw declarations, catalog Field/record classification and the
+new operation. A fresh pinned PostgreSQL 17.4 container verifies seven source
+cases, including duplicate-column rejection (42701), actual search-path behavior,
+and the different final memberships produced by ALTER, inheritance and LIKE.
+Across strict/report policies, seven classifications succeed and seven block.
+Chromium 148 with the pinned WASM parser matches all fourteen results and passes
+fourteen JSON/YAML receipt recoveries. Typechecking, browser builds and audits of
+187 schemas / 32 packages pass. See [declaration evidence](../../../../fixtures/validation/postgresql-ddl-kinds-evidence.json).
+
+This supplies a declared-only raw-DDL path, not composite-type classification,
+catalog expansion, execution replay or native equivalence. Those limitations,
+shared result conformance and the remaining priority-system bindings keep the
+Field work open. Queue validation still passes all 36 beads and 54 dependency
+edges; this slice does not change scope or close a bead.

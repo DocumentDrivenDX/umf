@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:postgresql-ddl-kinds:1.0.0",
+  "title": "Declared PostgreSQL CREATE TABLE record/member roles",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "mappings",
+    "residuals",
+    "diagnostics",
+    "scope",
+    "namespaceResolution"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-postgresql-ddl-record"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "recordId",
+        "declaration",
+        "mode"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declaration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.postgresql.ddl.record",
+        "version": "1.0.0",
+        "nativeVersion": "17.4",
+        "subset": "Explicit CREATE TABLE declaration only; no catalog expansion or statement replay"
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "origin",
+          "kind",
+          "idealPath",
+          "nativePath",
+          "nativeFragment",
+          "basis",
+          "outcome"
+        ],
+        "properties": {
+          "origin": {
+            "const": "classified"
+          },
+          "kind": {
+            "enum": [
+              "field",
+              "record"
+            ]
+          },
+          "idealPath": {
+            "type": "string"
+          },
+          "nativePath": {
+            "type": "string"
+          },
+          "nativeFragment": {},
+          "basis": {
+            "enum": [
+              "checked-raw-column-declaration",
+              "checked-raw-table-declaration"
+            ]
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "unknown"
+            ]
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "scope": {
+      "const": "declared-only"
+    },
+    "namespaceResolution": {
+      "enum": [
+        "explicit",
+        "create-schema-context",
+        "unresolved"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "residuals": {
+            "type": "array"
+          },
+          "diagnostics": {
+            "type": "array"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}
