@@ -1,7 +1,9 @@
 {
-  "scope": "PostgreSQL 17.4 captured table and member roles only",
+  "scope": "PostgreSQL 17.4 captured table/composite and member roles only",
   "browser": "148.0.7778.0",
   "checks": {
+    "composites": 4,
+    "compositeRecoveries": 8,
     "columns": 20,
     "recoveries": 40,
     "conflicts": 2,

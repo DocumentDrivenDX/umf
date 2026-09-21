@@ -16,8 +16,13 @@ try{
    if(JSON.stringify(names)!==JSON.stringify(row.names)||result.target.modules.at(-1).namespace!==row.relation.schema)throw Error('Qualified record mismatch');
    for(const format of ['json','yaml']){const receipt=u.readJsonValue(u.writeJsonValue(result,format),format);if(u.recoverPostgresqlRecordCapture(receipt,receipt.target)!==f.nativeSource)throw Error('Record native text loss');recordRecoveries++;}records++;
   }
+  let compositeRecoveries=0;
+  for(const row of f.composites){const result=u.classifyPostgresqlComposite(source,{recordModule:'composites',recordId:'record',mode:'strict',nativeSource:f.nativeSource,relation:row.relation});if(!result.target)throw Error('Composite blocked');
+   const elements=result.target.modules.at(-1).elements;if(elements[0].kind!=='record'||JSON.stringify(elements.slice(1).map((e:any)=>e.name))!==JSON.stringify(row.members.map((m:any)=>m.name))||elements.slice(1).some((e:any)=>e.kind!=='field'||e.scalarType))throw Error('Composite classification differs');
+   for(const format of ['json','yaml']){const receipt=u.readJsonValue(u.writeJsonValue(result,format),format);if(u.recoverPostgresqlCompositeCapture(receipt,receipt.target)!==f.nativeSource)throw Error('Composite native text loss');compositeRecoveries++;}
+  }
   const view=u.classifyPostgresqlRecord(source,{recordModule:'records',recordId:'view',mode:'report',nativeSource:f.nativeSource,relation:{schema:'sales',name:'scalar_view'}});if(view.status!=='blocked'||'target'in view)throw Error('View accepted');
-  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {columns:f.rows.length,recoveries,conflicts,records,recordRecoveries,viewBlocked:true,staleReceiptBlocked:true};
+  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {composites:f.composites.length,compositeRecoveries,columns:f.rows.length,recoveries,conflicts,records,recordRecoveries,viewBlocked:true,staleReceiptBlocked:true};
  });
- if(external.length)throw Error('External requests');await Bun.write('fixtures/validation/field-postgresql-browser.json',JSON.stringify({scope:'PostgreSQL 17.4 captured table and member roles only',browser:browser.version(),checks,externalRequests:external},null,2)+'\n');console.log(JSON.stringify(checks));
+ if(external.length)throw Error('External requests');await Bun.write('fixtures/validation/field-postgresql-browser.json',JSON.stringify({scope:'PostgreSQL 17.4 captured table/composite and member roles only',browser:browser.version(),checks,externalRequests:external},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

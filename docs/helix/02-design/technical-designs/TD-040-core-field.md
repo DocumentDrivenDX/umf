@@ -584,3 +584,35 @@ now records this expanded scope.
 Remaining work includes catalog composite classification, resolved structured
 member references, shared result conformance, the other priority-system Field
 bindings, and the complete admission record. No bead is closed by this extension.
+
+## PostgreSQL captured standalone composites
+
+`classifyPostgresqlComposite` now selects a standalone composite by exact captured
+schema/name and adds a new record module with ordered field members. A separate
+versioned binding and JSON Schema describe the operation. Existing modules cannot
+be overwritten; collisions, duplicate/empty attribute names, ambiguous type
+identities and non-increasing attribute positions block or reject the operation.
+Dropped attribute positions may leave gaps without changing retained member order.
+Null attribute aggregates classify as empty records under the pinned capture query.
+
+The capture contains formatted attribute type names rather than structured type
+identities. This binding therefore asserts only record/member roles. It does not
+infer scalar families or nested record references from that text. Collations,
+comments, ownership, ACLs, native type spellings and unknown detail remain in the
+source and copied native mapping fragments. The captured composite's qualified
+identity supplies its namespace; equal names in separate schemas remain distinct.
+`recoverPostgresqlCompositeCapture` recomputes the receipt and compares the current
+model before returning the exact archived capture text.
+
+Eleven catalog Field/record/composite tests pass 240 assertions. The fresh pinned
+PostgreSQL 17.4 oracle independently checks four composite relation kinds and
+attribute lists: equal names in sales/support, dropped attribute positions, nested
+composite/array members and an empty composite. Native and Chromium 148 checks
+both pass eight composite JSON/YAML recoveries; existing twenty Field and four
+table-record cases still pass. Typechecking, the browser build and audits of 188
+schemas / 32 packages pass. See [composite evidence](../../../../fixtures/validation/postgresql-composite-evidence.json).
+
+Resolved structured references require richer captured type identities and remain
+unfinished, as do shared result conformance and the other priority-system Field
+bindings. This completes neither Field admission nor native-equivalence graduation;
+existing bead scope and dependencies remain applicable.

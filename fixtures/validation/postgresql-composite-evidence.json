@@ -1,0 +1,32 @@
+{
+  "scope": "PostgreSQL 17.4 captured standalone composite record/member roles and exact native capture recovery; formatted attribute types remain unresolved",
+  "commands": [
+    "bun test tests/core-ideals/postgresql-composite.test.ts tests/core-ideals/record-postgresql.test.ts tests/core-ideals/field-postgresql.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-postgresql-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-browser.ts"
+  ],
+  "results": {
+    "tests": 11,
+    "assertions": 240,
+    "typecheck": "passed",
+    "schemasPassed": 188,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9825202,
+    "nativeCompositeCases": 4,
+    "nativeCompositeRecoveries": 8,
+    "browserCompositeRecoveries": 8
+  },
+  "sha256": {
+    "src/core-ideals/postgresql-composite.ts": "8251690f7cbb4508f89d27947f96fdab78555ab5148d60b8031f759b0916b85a",
+    "spec/core/postgresql-composite-classification.schema.json": "0df1acc484c60043c77558c7ee980af700f1291cf169bc551350a0268d515f59",
+    "scripts/core-ideals/postgresql-composite-schema.ts": "fb922dc38c04dfc8d60d21118f2e0e1330d1612d650be544fde4d6c5b79fd290",
+    "scripts/core-ideals/field-postgresql-oracle.ts": "655de8b0b6f6de1dd83efc405490d46fef19af1b7c5324ace9dd7cb690f7ced9",
+    "scripts/core-ideals/field-postgresql-browser.ts": "e8fa53a0afc3aee50a60f17ce0c40970c229987178734838da76a80c68381151",
+    "tests/core-ideals/postgresql-composite.test.ts": "0e926b4a66e849a7de875de067d0aa0b094c425329ca63694b60467dc0a4216b",
+    "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
+    "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4"
+  }
+}
