@@ -1,0 +1,37 @@
+{
+  "scope": "Authored flat record/member PostgreSQL 17.4 down-projection and retained-report recovery; no value-domain equivalence or full Field admission",
+  "commands": [
+    "bun test tests/core-ideals/field-postgresql-projection.test.ts tests/core-ideals/record-postgresql-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-postgresql-projection-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 8,
+    "assertions": 172,
+    "typecheck": "passed",
+    "schemasPassed": 186,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9800936,
+    "recordCases": 7,
+    "nativeExecutedRecords": 4,
+    "browserRecordRecoveries": 8,
+    "recordBlocks": 3
+  },
+  "sha256": {
+    "src/core-ideals/record-postgresql-projection.ts": "616bf394d606000bed461e284840d112238670ada34df252099e92b91b96f1fc",
+    "src/core-ideals/postgresql-syntax.ts": "250d017292534a0bbc3afa2f03c57ef10b423d5cd89816c0368f7c12c9f0ca50",
+    "src/core-ideals/field-postgresql-projection.ts": "316c6c170bbe6ed719c5a153c4862428c554a104797a9e5d402599275faa1bf7",
+    "spec/core/record-postgresql-projection.schema.json": "a9163a996a04ac885b3b2c1bfa056cbe105f307a3aae830f23b7b230a099391f",
+    "scripts/core-ideals/record-postgresql-projection-schema.ts": "f3826600be94166dd7b996821079d6e5a77848fdc9db371ea2345dd214d1db46",
+    "scripts/core-ideals/record-postgresql-projection-cases.ts": "c291c6f0b3087727799fa1281adf5c5b9a5b59baa1d71e7c5ed7f314db766e31",
+    "scripts/core-ideals/field-postgresql-projection-oracle.ts": "b6f303024e202dcf93cc3dd5ec7c72ee3c654d27995f3b512212fdec8f7af7f8",
+    "scripts/core-ideals/field-postgresql-projection-browser.ts": "e8a82408ba641a2ee1e338eba0a5459eb72f8fa3b8f3fadc2e2659250b59c777",
+    "tests/core-ideals/record-postgresql-projection.test.ts": "02c76efdc86304bb474337fecbe8cc57a9296ea7624492e18442cba70f3c5d6a",
+    "fixtures/validation/field-postgresql-projection-native.json": "8a665b0b72ea9b9a320aed4ce10d84fc49289b3809f6822dae79a2b3c6953cdd",
+    "fixtures/validation/field-postgresql-projection-browser.json": "d62e23e187c3dee6de46b375286e63e6b560702189ea8d1d8adaade0e139ec20"
+  }
+}

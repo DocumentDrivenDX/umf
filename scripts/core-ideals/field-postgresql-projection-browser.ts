@@ -18,7 +18,12 @@ try{
   const strict=await u.projectFieldToPostgresql(author,{...row.request,mode:'strict'},backend),report=await u.projectFieldToPostgresql(author,{...row.request,mode:'report'},backend);
   if(strict.status!=='blocked'||'target'in strict||'nativeSql'in strict||report.status!=='projected'||!report.residuals.length)throw Error('Loss policy');
   let identifiers=0;for(const value of ['x'.repeat(64),'雪'.repeat(22),'\0',String.fromCharCode(0xd800)]){try{await u.projectFieldToPostgresql(row.author,{...row.request,tableName:value},backend);}catch{identifiers++;continue;}throw Error('Unsafe identifier');}
-  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {projections:f.rows.length,recoveries,lossPolicies:2,identifierRefusals:identifiers};
+  let recordRecoveries=0,recordBlocks=0;
+  for(const row of f.recordRows){const result=await u.projectRecordToPostgresql(row.author,row.request,backend);if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Record AST parity');if(result.status==='blocked'){if('target'in result||'nativeSql'in result)throw Error('Partial record');recordBlocks++;continue;}
+   const names=u.getPostgresqlDdlDeclarations(result.target).declarations[0].columns.map((c:any)=>c.element.name);if(JSON.stringify(names)!==JSON.stringify(row.variant==='empty'?[]:['id','label','active']))throw Error('Record member order');
+   for(const format of ['json','yaml']){const receipt=u.readJsonValue(u.writeJsonValue(result,format),format);if(JSON.stringify(await u.recoverRecordFromPostgresql(receipt,result.nativeSql,backend))!==JSON.stringify(row.author.target))throw Error('Record ideal recovery');recordRecoveries++;}
+  }
+  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {projections:f.rows.length,recoveries,lossPolicies:2,identifierRefusals:identifiers,recordCases:f.recordRows.length,recordRecoveries,recordBlocks};
  });
  if(external.length)throw Error('External requests');await Bun.write('fixtures/validation/field-postgresql-projection-browser.json',JSON.stringify({scope:'Pinned WASM syntax/AST parity and ideal recovery; native execution evidence recorded separately',browser:browser.version(),checks,externalRequests:external},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

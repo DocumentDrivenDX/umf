@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:record-postgresql-projection:1.0.0",
+  "title": "Authored record to PostgreSQL 17.4 DDL",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "residuals",
+    "mappings",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-record-postgresql"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "author": {
+      "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tableName",
+        "mode",
+        "fields",
+        "namespace"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "author",
+              "columnName",
+              "nativeType"
+            ],
+            "properties": {
+              "author": {
+                "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+              },
+              "columnName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nativeType": {
+                "enum": [
+                  "boolean",
+                  "smallint",
+                  "integer",
+                  "bigint",
+                  "numeric",
+                  "real",
+                  "double precision",
+                  "text",
+                  "bytea",
+                  "date",
+                  "time",
+                  "time with time zone",
+                  "timestamp",
+                  "timestamp with time zone"
+                ]
+              }
+            }
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.record.postgresql",
+        "version": "1.0.0",
+        "nativeVersion": "17.4",
+        "subset": "Authored record with explicit pg_catalog field carriers; no value-domain or execution equivalence"
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "origin",
+          "kind",
+          "idealPath",
+          "nativePath",
+          "outcome"
+        ],
+        "properties": {
+          "origin": {
+            "const": "authored"
+          },
+          "kind": {
+            "enum": [
+              "record",
+              "field"
+            ]
+          },
+          "idealPath": {
+            "type": "string"
+          },
+          "nativePath": {
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "unknown",
+              "not-expressible"
+            ]
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "nativeSql": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSql"
+        ],
+        "properties": {
+          "target": true,
+          "nativeSql": true
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeSql": false
+        }
+      }
+    }
+  ]
+}

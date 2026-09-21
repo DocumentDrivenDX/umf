@@ -483,3 +483,39 @@ The full PostgreSQL binding still needs authored-record down-projection and
 raw-DDL/composite classification. Shared conformance and SQL Server/Avro/Parquet
 Field bindings remain unfinished. No native concept is removed or graduated to
 core equivalence by this operation.
+
+## PostgreSQL authored-record down-projection
+
+`projectRecordToPostgresql` now emits a complete flat table from an authored
+record and verified explicit member bindings. Columns follow record-member order,
+not request order; empty records emit empty tables. Record and member descriptions
+become quoted native comments. The Field and Record projectors share builtin
+carrier choices and identifier/literal encoding in `postgresql-syntax.ts`.
+All types remain pg_catalog-qualified and identifiers retain the same UTF-8 bound.
+
+Missing, duplicated, non-member/non-field or colliding bindings block the whole
+candidate under either policy. Strict also blocks unprojected meaning; report
+retains residuals and diagnostics with a complete target. Unknown constraints and
+facets are not inferred from chosen native types. The caller supplies the pinned
+parser backend; target SQL execution and schema creation remain external.
+`record-postgresql-projection.schema.json` describes the request/result shape.
+
+`recoverRecordFromPostgresql` recomputes the receipt and checks emitted SQL before
+recovering the retained source. Changed native SQL, stale member author receipts
+and changed mapping records cannot claim recovery. Native-only recapture still
+has classified provenance, never reconstructed author intent.
+
+Evidence: eight PostgreSQL Field/record projection tests pass 172 assertions.
+A fresh pinned PostgreSQL 17.4 container executes four complete record targets,
+including an empty table; three blocked cases create no table. Native checks verify
+column order, builtin type OIDs and table comments under a shadowing search path.
+Chromium 148 with the pinned WASM backend matches all seven record cases, eight
+JSON/YAML ideal recoveries and three atomic blocks. The fifteen Field cases also
+pass. Typecheck/build, optional WASM build, and audits of 186 schemas / 32 packages
+pass. See [record projection evidence](../../../../fixtures/validation/record-postgresql-projection-evidence.json).
+The main browser build clears dist, so the optional PostgreSQL runtime build must
+run afterward before this browser harness.
+
+Raw-DDL/composite classification and shared result conformance remain required,
+along with the SQL Server, Avro and Parquet Field bindings and complete admission
+evidence. This flat-record path makes no value-domain or native-equivalence claim.
