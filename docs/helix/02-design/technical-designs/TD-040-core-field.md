@@ -306,3 +306,36 @@ column identity. See [projection evidence](../../../../fixtures/validation/field
 TableSpec table-to-record/group mappings and multi-field reconciliation remain
 required. PostgreSQL, SQL Server, Avro and Parquet Field bindings remain queued;
 this one-system subset is not ideal admission or completion of US-040.
+
+## Whole-table record classification
+
+`classifyTableSpecRecord` now classifies every captured column and creates a core
+record in a caller-selected, previously absent module. The record uses ordered
+`member` references to the original column identities in the native table module.
+The native table/column module and extension archive remain intact. Equal display
+names never merge identities. Context/provider metadata does not imply core groups;
+it stays attached to the native source. An empty table has an empty member list.
+
+The operation is atomic across all members. Existing kinds require verified author
+receipts for the current complete source. Stale, duplicate, unrelated or conflicting
+receipts and record-module collisions block the whole candidate in strict and report
+modes. The result retains per-member and record mappings, native fragments, binding
+version, residuals and path-qualified diagnostics. `verifyTableSpecRecordClassification`
+recomputes the operation and rejects any changed current model or receipt, including
+changed member references. The schema is
+`spec/core/tablespec-record-classification.schema.json`.
+
+The binding `umf.tablespec.record` 1.0.0 uses the same pinned native source as column
+classification. Bun tests cover split-file/sidecar preservation, unknown native
+column types, empty records and multiple compatible author receipts. All 14
+TableSpec ideal tests pass 187 assertions. Chromium 148 checks 32 whole-record
+classifications and member-reference closure alongside 64 native recoveries. The
+pinned Python model accepts all 64 source/recovered comparisons and confirms the
+table name and complete ordered column membership. Typecheck/build and audits of
+181 schemas / 32 packages pass. See
+[record evidence](../../../../fixtures/validation/tablespec-record-evidence.json).
+
+This completes the initial table-to-record up-classification path, not the full
+TableSpec binding. Full authored-record down-projection and general shared result
+conformance remain unfinished, as do the other four native Field bindings and
+admission gate. Historical evidence sections above retain their earlier scope.

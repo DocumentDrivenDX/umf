@@ -1,0 +1,32 @@
+{
+  "scope": "Whole TableSpec table/column up-classification with ordered record membership and atomic conflicts; no full record down-projection or cross-system admission",
+  "commands": [
+    "bun test tests/core-ideals",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-browser.ts",
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/field-tablespec-oracle.py"
+  ],
+  "results": {
+    "tests": 14,
+    "assertions": 187,
+    "typecheck": "passed",
+    "schemasPassed": 181,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9738134,
+    "browserRecords": 32,
+    "nativeRecoveryComparisons": 64,
+    "nativeAccepted": 64
+  },
+  "sha256": {
+    "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
+    "spec/core/tablespec-record-classification.schema.json": "20771237c4ee9f1b845f2c2394978220dfd209f0cd098a08a4c3e3ae5d2b8914",
+    "scripts/core-ideals/tablespec-record-schema.ts": "f19fb418621ab66710b43925a083eade9e16cca6d5549263ea377f886c5da7c0",
+    "tests/core-ideals/record-tablespec.test.ts": "af6716b762f2fe7c4815f13586f12fc98ec88ca596f5ab0017f3566b427db835",
+    "scripts/core-ideals/field-tablespec-browser.ts": "042dfdb18078cb6a2cfd126240b7fc873483231aa7101595fd5dfdcf7cad8e99",
+    "scripts/core-ideals/field-tablespec-oracle.py": "31d38fa5171f0d3189d4b56def214244a226887a2d542224be9a65446f4da53e",
+    "fixtures/validation/field-tablespec-classification.json": "3742cedc3648c37d762745c9fbf3a5b7aa7b3501f9c5a7c7d0a332b2bf067cca",
+    "fixtures/validation/field-tablespec-native.json": "3268eaaee77bc026bdaba977e5bd60f665ce19312c5b79d1cc9cbd676d719af7"
+  }
+}

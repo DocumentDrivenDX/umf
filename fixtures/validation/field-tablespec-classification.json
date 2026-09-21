@@ -1,14 +1,44 @@
 {
-  "scope": "TableSpec captured column up-classification only; no record/down-projection or ideal admission claim",
+  "scope": "TableSpec captured table/column up-classification; no full record down-projection or ideal admission claim",
   "browser": "148.0.7778.0",
   "checks": {
     "classifications": 32,
     "recoveries": 64,
-    "conflicts": 2
+    "conflicts": 2,
+    "records": 32
   },
   "externalRequests": [],
   "rows": [
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -575,6 +605,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -1141,6 +1200,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -1707,6 +1795,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -2273,6 +2390,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -2839,6 +2985,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -3405,6 +3580,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -3988,6 +4192,35 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "Providers",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:1"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:2"
+          },
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:3"
+          }
+        ]
+      },
+      "recordExport": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "id": "providers",
       "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
       "nativeFormat": "yaml",
@@ -4571,6 +4804,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}",
       "id": "BOOLEAN",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -4760,6 +5007,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}",
       "id": "BOOLEAN",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -4949,6 +5210,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}",
       "id": "INTEGER",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -5138,6 +5413,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}",
       "id": "INTEGER",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -5327,6 +5616,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}",
       "id": "DECIMAL",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}",
       "nativeFormat": "json",
@@ -5540,6 +5843,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}",
       "id": "DECIMAL",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}",
       "nativeFormat": "json",
@@ -5753,6 +6070,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}",
       "id": "FLOAT",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -5942,6 +6273,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}",
       "id": "FLOAT",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -6131,6 +6476,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}",
       "id": "VARCHAR",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}",
       "nativeFormat": "json",
@@ -6332,6 +6691,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}",
       "id": "VARCHAR",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}",
       "nativeFormat": "json",
@@ -6533,6 +6906,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
       "id": "TEXT",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -6722,6 +7109,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
       "id": "TEXT",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -6911,6 +7312,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}",
       "id": "CHAR",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -7100,6 +7515,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}",
       "id": "CHAR",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -7289,6 +7718,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}",
       "id": "DATE",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -7478,6 +7921,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}",
       "id": "DATE",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -7667,6 +8124,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}",
       "id": "DATETIME",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -7856,6 +8327,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}",
       "id": "DATETIME",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -8045,6 +8530,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}",
       "id": "TIMESTAMP",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -8234,6 +8733,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}",
       "id": "TIMESTAMP",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}",
       "nativeFormat": "json",
@@ -8423,6 +8936,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}",
       "id": "EMBEDDING",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}",
       "nativeFormat": "json",
@@ -8622,6 +9149,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "sample",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}",
       "id": "EMBEDDING",
       "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}",
       "nativeFormat": "json",
@@ -8821,6 +9362,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "edited",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}",
       "id": "edited",
       "input": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}",
       "nativeFormat": "json",
@@ -9046,6 +9601,20 @@
       ]
     },
     {
+      "recordSummary": {
+        "id": "table-record",
+        "name": "edited",
+        "kind": "record",
+        "extensions": {},
+        "references": [
+          {
+            "role": "member",
+            "module": "table",
+            "element": "column:0"
+          }
+        ]
+      },
+      "recordExport": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}",
       "id": "edited",
       "input": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}",
       "nativeFormat": "json",

@@ -227,3 +227,4 @@ export * from './model/field-transition';
 export * from './model/field-kind';
 export * from './core-ideals/tablespec-field';
 export * from './core-ideals/field-tablespec-projection';
+export * from './core-ideals/tablespec-record';
