@@ -1,0 +1,73 @@
+{
+  "version": "1.12.0",
+  "scope": "Independent Apache Avro declared field membership; unknown logical meanings remain uninterpreted",
+  "checks": [
+    {
+      "id": "nested",
+      "fields": [
+        [
+          "sales.Order",
+          "id"
+        ],
+        [
+          "sales.Order",
+          "maybe"
+        ],
+        [
+          "sales.Order",
+          "items"
+        ],
+        [
+          "sales.Line",
+          "id"
+        ],
+        [
+          "sales.Order",
+          "byName"
+        ],
+        [
+          "sales.Order",
+          "when"
+        ],
+        [
+          "sales.Order",
+          "next"
+        ]
+      ]
+    },
+    {
+      "id": "dependencies",
+      "fields": [
+        [
+          "sales.Customer",
+          "id"
+        ],
+        [
+          "support.Customer",
+          "id"
+        ],
+        [
+          "app.Root",
+          "left"
+        ],
+        [
+          "app.Root",
+          "right"
+        ]
+      ]
+    },
+    {
+      "id": "error",
+      "fields": [
+        [
+          "Failure",
+          "message"
+        ],
+        [
+          "Failure",
+          "opaque"
+        ]
+      ]
+    }
+  ]
+}

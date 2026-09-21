@@ -1,0 +1,5 @@
+export const avroFieldCases=[
+ {id:'nested',schema:' {"type":"record","name":"Order","namespace":"sales","future":{"exact":9007199254740993},"fields":[{"name":"id","type":"long"},{"name":"maybe","type":["null","string"],"default":null},{"name":"items","type":{"type":"array","items":{"type":"record","name":"Line","fields":[{"name":"id","type":"int"}]}}},{"name":"byName","type":{"type":"map","values":"Line"}},{"name":"when","type":{"type":"long","logicalType":"timestamp-micros"}},{"name":"next","type":["null","Order"],"default":null}]}\n',dependencies:[]},
+ {id:'dependencies',schema:'\n{"type":"record","name":"Root","namespace":"app","fields":[{"name":"left","type":"sales.Customer"},{"name":"right","type":"support.Customer"}]}\n',dependencies:[{id:'sales',schema:' {"type":"record","name":"sales.Customer","fields":[{"name":"id","type":"long"}]}\n'},{id:'support',schema:'\n{"type":"record","name":"support.Customer","fields":[{"name":"id","type":"string"}]} '}]},
+ {id:'error',schema:'{"type":"error","name":"Failure","fields":[{"name":"message","type":"string"},{"name":"opaque","type":{"type":"bytes","logicalType":"future-meaning"}}]}\n',dependencies:[]}
+];

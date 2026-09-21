@@ -1,0 +1,16 @@
+import {test,expect} from 'bun:test';import {avroFieldCases} from '../../scripts/core-ideals/avro-field-cases';import {classifyAvroField,recoverAvroFieldBundle} from '../../src/core-ideals/avro-field';import {importAvroSchema,getAvroFieldMetadata} from '../../src/adapters/avro';import {upgradeFieldEnvelope} from '../../src/model/field-transition';import {declareCoreElementKind} from '../../src/model/field-kind';import {copyJson} from '../../src/model/json';import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+test('Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles',()=>{
+ for(const c of avroFieldCases){const source=upgradeFieldEnvelope(importAvroSchema(c.schema,{id:c.id,dependencies:c.dependencies})).target,metadata=getAvroFieldMetadata(source);
+ for(const f of metadata)for(const mode of ['strict','report'] as const){const result=classifyAvroField(source,{column:f.element.id,nativeSource:c.schema,dependencies:c.dependencies,mode});expect(result.status).toBe('classified');expect(result.mapping.nativePath).toBe(f.path);expect(result.mapping.dependencyId).toBe(f.dependencyId);expect(result.mapping.nativeFragment).toEqual(f.nativeField);expect(result.target!.modules[1]!.elements.find(e=>e.id===f.element.id)!.kind).toBe('field');
+ for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;expect(recoverAvroFieldBundle(receipt,receipt.target!)).toEqual({schema:c.schema,dependencies:c.dependencies});}}
+ if(c.id==='dependencies')expect(new Set(metadata.map(f=>f.element.id)).size).toBe(4);
+ if(c.id==='nested')for(const name of ['items','byName','next'])expect(metadata.find(f=>f.element.name===name)!.element.scalarType).toBeUndefined();
+ }
+});
+test('missing/reordered dependency archives, authored conflicts and stale receipts are refused',()=>{
+ const c=avroFieldCases[1]!,source=upgradeFieldEnvelope(importAvroSchema(c.schema,{id:c.id,dependencies:c.dependencies})).target,f=getAvroFieldMetadata(source).find(f=>f.element.name==='left')!,request={column:f.element.id,nativeSource:c.schema,dependencies:c.dependencies,mode:'strict' as const};
+ expect(()=>classifyAvroField(source,{...request,dependencies:[]})).toThrow('archive');expect(()=>classifyAvroField(source,{...request,dependencies:[...c.dependencies].reverse()})).toThrow('archive');expect(()=>classifyAvroField(source,{...request,column:f.path})).toThrow('identity');
+ const author=declareCoreElementKind(source,{module:'avro.fields',element:f.element.id},'record');for(const mode of ['strict','report'] as const){const result=classifyAvroField(author.target,{...request,mode,author});expect(result.status).toBe('blocked');expect(result.target).toBeUndefined();}
+ const good=declareCoreElementKind(source,{module:'avro.fields',element:f.element.id},'field');expect(classifyAvroField(good.target,{...request,author:good}).status).toBe('classified');
+ const result=classifyAvroField(source,request);result.target!.future=true;expect(()=>recoverAvroFieldBundle(result,result.target!)).toThrow();const tampered=classifyAvroField(source,request);tampered.mapping.dependencyId='wrong';expect(()=>recoverAvroFieldBundle(tampered,tampered.target!)).toThrow();
+});

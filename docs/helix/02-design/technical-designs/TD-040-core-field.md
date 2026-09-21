@@ -842,3 +842,39 @@ cases and 28 Field recoveries also pass. Typechecking, browser build and all
 This is a collation-qualified flat-record binding; arbitrary collations, structured
 references, common mapping/residual metadata and Avro/Parquet Field bindings remain
 unfinished. The Field admission and five-system gates remain open.
+
+## Avro declared Field classification
+
+`classifyAvroField` derives Field kind from declared record/error membership,
+including nested records and separately supplied named-schema dependencies. Its
+`column` selector is the source-qualified metadata element ID (dependency ID plus
+native path), not a bare field name or path. Mapping provenance includes the
+native field fragment, path and dependency ID when applicable. Equal paths in
+separate dependencies cannot merge.
+
+The request retains exact root text and an ordered dependency archive. Checked
+bundle export must match every archive before classification. Missing, reordered
+or changed dependencies fail; existing kinds require verified author provenance,
+and conflicts block both policies. Arrays, maps, record-valued references and
+recursive unions do not become scalar fields merely because they have member
+roles. Existing scalar-family metadata remains qualified by the Avro adapter;
+logical types, defaults, aliases and unknown annotations stay in native content.
+
+`recoverAvroFieldBundle` recomputes the complete receipt and checks the current
+model before returning exact root/dependency texts. Classification does not infer
+portable nullability, cardinality, identity, or logical-type execution. The
+operation has a dedicated JSON Schema using the shared classification policy.
+
+Two tests pass 196 assertions across nested/recursive records, unions, arrays,
+maps, error records, separate namespaces, unknown logical meaning and exact bundle
+recovery. Apache Avro 1.12.0 independently parses the three bundles and confirms
+all thirteen declared field memberships. Its warning for an invented logical type
+is expected; UMF preserves that annotation without assigning a scalar family.
+Chromium 148 matches thirteen classifications, 26 JSON/YAML bundle recoveries and
+both authored-conflict policies. Typechecking, browser build and all 193 schema /
+32 package checks pass. See [Avro Field evidence](../../../../fixtures/validation/field-avro-evidence.json).
+
+Avro record classification and authored down-projection, Parquet bindings,
+structured reference resolution and complete common mapping/residual metadata
+remain unfinished. This membership evidence does not establish value-domain
+semantics, full Avro support, or Field admission.

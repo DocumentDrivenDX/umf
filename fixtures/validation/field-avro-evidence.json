@@ -1,0 +1,36 @@
+{
+  "scope": "Avro 1.12 declared record/error field roles with exact root/dependency text recovery; no logical-type execution or value-domain equivalence",
+  "commands": [
+    "bun test tests/core-ideals/field-avro.test.ts",
+    "bun scripts/core-ideals/field-avro-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-avro-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-avro-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 196,
+    "typecheck": "passed",
+    "schemasPassed": 193,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9929314,
+    "independentNativeFields": 13,
+    "browserFields": 13,
+    "browserRecoveries": 26
+  },
+  "sha256": {
+    "src/core-ideals/avro-field.ts": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f",
+    "spec/core/avro-field-classification.schema.json": "bad6326b58edf9595180ff27aeb78a93147c1f9cce1de45c60ba7959bd8a6811",
+    "scripts/core-ideals/avro-field-schema.ts": "edd7a31f41cc1c67cbf61ebd4c8fa84e4be2fcb9097f6baa9de2799fbb55766c",
+    "scripts/core-ideals/avro-field-cases.ts": "7f967c4e0344afa2313bf136b3dd7bfa75c1453504c076380ba46be1a1382988",
+    "scripts/core-ideals/field-avro-corpus.ts": "36b857a1619d6b7b05b68547f51612ff43dc74506a6bd845a5131842045b8503",
+    "scripts/core-ideals/field-avro-oracle.py": "505efb1a94ce8e1369e0c4c6c13e5ee7d0f106587e2ad4b8e589e27d2eee6f13",
+    "scripts/core-ideals/field-avro-browser.ts": "d9bb74cc089a891b75e90e5a90afba067bacf105fec306ac91e8c9b1a51b4408",
+    "tests/core-ideals/field-avro.test.ts": "a0615a73ebe7af25f5a905e7f96fb6df4985e50c6918f6c17ba9414b982373c7",
+    "fixtures/validation/field-avro-corpus.json": "2a0de675f0a2ec726b76cc783a951358404ac62f957528db8ae73364faaa5cf4",
+    "fixtures/validation/field-avro-native.json": "8342bfec63c2bfef5fa6be75a719f9c9322faf091164aadba6a21d2952cc4067",
+    "fixtures/validation/field-avro-browser.json": "b04cad50d1b34244890c0afc061dd088f18d522edc2e0502f8887a24dec6ec21"
+  }
+}
