@@ -241,3 +241,4 @@ export * from './core-ideals/sqlserver-record';
 export * from './core-ideals/field-sqlserver-projection';
 export * from './core-ideals/record-sqlserver-projection';
 export * from './core-ideals/avro-field';
+export * from './core-ideals/avro-record';

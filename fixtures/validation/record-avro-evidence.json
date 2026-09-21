@@ -1,0 +1,37 @@
+{
+  "scope": "Avro 1.12 declared record/error direct membership, dependency-qualified identity and exact bundle recovery; no automatic type-reference or value-domain equivalence",
+  "commands": [
+    "bun test tests/core-ideals/record-avro.test.ts tests/core-ideals/field-avro.test.ts",
+    "bun scripts/core-ideals/field-avro-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-avro-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-avro-browser.ts"
+  ],
+  "results": {
+    "tests": 4,
+    "assertions": 253,
+    "typecheck": "passed",
+    "schemasPassed": 194,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9945674,
+    "independentNativeRecords": 7,
+    "browserRecords": 7,
+    "browserRecordRecoveries": 14
+  },
+  "sha256": {
+    "src/core-ideals/avro-record.ts": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1",
+    "src/core-ideals/avro-records.ts": "35d8e5d3a864f35c71f8dfccc40cbc2db1503fc7a394fb8f7ada4f189927c3ca",
+    "spec/core/avro-record-classification.schema.json": "f5c2d7f8053563ee8700e4e99826be5a6b7a622ac54c74fe923c76665276de34",
+    "scripts/core-ideals/avro-record-schema.ts": "9874d225f07689904ab2b75def284b1071289fa46ca0047bcc2efdecbf397946",
+    "scripts/core-ideals/avro-field-cases.ts": "013a3fdb3ab72acaf62b85566ee2f0da9fb93698b066811375e41524b04c531f",
+    "scripts/core-ideals/field-avro-corpus.ts": "32e4bef9901de14bdb2d9279b516fea8cf05fafb44ab7a9b8583571ed05c2cf9",
+    "scripts/core-ideals/field-avro-oracle.py": "f33194ca9a8981e6469807cb49432585d1c40cfd01fe689af02506334505064e",
+    "scripts/core-ideals/field-avro-browser.ts": "ba5cb3f2d43a6e4cf09c48dc78a1b78931577f52b5bac34d63de32ac01831cb5",
+    "tests/core-ideals/record-avro.test.ts": "5018d36a2787915cc3b832416580917a6db11a81b5809f11dd8f8f8e84c87b06",
+    "fixtures/validation/field-avro-corpus.json": "594335b1ab7e39a284c3e6515f96b13ca421b00cc0a70b6c5fd5efb343d72b57",
+    "fixtures/validation/field-avro-native.json": "8f3dd538aa9a5432e382aa19a86fa8b5e9a475a01f429593741198a7f14fa2e5",
+    "fixtures/validation/field-avro-browser.json": "fad2c726d9a2a44cc60f686c4464345bd0347c776cf7e2d1ce786791c2b942d9"
+  }
+}

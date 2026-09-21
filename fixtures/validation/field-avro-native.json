@@ -33,6 +33,25 @@
           "sales.Order",
           "next"
         ]
+      ],
+      "records": [
+        [
+          "sales.Order",
+          [
+            "id",
+            "maybe",
+            "items",
+            "byName",
+            "when",
+            "next"
+          ]
+        ],
+        [
+          "sales.Line",
+          [
+            "id"
+          ]
+        ]
       ]
     },
     {
@@ -54,6 +73,27 @@
           "app.Root",
           "right"
         ]
+      ],
+      "records": [
+        [
+          "sales.Customer",
+          [
+            "id"
+          ]
+        ],
+        [
+          "support.Customer",
+          [
+            "id"
+          ]
+        ],
+        [
+          "app.Root",
+          [
+            "left",
+            "right"
+          ]
+        ]
       ]
     },
     {
@@ -66,6 +106,25 @@
         [
           "Failure",
           "opaque"
+        ]
+      ],
+      "records": [
+        [
+          "Failure",
+          [
+            "message",
+            "opaque"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "empty",
+      "fields": [],
+      "records": [
+        [
+          "empty.Empty",
+          []
         ]
       ]
     }

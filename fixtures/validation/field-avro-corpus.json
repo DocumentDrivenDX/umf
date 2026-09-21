@@ -262,6 +262,1637 @@
           }
         ]
       },
+      "records": [
+        {
+          "fullname": "sales.Order",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "",
+            "nativeSource": " {\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"future\":{\"exact\":9007199254740993},\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"maybe\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"items\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Line\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"}]}}},{\"name\":\"byName\",\"type\":{\"type\":\"map\",\"values\":\"Line\"}},{\"name\":\"when\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"next\",\"type\":[\"null\",\"Order\"],\"default\":null}]}\n",
+            "dependencies": [],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "nested",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Order"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "sales"
+                              },
+                              "future": {
+                                "kind": "object",
+                                "members": {
+                                  "exact": {
+                                    "kind": "number",
+                                    "value": "9007199254740993"
+                                  }
+                                }
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "id"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "maybe"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "items"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "record"
+                                              },
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "Line"
+                                              },
+                                              "fields": {
+                                                "kind": "array",
+                                                "items": [
+                                                  {
+                                                    "kind": "object",
+                                                    "members": {
+                                                      "name": {
+                                                        "kind": "string",
+                                                        "value": "id"
+                                                      },
+                                                      "type": {
+                                                        "kind": "string",
+                                                        "value": "int"
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "byName"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "map"
+                                          },
+                                          "values": {
+                                            "kind": "string",
+                                            "value": "Line"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "when"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "next"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "Order"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "maybe",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/2\"]",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/2/type/items/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/3\"]",
+                      "name": "byName",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/4\"]",
+                      "name": "when",
+                      "scalarType": "timestamp",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/5\"]",
+                      "name": "next",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "",
+              "nativeSource": " {\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"future\":{\"exact\":9007199254740993},\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"maybe\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"items\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Line\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"}]}}},{\"name\":\"byName\",\"type\":{\"type\":\"map\",\"values\":\"Line\"}},{\"name\":\"when\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"next\",\"type\":[\"null\",\"Order\"],\"default\":null}]}\n",
+              "dependencies": [],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/0/kind",
+                "nativePath": "/fields/0",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "long"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/1/kind",
+                "nativePath": "/fields/1",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "maybe"
+                    },
+                    "type": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "null"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "default": {
+                      "kind": "null"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/2/kind",
+                "nativePath": "/fields/2",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "items"
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        },
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "record"
+                            },
+                            "name": {
+                              "kind": "string",
+                              "value": "Line"
+                            },
+                            "fields": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "id"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "int"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/4/kind",
+                "nativePath": "/fields/3",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "byName"
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "map"
+                        },
+                        "values": {
+                          "kind": "string",
+                          "value": "Line"
+                        }
+                      }
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/5/kind",
+                "nativePath": "/fields/4",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "when"
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "long"
+                        },
+                        "logicalType": {
+                          "kind": "string",
+                          "value": "timestamp-micros"
+                        }
+                      }
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/6/kind",
+                "nativePath": "/fields/5",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "next"
+                    },
+                    "type": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "null"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "Order"
+                        }
+                      ]
+                    },
+                    "default": {
+                      "kind": "null"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "Order"
+                    },
+                    "namespace": {
+                      "kind": "string",
+                      "value": "sales"
+                    },
+                    "future": {
+                      "kind": "object",
+                      "members": {
+                        "exact": {
+                          "kind": "number",
+                          "value": "9007199254740993"
+                        }
+                      }
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "long"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "maybe"
+                            },
+                            "type": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "null"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              ]
+                            },
+                            "default": {
+                              "kind": "null"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "items"
+                            },
+                            "type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                },
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "record"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "Line"
+                                    },
+                                    "fields": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "name": {
+                                              "kind": "string",
+                                              "value": "id"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "int"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "byName"
+                            },
+                            "type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "map"
+                                },
+                                "values": {
+                                  "kind": "string",
+                                  "value": "Line"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "when"
+                            },
+                            "type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "long"
+                                },
+                                "logicalType": {
+                                  "kind": "string",
+                                  "value": "timestamp-micros"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "next"
+                            },
+                            "type": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "null"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "Order"
+                                }
+                              ]
+                            },
+                            "default": {
+                              "kind": "null"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "nested",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Order"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "sales"
+                              },
+                              "future": {
+                                "kind": "object",
+                                "members": {
+                                  "exact": {
+                                    "kind": "number",
+                                    "value": "9007199254740993"
+                                  }
+                                }
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "id"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "maybe"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "items"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "record"
+                                              },
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "Line"
+                                              },
+                                              "fields": {
+                                                "kind": "array",
+                                                "items": [
+                                                  {
+                                                    "kind": "object",
+                                                    "members": {
+                                                      "name": {
+                                                        "kind": "string",
+                                                        "value": "id"
+                                                      },
+                                                      "type": {
+                                                        "kind": "string",
+                                                        "value": "int"
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "byName"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "map"
+                                          },
+                                          "values": {
+                                            "kind": "string",
+                                            "value": "Line"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "when"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "next"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "Order"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "maybe",
+                      "scalarType": "string",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/2\"]",
+                      "name": "items",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/2/type/items/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/3\"]",
+                      "name": "byName",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/4\"]",
+                      "name": "when",
+                      "scalarType": "timestamp",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/5\"]",
+                      "name": "next",
+                      "extensions": {},
+                      "kind": "field"
+                    }
+                  ]
+                },
+                {
+                  "id": "records",
+                  "namespace": "sales",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Order",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": [
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/0\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/1\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/2\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/3\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/4\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/5\"]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "fullname": "sales.Line",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "/fields/2/type/items",
+            "nativeSource": " {\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"future\":{\"exact\":9007199254740993},\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"maybe\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"items\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Line\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"}]}}},{\"name\":\"byName\",\"type\":{\"type\":\"map\",\"values\":\"Line\"}},{\"name\":\"when\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"next\",\"type\":[\"null\",\"Order\"],\"default\":null}]}\n",
+            "dependencies": [],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "nested",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Order"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "sales"
+                              },
+                              "future": {
+                                "kind": "object",
+                                "members": {
+                                  "exact": {
+                                    "kind": "number",
+                                    "value": "9007199254740993"
+                                  }
+                                }
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "id"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "maybe"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "items"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "record"
+                                              },
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "Line"
+                                              },
+                                              "fields": {
+                                                "kind": "array",
+                                                "items": [
+                                                  {
+                                                    "kind": "object",
+                                                    "members": {
+                                                      "name": {
+                                                        "kind": "string",
+                                                        "value": "id"
+                                                      },
+                                                      "type": {
+                                                        "kind": "string",
+                                                        "value": "int"
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "byName"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "map"
+                                          },
+                                          "values": {
+                                            "kind": "string",
+                                            "value": "Line"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "when"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "next"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "Order"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "maybe",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/2\"]",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/2/type/items/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/3\"]",
+                      "name": "byName",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/4\"]",
+                      "name": "when",
+                      "scalarType": "timestamp",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/5\"]",
+                      "name": "next",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "/fields/2/type/items",
+              "nativeSource": " {\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"future\":{\"exact\":9007199254740993},\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"maybe\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"items\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Line\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"}]}}},{\"name\":\"byName\",\"type\":{\"type\":\"map\",\"values\":\"Line\"}},{\"name\":\"when\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"next\",\"type\":[\"null\",\"Order\"],\"default\":null}]}\n",
+              "dependencies": [],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/3/kind",
+                "nativePath": "/fields/2/type/items/fields/0",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "int"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "/fields/2/type/items",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "Line"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "int"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "nested",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Order"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "sales"
+                              },
+                              "future": {
+                                "kind": "object",
+                                "members": {
+                                  "exact": {
+                                    "kind": "number",
+                                    "value": "9007199254740993"
+                                  }
+                                }
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "id"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "maybe"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "items"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "record"
+                                              },
+                                              "name": {
+                                                "kind": "string",
+                                                "value": "Line"
+                                              },
+                                              "fields": {
+                                                "kind": "array",
+                                                "items": [
+                                                  {
+                                                    "kind": "object",
+                                                    "members": {
+                                                      "name": {
+                                                        "kind": "string",
+                                                        "value": "id"
+                                                      },
+                                                      "type": {
+                                                        "kind": "string",
+                                                        "value": "int"
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "byName"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "map"
+                                          },
+                                          "values": {
+                                            "kind": "string",
+                                            "value": "Line"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "when"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "next"
+                                      },
+                                      "type": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "Order"
+                                          }
+                                        ]
+                                      },
+                                      "default": {
+                                        "kind": "null"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "maybe",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/2\"]",
+                      "name": "items",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/2/type/items/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/3\"]",
+                      "name": "byName",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/4\"]",
+                      "name": "when",
+                      "scalarType": "timestamp",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/5\"]",
+                      "name": "next",
+                      "extensions": {}
+                    }
+                  ]
+                },
+                {
+                  "id": "records",
+                  "namespace": "sales",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Line",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": [
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/2/type/items/fields/0\"]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
       "fields": [
         {
           "record": "sales.Order",
@@ -4496,6 +6127,1482 @@
           }
         ]
       },
+      "records": [
+        {
+          "fullname": "sales.Customer",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "",
+            "dependencyId": "sales",
+            "nativeSource": "\n{\"type\":\"record\",\"name\":\"Root\",\"namespace\":\"app\",\"fields\":[{\"name\":\"left\",\"type\":\"sales.Customer\"},{\"name\":\"right\",\"type\":\"support.Customer\"}]}\n",
+            "dependencies": [
+              {
+                "id": "sales",
+                "schema": " {\"type\":\"record\",\"name\":\"sales.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}\n"
+              },
+              {
+                "id": "support",
+                "schema": "\n{\"type\":\"record\",\"name\":\"support.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]} "
+              }
+            ],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "dependencies",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Root"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "app"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "left"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "sales.Customer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "right"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "support.Customer"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": [
+                            {
+                              "id": "sales",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "sales.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "id": "support",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "support.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[\"sales\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[\"support\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "left",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "right",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "",
+              "dependencyId": "sales",
+              "nativeSource": "\n{\"type\":\"record\",\"name\":\"Root\",\"namespace\":\"app\",\"fields\":[{\"name\":\"left\",\"type\":\"sales.Customer\"},{\"name\":\"right\",\"type\":\"support.Customer\"}]}\n",
+              "dependencies": [
+                {
+                  "id": "sales",
+                  "schema": " {\"type\":\"record\",\"name\":\"sales.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}\n"
+                },
+                {
+                  "id": "support",
+                  "schema": "\n{\"type\":\"record\",\"name\":\"support.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]} "
+                }
+              ],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/0/kind",
+                "nativePath": "/fields/0",
+                "dependencyId": "sales",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "long"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "",
+                "dependencyId": "sales",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "sales.Customer"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "long"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "dependencies",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Root"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "app"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "left"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "sales.Customer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "right"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "support.Customer"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": [
+                            {
+                              "id": "sales",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "sales.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "id": "support",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "support.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[\"sales\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[\"support\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "left",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "right",
+                      "extensions": {}
+                    }
+                  ]
+                },
+                {
+                  "id": "records",
+                  "namespace": "sales",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Customer",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": [
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[\"sales\",\"/fields/0\"]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "fullname": "support.Customer",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "",
+            "dependencyId": "support",
+            "nativeSource": "\n{\"type\":\"record\",\"name\":\"Root\",\"namespace\":\"app\",\"fields\":[{\"name\":\"left\",\"type\":\"sales.Customer\"},{\"name\":\"right\",\"type\":\"support.Customer\"}]}\n",
+            "dependencies": [
+              {
+                "id": "sales",
+                "schema": " {\"type\":\"record\",\"name\":\"sales.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}\n"
+              },
+              {
+                "id": "support",
+                "schema": "\n{\"type\":\"record\",\"name\":\"support.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]} "
+              }
+            ],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "dependencies",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Root"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "app"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "left"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "sales.Customer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "right"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "support.Customer"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": [
+                            {
+                              "id": "sales",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "sales.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "id": "support",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "support.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[\"sales\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[\"support\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "left",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "right",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "",
+              "dependencyId": "support",
+              "nativeSource": "\n{\"type\":\"record\",\"name\":\"Root\",\"namespace\":\"app\",\"fields\":[{\"name\":\"left\",\"type\":\"sales.Customer\"},{\"name\":\"right\",\"type\":\"support.Customer\"}]}\n",
+              "dependencies": [
+                {
+                  "id": "sales",
+                  "schema": " {\"type\":\"record\",\"name\":\"sales.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}\n"
+                },
+                {
+                  "id": "support",
+                  "schema": "\n{\"type\":\"record\",\"name\":\"support.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]} "
+                }
+              ],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/1/kind",
+                "nativePath": "/fields/0",
+                "dependencyId": "support",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "",
+                "dependencyId": "support",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "support.Customer"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "id"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "dependencies",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Root"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "app"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "left"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "sales.Customer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "right"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "support.Customer"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": [
+                            {
+                              "id": "sales",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "sales.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "id": "support",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "support.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[\"sales\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[\"support\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "string",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "left",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "right",
+                      "extensions": {}
+                    }
+                  ]
+                },
+                {
+                  "id": "records",
+                  "namespace": "support",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Customer",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": [
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[\"support\",\"/fields/0\"]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "fullname": "app.Root",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "",
+            "nativeSource": "\n{\"type\":\"record\",\"name\":\"Root\",\"namespace\":\"app\",\"fields\":[{\"name\":\"left\",\"type\":\"sales.Customer\"},{\"name\":\"right\",\"type\":\"support.Customer\"}]}\n",
+            "dependencies": [
+              {
+                "id": "sales",
+                "schema": " {\"type\":\"record\",\"name\":\"sales.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}\n"
+              },
+              {
+                "id": "support",
+                "schema": "\n{\"type\":\"record\",\"name\":\"support.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]} "
+              }
+            ],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "dependencies",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Root"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "app"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "left"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "sales.Customer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "right"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "support.Customer"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": [
+                            {
+                              "id": "sales",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "sales.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "id": "support",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "support.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[\"sales\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[\"support\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "left",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "right",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "",
+              "nativeSource": "\n{\"type\":\"record\",\"name\":\"Root\",\"namespace\":\"app\",\"fields\":[{\"name\":\"left\",\"type\":\"sales.Customer\"},{\"name\":\"right\",\"type\":\"support.Customer\"}]}\n",
+              "dependencies": [
+                {
+                  "id": "sales",
+                  "schema": " {\"type\":\"record\",\"name\":\"sales.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}\n"
+                },
+                {
+                  "id": "support",
+                  "schema": "\n{\"type\":\"record\",\"name\":\"support.Customer\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]} "
+                }
+              ],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/2/kind",
+                "nativePath": "/fields/0",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "left"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "sales.Customer"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/3/kind",
+                "nativePath": "/fields/1",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "right"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "support.Customer"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "Root"
+                    },
+                    "namespace": {
+                      "kind": "string",
+                      "value": "app"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "left"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "sales.Customer"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "right"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "support.Customer"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "dependencies",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Root"
+                              },
+                              "namespace": {
+                                "kind": "string",
+                                "value": "app"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "left"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "sales.Customer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "right"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "support.Customer"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": [
+                            {
+                              "id": "sales",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "sales.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "id": "support",
+                              "root": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "record"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "support.Customer"
+                                  },
+                                  "fields": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[\"sales\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "integer",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[\"support\",\"/fields/0\"]",
+                      "name": "id",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "left",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "right",
+                      "extensions": {},
+                      "kind": "field"
+                    }
+                  ]
+                },
+                {
+                  "id": "records",
+                  "namespace": "app",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Root",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": [
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/0\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/1\"]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
       "fields": [
         {
           "record": "sales.Customer",
@@ -6245,6 +9352,372 @@
           }
         ]
       },
+      "records": [
+        {
+          "fullname": "Failure",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "",
+            "nativeSource": "{\"type\":\"error\",\"name\":\"Failure\",\"fields\":[{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"opaque\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"future-meaning\"}}]}\n",
+            "dependencies": [],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "error",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "error"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Failure"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "message"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "opaque"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "bytes"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "future-meaning"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "message",
+                      "scalarType": "string",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "opaque",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "",
+              "nativeSource": "{\"type\":\"error\",\"name\":\"Failure\",\"fields\":[{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"opaque\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"future-meaning\"}}]}\n",
+              "dependencies": [],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/0/kind",
+                "nativePath": "/fields/0",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "message"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "field",
+                "idealPath": "/modules/1/elements/1/kind",
+                "nativePath": "/fields/1",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "opaque"
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "bytes"
+                        },
+                        "logicalType": {
+                          "kind": "string",
+                          "value": "future-meaning"
+                        }
+                      }
+                    }
+                  }
+                },
+                "basis": "checked-record-field-membership",
+                "outcome": "exact"
+              },
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "error"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "Failure"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "message"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "opaque"
+                            },
+                            "type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "bytes"
+                                },
+                                "logicalType": {
+                                  "kind": "string",
+                                  "value": "future-meaning"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "error",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "error"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "Failure"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "message"
+                                      },
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "opaque"
+                                      },
+                                      "type": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "bytes"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "future-meaning"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "[null,\"/fields/0\"]",
+                      "name": "message",
+                      "scalarType": "string",
+                      "extensions": {},
+                      "kind": "field"
+                    },
+                    {
+                      "id": "[null,\"/fields/1\"]",
+                      "name": "opaque",
+                      "extensions": {},
+                      "kind": "field"
+                    }
+                  ]
+                },
+                {
+                  "id": "records",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Failure",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": [
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/0\"]"
+                        },
+                        {
+                          "role": "member",
+                          "module": "avro.fields",
+                          "element": "[null,\"/fields/1\"]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
       "fields": [
         {
           "record": "Failure",
@@ -6742,6 +10215,230 @@
           }
         }
       ]
+    },
+    {
+      "id": "empty",
+      "schema": "{\"type\":\"record\",\"name\":\"empty.Empty\",\"fields\":[]}\n",
+      "dependencies": [],
+      "source": {
+        "umf": "0.2.0",
+        "id": "empty",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "empty.Empty"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": []
+                        }
+                      }
+                    },
+                    "dependencies": []
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": []
+          }
+        ]
+      },
+      "records": [
+        {
+          "fullname": "empty.Empty",
+          "request": {
+            "recordModule": "records",
+            "recordId": "record",
+            "path": "",
+            "nativeSource": "{\"type\":\"record\",\"name\":\"empty.Empty\",\"fields\":[]}\n",
+            "dependencies": [],
+            "mode": "strict"
+          },
+          "result": {
+            "operation": "classify-avro-record",
+            "version": "1.0.0",
+            "status": "classified",
+            "source": {
+              "umf": "0.2.0",
+              "id": "empty",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "empty.Empty"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": []
+                }
+              ]
+            },
+            "request": {
+              "recordModule": "records",
+              "recordId": "record",
+              "path": "",
+              "nativeSource": "{\"type\":\"record\",\"name\":\"empty.Empty\",\"fields\":[]}\n",
+              "dependencies": [],
+              "mode": "strict"
+            },
+            "binding": {
+              "id": "umf.avro.record",
+              "version": "1.0.0",
+              "nativeVersion": "1.12.0",
+              "subset": "Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"
+            },
+            "mappings": [
+              {
+                "origin": "classified",
+                "kind": "record",
+                "idealPath": "/modules/2/elements/0/kind",
+                "nativePath": "",
+                "nativeFragment": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "empty.Empty"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": []
+                    }
+                  }
+                },
+                "basis": "checked-record-declaration",
+                "outcome": "exact"
+              }
+            ],
+            "residuals": [],
+            "diagnostics": [],
+            "target": {
+              "umf": "0.2.0",
+              "id": "empty",
+              "vocabularies": {
+                "umf.avro": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.avro": {
+                          "version": "1.12.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "record"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "empty.Empty"
+                              },
+                              "fields": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          "dependencies": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "avro.fields",
+                  "namespace": "",
+                  "elements": []
+                },
+                {
+                  "id": "records",
+                  "namespace": "empty",
+                  "elements": [
+                    {
+                      "id": "record",
+                      "name": "Empty",
+                      "kind": "record",
+                      "extensions": {},
+                      "references": []
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "fields": []
     }
   ]
 }

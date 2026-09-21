@@ -878,3 +878,34 @@ Avro record classification and authored down-projection, Parquet bindings,
 structured reference resolution and complete common mapping/residual metadata
 remain unfinished. This membership evidence does not establish value-domain
 semantics, full Avro support, or Field admission.
+
+## Avro record/error declarations
+
+`classifyAvroRecord` now selects a concrete declaration by native path and optional
+dependency ID, then publishes a new record module with ordered references to its
+direct fields. A declaration walker follows only Avro schema positions, never
+arbitrary annotations or named-reference strings. It includes empty records,
+inline records within arrays/maps/unions, error records and named dependencies.
+Avro fullname/namespace rules determine record identity; the presence of children
+is not used to guess a container kind.
+
+Checked bundle correspondence is required even for empty records. Existing output
+modules cannot be overwritten. Every selected field passes the same provenance
+reconciler as single-Field classification; stale, duplicate or unrelated author
+receipts and member-kind conflicts block the whole candidate. Nested record fields
+are not incorrectly included among their parent's direct members. Full native
+record fragments, error semantics and unknown details remain attached to the
+source and mapping provenance. Recovery recomputes the receipt and rejects changed
+member references before returning exact root/dependency archives.
+
+Four Field/record tests pass 253 assertions. Apache Avro 1.12 independently confirms
+seven declarations and ordered member lists across four bundles, including an
+empty record, recursion, nested records and same-named dependency records in
+separate namespaces. Chromium 148 matches seven record classifications and fourteen
+JSON/YAML bundle recoveries; existing thirteen Field classifications and 26
+recoveries still pass. Typechecking, browser build and all 194 schema / 32 package
+checks pass. See [Avro record evidence](../../../../fixtures/validation/record-avro-evidence.json).
+
+This adds declaration membership, not automatic record-valued type references or
+value-domain equivalence. Avro authored projection, Parquet bindings and complete
+mapping/residual metadata remain unfinished; no admission or delivery gate closes.
