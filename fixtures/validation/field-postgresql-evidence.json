@@ -1,0 +1,34 @@
+{
+  "scope": "PostgreSQL 17.4 captured catalog column up-classification and exact provided capture-text recovery; no raw DDL, record/down binding or core admission",
+  "commands": [
+    "bun test tests/core-ideals/field-postgresql.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-postgresql-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-browser.ts"
+  ],
+  "results": {
+    "tests": 4,
+    "assertions": 113,
+    "typecheck": "passed",
+    "schemasPassed": 183,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9761387,
+    "liveNativeColumns": 20,
+    "liveNativeRecoveries": 40,
+    "browserColumns": 20,
+    "browserRecoveries": 40,
+    "conflictBlocks": 2
+  },
+  "sha256": {
+    "src/core-ideals/postgresql-field.ts": "d02ba4cdb319a751511f947e04ea91a6c8c0f8eb73ca0752f57d53f6478f2097",
+    "spec/core/postgresql-field-classification.schema.json": "320bc813ad79e8a5863de37e576b6b6d32b8e75e875f8ceed401ffcb5d07065d",
+    "scripts/core-ideals/postgresql-field-schema.ts": "a31bcc3944027d3372ab3c008d9491e3ad929004b0d86e4539c28b8db21d5210",
+    "scripts/core-ideals/field-postgresql-oracle.ts": "1cfdd56ea7bad91d666f084daf137d3c9869f57f1bbeed65348412e3e23f4dd3",
+    "scripts/core-ideals/field-postgresql-browser.ts": "c1ef704587106bb5f4ff6245036392831f0fceb3095bc2073446a5ab1f165fca",
+    "tests/core-ideals/field-postgresql.test.ts": "6d9a53c44c3bc28fb03bf97a2a2d7b49d71aa4a3cd09960110952503aa962c59",
+    "fixtures/validation/field-postgresql-native.json": "50f939b414ae8076bf813f855d9b21a40799498599ad3df9858111ec702db8df",
+    "fixtures/validation/field-postgresql-browser.json": "d9c540a9a87d362dccc9d3619b5fcd859636b41e9376fbafacbb592f5b8ab724"
+  }
+}

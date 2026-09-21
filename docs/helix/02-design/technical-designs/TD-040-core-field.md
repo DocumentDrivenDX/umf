@@ -373,3 +373,40 @@ and confirms ordered names/types. Existing single-Field cases also pass. See
 Field remains experimental. Shared operation-result conformance, explicit group
 refusal coverage, complete five-system bindings and the separate admission gate
 remain required. This result does not graduate any native meaning into equivalence.
+
+## PostgreSQL catalog Field binding foundation
+
+`classifyPostgresqlField` now classifies a captured catalog column by its exact
+capture path, preserving qualified relation/type metadata and unknown refinements.
+It requires an explicit 0.2.0 model, checked derived column metadata, PostgreSQL
+17.4 and the original native capture text. The supplied text must match the exact
+captured tree before it can serve as the recovery archive. Native paths are JSON
+pointers into that text, not pointers into UMF's tagged representation.
+
+The binding `umf.postgresql.catalog.field` 1.0.0 establishes member role only.
+Arrays and domains remain fields without being relabeled as scalars. Existing
+kinds require verified author provenance; conflicts block under strict and report
+policies with source/residuals/diagnostics retained and no partial target. Unknown
+representation encodings and stale derived metadata refuse classification. The
+result schema is `spec/core/postgresql-field-classification.schema.json`.
+
+`recoverPostgresqlFieldCapture` recomputes the receipt, checks the current target,
+and returns the retained capture text exactly, including whitespace and unknown
+native numeric tokens. The legacy catalog exporter canonicalizes JSON formatting;
+this new receipt explicitly preserves the original text instead of claiming that
+canonical export restores bytes. It does not restore database state or establish
+that edited captures describe a live server. Raw DDL declarations remain separate.
+
+Evidence: 4 targeted Bun tests / 113 assertions pass, covering 20 representative
+scalar/domain/array columns, unknown metadata, source collisions and version/error
+boundaries. A fresh pinned, network-isolated PostgreSQL 17.4 container confirms
+20 column identities independently through pg_attribute and 40 JSON/YAML receipt
+recoveries. The harness removes its owned container. Chromium 148 repeats 20
+classifications, 40 exact recoveries, two conflict blocks and stale-receipt refusal
+without external requests or host globals. Typecheck/build and audits of 183
+schemas / 32 packages pass. See
+[PostgreSQL Field evidence](../../../../fixtures/validation/field-postgresql-evidence.json).
+
+This adds a second up-classification foundation, not a second complete binding.
+PostgreSQL record/DDL/down-projection and ideal recovery remain required, as do
+SQL Server, Avro and Parquet ideal bindings and the full Field conformance gate.

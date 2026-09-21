@@ -1,0 +1,9 @@
+export {};
+const schema=await Bun.file('spec/core/tablespec-field-classification.schema.json').json();
+schema.$id='urn:umf:core:postgresql-field-classification:1.0.0';schema.title='PostgreSQL 17.4 catalog column Field classification';
+schema.properties.operation.const='classify-postgresql-field';
+schema.properties.request.required.push('nativeSource');schema.properties.request.properties.nativeSource={type:'string',maxLength:4000000};schema.properties.request.properties.column={type:'string',minLength:1};
+schema.properties.binding.const={id:'umf.postgresql.catalog.field',version:'1.0.0',nativeVersion:'17.4',subset:'Captured catalog column membership; excludes raw DDL and native constraint/value equivalence'};
+schema.properties.mapping.properties.basis.const='checked-catalog-column-membership';
+schema.required.push('diagnostics');schema.properties.diagnostics={type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{const:'error'}}}};
+await Bun.write('spec/core/postgresql-field-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
