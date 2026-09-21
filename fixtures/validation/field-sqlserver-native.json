@@ -1,0 +1,297 @@
+{
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "version": "16.0.4295.3",
+  "nativeSource": "{\n  \"profile\": \"sqlserver-catalog-v1\",\n  \"state\": \"captured\",\n  \"serverVersion\": \"16.0.4295.3\",\n  \"query\": \"SET NOCOUNT ON;\\nSELECT 'sqlserver-catalog-v1' AS profile, 'captured' AS state,\\n CONVERT(nvarchar(128),SERVERPROPERTY('ProductVersion')) AS serverVersion,\\n 'native/sqlserver/catalog.sql' AS query,\\n JSON_QUERY(COALESCE((SELECT SCHEMA_NAME(t.schema_id) AS [schema],t.name,\\n  JSON_QUERY(COALESCE((SELECT c.name,c.column_id,c.system_type_id,c.user_type_id,\\n   SCHEMA_NAME(ty.schema_id) AS type_schema,ty.name AS type_name,bt.name AS base_type_name,\\n   ty.is_user_defined,ty.is_assembly_type,c.max_length,c.precision,c.scale,\\n   c.is_nullable,c.is_identity,c.is_computed,c.collation_name,\\n   OBJECT_DEFINITION(c.default_object_id) AS default_definition,cc.definition AS computed_definition,\\n   CONVERT(nvarchar(128),ic.seed_value) AS identity_seed,\\n   CONVERT(nvarchar(128),ic.increment_value) AS identity_increment,\\n   CONVERT(nvarchar(max),ep.value) AS description\\n   FROM sys.columns c JOIN sys.types ty ON ty.user_type_id=c.user_type_id\\n   LEFT JOIN sys.types bt ON bt.user_type_id=c.system_type_id AND bt.system_type_id=bt.user_type_id\\n   LEFT JOIN sys.computed_columns cc ON cc.object_id=c.object_id AND cc.column_id=c.column_id\\n   LEFT JOIN sys.identity_columns ic ON ic.object_id=c.object_id AND ic.column_id=c.column_id\\n   LEFT JOIN sys.extended_properties ep ON ep.class=1 AND ep.major_id=c.object_id AND ep.minor_id=c.column_id AND ep.name=N'MS_Description'\\n   WHERE c.object_id=t.object_id ORDER BY c.column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n  FROM sys.tables t WHERE t.is_ms_shipped=0 ORDER BY SCHEMA_NAME(t.schema_id),t.name\\n  FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS tables\\nFOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;\\n\",\n  \"tables\": [\n    {\n      \"schema\": \"sales\",\n      \"name\": \"LegacyTimestamp\",\n      \"columns\": [\n        {\n          \"name\": \"id\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"version_stamp\",\n          \"column_id\": 2,\n          \"system_type_id\": 189,\n          \"user_type_id\": 189,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"timestamp\",\n          \"base_type_name\": \"timestamp\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ]\n    },\n    {\n      \"schema\": \"sales\",\n      \"name\": \"Types\",\n      \"columns\": [\n        {\n          \"name\": \"id\",\n          \"column_id\": 1,\n          \"system_type_id\": 127,\n          \"user_type_id\": 127,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bigint\",\n          \"base_type_name\": \"bigint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 19,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": true,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": \"9007199254740993\",\n          \"identity_increment\": \"1\",\n          \"description\": null\n        },\n        {\n          \"name\": \"flag\",\n          \"column_id\": 2,\n          \"system_type_id\": 104,\n          \"user_type_id\": 104,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bit\",\n          \"base_type_name\": \"bit\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 1,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": \"((1))\",\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"tiny\",\n          \"column_id\": 3,\n          \"system_type_id\": 48,\n          \"user_type_id\": 48,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"tinyint\",\n          \"base_type_name\": \"tinyint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 3,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"small\",\n          \"column_id\": 4,\n          \"system_type_id\": 52,\n          \"user_type_id\": 52,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"smallint\",\n          \"base_type_name\": \"smallint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 5,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"ordinary\",\n          \"column_id\": 5,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"exact\",\n          \"column_id\": 6,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 17,\n          \"precision\": 38,\n          \"scale\": 9,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": \"Exact decimal amount\"\n        },\n        {\n          \"name\": \"numeric_value\",\n          \"column_id\": 7,\n          \"system_type_id\": 108,\n          \"user_type_id\": 108,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"numeric\",\n          \"base_type_name\": \"numeric\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 13,\n          \"precision\": 20,\n          \"scale\": 3,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"cash\",\n          \"column_id\": 8,\n          \"system_type_id\": 60,\n          \"user_type_id\": 60,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"money\",\n          \"base_type_name\": \"money\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 19,\n          \"scale\": 4,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"small_cash\",\n          \"column_id\": 9,\n          \"system_type_id\": 122,\n          \"user_type_id\": 122,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"smallmoney\",\n          \"base_type_name\": \"smallmoney\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 4,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"approximate\",\n          \"column_id\": 10,\n          \"system_type_id\": 62,\n          \"user_type_id\": 62,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"float\",\n          \"base_type_name\": \"float\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 53,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"single\",\n          \"column_id\": 11,\n          \"system_type_id\": 59,\n          \"user_type_id\": 59,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"real\",\n          \"base_type_name\": \"real\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 24,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"words\",\n          \"column_id\": 12,\n          \"system_type_id\": 167,\n          \"user_type_id\": 167,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varchar\",\n          \"base_type_name\": \"varchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 40,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_BIN2\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"unicode_words\",\n          \"column_id\": 13,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 80,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"unlimited\",\n          \"column_id\": 14,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"fixed_text\",\n          \"column_id\": 15,\n          \"system_type_id\": 175,\n          \"user_type_id\": 175,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"char\",\n          \"base_type_name\": \"char\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"unicode_fixed\",\n          \"column_id\": 16,\n          \"system_type_id\": 239,\n          \"user_type_id\": 239,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nchar\",\n          \"base_type_name\": \"nchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"bytes\",\n          \"column_id\": 17,\n          \"system_type_id\": 165,\n          \"user_type_id\": 165,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varbinary\",\n          \"base_type_name\": \"varbinary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"fixed_bytes\",\n          \"column_id\": 18,\n          \"system_type_id\": 173,\n          \"user_type_id\": 173,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"binary\",\n          \"base_type_name\": \"binary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"version_stamp\",\n          \"column_id\": 19,\n          \"system_type_id\": 189,\n          \"user_type_id\": 189,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"timestamp\",\n          \"base_type_name\": \"timestamp\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"day\",\n          \"column_id\": 20,\n          \"system_type_id\": 40,\n          \"user_type_id\": 40,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"date\",\n          \"base_type_name\": \"date\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 3,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"clock\",\n          \"column_id\": 21,\n          \"system_type_id\": 41,\n          \"user_type_id\": 41,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"time\",\n          \"base_type_name\": \"time\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 16,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"local_stamp\",\n          \"column_id\": 22,\n          \"system_type_id\": 42,\n          \"user_type_id\": 42,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"datetime2\",\n          \"base_type_name\": \"datetime2\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 27,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"instant\",\n          \"column_id\": 23,\n          \"system_type_id\": 43,\n          \"user_type_id\": 43,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"datetimeoffset\",\n          \"base_type_name\": \"datetimeoffset\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 10,\n          \"precision\": 34,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"legacy_stamp\",\n          \"column_id\": 24,\n          \"system_type_id\": 61,\n          \"user_type_id\": 61,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"datetime\",\n          \"base_type_name\": \"datetime\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 23,\n          \"scale\": 3,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"small_stamp\",\n          \"column_id\": 25,\n          \"system_type_id\": 58,\n          \"user_type_id\": 58,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"smalldatetime\",\n          \"base_type_name\": \"smalldatetime\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 16,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"amount\",\n          \"column_id\": 26,\n          \"system_type_id\": 106,\n          \"user_type_id\": 257,\n          \"type_schema\": \"sales\",\n          \"type_name\": \"Amount\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": true,\n          \"is_assembly_type\": false,\n          \"max_length\": 9,\n          \"precision\": 18,\n          \"scale\": 4,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"identifier\",\n          \"column_id\": 27,\n          \"system_type_id\": 36,\n          \"user_type_id\": 36,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"uniqueidentifier\",\n          \"base_type_name\": \"uniqueidentifier\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 16,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"document\",\n          \"column_id\": 28,\n          \"system_type_id\": 241,\n          \"user_type_id\": 241,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"xml\",\n          \"base_type_name\": \"xml\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"variant\",\n          \"column_id\": 29,\n          \"system_type_id\": 98,\n          \"user_type_id\": 98,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"sql_variant\",\n          \"base_type_name\": \"sql_variant\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8016,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"computed\",\n          \"column_id\": 30,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": true,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": \"([ordinary]+(1))\",\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ]\n    }\n  ]\n}\n",
+  "rows": [
+    {
+      "path": "/tables/0/columns/0",
+      "name": "id",
+      "table": {
+        "schema": "sales",
+        "name": "LegacyTimestamp"
+      },
+      "scalarType": "integer"
+    },
+    {
+      "path": "/tables/0/columns/1",
+      "name": "version_stamp",
+      "table": {
+        "schema": "sales",
+        "name": "LegacyTimestamp"
+      },
+      "scalarType": "binary"
+    },
+    {
+      "path": "/tables/1/columns/0",
+      "name": "id",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "integer"
+    },
+    {
+      "path": "/tables/1/columns/1",
+      "name": "flag",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "boolean"
+    },
+    {
+      "path": "/tables/1/columns/2",
+      "name": "tiny",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "integer"
+    },
+    {
+      "path": "/tables/1/columns/3",
+      "name": "small",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "integer"
+    },
+    {
+      "path": "/tables/1/columns/4",
+      "name": "ordinary",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "integer"
+    },
+    {
+      "path": "/tables/1/columns/5",
+      "name": "exact",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "decimal"
+    },
+    {
+      "path": "/tables/1/columns/6",
+      "name": "numeric_value",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "decimal"
+    },
+    {
+      "path": "/tables/1/columns/7",
+      "name": "cash",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "decimal"
+    },
+    {
+      "path": "/tables/1/columns/8",
+      "name": "small_cash",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "decimal"
+    },
+    {
+      "path": "/tables/1/columns/9",
+      "name": "approximate",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "float"
+    },
+    {
+      "path": "/tables/1/columns/10",
+      "name": "single",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "float"
+    },
+    {
+      "path": "/tables/1/columns/11",
+      "name": "words",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "string"
+    },
+    {
+      "path": "/tables/1/columns/12",
+      "name": "unicode_words",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "string"
+    },
+    {
+      "path": "/tables/1/columns/13",
+      "name": "unlimited",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "string"
+    },
+    {
+      "path": "/tables/1/columns/14",
+      "name": "fixed_text",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "string"
+    },
+    {
+      "path": "/tables/1/columns/15",
+      "name": "unicode_fixed",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "string"
+    },
+    {
+      "path": "/tables/1/columns/16",
+      "name": "bytes",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "binary"
+    },
+    {
+      "path": "/tables/1/columns/17",
+      "name": "fixed_bytes",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "binary"
+    },
+    {
+      "path": "/tables/1/columns/18",
+      "name": "version_stamp",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "binary"
+    },
+    {
+      "path": "/tables/1/columns/19",
+      "name": "day",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "date"
+    },
+    {
+      "path": "/tables/1/columns/20",
+      "name": "clock",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "time"
+    },
+    {
+      "path": "/tables/1/columns/21",
+      "name": "local_stamp",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "timestamp"
+    },
+    {
+      "path": "/tables/1/columns/22",
+      "name": "instant",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "timestamp"
+    },
+    {
+      "path": "/tables/1/columns/23",
+      "name": "legacy_stamp",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "timestamp"
+    },
+    {
+      "path": "/tables/1/columns/24",
+      "name": "small_stamp",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "timestamp"
+    },
+    {
+      "path": "/tables/1/columns/25",
+      "name": "amount",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "decimal"
+    },
+    {
+      "path": "/tables/1/columns/26",
+      "name": "identifier",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": null
+    },
+    {
+      "path": "/tables/1/columns/27",
+      "name": "document",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": null
+    },
+    {
+      "path": "/tables/1/columns/28",
+      "name": "variant",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": null
+    },
+    {
+      "path": "/tables/1/columns/29",
+      "name": "computed",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "scalarType": "integer"
+    }
+  ],
+  "recoveries": 64,
+  "scope": "Captured native member roles; permission-limited, no ideal identity/constraint inference"
+}

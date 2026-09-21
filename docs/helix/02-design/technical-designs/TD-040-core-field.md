@@ -702,3 +702,37 @@ Structural policy conformance is now shared across these ten result schemas.
 Common mapping/residual metadata, structured type references, remaining native
 bindings and the full admission record remain required; this does not close the
 Field bead or the overall goal.
+
+## SQL Server captured Field classification
+
+`classifySqlServerField` now derives Field kind from checked native column
+membership for SQL Server build 16.0.4295.3. The operation accepts an explicitly
+migrated envelope, selected capture path, exact native capture archive and
+strict/report policy, plus optional verified author provenance. Its JSON Schema
+uses the shared classification policy. Existing kinds require matching author
+provenance; conflicts block both modes without a target. Native/core metadata
+mismatches, stale archives and unsupported server builds are rejected.
+
+The mapping retains the complete native column fragment and exact capture path.
+Alias, computed, identity, rowversion, collation and native type details remain
+extension content. Field classification neither infers a portable key from an
+index nor promotes native nullability/enforcement flags. Unknown scalar families
+still classify as fields. Capture correspondence is permission-limited and is
+not an assertion that arbitrary supplied metadata came from a live server.
+`recoverSqlServerFieldCapture` recomputes the receipt and checks the current model
+before returning the exact retained capture, including whitespace and unknown
+numeric tokens.
+
+Ten tests pass 298 assertions across Field, existing catalog and index behavior.
+A fresh isolated container using the existing pinned SQL Server image checks
+32 native column memberships against an independent catalog query and passes
+64 JSON/YAML capture recoveries. The harness also retains its DDL replay and
+identity/computed/rowversion checks. Chromium 148 passes the same 32 classifications
+and 64 recoveries, both authored-conflict policies and a stale-receipt refusal.
+Typechecking, browser build and all 189 schema / 32 package checks pass. See
+[SQL Server Field evidence](../../../../fixtures/validation/field-sqlserver-evidence.json).
+
+SQL Server record classification and authored down-projection remain unfinished,
+along with Avro/Parquet Field bindings, common mapping/residual metadata and
+structured references. This scoped up-classifier does not close the SQL Server
+binding or the overall Field admission gate.

@@ -1,0 +1,33 @@
+{
+  "scope": "SQL Server 16.0.4295.3 captured native column Field roles and exact capture archive recovery; no key/nullability/value-domain equivalence",
+  "commands": [
+    "bun test tests/core-ideals/field-sqlserver.test.ts tests/sqlserver/catalog.test.ts tests/sqlserver/indexes.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-sqlserver-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-sqlserver-browser.ts"
+  ],
+  "results": {
+    "tests": 10,
+    "assertions": 298,
+    "typecheck": "passed",
+    "schemasPassed": 189,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9867068,
+    "nativeColumns": 32,
+    "nativeRecoveries": 64,
+    "browserColumns": 32,
+    "browserRecoveries": 64
+  },
+  "sha256": {
+    "src/core-ideals/sqlserver-field.ts": "6c1f1cba034f074b4036e8a3e257e820bf6f9286a978ba24ac6fc69062c787e7",
+    "spec/core/sqlserver-field-classification.schema.json": "baf5256a6974d1b19a3c3d868cffc54864078080ebe79048f5a895c30a9bbdf3",
+    "scripts/core-ideals/sqlserver-field-schema.ts": "a524b2d4b10acd4772d40d0fc5df6780f41f7d6751a73c563b74dd9c2d53ecd3",
+    "scripts/core-ideals/field-sqlserver-oracle.ts": "d93977a57f73c962f1cdf334bf71cf5621a238f32b06fa9a63ab90de34dc7cbb",
+    "scripts/core-ideals/field-sqlserver-browser.ts": "8bfe3c0ef1e5497fe0e84a9817c5736cc7c1b1c9a1bce8bdde2a2f90fb52726c",
+    "tests/core-ideals/field-sqlserver.test.ts": "77fd5fe13807887865bb70f5d05bd9f6d7eb993dca572ed6af4080aec7644f61",
+    "fixtures/validation/field-sqlserver-native.json": "30845be2b4a0aa650ece07b8c0094a4164da55e6f86a8737d862290b88b24684",
+    "fixtures/validation/field-sqlserver-browser.json": "9ccc5b6c40398dc040065d0b7303aa7994fff8be30404d56b2f89998e5afb0cc"
+  }
+}
