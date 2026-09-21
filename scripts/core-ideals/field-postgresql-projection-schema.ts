@@ -1,0 +1,10 @@
+export {};
+const schema=await Bun.file('spec/core/field-tablespec-projection.schema.json').json();
+schema.$id='urn:umf:core:field-postgresql-projection:1.0.0';schema.title='Authored Field to PostgreSQL 17.4 DDL';schema.properties.operation.const='project-field-postgresql';
+schema.properties.request.required.push('namespace');schema.properties.request.properties.namespace={type:'string',minLength:1};
+schema.properties.request.properties.nativeType.enum=['boolean','smallint','integer','bigint','numeric','real','double precision','text','bytea','date','time','time with time zone','timestamp','timestamp with time zone'];
+schema.properties.binding.const={id:'umf.core.field.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored Field with explicit pg_catalog carrier; no value-domain or execution equivalence'};
+schema.properties.mapping.properties.nativePath.const='/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';
+schema.properties.nativeSql={type:'string',minLength:1};schema.allOf[0].then.required.push('nativeSql');schema.allOf[0].then.properties.nativeSql=true;schema.allOf[0].else.properties.nativeSql=false;
+schema.required.push('diagnostics');schema.properties.diagnostics={type:'array',items:{type:'object',additionalProperties:false,required:['code','path','message','severity'],properties:{code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{enum:['error','warning']}}}};
+await Bun.write('spec/core/field-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');

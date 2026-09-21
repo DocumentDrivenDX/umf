@@ -1,0 +1,36 @@
+{
+  "scope": "Single authored Field to explicit PostgreSQL 17.4 built-in carrier, pinned syntax backend and retained-report ideal recovery; no value-domain equivalence",
+  "commands": [
+    "bun test tests/core-ideals/field-postgresql-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/field-postgresql-projection-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 4,
+    "assertions": 134,
+    "typecheck": "passed",
+    "schemasPassed": 185,
+    "packagesPassed": 32,
+    "browserBuildBytes": 9785986,
+    "nativeExecuted": 15,
+    "nativeClassified": 15,
+    "browserProjections": 15,
+    "browserIdealRecoveries": 30,
+    "identifierRefusals": 4
+  },
+  "sha256": {
+    "src/core-ideals/field-postgresql-projection.ts": "df6c2412d703d3cd382be6b24f4e6fe7a71f4a08779d42c3e4dfb325179c510b",
+    "spec/core/field-postgresql-projection.schema.json": "a556b93b5fa9c0f2d076cf80971dff7c2b77803eb0e2810a3b6b46c6f93436d6",
+    "scripts/core-ideals/field-postgresql-projection-schema.ts": "3bf35169caf59873a4de24675796e81a9ac76ef93b467c6a59c320526e183910",
+    "scripts/core-ideals/field-postgresql-projection-cases.ts": "30e0140ec70a76233f27fcb59bf1a533a78f4394d0cac0383c654ba6fff1ce9d",
+    "scripts/core-ideals/field-postgresql-projection-oracle.ts": "0fc99817e1b6e012620aabeba2659b327cbc2824b6911170d65f2397db3e9d6a",
+    "scripts/core-ideals/field-postgresql-projection-browser.ts": "9cfce62712ef84f5eea1affe55f4f05d76eb3c546b42815218163b3711666af8",
+    "tests/core-ideals/field-postgresql-projection.test.ts": "304464b83a2556c00c5d2a8f88b657557e7fae84131a611982d798e80c41bfb3",
+    "fixtures/validation/field-postgresql-projection-native.json": "c7d0aa01c045f90acc89f6733134d832f9f71eea327fa03f2634c29355044335",
+    "fixtures/validation/field-postgresql-projection-browser.json": "4cd539ed406a22454baf6f143a2a17337ccc2a9798506129c3a40c36b6628d9a"
+  }
+}

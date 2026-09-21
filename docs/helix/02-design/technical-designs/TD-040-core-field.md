@@ -445,3 +445,41 @@ packages pass. See [record evidence](../../../../fixtures/validation/record-post
 PostgreSQL down-projection, raw DDL/composite mappings, shared conformance and the
 remaining three native bindings remain unfinished. Neither this record classifier
 nor the earlier TableSpec work completes the Field admission gate.
+
+## PostgreSQL single-Field down-projection
+
+`projectFieldToPostgresql` now emits reviewable CREATE TABLE and optional column
+COMMENT DDL for one verified authored Field, with an explicit namespace/table/
+column binding and one of fourteen native built-in type choices. Every type is
+qualified through pg_catalog; user search-path domains cannot replace it. Native
+identifiers are quoted, bounded to 63 UTF-8 bytes, and reject NUL/unpaired surrogates
+before parsing. Comments use escaped literals. Namespace creation, permissions,
+existing-object policy and SQL execution remain outside the browser library.
+
+The caller supplies the pinned `@libpg-query/parser@17.6.10` backend. Generated SQL
+is parsed into the existing PostgreSQL extension, while exact emitted text appears
+as nativeSql. Target AST syntax does not imply catalog resolution or value-domain
+equivalence. Mapping paths address the generated raw AST. The request/result schema
+is `spec/core/field-postgresql-projection.schema.json`.
+
+Strict blocks renamed fields, mismatched scalar families and unprojected source
+metadata. Report retains source assertions, residuals and diagnostics with the
+complete candidate. Neither mode lowers a record/group into one column. Unknown
+facets or constraints are not silently honored. `recoverFieldFromPostgresql`
+recomputes the retained receipt with the explicit backend and checks emitted text
+before recovering author meaning; native-only recapture has classified provenance.
+
+Evidence: four Bun tests / 134 assertions pass, including identifier boundaries,
+quoted Unicode names/comments and loss policies. A fresh pinned PostgreSQL 17.4
+container executes fifteen emitted schemas under a shadowing search path and
+verifies requested type OIDs, builtin namespaces, names and comments. Native-only
+recapture classifies fifteen fields. Chromium 148 with the pinned WASM backend
+matches all fifteen projection results and thirty JSON/YAML ideal recoveries,
+plus strict/report and invalid-identifier checks, without external requests or
+host globals. Typecheck/build, optional WASM build, and audits of 185 schemas / 32
+packages pass. See [down-projection evidence](../../../../fixtures/validation/field-postgresql-projection-evidence.json).
+
+The full PostgreSQL binding still needs authored-record down-projection and
+raw-DDL/composite classification. Shared conformance and SQL Server/Avro/Parquet
+Field bindings remain unfinished. No native concept is removed or graduated to
+core equivalence by this operation.
