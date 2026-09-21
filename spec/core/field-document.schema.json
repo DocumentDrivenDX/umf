@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:0.2.0",
+  "title": "UMF 0.2.0 experimental field envelope",
+  "type": "object",
+  "required": [
+    "umf",
+    "id",
+    "vocabularies",
+    "modules"
+  ],
+  "properties": {
+    "umf": {
+      "const": "0.2.0"
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "vocabularies": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/id"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "version"
+        ],
+        "properties": {
+          "version": {
+            "$ref": "#/$defs/version"
+          }
+        }
+      }
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/module"
+      }
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "knownScalarType": {
+      "enum": [
+        "boolean",
+        "integer",
+        "decimal",
+        "float",
+        "string",
+        "binary",
+        "date",
+        "time",
+        "timestamp"
+      ],
+      "description": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+    },
+    "scalarType": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/knownScalarType"
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "$ref": "#/$defs/knownScalarType"
+          },
+          "description": "Unknown family retained with incomplete semantic validation."
+        }
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/id"
+      },
+      "additionalProperties": true
+    },
+    "reference": {
+      "type": "object",
+      "required": [
+        "role",
+        "module",
+        "element"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/id"
+        },
+        "module": {
+          "$ref": "#/$defs/id"
+        },
+        "element": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "required": [
+        "id",
+        "extensions"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "scalarType": {
+          "$ref": "#/$defs/scalarType"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "record",
+                  "group"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scalarType": false
+            }
+          }
+        }
+      ]
+    },
+    "module": {
+      "type": "object",
+      "required": [
+        "id",
+        "namespace",
+        "elements"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      }
+    },
+    "knownElementKind": {
+      "enum": [
+        "field",
+        "record",
+        "group"
+      ]
+    }
+  },
+  "description": "Opt-in field/record/group roles. No implicit upgrade from 0.1.0. Provenance, migration and binding evidence remain required."
+}

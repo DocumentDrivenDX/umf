@@ -1,0 +1,10 @@
+export {};
+const schema=await Bun.file('spec/core/schema.json').json();
+schema.$id='urn:umf:core:0.2.0';
+schema.title='UMF 0.2.0 experimental field envelope';
+schema.description='Opt-in field/record/group roles. No implicit upgrade from 0.1.0. Provenance, migration and binding evidence remain required.';
+schema.properties.umf.const='0.2.0';
+schema.$defs.knownElementKind={enum:['field','record','group']};
+schema.$defs.element.properties.kind={type:'string',minLength:1,description:'UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType.'};
+schema.$defs.element.allOf=[{if:{required:['kind'],properties:{kind:{enum:['record','group']}}},then:{properties:{scalarType:false}}}];
+await Bun.write('spec/core/field-document.schema.json',JSON.stringify(schema,null,2)+'\n');

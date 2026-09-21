@@ -72,6 +72,15 @@ Consumer selection must preserve source identity and source paths, not merge nam
 
 ## Data Model Changes
 
+The initial implementation selects a separate experimental envelope `umf: "0.2.0"`
+with schema ID `urn:umf:core:0.2.0`. Version `0.1.0` retains its current schema
+and interpretation, including opaque `kind` members of any JSON shape. Only
+`0.2.0` interprets field/record/group. No automatic upgrade is permitted.
+Unknown kind strings are preserved without interpretation; record/group cannot
+carry scalarType. Validation reports this envelope as experimental and incomplete
+until provenance, explicit migration/rollback and admission evidence are present.
+The version choice precedes schema publication; it is not a release or admission.
+
 Add this concept incrementally, retaining author/classification provenance and
 native extension data. An absent member on an old model asserts nothing. No
 schema file changes are made in this documentation evolution. No database migration
@@ -143,3 +152,24 @@ and follow-up bindings; report mode must never imply execution enforcement.
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
 - [ ] Schema/version transition, five bindings and regression evidence implemented.
+
+## Initial envelope execution evidence
+
+The first implementation slice adds `spec/core/field-document.schema.json` and
+version-aware validation. `0.1.0` is unchanged; there is no upgrade API yet.
+`0.2.0` accepts explicit field/record/group, preserves unknown kind strings,
+rejects structured scalar assertions, and always reports experimental/incomplete
+validation. No native adapter emits this version yet.
+
+Bun core regression: 32 tests, 415 assertions, zero failures. Chromium 148 checks
+40 version/kind/scalar combinations and 56 JSON/YAML recoveries, with no external
+requests or runtime host globals. Typecheck and browser build pass; 176 schemas
+and 32 packages pass their audits. Source fingerprints and exact commands are in
+[the envelope evidence](../../../../fixtures/validation/core-field-envelope.json);
+[browser evidence](../../../../fixtures/validation/core-field-browser.json) records
+its scoped results.
+
+The core Field bead remains in progress. Explicit migration/rollback (including
+retained new assertions), provenance, operation/result schemas and typed consumer
+access are still required before core task completion. Five-system native binding
+and admission evidence remain separate queued work.
