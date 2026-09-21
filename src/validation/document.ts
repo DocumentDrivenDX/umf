@@ -18,7 +18,7 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
     return {valid: false, complete: false, diagnostics};
   }
   const doc = value as Document;
-  if(doc.umf==='0.2.0')add('EXPERIMENTAL_CORE_FIELDS','/umf','Field envelope is experimental; migration, provenance and admission evidence remain incomplete','warning');
+  if(doc.umf==='0.2.0')add('EXPERIMENTAL_CORE_FIELDS','/umf','Field envelope is experimental; provenance and native admission evidence remain incomplete','warning');
   const unknown = (obj: object, known: string[], path: string) => {
     for (const key of Object.keys(obj)) if (!known.includes(key)) add('UNKNOWN_CORE_FIELD', `${path}/${pointer(key)}`, 'Field retained without interpretation', 'warning');
   };

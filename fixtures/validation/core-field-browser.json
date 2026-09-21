@@ -1,9 +1,10 @@
 {
-  "scope": "Experimental Field envelope validation and legacy collision recovery only; no migration, provenance or native binding claim",
+  "scope": "Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; no provenance or native binding claim",
   "browser": "148.0.7778.0",
   "checks": {
     "decisions": 40,
     "recoveries": 56,
+    "transitions": 40,
     "hostGlobalsAbsent": true
   },
   "externalRequests": []

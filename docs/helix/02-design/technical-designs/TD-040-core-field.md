@@ -156,7 +156,8 @@ and follow-up bindings; report mode must never imply execution enforcement.
 ## Initial envelope execution evidence
 
 The first implementation slice adds `spec/core/field-document.schema.json` and
-version-aware validation. `0.1.0` is unchanged; there is no upgrade API yet.
+version-aware validation. `0.1.0` is unchanged. The initial evidence below predates
+the explicit transition API described in the next section.
 `0.2.0` accepts explicit field/record/group, preserves unknown kind strings,
 rejects structured scalar assertions, and always reports experimental/incomplete
 validation. No native adapter emits this version yet.
@@ -169,7 +170,35 @@ and 32 packages pass their audits. Source fingerprints and exact commands are in
 [browser evidence](../../../../fixtures/validation/core-field-browser.json) records
 its scoped results.
 
-The core Field bead remains in progress. Explicit migration/rollback (including
+At that initial checkpoint the core Field bead remained in progress. Migration/rollback (including
 retained new assertions), provenance, operation/result schemas and typed consumer
-access are still required before core task completion. Five-system native binding
+access were still required before core task completion. Five-system native binding
 and admission evidence remain separate queued work.
+
+## Explicit envelope transition
+
+`upgradeFieldEnvelope` now copies a valid 0.1.0 model, archives every element
+`kind` member in a path-qualified residual, and emits 0.2.0 without inferred
+kinds. Known-looking legacy strings receive the same treatment as arbitrary JSON.
+The receipt keeps the full original envelope, including unknown native content.
+`field-transition.schema.json` describes upgrade and rollback receipts.
+
+`rollbackFieldEnvelope` checks the receipt against recomputation from its retained
+source. It restores the original 0.1.0 model and retains the complete current 0.2.0
+model in the rollback receipt's source. Later assertions and native edits therefore
+survive separately; rollback does not apply them to an older interpreter. Receipts
+are consistency records, not cryptographic authentication. Recovery concerns model
+content, not original outer JSON/YAML formatting. Native archives stay unchanged.
+
+Core regression passed 36 tests and 466 assertions. After assertion typing repairs,
+the nine Field tests passed 191 assertions; typechecking and browser build pass.
+The schema audit passes 177 schemas and 32 packages. Chromium 148 checks 40
+validation decisions, 56 serialization recoveries and 40 transition cycles with
+edited assertions/native content and inconsistent receipt rejection. No external
+requests or host runtime globals occur. See the current
+[transition evidence](../../../../fixtures/validation/core-field-transition.json).
+
+Field remains in progress: authored/classified provenance, typed consumer access,
+and native projection result schemas are required next, followed by five-system
+binding and separate admission evidence. These transition operations do not
+establish native equivalence or native projection completeness.

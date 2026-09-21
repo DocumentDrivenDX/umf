@@ -13,15 +13,26 @@ try{
  page.on('request',request=>{if(!request.url().startsWith(`http://127.0.0.1:${server.port}/`))external.push(request.url());});
  await page.goto(`http://127.0.0.1:${server.port}/`);
  const checks=await page.evaluate(async()=>{
-  const path='/umf.js';const umf=await import(path);const {cases,expected}=await(await fetch('/cases')).json();let recoveries=0;
+  const path='/umf.js';const umf=await import(path);const {cases,expected}=await(await fetch('/cases')).json();let recoveries=0,transitions=0;
   for(let i=0;i<cases.length;i++){
    const result=umf.validateDocument(cases[i]);if(JSON.stringify(result)!==JSON.stringify(expected[i]))throw Error('Host parity '+i);
+   if(result.valid&&cases[i].umf==='0.1.0')for(const format of ['json','yaml']){
+    const receipt=umf.upgradeFieldEnvelope(cases[i]);
+    const decoded=umf.readJsonValue(umf.writeJsonValue(receipt,format),format);
+    const current=umf.copyJson(decoded.target);current.modules[0].elements[0].kind='field';
+    current.modules[0].elements[0].extensions.future={edited:'retained'};
+    const rollback=umf.rollbackFieldEnvelope(decoded,current);
+    if(JSON.stringify(rollback.target)!==JSON.stringify(cases[i])||JSON.stringify(rollback.source)!==JSON.stringify(current))throw Error('Transition recovery '+i);
+    const altered=umf.copyJson(decoded);altered.target.id='stale';let refused=false;
+    try{umf.rollbackFieldEnvelope(altered,current);}catch{refused=true;}if(!refused)throw Error('Stale receipt accepted');
+    transitions++;
+   }
    if(result.valid)for(const format of ['json','yaml']){const back=umf.readDocument(umf.writeDocument(cases[i],format),format);if(JSON.stringify(back)!==JSON.stringify(cases[i]))throw Error('Recovery '+i);recoveries++;}
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');
-  return {decisions:cases.length,recoveries,hostGlobalsAbsent:true};
+  return {decisions:cases.length,recoveries,transitions,hostGlobalsAbsent:true};
  });
  if(external.length)throw Error('Unexpected external requests');
- const result={scope:'Experimental Field envelope validation and legacy collision recovery only; no migration, provenance or native binding claim',browser:browser.version(),checks,externalRequests:external};
+ const result={scope:'Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; no provenance or native binding claim',browser:browser.version(),checks,externalRequests:external};
  await Bun.write('fixtures/validation/core-field-browser.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
 }finally{await browser?.close();server.stop(true);}

@@ -1,0 +1,43 @@
+{
+  "scope": "Explicit Field envelope upgrade/rollback. No native binding, provenance, equivalence or admission claim.",
+  "results": {
+    "coreTests": 36,
+    "coreAssertions": 466,
+    "fieldRetest": {
+      "tests": 9,
+      "assertions": 191
+    },
+    "typecheck": "passed",
+    "browserBuildBytes": 9701436,
+    "schemasPassed": 177,
+    "packagesPassed": 32,
+    "browser": {
+      "scope": "Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; no provenance or native binding claim",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "decisions": 40,
+        "recoveries": 56,
+        "transitions": 40,
+        "hostGlobalsAbsent": true
+      },
+      "externalRequests": []
+    }
+  },
+  "commands": [
+    "bun test tests/core",
+    "bun test tests/core/field-transition.test.ts tests/core/field-ideals.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-field-browser.ts"
+  ],
+  "sha256": {
+    "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
+    "src/validation/document.ts": "cc38c024997affba42b2cfe3a8e2590de289439c880e6ec0765e54a3d2877885",
+    "spec/core/field-transition.schema.json": "13be1b0b1247d2914fbf1bc6e6ef511544e7c3250c54b2a6a6b66e894b1725dc",
+    "scripts/core-field-transition-schema.ts": "924ad32846369d0bec4be57c52a1e4ffbcdd268f5cc5a373e02bd45adaba61c3",
+    "tests/core/field-transition.test.ts": "41144357beb4667a4f00df2e7718775c7108649065c63d9feac419aaed5df0fe",
+    "scripts/core-field-browser.ts": "88dbafccde7d72b73d562f605707cb6f0e5db0106019c2b29209dfe43559b727",
+    "fixtures/validation/core-field-browser.json": "0be93b45091dc119b07b41c4055284866336a5c1a7f068c25662d4161eba3586"
+  }
+}
