@@ -1,10 +1,11 @@
 export {};
 const schema=await Bun.file('spec/core/postgresql-record-classification.schema.json').json();
-schema.$id='urn:umf:core:postgresql-ddl-kinds:1.0.0';schema.title='Declared PostgreSQL CREATE TABLE record/member roles';schema.properties.operation.const='classify-postgresql-ddl-record';
+schema.$id='urn:umf:core:postgresql-ddl-kinds:1.0.0';schema.title='Declared PostgreSQL table/composite record/member roles';schema.properties.operation.const='classify-postgresql-ddl-record';
 schema.properties.request={type:'object',additionalProperties:false,required:['module','recordId','declaration','mode'],properties:{module:{type:'string',minLength:1},recordId:{type:'string',minLength:1},declaration:{type:'string',minLength:1},mode:{enum:['strict','report']}}};
 schema.properties.binding.const={id:'umf.postgresql.ddl.record',version:'1.0.0',nativeVersion:'17.4',subset:'Explicit CREATE TABLE declaration only; no catalog expansion or statement replay'};
+schema.properties.binding={enum:[schema.properties.binding.const,{id:'umf.postgresql.ddl.composite',version:'1.0.0',nativeVersion:'17.4',subset:'Explicit CREATE TYPE AS composite attributes only; no type resolution or statement replay'}]};
 schema.required.push('scope','namespaceResolution');schema.properties.scope={const:'declared-only'};schema.properties.namespaceResolution={enum:['explicit','create-schema-context','unresolved']};
-schema.properties.mappings.items.properties.basis.enum=['checked-raw-column-declaration','checked-raw-table-declaration'];
+schema.properties.mappings.items.properties.basis.enum=['checked-raw-column-declaration','checked-raw-table-declaration','checked-raw-composite-declaration'];
 schema.properties.diagnostics.items.properties.severity={enum:['error','warning']};
 schema.allOf[0].then.properties.residuals={type:'array'};schema.allOf[0].then.properties.diagnostics={type:'array'};
 await Bun.write('spec/core/postgresql-ddl-kinds.schema.json',JSON.stringify(schema,null,2)+'\n');

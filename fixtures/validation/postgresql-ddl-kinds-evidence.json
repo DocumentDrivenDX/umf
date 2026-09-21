@@ -1,38 +1,38 @@
 {
-  "scope": "Declared-only PostgreSQL 17.4 CREATE TABLE record/member classification; no final catalog, execution replay or native equivalence claim",
+  "scope": "Declared-only PostgreSQL 17.4 table/composite record/member classification; unresolved nested types retained, no final catalog or native equivalence claim",
   "commands": [
-    "bun test tests/core-ideals/postgresql-ddl-kinds.test.ts tests/core-ideals/record-postgresql.test.ts tests/core-ideals/field-postgresql.test.ts tests/postgresql/declarations.test.ts",
+    "bun test tests/core-ideals/postgresql-ddl-kinds.test.ts tests/postgresql/declarations.test.ts",
     "bun run typecheck",
     "bun run build",
     "bun run build:postgresql",
     "bun run test:schemas",
     "bun scripts/core-ideals/postgresql-ddl-kinds-oracle.ts",
-    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/postgresql-ddl-kinds-browser.ts",
-    "python3 .cache/verify-core-ideal-queue.py"
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
   ],
   "results": {
-    "tests": 12,
-    "assertions": 277,
-    "nativeCases": 7,
-    "classifications": 7,
-    "blocks": 7,
-    "browserRecoveries": 14,
+    "tests": 5,
+    "assertions": 218,
+    "nativeCases": 12,
+    "classifications": 14,
+    "blocks": 10,
+    "browserRecoveries": 28,
     "typecheck": "passed",
     "schemasPassed": 187,
     "packagesPassed": 32,
-    "browserBuildBytes": 9812222,
-    "queueBeads": 36,
-    "queueEdges": 54
+    "browserBuildBytes": 9813798
   },
   "sha256": {
-    "src/core-ideals/postgresql-ddl-kinds.ts": "bf92786c2fd631ef2c91d9cd731c66ecaf14967ca3d2f59fb27885e94cdfaed5",
-    "spec/core/postgresql-ddl-kinds.schema.json": "9a6260da04a4478f8dad2f8c932867eeeda354a52867f0aff87a6c25f5d99593",
-    "scripts/core-ideals/postgresql-ddl-kind-schema.ts": "68b9e48556e815fda4ca92df3e5c7e259029a586cbf7ae1a1b898686b359ac16",
-    "scripts/core-ideals/postgresql-ddl-kind-cases.ts": "f17780e19acbe034895632e17ba4980bcb9f042d095839071d3012bb9cef8c57",
-    "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts": "191edc701ddf98b6dbeb7cc4777022e735936d8c6bc7a2734852a63b8407c7cd",
+    "src/core-ideals/postgresql-ddl-kinds.ts": "15aca057292465dd9fc29cd68951f074ba0ce918c089536814b282380b6f7e66",
+    "spec/core/postgresql-ddl-kinds.schema.json": "45b41791fb5b2be8d57327a4f32e456a82695d0b988cf31531a5253cde350b96",
+    "scripts/core-ideals/postgresql-ddl-kind-schema.ts": "e0b234a3df170554e00dd8dc3173395350c3e7a7086e46c4e63d43b362abd9b2",
+    "scripts/core-ideals/postgresql-ddl-kind-cases.ts": "c5b036566e47d174a6013a635af18efda39ed72cdc0cd97305cfa37550be8f40",
+    "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts": "8fe8e0b0610032dd887a7c1aa4e2137924bff04a41f43cd69ab02f72d1c0e2a4",
     "scripts/core-ideals/postgresql-ddl-kinds-browser.ts": "30e082c214561dde06a432b4de7a60200a097b7570817f93f5282c89d9a7818a",
-    "tests/core-ideals/postgresql-ddl-kinds.test.ts": "16065ae33e260127297a54079905f385372adbab1d2764db788a4d2a1836be17",
-    "fixtures/validation/postgresql-ddl-kinds-native.json": "afd66f06c743a5277a0b60a1de93b43597bf0fc6e4502a63ef8a584eab207c07",
-    "fixtures/validation/postgresql-ddl-kinds-browser.json": "4fabb99ea5b4255b859ace657c2790b2d532cfe0cdfd7bc261bcfdaedc58683a"
+    "tests/core-ideals/postgresql-ddl-kinds.test.ts": "8cec9f291da5f31e59211b9dbd1a3bf51b6391fd4e1ef653005a60ada5fab2c6",
+    "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
+    "src/adapters/postgresql/declarations.ts": "e47ebd6366fee86fb8ccaf1270555bcd338957bff511f30cdcae22a088c6d8d9",
+    "spec/extensions/postgresql/ddl-declarations.schema.json": "9faea63c73c254fa77514d2d524a8e87ed75220cac8db0f4e3e497506477f21a",
+    "scripts/postgresql-declaration-schema.ts": "7b649c5635c897fcbd0b2083eb46e7ee36ddeae320e44173ba4a0670beb60b86"
   }
 }

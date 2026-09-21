@@ -6,4 +6,9 @@ export const ddlKindCases=[
  {id:'inheritance',sql:'CREATE TABLE sales.base (id integer); CREATE TABLE sales.child (extra text) INHERITS (sales.base);\n',name:'child',relation:'sales.child',names:['extra'],finalNames:['id','extra'],namespace:'sales',expansion:true,nativeAccepted:true},
  {id:'like',sql:'CREATE TABLE sales.like_copy (LIKE sales.simple);\n',name:'like_copy',relation:'sales.like_copy',names:[],finalNames:['id','payload'],namespace:'sales',expansion:true,nativeAccepted:true},
  {id:'duplicate',sql:'CREATE TABLE sales.duplicate (id integer, id text);\n',name:'duplicate',relation:'sales.duplicate',names:['id','id'],namespace:'sales',expansion:false,nativeAccepted:false},
+ {id:'composite',sql:'-- composite attributes retain collation and nested type syntax\nCREATE TYPE sales.address AS (street pg_catalog.text COLLATE "C", tags integer[]);\n',name:'address',relation:'sales.address',names:['street','tags'],namespace:'sales',expansion:false,nativeAccepted:true},
+ {id:'nested-composite',sql:'CREATE TYPE sales.contact AS (address sales.address, addresses sales.address[]); ALTER TYPE sales.contact ADD ATTRIBUTE later integer;\n',name:'contact',relation:'sales.contact',names:['address','addresses'],finalNames:['address','addresses','later'],namespace:'sales',expansion:false,nativeAccepted:true},
+ {id:'empty-composite',sql:'CREATE TYPE sales.empty_record AS ();\n',name:'empty_record',relation:'sales.empty_record',names:[],namespace:'sales',expansion:false,nativeAccepted:true},
+ {id:'unqualified-composite',sql:'CREATE TYPE local_record AS (id integer);\n',name:'local_record',relation:'sales.local_record',names:['id'],namespace:'',expansion:false,nativeAccepted:true},
+ {id:'duplicate-composite',sql:'CREATE TYPE sales.bad_record AS (id integer, id text);\n',name:'bad_record',relation:'sales.bad_record',names:['id','id'],namespace:'sales',expansion:false,nativeAccepted:false},
 ];

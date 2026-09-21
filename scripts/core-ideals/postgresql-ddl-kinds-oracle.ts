@@ -19,14 +19,16 @@ try{
  for(const c of ddlKindCases){
   let accepted=true;try{await sql('SET search_path=sales,pg_catalog;\n'+c.sql);}catch(error){if(c.nativeAccepted||!String(error).includes('42701'))throw error;accepted=false;}
   if(accepted!==c.nativeAccepted)throw Error('Unexpected native acceptance');
-  let finalNames:string[]=[];if(accepted){finalNames=JSON.parse((await sql("SELECT coalesce(json_agg(attname ORDER BY attnum),'[]'::json) FROM pg_attribute WHERE attrelid='"+c.relation+"'::regclass AND attnum>0 AND NOT attisdropped")).trim());if(JSON.stringify(finalNames)!==JSON.stringify(c.finalNames??c.names))throw Error('Unexpected catalog membership');}
+  let nativeKind:string|null=null;let finalNames:string[]=[];if(accepted){finalNames=JSON.parse((await sql("SELECT coalesce(json_agg(attname ORDER BY attnum),'[]'::json) FROM pg_attribute WHERE attrelid='"+c.relation+"'::regclass AND attnum>0 AND NOT attisdropped")).trim());if(JSON.stringify(finalNames)!==JSON.stringify(c.finalNames??c.names))throw Error('Unexpected catalog membership');}
+  if(accepted)nativeKind=(await sql("SELECT relkind FROM pg_class WHERE oid='"+c.relation+"'::regclass")).trim();
   const source=upgradeFieldEnvelope(await importPostgresqlSql(c.sql,backend,{id:c.id})).target;
   const declaration=getPostgresqlDdlDeclarations(source).declarations.find(d=>d.relation.kind==='object'&&d.relation.members.relname?.kind==='string'&&d.relation.members.relname.value===c.name)!;
+  if(accepted&&nativeKind!==(declaration.kind==='create-composite'?'c':'r'))throw Error('Native relation kind differs');
   for(const mode of ['strict','report'] as const){const request={module:'declared',recordId:'record',declaration:declaration.path,mode},result=await classifyPostgresqlDdlRecord(source,request,backend);
    const blocked=c.expansion||!c.nativeAccepted||c.namespace===''&&mode==='strict';if((result.status==='blocked')!==blocked)throw Error('Unexpected classification');
    if(result.target){if(JSON.stringify(result.target.modules.at(-1)!.elements.slice(1).map(e=>e.name))!==JSON.stringify(c.names))throw Error('Declaration membership');if(await recoverPostgresqlDdlKinds(result,result.target,backend)!==c.sql)throw Error('Source lost');}
-   rows.push({case:c,finalNames,source,request,result});
+   rows.push({case:c,finalNames,nativeKind,source,request,result});
   }
  }
- await Bun.write('fixtures/validation/postgresql-ddl-kinds-native.json',JSON.stringify({scope:'Declared-only CREATE TABLE classification, not final catalog or name resolution',image:manifest.reference,version,rows},null,2)+'\n');console.log(JSON.stringify({cases:ddlKindCases.length,classifications:rows.filter(r=>r.result.target).length,blocked:rows.filter(r=>!r.result.target).length}));
+ await Bun.write('fixtures/validation/postgresql-ddl-kinds-native.json',JSON.stringify({scope:'Declared-only table/composite classification, not final catalog or name resolution',image:manifest.reference,version,rows},null,2)+'\n');console.log(JSON.stringify({cases:ddlKindCases.length,classifications:rows.filter(r=>r.result.target).length,blocked:rows.filter(r=>!r.result.target).length}));
 }finally{if(created)await run(['docker','rm','-f',name]);}

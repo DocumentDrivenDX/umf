@@ -1,3 +1,5 @@
+import {createValidator} from '../../src/validation/schema';
+import declarationsSchema from '../../spec/extensions/postgresql/ddl-declarations.schema.json';
 import {test,expect} from 'bun:test';
 import {ddlKindCases} from '../../scripts/core-ideals/postgresql-ddl-kind-cases';
 import {backend} from '../../native/postgresql/runtime';
@@ -25,4 +27,19 @@ test('collisions, edited AST archives and stale receipts cannot silently publish
  expect((await classifyPostgresqlDdlRecord(source,{...options,module:'schema'},backend)).status).toBe('blocked');
  const edited=proposePostgresqlNodeEdit(source,'/stmts/0/stmt/CreateStmt/relation/relname','"changed"').document;await expect(classifyPostgresqlDdlRecord(edited,options,backend)).rejects.toThrow('archive');
  const result=await classifyPostgresqlDdlRecord(source,options,backend);result.target!.modules.at(-1)!.elements[0]!.name='stale';await expect(recoverPostgresqlDdlKinds(result,result.target!,backend)).rejects.toThrow();
+});
+test('composite attributes preserve collations and unresolved nested types without scalar flattening',async()=>{
+ for(const id of ['composite','nested-composite','empty-composite']){
+  const c=ddlKindCases.find(c=>c.id===id)!,source=upgradeFieldEnvelope(await importPostgresqlSql(c.sql,backend,{id:c.id})).target;
+  const inventory=getPostgresqlDdlDeclarations(source);expect(createValidator().compile(declarationsSchema)(inventory)).toBe(true);const declaration=inventory.declarations.find(d=>d.kind==='create-composite')!;
+  expect(declaration.columns.map(c=>c.element.name)).toEqual(c.names);
+  const result=await classifyPostgresqlDdlRecord(source,{module:'types',recordId:'type',declaration:declaration.path,mode:'strict'},backend);
+  expect(result.binding.id).toBe('umf.postgresql.ddl.composite');expect(result.mappings[0]!.basis).toBe('checked-raw-composite-declaration');
+  const members=result.target!.modules.at(-1)!.elements.slice(1);
+  expect(members.map(e=>e.kind)).toEqual(c.names.map(()=>'field'));
+  expect(members.map(e=>e.scalarType??null)).toEqual(id==='composite'?['string',null]:c.names.map(()=>null));
+  if(id==='composite')expect(JSON.stringify(result.mappings[1]!.nativeFragment)).toContain('collClause');
+  if(id==='nested-composite')expect(inventory.declarations.some(d=>d.kind==='alter-table'&&d.requiresCatalogExpansion)).toBe(true);
+  expect(await recoverPostgresqlDdlKinds(result,result.target!,backend)).toBe(c.sql);
+ }
 });

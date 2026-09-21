@@ -553,3 +553,34 @@ catalog expansion, execution replay or native equivalence. Those limitations,
 shared result conformance and the remaining priority-system bindings keep the
 Field work open. Queue validation still passes all 36 beads and 54 dependency
 edges; this slice does not change scope or close a bead.
+
+## PostgreSQL composite declarations
+
+The declaration inventory and `classifyPostgresqlDdlRecord` now also recognize
+`CREATE TYPE ... AS (...)`. A separate `umf.postgresql.ddl.composite` binding
+(version 1.0.0, PostgreSQL 17.4) classifies the declared type as a record and its
+ordered attributes as fields. The existing table binding identity remains
+unchanged. Both result schemas describe the added declaration/binding variants.
+
+This follows PostgreSQL's [composite-type definition](https://www.postgresql.org/docs/17/rowtypes.html).
+Attribute collation, qualified type names, nested composite references, arrays
+and later `ALTER TYPE` statements remain native content. Unresolved nested types
+are not scalarized or linked by guessing; resolved record-valued references remain
+unfinished. Standalone composite classification does not imply table constraints,
+a storage table, or a final executed catalog. Empty composites are supported.
+Unqualified names follow the existing strict/report namespace policy, and duplicate
+attribute names block the entire candidate in both modes.
+
+Five targeted tests pass 218 assertions, including declaration-schema validation,
+collation retention, unresolved nested types and exact receipt recovery. The
+expanded native oracle executes twelve cases in PostgreSQL 17.4 and independently
+checks relation kind (`r` table versus `c` composite) and final catalog membership.
+Fourteen classifications succeed and ten block across both policies. Chromium 148
+matches all 24 results and verifies 28 JSON/YAML SQL recoveries. Typechecking,
+browser/WASM builds and all 187 schemas / 32 package checks pass. The
+[declaration evidence](../../../../fixtures/validation/postgresql-ddl-kinds-evidence.json)
+now records this expanded scope.
+
+Remaining work includes catalog composite classification, resolved structured
+member references, shared result conformance, the other priority-system Field
+bindings, and the complete admission record. No bead is closed by this extension.
