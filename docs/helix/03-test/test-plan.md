@@ -2854,3 +2854,38 @@ admission, the facet delivery gate and key remain required. No native facet
 enforcement, general row conversion or native equivalence is claimed. The next
 binding is TableSpec under the declared schema/runtime profiles; native refinements
 and unknown numeric tokens must stay attached to any classification/projection.
+
+
+### Qualified TableSpec facet binding
+
+The [acceptance record](../../../fixtures/validation/tablespec-facets-acceptance-evidence.json) covers experimental core 0.5.0 TableSpec facet
+classification, authored projection, strict/report loss handling and verified
+native/ideal recovery. It supersedes the earlier classification/projection
+checkpoints' full-refresh limitation; their original evidence remains historical.
+
+All 80 compatibility-refresh steps pass, including 438 priority tests,
+47,122 assertions across 139 files, type checks,
+264 schemas, 43 extension packages, browser build and qualified native/browser
+checks for existing Field, Nullability and Cardinality bindings. Their three
+separate conformance gates pass after evidence revalidation. This is the core and
+five-priority-system scope, not a new full-repository baseline.
+
+TableSpec evidence uses commit 647e8e566ad78b864282ec65c0b0b2237aa63084,
+Pydantic 2.11.10, JSONSchema 4.25.1, Spark 4.0.1, GX 1.15.1, Java 21.0.2 and
+Chromium 148. The browser matrices cover 1,216 native classification cases,
+80 explicit-suite cases and 540 authored projection cases. Native checks validate
+331 emitted documents and 104 facet representation claims; 11 emitted suite
+rules undergo 63 value checks and two tolerance controls. Recovery preserves
+native text/archives and full authored ideals, including unknown qualifiers.
+
+Profiles keep declarations, raw/normalized generated schemas, baseline GX,
+explicit GX suites and ingest casts separate. Explicit suites support zero length
+and canonical widths within the signed-32-bit Spark carrier. Decimal precision
+and scale remain consumer-specific. Missing facets do not inherit native defaults.
+The binary64-to-binary32 narrowing counterexample remains an exact-input failure.
+Unknown detail, unsupported encodings, shape conflicts and conversion losses
+remain explicit. This does not qualify whole-pipeline execution or write policy.
+
+This closes the TableSpec facet binding only. PostgreSQL, SQL Server, Avro and
+Parquet facet bindings, the distinct facet ideal admission/five-system delivery
+gate, and Key remain required. Native-equivalence graduation is not claimed.

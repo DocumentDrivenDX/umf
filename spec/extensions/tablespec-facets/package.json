@@ -2,7 +2,7 @@
   "id": "umf.tablespec.facets",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental profile-qualified TableSpec facet observations with original native content retained",
+  "description": "Experimental profile-qualified TableSpec facet classification and authored projection with retained source meaning",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:tablespec:facet-binding:1.0.0",
@@ -115,23 +115,28 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification only; native down-projection and binding acceptance pending",
+  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
   "scopes": [
     "element"
   ],
   "capabilities": {
     "validation": "structural",
     "directions": [
-      "import"
+      "import",
+      "export"
     ],
     "native": {
       "system": "TableSpec",
       "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
-      "subset": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence"
+      "subset": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses explicit native scalar carriers and consumer profiles, with strict/report loss handling and retained ideal recovery"
     },
     "evidence": [
       "tests/core-ideals/facets-tablespec.test.ts",
-      "fixtures/validation/facets-tablespec-profile-native.json"
+      "tests/core-ideals/facets-tablespec-suite.test.ts",
+      "tests/core-ideals/facets-tablespec-projection.test.ts",
+      "spec/core/facets-tablespec-projection.schema.json",
+      "fixtures/validation/facets-tablespec-native.json",
+      "fixtures/validation/facets-tablespec-browser.json"
     ]
   }
 }
