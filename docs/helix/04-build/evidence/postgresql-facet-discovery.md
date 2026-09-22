@@ -85,3 +85,30 @@ ASTs, not browser SQL parsing. Source fingerprints, logs and the browser corpus
 are recorded in
 [the predicate checkpoint](../../../../fixtures/validation/facets-postgresql-predicate-evidence.json).
 No new PostgreSQL engine run or full binding acceptance is claimed here.
+
+## Resolved constraint discovery checkpoint
+
+A separate repeatable-read, read-only capture now records PostgreSQL 17.4 CHECK
+expressions with `search_path=pg_catalog`, their raw analyzed node trees,
+referenced column numbers/types, validation/inheritance state and function/operator
+OID lookups. It leaves the existing general catalog query unchanged. This is an
+internal discovery supplement, not an accepted extension package or classifier.
+
+The isolated native run captures twelve constraints. Eight deparsed expressions
+produce syntax candidates; four custom or multi-column expressions are refused.
+Custom functions named `char_length` and `trunc`, and a custom `<=` operator,
+accept over-length text, excess decimal scale and an out-of-range value. Their
+qualified identities differ from the built-ins despite similar names. The capture
+also retains the unvalidated CHECK and its pre-existing NaN row.
+
+The OID lookup extraction supplies catalog observations only. It does not validate
+the complete analyzed node-tree structure, prove correspondence with a separate
+capture, or authorize core facets. Those checks and stored/write-input scope
+qualification remain required before classification. Domain constraints remain
+outside this table-CHECK supplement and retain their earlier native evidence.
+
+Nine Bun tests with 288 assertions pass, including the discovery and syntax
+regressions; typechecking passes. Native value probes record both expected and
+observed results. JSON/YAML serialization preserves the complete supplement.
+This checkpoint adds no browser-library changes or browser qualification claim.
+See [resolved constraint evidence](../../../../fixtures/validation/facets-postgresql-constraints-evidence.json).

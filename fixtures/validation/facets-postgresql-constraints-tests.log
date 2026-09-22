@@ -1,0 +1,21 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-postgresql-constraints.test.ts:
+(pass) native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax [1.05ms]
+(pass) native deparsed checks replay as candidates or explicit refusals with complete retained trees [45.72ms]
+
+tests/core-ideals/facets-postgresql-predicate.test.ts:
+(pass) closed predicate syntax retains exact bounds without claiming resolved enforcement [12.81ms]
+(pass) lookalikes and extra syntax stay native; conjuncts never produce partial claims [4.53ms]
+(pass) unknown AST content, forged versions and unsafe objects are never interpreted [0.81ms]
+
+tests/core-ideals/facets-postgresql-discovery.test.ts:
+(pass) native evidence is pinned and preserves counterexamples to direct core promotion [1.01ms]
+(pass) signed numeric modifiers are decoded without importing misleading information_schema scale [6.58ms]
+(pass) unknown qualifiers survive and unsafe or reserved modifier layouts cannot become native facts [1.38ms]
+(pass) catalog observations and native refinements survive both envelope forms without core facet assertions [561.75ms]
+
+ 9 pass
+ 0 fail
+ 288 expect() calls
+Ran 9 tests across 3 files. [3.22s]

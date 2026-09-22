@@ -1,0 +1,25 @@
+{
+  "scope": "Internal resolved PostgreSQL 17.4 CHECK discovery; no complete node-tree verification, source-pair correspondence, public facet classifier, authored projection or binding acceptance",
+  "native": {
+    "constraints": 12,
+    "syntaxCandidates": 8,
+    "syntaxRefusals": 4,
+    "valueProbes": 4
+  },
+  "bun": {
+    "tests": 9,
+    "assertions": 288,
+    "failures": 0
+  },
+  "typecheck": "passed",
+  "sha256": {
+    "native/postgresql/catalog/facet-constraints.sql": "d5c36255595642a3055210d436169ae06d39abc6894e44b3e251fe6f20061cbd",
+    "fixtures/postgresql/facet-predicate-lookalikes.sql": "34de9221087a1b6e61064855de70a5a3bfcb6c9670ee585ecfa007a1ebdce0be",
+    "scripts/core-ideals/facets-postgresql-constraints-native.ts": "cb3f89e51a25c96addc3411eb1048d3d5a28ef007a90f7489ac6c2d8fa0e32ce",
+    "tests/core-ideals/facets-postgresql-constraints.test.ts": "b5c3b9a287fbf7c039451a2be36a6de71ac2c3b7058bcaad48bd3b106db5ac11",
+    "fixtures/validation/facets-postgresql-constraints-native.json": "3c34754991193bb426a06316b7c064ae1a003b0a531e5619324198cdc2221c3a",
+    "fixtures/validation/facets-postgresql-constraints-tests.log": "6215b15eb883eba993070b6df04d81a414be43d592c4363d2d0057cca90146c9",
+    "fixtures/validation/facets-postgresql-constraints-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "docs/helix/04-build/evidence/postgresql-facet-discovery.md": "c97e73894d6be931e342ceb9a582841a0113d6bead7e4367b9ad51eb08f51edf"
+  }
+}

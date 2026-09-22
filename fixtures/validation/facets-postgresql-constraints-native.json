@@ -1,0 +1,2004 @@
+{
+  "scope": "PostgreSQL 17.4 resolved constraint observations and custom predicate counterexamples. OID lookup extraction does not validate node-tree structure or authorize core facets.",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "query": "-- Internal PostgreSQL 17.4 discovery supplement. Raw node trees remain the\n-- authority for occurrences/structure; these OID lookups alone do not qualify\n-- a predicate or establish that every relevant dependency was interpreted.\nBEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\nSET LOCAL search_path = pg_catalog;\nSELECT jsonb_build_object(\n 'profile','postgresql-facet-constraints-discovery-v1',\n 'serverVersion',current_setting('server_version_num')::integer,\n 'encoding',current_setting('server_encoding'),\n 'constraints',COALESCE((SELECT jsonb_agg(jsonb_build_object(\n  'oid',c.oid::text,'schema',ns.nspname,'relation',r.relname,'relationKind',r.relkind,\n  'name',c.conname,'validated',c.convalidated,'noInherit',c.connoinherit,\n  'isLocal',c.conislocal,'inheritanceCount',c.coninhcount,'parentOid',c.conparentid::text,\n  'columnNumbers',c.conkey,'expression',pg_get_expr(c.conbin,c.conrelid,false),\n  'nodeTree',c.conbin::text,\n  'columns',(SELECT jsonb_agg(jsonb_build_object('number',a.attnum,'name',a.attname,\n   'typeOid',a.atttypid::text,'typeSchema',tn.nspname,'typeName',t.typname,\n   'typeKind',t.typtype,'modifier',a.atttypmod,'dimensions',a.attndims)\n   ORDER BY a.attnum) FROM pg_attribute a JOIN pg_type t ON t.oid=a.atttypid\n   JOIN pg_namespace tn ON tn.oid=t.typnamespace\n   WHERE a.attrelid=c.conrelid AND a.attnum>0 AND NOT a.attisdropped),\n  'operatorLookups',COALESCE((SELECT jsonb_agg(jsonb_build_object(\n   'oid',o.oid::text,'schema',onsp.nspname,'name',o.oprname,\n   'leftTypeOid',o.oprleft::text,'rightTypeOid',o.oprright::text,\n   'resultTypeOid',o.oprresult::text,'functionOid',o.oprcode::oid::text,\n   'functionSchema',pn.nspname,'functionName',p.proname)\n   ORDER BY o.oid) FROM pg_operator o JOIN pg_namespace onsp ON onsp.oid=o.oprnamespace\n   JOIN pg_proc p ON p.oid=o.oprcode JOIN pg_namespace pn ON pn.oid=p.pronamespace\n   WHERE o.oid IN (SELECT (m[1])::oid FROM regexp_matches(c.conbin::text,':opno ([0-9]+)', 'g') m)), '[]'::jsonb),\n  'functionLookups',COALESCE((SELECT jsonb_agg(jsonb_build_object(\n   'oid',p.oid::text,'schema',pn.nspname,'name',p.proname,\n   'argumentTypeOids',p.proargtypes::oid[]::text,'resultTypeOid',p.prorettype::text,\n   'kind',p.prokind,'volatility',p.provolatile,'strict',p.proisstrict)\n   ORDER BY p.oid) FROM pg_proc p JOIN pg_namespace pn ON pn.oid=p.pronamespace\n   WHERE p.oid IN (SELECT (m[1])::oid FROM regexp_matches(c.conbin::text,':funcid ([0-9]+)', 'g') m)), '[]'::jsonb)\n ) ORDER BY ns.nspname,r.relname,c.conname)\n FROM pg_constraint c JOIN pg_class r ON r.oid=c.conrelid\n JOIN pg_namespace ns ON ns.oid=r.relnamespace\n WHERE c.contype='c' AND ns.nspname NOT IN ('pg_catalog','information_schema')\n AND ns.nspname !~ '^pg_toast' AND ns.nspname !~ '^pg_temp'), '[]'::jsonb));\nCOMMIT;\n",
+  "capture": {
+    "profile": "postgresql-facet-constraints-discovery-v1",
+    "encoding": "UTF8",
+    "constraints": [
+      {
+        "oid": "16458",
+        "name": "binary_bound_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "17",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "bytea",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 523 :opfuncid 149 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({FUNCEXPR :funcid 720 :funcresulttype 23 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 17 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1}) :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 2 0 0 0 0 0 0 0 ]}) :location -1}",
+        "relation": "binary_bound",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(octet_length(value) <= 2)",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [
+          {
+            "oid": "720",
+            "kind": "f",
+            "name": "octet_length",
+            "schema": "pg_catalog",
+            "strict": true,
+            "volatility": "i",
+            "resultTypeOid": "23",
+            "argumentTypeOids": "[0:0]={17}"
+          }
+        ],
+        "operatorLookups": [
+          {
+            "oid": "523",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "149",
+            "leftTypeOid": "23",
+            "functionName": "int4le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16423",
+        "name": "decimal_exact_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "1700",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "numeric",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{BOOLEXPR :boolop and :args ({BOOLEXPR :boolop and :args ({OPEXPR :opno 1757 :opfuncid 1721 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 161 231 3 172 38 ]}) :location -1} {OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 129 231 3 172 38 ]}) :location -1}) :location -1} {OPEXPR :opno 1752 :opfuncid 1718 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {FUNCEXPR :funcid 1709 :funcresulttype 1700 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 2 0 0 0 0 0 0 0 ]}) :location -1}) :location -1}) :location -1}",
+        "relation": "decimal_exact",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(((value >= '-999.99'::numeric) AND (value <= 999.99)) AND (value = trunc(value, 2)))",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [
+          {
+            "oid": "1709",
+            "kind": "f",
+            "name": "trunc",
+            "schema": "pg_catalog",
+            "strict": true,
+            "volatility": "i",
+            "resultTypeOid": "1700",
+            "argumentTypeOids": "[0:1]={1700,23}"
+          }
+        ],
+        "operatorLookups": [
+          {
+            "oid": "1752",
+            "name": "=",
+            "schema": "pg_catalog",
+            "functionOid": "1718",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_eq",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          },
+          {
+            "oid": "1755",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "1723",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_le",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          },
+          {
+            "oid": "1757",
+            "name": ">=",
+            "schema": "pg_catalog",
+            "functionOid": "1721",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_ge",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16419",
+        "name": "decimal_finite_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "1700",
+            "modifier": 327686,
+            "typeKind": "b",
+            "typeName": "numeric",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{BOOLEXPR :boolop and :args ({OPEXPR :opno 1757 :opfuncid 1721 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod 327686 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 161 231 3 172 38 ]}) :location -1} {OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod 327686 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 129 231 3 172 38 ]}) :location -1}) :location -1}",
+        "relation": "decimal_finite",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "((value >= '-999.99'::numeric) AND (value <= 999.99))",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [],
+        "operatorLookups": [
+          {
+            "oid": "1755",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "1723",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_le",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          },
+          {
+            "oid": "1757",
+            "name": ">=",
+            "schema": "pg_catalog",
+            "functionOid": "1721",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_ge",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16397",
+        "name": "signed8_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "21",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "int2",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{BOOLEXPR :boolop and :args ({OPEXPR :opno 542 :opfuncid 168 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 21 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 128 255 255 255 255 255 255 255 ]}) :location -1} {OPEXPR :opno 540 :opfuncid 166 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 21 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 127 0 0 0 0 0 0 0 ]}) :location -1}) :location -1}",
+        "relation": "signed8",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "((value >= '-128'::integer) AND (value <= 127))",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [],
+        "operatorLookups": [
+          {
+            "oid": "540",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "166",
+            "leftTypeOid": "21",
+            "functionName": "int24le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          },
+          {
+            "oid": "542",
+            "name": ">=",
+            "schema": "pg_catalog",
+            "functionOid": "168",
+            "leftTypeOid": "21",
+            "functionName": "int24ge",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16446",
+        "name": "text_bound_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "25",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "text",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 523 :opfuncid 149 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({FUNCEXPR :funcid 1381 :funcresulttype 23 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 100 :args ({VAR :varno 1 :varattno 1 :vartype 25 :vartypmod -1 :varcollid 100 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1}) :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 2 0 0 0 0 0 0 0 ]}) :location -1}",
+        "relation": "text_bound",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(char_length(value) <= 2)",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [
+          {
+            "oid": "1381",
+            "kind": "f",
+            "name": "char_length",
+            "schema": "pg_catalog",
+            "strict": true,
+            "volatility": "i",
+            "resultTypeOid": "23",
+            "argumentTypeOids": "[0:0]={25}"
+          }
+        ],
+        "operatorLookups": [
+          {
+            "oid": "523",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "149",
+            "leftTypeOid": "23",
+            "functionName": "int4le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16452",
+        "name": "text_zero_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "25",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "text",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 523 :opfuncid 149 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({FUNCEXPR :funcid 1381 :funcresulttype 23 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 100 :args ({VAR :varno 1 :varattno 1 :vartype 25 :vartypmod -1 :varcollid 100 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1}) :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 0 0 0 0 0 0 0 0 ]}) :location -1}",
+        "relation": "text_zero",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(char_length(value) <= 0)",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [
+          {
+            "oid": "1381",
+            "kind": "f",
+            "name": "char_length",
+            "schema": "pg_catalog",
+            "strict": true,
+            "volatility": "i",
+            "resultTypeOid": "23",
+            "argumentTypeOids": "[0:0]={25}"
+          }
+        ],
+        "operatorLookups": [
+          {
+            "oid": "523",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "149",
+            "leftTypeOid": "23",
+            "functionName": "int4le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16401",
+        "name": "unsigned8_value_check",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "21",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "int2",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{BOOLEXPR :boolop and :args ({OPEXPR :opno 542 :opfuncid 168 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 21 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 0 0 0 0 0 0 0 0 ]}) :location -1} {OPEXPR :opno 540 :opfuncid 166 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 21 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 255 0 0 0 0 0 0 0 ]}) :location -1}) :location -1}",
+        "relation": "unsigned8",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "((value >= 0) AND (value <= 255))",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [],
+        "operatorLookups": [
+          {
+            "oid": "540",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "166",
+            "leftTypeOid": "21",
+            "functionName": "int24le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          },
+          {
+            "oid": "542",
+            "name": ">=",
+            "schema": "pg_catalog",
+            "functionOid": "168",
+            "leftTypeOid": "21",
+            "functionName": "int24ge",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16483",
+        "name": "finite_value",
+        "schema": "facet",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "1700",
+            "modifier": 327686,
+            "typeKind": "b",
+            "typeName": "numeric",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{BOOLEXPR :boolop and :args ({OPEXPR :opno 1757 :opfuncid 1721 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod 327686 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 161 231 3 172 38 ]}) :location -1} {OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod 327686 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 129 231 3 172 38 ]}) :location -1}) :location -1}",
+        "relation": "unvalidated",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": false,
+        "expression": "((value >= '-999.99'::numeric) AND (value <= 999.99))",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [],
+        "operatorLookups": [
+          {
+            "oid": "1755",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "1723",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_le",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          },
+          {
+            "oid": "1757",
+            "name": ">=",
+            "schema": "pg_catalog",
+            "functionOid": "1721",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_ge",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16518",
+        "name": "bound_check_value_check",
+        "schema": "facet_shadow",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "1700",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "numeric",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 16502 :opfuncid 16501 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 129 231 3 172 38 ]}) :location -1}",
+        "relation": "bound_check",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(value OPERATOR(facet_shadow.<=) 999.99)",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [],
+        "operatorLookups": [
+          {
+            "oid": "16502",
+            "name": "<=",
+            "schema": "facet_shadow",
+            "functionOid": "16501",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_le",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "facet_shadow"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16506",
+        "name": "length_check_value_check",
+        "schema": "facet_shadow",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "25",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "text",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 523 :opfuncid 149 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({FUNCEXPR :funcid 16499 :funcresulttype 23 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 100 :args ({VAR :varno 1 :varattno 1 :vartype 25 :vartypmod -1 :varcollid 100 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1}) :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 2 0 0 0 0 0 0 0 ]}) :location -1}",
+        "relation": "length_check",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(facet_shadow.char_length(value) <= 2)",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [
+          {
+            "oid": "16499",
+            "kind": "f",
+            "name": "char_length",
+            "schema": "facet_shadow",
+            "strict": true,
+            "volatility": "i",
+            "resultTypeOid": "23",
+            "argumentTypeOids": "[0:0]={25}"
+          }
+        ],
+        "operatorLookups": [
+          {
+            "oid": "523",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "149",
+            "leftTypeOid": "23",
+            "functionName": "int4le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16524",
+        "name": "multi_column_check",
+        "schema": "facet_shadow",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "23",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "int4",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          },
+          {
+            "name": "other",
+            "number": 2,
+            "typeOid": "23",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "int4",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 523 :opfuncid 149 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 23 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {VAR :varno 1 :varattno 2 :vartype 23 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 2 :location -1}) :location -1}",
+        "relation": "multi_column",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(value <= other)",
+        "relationKind": "r",
+        "columnNumbers": [
+          1,
+          2
+        ],
+        "functionLookups": [],
+        "operatorLookups": [
+          {
+            "oid": "523",
+            "name": "<=",
+            "schema": "pg_catalog",
+            "functionOid": "149",
+            "leftTypeOid": "23",
+            "functionName": "int4le",
+            "rightTypeOid": "23",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      },
+      {
+        "oid": "16512",
+        "name": "scale_check_value_check",
+        "schema": "facet_shadow",
+        "columns": [
+          {
+            "name": "value",
+            "number": 1,
+            "typeOid": "1700",
+            "modifier": -1,
+            "typeKind": "b",
+            "typeName": "numeric",
+            "dimensions": 0,
+            "typeSchema": "pg_catalog"
+          }
+        ],
+        "isLocal": true,
+        "nodeTree": "{OPEXPR :opno 1752 :opfuncid 1718 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {FUNCEXPR :funcid 16500 :funcresulttype 1700 :funcretset false :funcvariadic false :funcformat 0 :funccollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 23 :consttypmod -1 :constcollid 0 :constlen 4 :constbyval true :constisnull false :location -1 :constvalue 4 [ 2 0 0 0 0 0 0 0 ]}) :location -1}) :location -1}",
+        "relation": "scale_check",
+        "noInherit": false,
+        "parentOid": "0",
+        "validated": true,
+        "expression": "(value = facet_shadow.trunc(value, 2))",
+        "relationKind": "r",
+        "columnNumbers": [
+          1
+        ],
+        "functionLookups": [
+          {
+            "oid": "16500",
+            "kind": "f",
+            "name": "trunc",
+            "schema": "facet_shadow",
+            "strict": true,
+            "volatility": "i",
+            "resultTypeOid": "1700",
+            "argumentTypeOids": "[0:1]={1700,23}"
+          }
+        ],
+        "operatorLookups": [
+          {
+            "oid": "1752",
+            "name": "=",
+            "schema": "pg_catalog",
+            "functionOid": "1718",
+            "leftTypeOid": "1700",
+            "functionName": "numeric_eq",
+            "rightTypeOid": "1700",
+            "resultTypeOid": "16",
+            "functionSchema": "pg_catalog"
+          }
+        ],
+        "inheritanceCount": 0
+      }
+    ],
+    "serverVersion": 170004
+  },
+  "rows": [
+    {
+      "schema": "facet",
+      "relation": "binary_bound",
+      "name": "binary_bound_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "<="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "FuncCall": {
+                                "funcname": [
+                                  {
+                                    "String": {
+                                      "sval": "octet_length"
+                                    }
+                                  }
+                                ],
+                                "args": [
+                                  {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 21
+                                    }
+                                  }
+                                ],
+                                "funcformat": "COERCE_EXPLICIT_CALL",
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "A_Const": {
+                                "ival": {
+                                  "ival": 2
+                                },
+                                "location": 31
+                              }
+                            },
+                            "location": 28
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "length",
+            "functionName": [
+              "octet_length"
+            ],
+            "max": "2"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "decimal_exact",
+      "name": "decimal_exact_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "BoolExpr": {
+                            "boolop": "AND_EXPR",
+                            "args": [
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": ">="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 10
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "TypeCast": {
+                                      "arg": {
+                                        "A_Const": {
+                                          "sval": {
+                                            "sval": "-999.99"
+                                          },
+                                          "location": 19
+                                        }
+                                      },
+                                      "typeName": {
+                                        "names": [
+                                          {
+                                            "String": {
+                                              "sval": "pg_catalog"
+                                            }
+                                          },
+                                          {
+                                            "String": {
+                                              "sval": "numeric"
+                                            }
+                                          }
+                                        ],
+                                        "typemod": -1,
+                                        "location": 30
+                                      },
+                                      "location": 28
+                                    }
+                                  },
+                                  "location": 16
+                                }
+                              },
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": "<="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 44
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "A_Const": {
+                                      "fval": {
+                                        "fval": "999.99"
+                                      },
+                                      "location": 53
+                                    }
+                                  },
+                                  "location": 50
+                                }
+                              },
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": "="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 67
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "FuncCall": {
+                                      "funcname": [
+                                        {
+                                          "String": {
+                                            "sval": "trunc"
+                                          }
+                                        }
+                                      ],
+                                      "args": [
+                                        {
+                                          "ColumnRef": {
+                                            "fields": [
+                                              {
+                                                "String": {
+                                                  "sval": "value"
+                                                }
+                                              }
+                                            ],
+                                            "location": 81
+                                          }
+                                        },
+                                        {
+                                          "A_Const": {
+                                            "ival": {
+                                              "ival": 2
+                                            },
+                                            "location": 88
+                                          }
+                                        }
+                                      ],
+                                      "funcformat": "COERCE_EXPLICIT_CALL",
+                                      "location": 75
+                                    }
+                                  },
+                                  "location": 73
+                                }
+                              }
+                            ],
+                            "location": 39
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "bound",
+            "operator": ">=",
+            "literal": "-999.99",
+            "cast": "numeric"
+          },
+          {
+            "kind": "bound",
+            "operator": "<=",
+            "literal": "999.99"
+          },
+          {
+            "kind": "scale",
+            "functionName": [
+              "trunc"
+            ],
+            "scale": "2"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "decimal_finite",
+      "name": "decimal_finite_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "BoolExpr": {
+                            "boolop": "AND_EXPR",
+                            "args": [
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": ">="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 9
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "TypeCast": {
+                                      "arg": {
+                                        "A_Const": {
+                                          "sval": {
+                                            "sval": "-999.99"
+                                          },
+                                          "location": 18
+                                        }
+                                      },
+                                      "typeName": {
+                                        "names": [
+                                          {
+                                            "String": {
+                                              "sval": "pg_catalog"
+                                            }
+                                          },
+                                          {
+                                            "String": {
+                                              "sval": "numeric"
+                                            }
+                                          }
+                                        ],
+                                        "typemod": -1,
+                                        "location": 29
+                                      },
+                                      "location": 27
+                                    }
+                                  },
+                                  "location": 15
+                                }
+                              },
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": "<="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 43
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "A_Const": {
+                                      "fval": {
+                                        "fval": "999.99"
+                                      },
+                                      "location": 52
+                                    }
+                                  },
+                                  "location": 49
+                                }
+                              }
+                            ],
+                            "location": 38
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "bound",
+            "operator": ">=",
+            "literal": "-999.99",
+            "cast": "numeric"
+          },
+          {
+            "kind": "bound",
+            "operator": "<=",
+            "literal": "999.99"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "signed8",
+      "name": "signed8_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "BoolExpr": {
+                            "boolop": "AND_EXPR",
+                            "args": [
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": ">="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 9
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "TypeCast": {
+                                      "arg": {
+                                        "A_Const": {
+                                          "sval": {
+                                            "sval": "-128"
+                                          },
+                                          "location": 18
+                                        }
+                                      },
+                                      "typeName": {
+                                        "names": [
+                                          {
+                                            "String": {
+                                              "sval": "pg_catalog"
+                                            }
+                                          },
+                                          {
+                                            "String": {
+                                              "sval": "int4"
+                                            }
+                                          }
+                                        ],
+                                        "typemod": -1,
+                                        "location": 26
+                                      },
+                                      "location": 24
+                                    }
+                                  },
+                                  "location": 15
+                                }
+                              },
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": "<="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 40
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "A_Const": {
+                                      "ival": {
+                                        "ival": 127
+                                      },
+                                      "location": 49
+                                    }
+                                  },
+                                  "location": 46
+                                }
+                              }
+                            ],
+                            "location": 35
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "bound",
+            "operator": ">=",
+            "literal": "-128",
+            "cast": "int4"
+          },
+          {
+            "kind": "bound",
+            "operator": "<=",
+            "literal": "127"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "text_bound",
+      "name": "text_bound_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "<="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "FuncCall": {
+                                "funcname": [
+                                  {
+                                    "String": {
+                                      "sval": "char_length"
+                                    }
+                                  }
+                                ],
+                                "args": [
+                                  {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 20
+                                    }
+                                  }
+                                ],
+                                "funcformat": "COERCE_EXPLICIT_CALL",
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "A_Const": {
+                                "ival": {
+                                  "ival": 2
+                                },
+                                "location": 30
+                              }
+                            },
+                            "location": 27
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "length",
+            "functionName": [
+              "char_length"
+            ],
+            "max": "2"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "text_zero",
+      "name": "text_zero_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "<="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "FuncCall": {
+                                "funcname": [
+                                  {
+                                    "String": {
+                                      "sval": "char_length"
+                                    }
+                                  }
+                                ],
+                                "args": [
+                                  {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 20
+                                    }
+                                  }
+                                ],
+                                "funcformat": "COERCE_EXPLICIT_CALL",
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "A_Const": {
+                                "ival": {},
+                                "location": 30
+                              }
+                            },
+                            "location": 27
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "length",
+            "functionName": [
+              "char_length"
+            ],
+            "max": "0"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "unsigned8",
+      "name": "unsigned8_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "BoolExpr": {
+                            "boolop": "AND_EXPR",
+                            "args": [
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": ">="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 9
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "A_Const": {
+                                      "ival": {},
+                                      "location": 18
+                                    }
+                                  },
+                                  "location": 15
+                                }
+                              },
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": "<="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 26
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "A_Const": {
+                                      "ival": {
+                                        "ival": 255
+                                      },
+                                      "location": 35
+                                    }
+                                  },
+                                  "location": 32
+                                }
+                              }
+                            ],
+                            "location": 21
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "bound",
+            "operator": ">=",
+            "literal": "0"
+          },
+          {
+            "kind": "bound",
+            "operator": "<=",
+            "literal": "255"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet",
+      "relation": "unvalidated",
+      "name": "finite_value",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "BoolExpr": {
+                            "boolop": "AND_EXPR",
+                            "args": [
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": ">="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 9
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "TypeCast": {
+                                      "arg": {
+                                        "A_Const": {
+                                          "sval": {
+                                            "sval": "-999.99"
+                                          },
+                                          "location": 18
+                                        }
+                                      },
+                                      "typeName": {
+                                        "names": [
+                                          {
+                                            "String": {
+                                              "sval": "pg_catalog"
+                                            }
+                                          },
+                                          {
+                                            "String": {
+                                              "sval": "numeric"
+                                            }
+                                          }
+                                        ],
+                                        "typemod": -1,
+                                        "location": 29
+                                      },
+                                      "location": 27
+                                    }
+                                  },
+                                  "location": 15
+                                }
+                              },
+                              {
+                                "A_Expr": {
+                                  "kind": "AEXPR_OP",
+                                  "name": [
+                                    {
+                                      "String": {
+                                        "sval": "<="
+                                      }
+                                    }
+                                  ],
+                                  "lexpr": {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 43
+                                    }
+                                  },
+                                  "rexpr": {
+                                    "A_Const": {
+                                      "fval": {
+                                        "fval": "999.99"
+                                      },
+                                      "location": 52
+                                    }
+                                  },
+                                  "location": 49
+                                }
+                              }
+                            ],
+                            "location": 38
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "candidate",
+        "candidates": [
+          {
+            "kind": "bound",
+            "operator": ">=",
+            "literal": "-999.99",
+            "cast": "numeric"
+          },
+          {
+            "kind": "bound",
+            "operator": "<=",
+            "literal": "999.99"
+          }
+        ],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet_shadow",
+      "relation": "bound_check",
+      "name": "bound_check_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "facet_shadow"
+                                }
+                              },
+                              {
+                                "String": {
+                                  "sval": "<="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "ColumnRef": {
+                                "fields": [
+                                  {
+                                    "String": {
+                                      "sval": "value"
+                                    }
+                                  }
+                                ],
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "A_Const": {
+                                "fval": {
+                                  "fval": "999.99"
+                                },
+                                "location": 40
+                              }
+                            },
+                            "location": 14
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "unsupported",
+        "candidates": [],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet_shadow",
+      "relation": "length_check",
+      "name": "length_check_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "<="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "FuncCall": {
+                                "funcname": [
+                                  {
+                                    "String": {
+                                      "sval": "facet_shadow"
+                                    }
+                                  },
+                                  {
+                                    "String": {
+                                      "sval": "char_length"
+                                    }
+                                  }
+                                ],
+                                "args": [
+                                  {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 33
+                                    }
+                                  }
+                                ],
+                                "funcformat": "COERCE_EXPLICIT_CALL",
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "A_Const": {
+                                "ival": {
+                                  "ival": 2
+                                },
+                                "location": 43
+                              }
+                            },
+                            "location": 40
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "unsupported",
+        "candidates": [],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet_shadow",
+      "relation": "multi_column",
+      "name": "multi_column_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "<="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "ColumnRef": {
+                                "fields": [
+                                  {
+                                    "String": {
+                                      "sval": "value"
+                                    }
+                                  }
+                                ],
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "ColumnRef": {
+                                "fields": [
+                                  {
+                                    "String": {
+                                      "sval": "other"
+                                    }
+                                  }
+                                ],
+                                "location": 17
+                              }
+                            },
+                            "location": 14
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "unsupported",
+        "candidates": [],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    },
+    {
+      "schema": "facet_shadow",
+      "relation": "scale_check",
+      "name": "scale_check_value_check",
+      "inspection": {
+        "native": {
+          "version": 170004,
+          "stmts": [
+            {
+              "stmt": {
+                "SelectStmt": {
+                  "targetList": [
+                    {
+                      "ResTarget": {
+                        "val": {
+                          "A_Expr": {
+                            "kind": "AEXPR_OP",
+                            "name": [
+                              {
+                                "String": {
+                                  "sval": "="
+                                }
+                              }
+                            ],
+                            "lexpr": {
+                              "ColumnRef": {
+                                "fields": [
+                                  {
+                                    "String": {
+                                      "sval": "value"
+                                    }
+                                  }
+                                ],
+                                "location": 8
+                              }
+                            },
+                            "rexpr": {
+                              "FuncCall": {
+                                "funcname": [
+                                  {
+                                    "String": {
+                                      "sval": "facet_shadow"
+                                    }
+                                  },
+                                  {
+                                    "String": {
+                                      "sval": "trunc"
+                                    }
+                                  }
+                                ],
+                                "args": [
+                                  {
+                                    "ColumnRef": {
+                                      "fields": [
+                                        {
+                                          "String": {
+                                            "sval": "value"
+                                          }
+                                        }
+                                      ],
+                                      "location": 35
+                                    }
+                                  },
+                                  {
+                                    "A_Const": {
+                                      "ival": {
+                                        "ival": 2
+                                      },
+                                      "location": 42
+                                    }
+                                  }
+                                ],
+                                "funcformat": "COERCE_EXPLICIT_CALL",
+                                "location": 16
+                              }
+                            },
+                            "location": 14
+                          }
+                        },
+                        "location": 7
+                      }
+                    }
+                  ],
+                  "limitOption": "LIMIT_OPTION_DEFAULT",
+                  "op": "SETOP_NONE"
+                }
+              }
+            }
+          ]
+        },
+        "state": "unsupported",
+        "candidates": [],
+        "requires": "catalog-resolution-and-enforcement-evidence"
+      }
+    }
+  ],
+  "probes": [
+    {
+      "id": "custom-length-accepts-overlength",
+      "sql": "INSERT INTO facet_shadow.length_check VALUES ('abcdef') RETURNING value::text",
+      "expected": "abcdef",
+      "actual": "abcdef"
+    },
+    {
+      "id": "custom-trunc-accepts-extra-scale",
+      "sql": "INSERT INTO facet_shadow.scale_check VALUES (1.235) RETURNING value::text",
+      "expected": "1.235",
+      "actual": "1.235"
+    },
+    {
+      "id": "custom-operator-accepts-overflow",
+      "sql": "INSERT INTO facet_shadow.bound_check VALUES (1000) RETURNING value::text",
+      "expected": "1000",
+      "actual": "1000"
+    },
+    {
+      "id": "unvalidated-existing-nan",
+      "sql": "SELECT value::text FROM facet.unvalidated",
+      "expected": "NaN",
+      "actual": "NaN"
+    }
+  ],
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/catalog/facet-constraints.sql": "d5c36255595642a3055210d436169ae06d39abc6894e44b3e251fe6f20061cbd",
+    "fixtures/postgresql/facets.sql": "719ebfc4fab0a3f98073cd0cb3b798f40977950b64166d04be1d4b8c5087f14d",
+    "fixtures/postgresql/facet-predicate-lookalikes.sql": "34de9221087a1b6e61064855de70a5a3bfcb6c9670ee585ecfa007a1ebdce0be",
+    "scripts/core-ideals/facets-postgresql-constraints-native.ts": "cb3f89e51a25c96addc3411eb1048d3d5a28ef007a90f7489ac6c2d8fa0e32ce",
+    "src/adapters/postgresql/facet-predicate.ts": "76e113ec5cb1e93fc4239f22095c981280984b9392a8f93be84f1d66e617d523"
+  }
+}
