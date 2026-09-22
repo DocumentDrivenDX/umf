@@ -614,3 +614,45 @@ remains limited to the explicit representation and carrier profiles documented
 above; no recursive item conversion, row decoder, unrestricted map equivalence or
 arbitrary constraint-expression interpreter is claimed. Avro, Parquet and the
 separate Cardinality admission/delivery gate remain unfinished.
+
+### Avro classification representation
+
+The `present-non-null-schema` profile classifies the declared outer shape of a
+present, non-null native value. It does not equate a nullable union with member
+omission, apply a reader default, or assert that a codec preserves arbitrary data.
+Avro maps describe exact string-key mappings at this schema level. The duplicate
+binary-key and avsc `__proto__` counterexamples remain mandatory value/encoding
+boundaries; schema classification does not perform those lossy decodes.
+
+Classification publishes separately identified logical Fields, retaining the
+unchanged `avro.fields` module and complete native bundle. Each unambiguous array
+item or map value gets its own Field and exact native type location; nested
+containers recurse through syntax locations. Null branches remain in the native
+fragment and availability is not authored implicitly. Mixed container unions,
+null-only types and unresolved syntax produce unspecified shape with a residual;
+strict mode blocks the complete candidate, while report mode retains the residual.
+Named record members retain their definition paths and native structure without
+inventing a core record association. Known scalar families may be copied only onto
+singular Fields, using the existing qualified Avro metadata derivation.
+
+The operation must reject identity collisions and incompatible extension versions,
+validate both input and candidate envelopes, and recompute receipts before exact
+schema/dependency text recovery. This decision precedes operation/package schemas;
+classification, authored projection and binding acceptance remain unfinished.
+
+### Avro classification implementation checkpoint
+
+`classifyAvroCardinality`, receipt verification and exact bundle-text recovery are
+implemented with a complete operation schema and `umf.avro.cardinality` package.
+Nested item/value Fields retain type locations, named-definition locations and
+native fragments. Singular scalar families use existing Avro qualifier rules;
+container and member availability remain native observations, not authored labels.
+
+Seven focused tests pass (717 assertions). Chromium reproduces all 80 classification
+cases: 58 classified, 22 blocked, 116 JSON/YAML source recoveries and 58 forged-receipt
+refusals. Type checking, browser build, 249 schema audits and 41 package audits pass.
+The proof is `fixtures/validation/cardinality-avro-classification-browser.json`.
+Receipt consistency is not authentication: a self-consistent whitespace-only source
+receipt can be recomputed, while changed native meaning and stale targets refuse.
+Authored down-projection and the full binding acceptance refresh remain required;
+these checks do not accept the Avro binding or run the Cardinality concept gate.

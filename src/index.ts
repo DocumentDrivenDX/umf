@@ -282,3 +282,5 @@ export * from './core-ideals/cardinality-postgresql';
 export * from './core-ideals/cardinality-postgresql-projection';
 export * from './core-ideals/cardinality-sqlserver';
 export * from './core-ideals/cardinality-sqlserver-projection';
+
+export * from './core-ideals/cardinality-avro';

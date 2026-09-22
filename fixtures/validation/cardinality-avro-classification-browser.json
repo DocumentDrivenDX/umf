@@ -1,0 +1,25 @@
+{
+  "scope": "Declared present non-null schema shape and native-source receipt recovery; authored projection and binding acceptance remain unfinished",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 80,
+    "classified": 58,
+    "blocked": 22,
+    "recoveries": 116,
+    "forgedRefusals": 58
+  },
+  "externalRequests": [],
+  "sha256": {
+    "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
+    "scripts/core-ideals/cardinality-avro-classification-browser.ts": "c5ebc065972db510843618bb43a2002126a570d4b9c32d8a88a1df135b6356a6",
+    "scripts/core-ideals/cardinality-avro-schema.ts": "0954a4e754e1cf10e8797090b58dfee790ebbc12a83ab42492f360b3dc0b75c8",
+    "src/core-ideals/cardinality-avro.ts": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
+    "src/adapters/avro/metadata.ts": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775",
+    "src/index.ts": "a04b505a09c726d016c8ecc9dc41c0882375532a43b4972b0f857863f430e918",
+    "spec/core/avro-cardinality-classification.schema.json": "da852a89ce4a640463260e538c2578ddde8faa7df6f7ac0215ac906b6b84f5b2",
+    "spec/extensions/avro-cardinality/schema.json": "4e722177a26758b4204d660283db22d423e82012f880b14ac6bca9b8c70ec18a",
+    "spec/extensions/avro-cardinality/package.json": "72c43a1ddf59d4304cf577126d600f41a6e949561131e22b10b82778b0919253",
+    "dist/umf.js": "7cc72364f74bbdf9e3bc920f78c46ab04a5c61518fcdec4f411f50b7b2467075"
+  }
+}
