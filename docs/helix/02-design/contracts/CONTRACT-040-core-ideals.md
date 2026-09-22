@@ -347,3 +347,11 @@ explicit no-constraint declaration. `inapplicable` identifies a non-Field under
 states does not establish authored or classified provenance. An author declaration
 retains its entire source and records only ideal availability, with no native path.
 Any later model change invalidates that receipt for current-provenance purposes.
+
+
+Core 0.3.0 selection reports have a separate versioned schema. Verification uses
+the source envelope version; it cannot adopt the 0.3.0 availability interpretation
+for a 0.1.0 or 0.2.0 source. Selection retains full source context, unknown labels
+and extension payloads. Recomputed query, diagnostics and reference boundaries
+must match the receipt. Recursive traversal remains identity-bounded; an unknown
+reference role is not promoted into a verified semantic relationship.

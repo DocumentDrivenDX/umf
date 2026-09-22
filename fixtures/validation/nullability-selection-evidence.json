@@ -1,0 +1,49 @@
+{
+  "scope": "0.3.0 core metadata selection report schema/verification; no native absence or author provenance inference",
+  "commands": [
+    "bun scripts/core-ideals/nullability-selection-schema.ts",
+    "bun test tests/core-ideals/nullability-selection.test.ts tests/core-ideals/field-selection.test.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-selection-browser.ts"
+  ],
+  "results": {
+    "tests": 6,
+    "assertions": 97,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 212,
+    "packages": 32,
+    "browserBuildBytes": 10164362,
+    "browser": {
+      "scope": "0.3.0 metadata selection and report verification; no native absence or provenance inference",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "cases": 5,
+        "recoveries": 10,
+        "refusals": 5,
+        "legacyVerified": true
+      },
+      "externalRequests": []
+    }
+  },
+  "limits": [
+    "Queries retain existing filters and explicit reference traversal; this change adds the 0.3.0 result schema rather than new availability filters.",
+    "Bare references and labels do not establish authored/classified provenance or a native absence encoding.",
+    "0.1.0 and 0.2.0 selection schemas remain unchanged; nullability is still opaque in those envelopes.",
+    "Field kind/record-type receipt integration with 0.3.0 and prior Field source-evidence revalidation remain pending."
+  ],
+  "sha256": {
+    "src/model/selection-verification.ts": "8497e9c734a691b16774df7b39ae517dfdb47424938d021142ae0b9c5dffd160",
+    "src/model/selection.ts": "74e0ad24586e9dad1c1ebe8e9651336bf0129675f93d465c91a95a6568c88979",
+    "spec/core/nullability-selection.schema.json": "0d00b993d9f205326bf8879d9d659aac7d9bb4c34d886c5c966a86a1f7e3d47f",
+    "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
+    "scripts/core-ideals/nullability-selection-schema.ts": "63b9ffe3a74e0c875a66b7413157908c8668aed8c92178ed7c17d4761bdd07cd",
+    "scripts/core-ideals/nullability-selection-cases.ts": "215306d0ea3f039cb4b0f141d5ddd910584ef443439c83c154ee9a34a8068ecb",
+    "scripts/core-ideals/nullability-selection-browser.ts": "dd2b233c7421313f7a2315acbc833de2ffbc484470916209ce40fbcb010f2edc",
+    "tests/core-ideals/nullability-selection.test.ts": "e81cdf4b607ef6356d45f67d6785a8e6aec650746e022754e18c5879742aea3b",
+    "tests/core-ideals/field-selection.test.ts": "f0ce21dbded3a4c8ed10058e4923d89544d574e5d8e645244b8a26654b95bf14",
+    "fixtures/validation/nullability-selection-browser.json": "66519fb54b027dc7b91e46b6947ee154ae05863407a1f16c3c2fd35c475f6a10"
+  }
+}

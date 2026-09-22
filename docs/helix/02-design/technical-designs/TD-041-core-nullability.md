@@ -217,3 +217,28 @@ This supersedes the foundation's pending authoring/migration items, not its nati
 support limits. Existing version-qualified Field/selection APIs still need 0.3.0
 integration, and prior Field source fingerprints need revalidation before the
 Nullability core bead closes. All five native Nullability bindings remain pending.
+
+### Nullability selection report integration
+
+Core 0.3.0 now uses `urn:umf:core:element-selection:0.3.0`, exported as
+`coreNullabilitySelectionSchema`. `verifyCoreElementSelection` selects the report
+schema from the retained source version, then recomputes the query, selected
+metadata, validation diagnostics and reference boundaries with the caller registry.
+The previous 0.1.0/0.2.0 schemas and their interpretation remain unchanged.
+
+The five scenarios cover known/missing/unknown availability, same-named fields in
+different namespaces, recursive explicit links, selection boundaries and native
+refinements. Mutating availability, deleting extension metadata, altering queries,
+erasing diagnostics or changing boundaries fails verification. No availability
+filter, native absence carrier or provenance inference is introduced.
+
+`fixtures/validation/nullability-selection-evidence.json` records six passing
+new/legacy selection tests with 97 assertions, typecheck, 212 schemas, 32 packages
+and the browser build. Chromium 148 reproduces five scenarios, ten JSON/YAML
+recoveries, five altered-report refusals and legacy opaque-value verification,
+without external requests or Bun/Node globals.
+
+Selection integration is complete for this revision. Field kind and record-type
+authoring/verification still require their 0.3.0 integration, followed by the prior
+Field evidence refresh. The Nullability core bead remains in progress; native
+Nullability binding tasks remain dependency-waiting.
