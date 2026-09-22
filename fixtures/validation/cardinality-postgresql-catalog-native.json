@@ -1,0 +1,229 @@
+{
+  "scope": "PostgreSQL 17.4 versioned Cardinality catalog supplement and native boundary checks; no binding acceptance",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "supplement": {
+    "types": [
+      {
+        "base": null,
+        "kind": "b",
+        "element": {
+          "name": "positive",
+          "schema": "cardinality"
+        },
+        "category": "A",
+        "identity": {
+          "name": "_positive",
+          "schema": "cardinality"
+        },
+        "standardArray": true
+      },
+      {
+        "base": {
+          "name": "int4",
+          "schema": "pg_catalog"
+        },
+        "kind": "d",
+        "element": null,
+        "category": "N",
+        "identity": {
+          "name": "positive",
+          "schema": "cardinality"
+        },
+        "standardArray": false
+      },
+      {
+        "base": {
+          "name": "_int4",
+          "schema": "pg_catalog"
+        },
+        "kind": "d",
+        "element": null,
+        "category": "A",
+        "identity": {
+          "name": "vector",
+          "schema": "cardinality"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": {
+          "name": "int4",
+          "schema": "pg_catalog"
+        },
+        "category": "A",
+        "identity": {
+          "name": "_int4",
+          "schema": "pg_catalog"
+        },
+        "standardArray": true
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "N",
+        "identity": {
+          "name": "int2",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": {
+          "name": "int2",
+          "schema": "pg_catalog"
+        },
+        "category": "A",
+        "identity": {
+          "name": "int2vector",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "N",
+        "identity": {
+          "name": "int4",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "U",
+        "identity": {
+          "name": "json",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "U",
+        "identity": {
+          "name": "jsonb",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      }
+    ],
+    "columns": [
+      {
+        "name": "value",
+        "type": {
+          "name": "_int4",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "declared",
+        "declaredDimensions": 1
+      },
+      {
+        "name": "items",
+        "type": {
+          "name": "_positive",
+          "schema": "cardinality"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "domains",
+        "declaredDimensions": 1
+      },
+      {
+        "name": "vector",
+        "type": {
+          "name": "vector",
+          "schema": "cardinality"
+        },
+        "schema": "cardinality",
+        "ordinal": 2,
+        "relation": "domains",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "value",
+        "type": {
+          "name": "json",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "json_values",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "value",
+        "type": {
+          "name": "jsonb",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "jsonb_object",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "value",
+        "type": {
+          "name": "jsonb",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "jsonb_values",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "value",
+        "type": {
+          "name": "_int4",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "sequence",
+        "declaredDimensions": 1
+      },
+      {
+        "name": "value",
+        "type": {
+          "name": "int2vector",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "vectorish",
+        "declaredDimensions": 0
+      }
+    ],
+    "profile": "postgresql-cardinality-catalog",
+    "version": "1.0.0",
+    "serverVersion": 170004
+  },
+  "nativeCases": 37,
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
+    "scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts": "72c95b42016c20acfb9077f2676755005d0437bb4fcc20cdd2e6d41d4d92fe96",
+    "native/postgresql/catalog/cardinality-v1.sql": "534e8996085e600c697a5d1e799e4ab4816ee0663290a44283b46a1195952344",
+    "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6"
+  },
+  "limits": [
+    "Relationships are observations; no core classification or equivalence claim.",
+    "Constraints, availability and physical representation remain in the original catalog/archive.",
+    "A supplement must be captured with the original catalog in the same database snapshot before binding use."
+  ]
+}
