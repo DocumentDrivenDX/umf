@@ -1,0 +1,37 @@
+{
+  "scope": "Direct Avro record type classification with qualified dependencies and exact bundle recovery; unions/containers and value-domain equivalence excluded",
+  "commands": [
+    "bun test tests/core-ideals/avro-record-type.test.ts",
+    "bun scripts/core-ideals/avro-record-type-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/avro-record-type-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/avro-record-type-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 105,
+    "nativeBundles": 5,
+    "directRecords": 5,
+    "blockedNonDirectTypes": 12,
+    "browserRecoveries": 10,
+    "typecheck": "passed",
+    "schemasPassed": 203,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10074299
+  },
+  "sha256": {
+    "src/core-ideals/avro-record-type.ts": "33b6e4845af04f14c91eb21294510ff8e39ac82d4f9b8e6a6e6902fbcb19bdfc",
+    "spec/core/avro-record-type-classification.schema.json": "b857f191fd90490c99b145e8dbac5ec8f7dc514947485181824ea2b6c84f0018",
+    "scripts/core-ideals/avro-record-type-schema.ts": "98489b4c6fb9dde13f34e2c00b7f8bf4bbe146f7df8611da9c325b913274fb81",
+    "scripts/core-ideals/avro-record-type-cases.ts": "8f09dd17905fc602006aef54af5cc1f1b78c7385bdf5f9d2f88dab8833342867",
+    "scripts/core-ideals/avro-record-type-corpus.ts": "343fdc5c71aae2f3827b5774836e18b0ce2b9ffe5f03be70485c5f331d4d7b57",
+    "scripts/core-ideals/avro-record-type-oracle.py": "0f63ed970fbcf5c9e7041b8fa93f432a3c20f639f3e6f31163d6c8ea33c0f8f3",
+    "scripts/core-ideals/avro-record-type-browser.ts": "f5a770790be296fd955ecd296931e3d3b5e1830ea246f8b7df4c3d170a455437",
+    "tests/core-ideals/avro-record-type.test.ts": "ad2bfb1d0da3460ae8aa5a4e123fb8e9eb16e8165c24e1331af19ef67c86ad01",
+    "fixtures/validation/avro-record-type-corpus.json": "a2e11877985316b68b0e4a9539bce6deca1d42035b26d9b1faf5c8f7c473f623",
+    "fixtures/validation/avro-record-type-native.json": "06d60d280272aaa75c29366109323e039252dc822b71ad0ad0d88ed652ad9700",
+    "fixtures/validation/avro-record-type-browser.json": "c69cb73469a198f28076239612f76f979d63c20fc46b55e95b46134d2428f5bd"
+  }
+}

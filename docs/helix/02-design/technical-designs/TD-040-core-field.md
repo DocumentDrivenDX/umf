@@ -1136,3 +1136,30 @@ audits pass. See [selection evidence](../../../../fixtures/validation/field-sele
 
 Native type-reference classification, nested projections, organizational groups
 and complete common projection metadata still keep the Field delivery gate open.
+
+## Avro classified record-type references
+
+`classifyAvroRecordType` now resolves a selected direct record-valued member to an
+inline or qualified named record/error definition, including named dependencies
+and direct recursive references. It classifies the selected Field, creates a
+separate record definition with ordered member references, and adds a classified
+`record-type` link. Source-qualified mapping paths retain the complete native type
+fragment; the original bundle text remains available for exact recovery.
+
+Unions, arrays, maps and scalar types block this direct-reference operation in
+both policies. They require their own explicit branch/container bindings. Existing
+record-type assertions, scalar conflicts, module collisions and incompatible or
+unrelated author receipts cannot be silently reconciled. Successful results are
+atomic; recovery recomputes the whole classification and checks the current target.
+This does not infer array element types or project nested ideal records to native.
+
+Two Bun tests pass 105 assertions. Apache Avro 1.12.0 independently resolves five
+direct record types and checks their qualified names and ordered members across
+five bundles; twelve non-direct types remain blocked. The native oracle warns that
+it ignores the fixture's unknown logical annotation; UMF retains it without claiming
+its semantics. Chromium 148 matches all seventeen decisions and ten JSON/YAML exact
+bundle recoveries. Typechecking, browser build and all 203 schema / 32 package
+audits pass. See [Avro record-type evidence](../../../../fixtures/validation/avro-record-type-evidence.json).
+
+Other native record-reference bindings, nested/container projections and common
+mapping/residual metadata remain required. Field and the overall goal stay open.

@@ -250,3 +250,4 @@ export * from './core-ideals/field-parquet-projection';
 export * from './core-ideals/record-parquet-projection';
 export * from './model/record-type';
 export * from './model/selection-verification';
+export * from './core-ideals/avro-record-type';
