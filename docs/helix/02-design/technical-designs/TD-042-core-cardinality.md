@@ -795,3 +795,32 @@ existing Parquet Cardinality profile browser command now compares complete resol
 results with Bun for the 30 generated files, while retaining its 60 exact-byte
 recovery checks. The resolver is internal: no public Cardinality classification
 API, operation schema or extension package is exported at this checkpoint.
+
+
+### Parquet logical classification checkpoint
+
+The public `classifyParquetCardinality` API now accepts an explicitly migrated
+core 0.4.0 source, physical schema index, logical destination identity,
+`present-value-schema` or `unresolved` profile, and strict/report mode. Complete
+operation and `umf.parquet.cardinality` extension schemas precede the exported API.
+Logical Fields preserve native modules and nested item/value links. Record-member
+indexes remain native observations; this operation does not fabricate record
+definitions or infer core nullability. Existing logical identities and incompatible
+binding versions block atomically, including in report mode.
+
+Every MAP carries a uniqueness residual; non-string keys carry an additional
+carrier residual. Strict mode emits no candidate when any residual remains.
+Unresolved profiles, wrappers and key-only maps publish only unspecified shape in
+report mode. `verifyParquetCardinalityClassification` recomputes the entire receipt
+and checks the current target; `recoverParquetCardinalityBytes` restores original
+bytes. This is consistency verification, not authentication.
+
+Three classification tests pass 828 assertions. The real Chromium matrix passes
+120 profile/policy cases: 76 classified, 44 blocked, 152 JSON/YAML native recoveries
+and 76 forged-receipt refusals. Typechecking, the 10,608,433-byte browser build,
+252 schema checks and 42 package checks pass. See
+[classification browser evidence](../../../../fixtures/validation/cardinality-parquet-classification-browser.json).
+Authored projection, composed ideal/native recovery, expanded classification
+coverage for legacy/native refinements and the full shared-library acceptance
+refresh remain unfinished. Existing acceptance records are historical until that
+refresh; no Parquet Cardinality acceptance or native equivalence is claimed.
