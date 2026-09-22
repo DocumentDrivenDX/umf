@@ -1,0 +1,35 @@
+{
+  "scope": "TableSpec namespace loss accounting; namespaced inputs retained and strict/report outcomes corrected",
+  "commands": [
+    "bun test tests/core-ideals/field-tablespec-projection.test.ts tests/core-ideals/record-tablespec-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-tablespec-projection-browser.ts",
+    ".venv/bin/python scripts/core-ideals/field-tablespec-projection-oracle.py"
+  ],
+  "results": {
+    "tests": 12,
+    "assertions": 159,
+    "fieldCases": 40,
+    "fieldBlocks": 10,
+    "recordCases": 6,
+    "recordBlocks": 4,
+    "nativeFieldsAccepted": 30,
+    "nativeRecordsAccepted": 2,
+    "browserFieldRecoveries": 60,
+    "browserRecordRecoveries": 4,
+    "typecheck": "passed",
+    "browserBuildBytes": 10087820
+  },
+  "sha256": {
+    "src/core-ideals/field-tablespec-projection.ts": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae",
+    "src/core-ideals/record-tablespec-projection.ts": "ca27b2ccbe5a6df6aa2faf6763abec0f8dca1cab68e1102655778347fadf94aa",
+    "tests/core-ideals/field-tablespec-projection.test.ts": "70b22abae691e8f7de95fddf2e1103d1a88242b019d7197bf7fda7fa647e397a",
+    "tests/core-ideals/record-tablespec-projection.test.ts": "4bc462b38d22897c5f4152cd0b155c10b11a8799fa25bb0ac3c90b3afcb97715",
+    "scripts/core-ideals/field-tablespec-projection-browser.ts": "8b1143abfb0d644d1316a5682b61762086c2c624791764538bb08e3a7672b336",
+    "scripts/core-ideals/field-tablespec-projection-oracle.py": "88dfd34aed41e071770a7e592bbe19cd1d9dc04f4730c20d5107d965f4f02cfa",
+    "fixtures/validation/field-tablespec-projection.json": "39080ede9b5603fbae7bf31718a383656f76ecdb146d524dd022925e4637016f",
+    "fixtures/validation/field-tablespec-projection-native.json": "a4c16223e4a0402c0fed8a9ae0d3db67a406e24e1b4e5f7b1707ea340f13822b",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b"
+  }
+}

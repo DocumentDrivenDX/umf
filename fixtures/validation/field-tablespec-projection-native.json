@@ -2,12 +2,6 @@
   "records": [
     {
       "variant": "clean",
-      "mode": "strict",
-      "accepted": true,
-      "columns": 3
-    },
-    {
-      "variant": "clean",
       "mode": "report",
       "accepted": true,
       "columns": 3
@@ -20,9 +14,9 @@
     }
   ],
   "scope": "Native schema model acceptance and column identity for explicit carriers; no row value or storage enforcement equivalence",
-  "pydantic": "2.11.10",
+  "pydantic": "2.13.5",
   "sourceSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
-  "inputSha256": "b3098bbfd865cccd8984e6f86e6c5b2eb62c7805ab42deb7f4a9f5db0376f96c",
+  "inputSha256": "39080ede9b5603fbae7bf31718a383656f76ecdb146d524dd022925e4637016f",
   "cases": [
     {
       "nativeType": "BOOLEAN",
@@ -35,6 +29,11 @@
       "accepted": true
     },
     {
+      "nativeType": "BOOLEAN",
+      "mode": "report",
+      "accepted": true
+    },
+    {
       "nativeType": "INTEGER",
       "mode": "strict",
       "accepted": true
@@ -45,8 +44,18 @@
       "accepted": true
     },
     {
+      "nativeType": "INTEGER",
+      "mode": "report",
+      "accepted": true
+    },
+    {
       "nativeType": "DECIMAL",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -57,6 +66,11 @@
     {
       "nativeType": "FLOAT",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -67,6 +81,11 @@
     {
       "nativeType": "TEXT",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -77,6 +96,11 @@
     {
       "nativeType": "VARCHAR",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -87,6 +111,11 @@
     {
       "nativeType": "CHAR",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -97,6 +126,11 @@
     {
       "nativeType": "DATE",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -107,6 +141,11 @@
     {
       "nativeType": "DATETIME",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "mode": "report",
       "accepted": true
     },
     {
@@ -117,6 +156,11 @@
     {
       "nativeType": "TIMESTAMP",
       "mode": "strict",
+      "accepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "mode": "report",
       "accepted": true
     },
     {

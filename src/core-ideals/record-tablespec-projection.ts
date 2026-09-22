@@ -46,6 +46,7 @@ export function projectRecordToTableSpec(input:CoreKindDeclaration,options:Recor
  source.modules.forEach((module,mi)=>{
   const root='/modules/'+mi;
   if(!module.elements.some((_,ei)=>included.has(root+'/elements/'+ei))){loss(root,module,'Module lies outside projected record');return;}
+  if(module.namespace)loss(root+'/namespace',module.namespace,'This TableSpec binding has no namespace representation',true);
   for(const [key,value] of Object.entries(module))if(!['id','namespace','elements'].includes(key))loss(root+'/'+pointer(key),value,'Module metadata is not projected');
   module.elements.forEach((element,ei)=>{
    const path=root+'/elements/'+ei;if(!included.has(path)){loss(path,element,'Element lies outside projected record');return;}

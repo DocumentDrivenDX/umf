@@ -9,7 +9,7 @@ import {copyJson} from '../../src/model/json';
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import {type Document} from '../../src/model/types';
 test('record projection orders columns by declared membership and recovers the complete ideal',()=>{
- const {source,author,request}=recordCase();const result=projectRecordToTableSpec(author,request);expect(result.status).toBe('projected');expect(result.residuals).toEqual([]);
+ const {source,author,request}=recordCase();expect(projectRecordToTableSpec(author,request).status).toBe('blocked');const result=projectRecordToTableSpec(author,{...request,mode:'report'});expect(result.status).toBe('projected');expect(result.residuals.map(r=>r.path)).toEqual(['/modules/0/namespace','/modules/1/namespace']);
  const text=exportTableSpec(result.target!);expect(JSON.parse(text).columns.map((c:any)=>c.name)).toEqual(['id','label','active']);expect(JSON.parse(text).description).toBe('Order record');
  for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;expect(recoverRecordFromTableSpec(receipt,text)).toEqual(source);}
  const nativeOnly=classifyTableSpecRecord(upgradeFieldEnvelope(importTableSpec(text,{id:'native',format:'json'})).target,{recordModule:'records',recordId:'Order',mode:'strict'});
@@ -29,10 +29,11 @@ test('unknown metadata and relationship refinements survive as residuals',()=>{
  const {source}=recordCase();source.modules[0]!.elements[0]!.future={rule:'unknown'};source.modules[0]!.elements[0]!.references![0]!.future='edge';
  const declaration=(module:string,element:string,kind:'field'|'record')=>{const before=copyJson(source) as unknown as Document;delete before.modules.find(m=>m.id===module)!.elements.find(e=>e.id===element)!.kind;return declareCoreElementKind(before,{module,element},kind);};
  const request=recordCase().request;request.mode='report';request.fields=request.fields.map(f=>({...f,author:declaration(f.author.identity.module,f.author.identity.element,'field')}));
- const result=projectRecordToTableSpec(declaration('sales','Order','record'),request);expect(result.status).toBe('projected');expect(result.residuals.map(r=>r.path)).toEqual(['/modules/0/elements/0/references/0/future','/modules/0/elements/0/future']);expect(recoverRecordFromTableSpec(result,exportTableSpec(result.target!))).toEqual(source);
+ const result=projectRecordToTableSpec(declaration('sales','Order','record'),request);expect(result.status).toBe('projected');expect(result.residuals.map(r=>r.path)).toEqual(['/modules/0/elements/0/references/0/future','/modules/0/namespace','/modules/0/elements/0/future','/modules/1/namespace']);expect(recoverRecordFromTableSpec(result,exportTableSpec(result.target!))).toEqual(source);
 });
 test('stale member provenance and edited native/receipt data cannot claim ideal recovery',()=>{
  const {author,request}=recordCase();request.fields[0]!.author.target.future=true;expect(()=>projectRecordToTableSpec(author,request)).toThrow();
- const fresh=recordCase(),result=projectRecordToTableSpec(fresh.author,fresh.request),text=exportTableSpec(result.target!);
+ const fresh=recordCase(),result=projectRecordToTableSpec(fresh.author,{...fresh.request,mode:'report'}),text=exportTableSpec(result.target!);
  expect(()=>recoverRecordFromTableSpec(result,text+' ')).toThrow();result.mappings[0]!.nativePath='/fake';expect(()=>recoverRecordFromTableSpec(result,text)).toThrow();
 });
+test('an empty-namespace record can project strictly without erasing namespaced inputs',()=>{const {source,request}=recordCase();source.modules.forEach(m=>m.namespace='');const author=declareCoreElementKind(source,{module:'sales',element:'Order'},'record');request.fields=request.fields.map(f=>({...f,author:declareCoreElementKind(source,f.author.identity,'field')}));const result=projectRecordToTableSpec(author,request);expect(result.status).toBe('projected');expect(result.residuals).toEqual([]);expect(recoverRecordFromTableSpec(result,exportTableSpec(result.target!))).toEqual(source);});

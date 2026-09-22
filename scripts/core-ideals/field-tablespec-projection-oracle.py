@@ -6,6 +6,9 @@ UMF=runpy.run_path(str(source))['UMF']
 fixture=Path('fixtures/validation/field-tablespec-projection.json')
 rows=[]
 for case in json.loads(fixture.read_text())['rows']:
+    if case['result']['status']=='blocked':
+        assert 'target' not in case['result'] and 'text' not in case
+        continue
     model=UMF.model_validate_json(case['text'])
     assert len(model.columns)==1
     assert model.columns[0].name==case['request']['columnName']

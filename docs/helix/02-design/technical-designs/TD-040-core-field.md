@@ -1240,3 +1240,27 @@ namespace outputs. See [SQL namespace evidence](../../../../fixtures/validation/
 The TableSpec namespace policy still needs correction/audit. Nested projections,
 reference binding coverage and full common residual metadata remain open, so this
 change does not close the Field gate.
+
+## TableSpec namespace loss
+
+The pinned TableSpec model does not provide an ideal namespace representation in
+this emitted table schema. Field and flat-record projections now residualize each
+selected nonempty module namespace instead of silently excluding it from accounting.
+Strict mode blocks; report mode emits the native table and retains the namespaced
+ideal. Empty namespaces assert no label to preserve and still permit strict output.
+No invented TableSpec namespace property is emitted.
+
+Namespaced fixtures remain in the matrix with corrected expectations; separate
+empty-namespace controls preserve strict-success coverage. Twelve tests pass 159
+assertions. Chromium 148 checks forty Field policy cases (ten blocked, thirty
+emitted), sixty Field recoveries and six record cases (four blocked, two emitted)
+with four record recoveries. The pinned TableSpec/Pydantic native model accepts all
+thirty emitted single-field schemas and both emitted record schemas. Typechecking
+and browser build pass. No schema files changed. Previously incomplete receipts
+that omitted this namespace loss no longer verify as exact; diagnostic-omission
+compatibility remains only when all other claims recompute correctly.
+See [TableSpec namespace evidence](../../../../fixtures/validation/tablespec-namespace-evidence.json).
+
+This resolves the observed namespace-accounting pattern across the five priority
+projectors within their published subsets. It does not close the remaining nested
+projection, reference binding, common residual metadata or Field exit requirements.

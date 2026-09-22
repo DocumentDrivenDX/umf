@@ -6,10 +6,10 @@ import {projectFieldToTableSpec,type FieldTableSpecRequest} from '../../src/core
 import {exportTableSpec} from '../../src/adapters/tablespec';
 import {type Document} from '../../src/model/types';
 const rows:any[]=[];
-for(const nativeType of ['BOOLEAN','INTEGER','DECIMAL','FLOAT','TEXT','VARCHAR','CHAR','DATE','DATETIME','TIMESTAMP'] as const)for(const mode of ['strict','report'] as const){
- const source:Document={umf:'0.2.0',id:'source',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'e',name:'value',extensions:{}}]}]};
+for(const nativeType of ['BOOLEAN','INTEGER','DECIMAL','FLOAT','TEXT','VARCHAR','CHAR','DATE','DATETIME','TIMESTAMP'] as const)for(const mode of ['strict','report'] as const)for(const namespace of ['sales','']){
+ const source:Document={umf:'0.2.0',id:'source',vocabularies:{},modules:[{id:'m',namespace,elements:[{id:'e',name:'value',extensions:{}}]}]};
  const author=declareCoreElementKind(source,{module:'m',element:'e'},'field'),request:FieldTableSpecRequest={id:'target',tableName:'Sample',columnName:'value',nativeType,mode};
- const result=projectFieldToTableSpec(author,request);if(!result.target)throw Error('Positive failed');rows.push({author,request,result,text:exportTableSpec(result.target)});
+ const result=projectFieldToTableSpec(author,request);if(result.status!==(namespace&&mode==='strict'?'blocked':'projected'))throw Error('Namespace policy');rows.push({author,request,result,...(result.target?{text:exportTableSpec(result.target)}:{})});
 }
 const records:any[]=[];
 for(const mode of ['strict','report'] as const)for(const variant of ['clean','mismatch','missing']){
@@ -22,10 +22,11 @@ try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();const external:string[]=[];
  page.on('request',request=>{if(!request.url().startsWith(`http://127.0.0.1:${server.port}/`))external.push(request.url());});await page.goto(`http://127.0.0.1:${server.port}/`);
  const checks=await page.evaluate(async()=>{
-  const path='/umf.js',umf=await import(path),rows=await(await fetch('/cases')).json();let recoveries=0;
+  const path='/umf.js',umf=await import(path),rows=await(await fetch('/cases')).json();let recoveries=0,fieldBlocks=0;
   for(const row of rows){
    const result=umf.projectFieldToTableSpec(row.author,row.request);if(JSON.stringify(result)!==JSON.stringify(row.result))throw Error('Projection parity');
-   if(!Array.isArray(result.diagnostics)||result.diagnostics.length)throw Error('Success diagnostics');const legacy=umf.copyJson(result);delete legacy.diagnostics;if(JSON.stringify(umf.recoverFieldFromTableSpec(legacy,row.text))!==JSON.stringify(result.source))throw Error('Legacy recovery');
+   if(result.status==='blocked'){if('target'in result)throw Error('Partial Field');fieldBlocks++;continue;}
+   if(!Array.isArray(result.diagnostics)||result.diagnostics.length!==result.residuals.length)throw Error('Success diagnostics');const legacy=umf.copyJson(result);delete legacy.diagnostics;if(JSON.stringify(umf.recoverFieldFromTableSpec(legacy,row.text))!==JSON.stringify(result.source))throw Error('Legacy recovery');
    for(const format of ['json','yaml']){const back=umf.readJsonValue(umf.writeJsonValue(result,format),format);if(JSON.stringify(umf.recoverFieldFromTableSpec(back,row.text))!==JSON.stringify(row.author.target))throw Error('Ideal recovery');recoveries++;}
    const nativeOnly=umf.upgradeFieldEnvelope(umf.importTableSpec(row.text,{id:'native-only',format:'json'})).target;
    if(umf.classifyTableSpecField(nativeOnly,{column:0,mode:'strict'}).mapping.origin!=='classified')throw Error('Author intent inferred');
@@ -44,7 +45,7 @@ try{
    const native=umf.upgradeFieldEnvelope(umf.importTableSpec(row.text,{id:'native-record',format:'json'})).target;
    const classified=umf.classifyTableSpecRecord(native,{recordModule:'records',recordId:'record',mode:'strict'});if(classified.target.modules.at(-1).elements[0].references.length!==3)throw Error('Native record membership');
   }
-  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {projections:rows.length,idealRecoveries:recoveries,lossPolicies:2,recordCases:records.length,recordRecoveries,recordBlocks};
+  if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {fieldBlocks,projections:rows.length,idealRecoveries:recoveries,lossPolicies:2,recordCases:records.length,recordRecoveries,recordBlocks};
  });
  if(external.length)throw Error('External requests');
  await Bun.write('fixtures/validation/field-tablespec-projection.json',JSON.stringify({scope:'Field and flat Record projection; chosen native types do not prove value-domain equivalence',browser:browser.version(),checks,externalRequests:external,rows,records},null,2)+'\n');console.log(JSON.stringify(checks));
