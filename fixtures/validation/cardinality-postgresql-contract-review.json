@@ -1,0 +1,31 @@
+{
+  "scope": "PostgreSQL Cardinality focused contract review before acceptance refresh",
+  "status": "acceptance-pending",
+  "findings": [
+    {
+      "id": "PG-CARD-REVIEW-1",
+      "requirement": "CONTRACT-040: each interpreted assertion identifies its basis",
+      "finding": "Projection mapping omitted an explicit basis member",
+      "resolution": "Required constant basis added to operation schema and mapping; regression asserts basis on all carrier/mode combinations",
+      "verification": "bun test ./tests/core-ideals/cardinality-postgresql-projection.test.ts: 3 tests, 193 assertions, zero failures"
+    },
+    {
+      "id": "PG-CARD-REVIEW-2",
+      "finding": "TD-042 discovery section still said PostgreSQL classification/projection was unimplemented",
+      "resolution": "Appended current implementation checkpoint explicitly superseding discovery-only status and preserving acceptance limits"
+    }
+  ],
+  "remaining": [
+    "69-command five-system native/browser refresh and priority regression",
+    "Republish verified dependent conformance evidence and run both gates",
+    "Publish qualified PostgreSQL binding acceptance only after all checks pass"
+  ],
+  "sha256": {
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "0a752098a0afbc1e9c277148f9c58c8fd18e26e9b1360267ba156ef533fac0e9",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "b02abf15c82ee74e489e11c76434ca5cb386bbe91805bbbbb46baaed32edc274",
+    "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608",
+    "src/core-ideals/cardinality-postgresql-projection.ts": "2a97aa3bec0dba48782119771c9b2e299d83971c713c3ff86250711e0e4355f5",
+    "spec/core/cardinality-postgresql-projection.schema.json": "ab8754f6fa3cc08ff0c5ca8cf3c720d2306673970b6615e06549bf28e7a8eb6d",
+    "tests/core-ideals/cardinality-postgresql-projection.test.ts": "ceecf39247cb12cae75cc37da5e6bfb651f2c890e772f46f59fefed675886d7c"
+  }
+}

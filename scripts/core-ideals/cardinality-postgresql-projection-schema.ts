@@ -9,7 +9,7 @@ req.properties.nativeType.enum.push('jsonb');
 Object.assign(req.properties,{storage:{enum:['scalar','array','jsonb-object']},requireExactValues:{type:'boolean'}});req.required.push('storage','requireExactValues');
 req.allOf=[{if:{properties:{storage:{const:'jsonb-object'}}},then:{properties:{nativeType:{const:'jsonb'}}},else:{properties:{nativeType:{not:{const:'jsonb'}}}}}];
 const mapping=schema.properties.mapping;
-Object.assign(mapping.properties,{cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','sequence-check','object-check','carrier-only']}});mapping.required.push('cardinality','encoding');
+Object.assign(mapping.properties,{basis:{const:'Explicit author declaration and requested native carrier; retained residuals qualify unrepresented obligations'},cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','sequence-check','object-check','carrier-only']}});mapping.required.push('cardinality','encoding','basis');
 mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
 schema.properties.binding.const.subset='Single authored Field with explicit scalar, checked sequence or JSONB object carrier; item/value conversion and native equivalence are not implied';
 await Bun.write('spec/core/cardinality-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');

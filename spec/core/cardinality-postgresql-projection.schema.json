@@ -149,7 +149,8 @@
         "nativePath",
         "outcome",
         "cardinality",
-        "encoding"
+        "encoding",
+        "basis"
       ],
       "properties": {
         "origin": {
@@ -168,6 +169,9 @@
             "not-expressible",
             "approximated"
           ]
+        },
+        "basis": {
+          "const": "Explicit author declaration and requested native carrier; retained residuals qualify unrepresented obligations"
         },
         "cardinality": {
           "enum": [

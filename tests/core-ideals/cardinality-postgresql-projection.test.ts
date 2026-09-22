@@ -12,6 +12,7 @@ test('explicit carriers block losses in strict mode and retain ideal recovery in
   const request:CardinalityPostgresqlRequest={...base,storage,mode,nativeType:storage==='jsonb-object'?'jsonb':'integer'};
   const a=author(shape),r=await projectCardinalityToPostgresql(a,request,backend);
   const exact=storage==='scalar'&&['one','unspecified'].includes(shape);
+  expect(r.mapping.basis).toContain('Explicit author declaration');
   expect(r.status).toBe(mode==='strict'&&!exact?'blocked':'projected');
   if(r.status==='blocked'){expect(r.nativeSql).toBeUndefined();continue;}
   expect(await recoverCardinalityFromPostgresql(r,r.nativeSql!,backend)).toEqual(a.target);

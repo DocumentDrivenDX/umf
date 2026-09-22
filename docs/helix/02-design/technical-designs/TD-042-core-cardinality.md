@@ -492,3 +492,41 @@ obligations. Retain source text/bytes and unknown extension content in both reco
 directions. The next work is the versioned capture supplement, complete operation
 schemas, browser-safe APIs and native/Chromium round-trip matrices. No PostgreSQL
 binding acceptance or second-system Cardinality admission follows from this probe.
+
+### PostgreSQL implementation checkpoint (acceptance pending)
+
+The implementation now supersedes the discovery-only status above. PostgreSQL
+17.4 has a versioned type-relationship supplement alongside the unchanged catalog
+capture profile. Native probes capture both queries in one read-only repeatable-read
+transaction. Browser correlation checks overlapping observations; it does not
+authenticate transaction provenance. Exact source texts and unknown tokens remain
+retained, including the supplement in classified Field extensions.
+
+Classification supports `one` for the qualified basic scalar types and domains
+resolved to those types. Native arrays produce an `array` approximation with a
+rank/lower-bound residual. JSON/JSONB and vector types remain `unspecified` with
+an explicit residual. Existing author declarations require verified receipts;
+conflicts block rather than deleting or relocating scalar/item assertions.
+
+Down-projection selects a scalar, checked sequence, or JSONB object carrier.
+Sequence checks allow empty arrays, require rank one and lower bound one for
+nonempty arrays, and leave SQL NULL separate from item availability. JSONB object
+checks reject scalar JSON and JSON null but permit SQL NULL. Homogeneous item
+restrictions, exact-value demands, JSONB key/value limitations, nested or cyclic
+item definitions, and unprojected metadata receive explicit residuals. Report-mode
+carrier emission does not imply value conversion. Strict mode blocks every loss.
+
+Both directions retain recovery receipts. The composed native oracle recaptures
+emitted SQL and classifies it back: JSONB object carriers remain unspecified on
+native-only classification while the retained author receipt recovers map intent.
+The native matrix contains 48 projections, including nested/self item references,
+opposite container/member availability and unknown extensions. It executes 26
+candidates, blocks 22, and verifies 26 ideal and 26 native recoveries. Browser
+projection evidence includes 52 JSON/YAML ideal recoveries. The separate scalar
+capture matrix covers 26 columns with 18 strict scalar classifications.
+
+Run `bun scripts/core-ideals/cardinality-postgresql-oracle.ts` and
+`bun scripts/core-ideals/cardinality-postgresql-browser.ts` for the combined
+fingerprinted native/browser evidence. These focused checks do not establish full
+binding acceptance. A current five-system regression refresh, conformance checks,
+and acceptance record remain required. No equivalence graduation is claimed.
