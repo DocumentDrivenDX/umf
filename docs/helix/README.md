@@ -38,11 +38,13 @@ Cardinality core-task acceptance now passes: 358 tests / 31,542 assertions,
 fresh native/browser checks for all five existing Field and Nullability bindings,
 and both separate conformance gates. See the
 [core acceptance record](../../fixtures/validation/cardinality-core-acceptance-evidence.json).
-All five native Cardinality bindings and Cardinality ideal admission remain unfinished.
-TableSpec now has qualified declared-shape classification, strict/report native
-carrier projection and retained native/ideal recovery with Bun/native/Chromium
-evidence. Binding acceptance and the broader regression/gate refresh remain pending. Prior Field/Nullability gate records require refresh after this library
-addition. See [TD-042](02-design/technical-designs/TD-042-core-cardinality.md).
+TableSpec Cardinality now passes qualified binding acceptance: declared-shape
+classification, explicit scalar/vector carrier projection and retained native/ideal
+recovery, with strict/report losses and fresh native/Chromium evidence. See the
+[acceptance record](../../fixtures/validation/tablespec-cardinality-acceptance-evidence.json).
+Both existing five-system Field/Nullability gates pass after the library refresh.
+PostgreSQL, SQL Server, Avro and Parquet Cardinality bindings remain pending;
+Cardinality ideal admission still requires at least two useful bindings.
 Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

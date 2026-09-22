@@ -22,7 +22,8 @@ ddx:
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
 revision 1. **Status:** Field and Nullability ideals have passed their qualified
 five-system admission/delivery gates. Experimental Cardinality core 0.4.0 has passed
-core-task acceptance; its five native bindings and ideal admission remain unfinished.
+core-task acceptance. TableSpec Cardinality has qualified binding acceptance; the
+other four native Cardinality bindings and ideal admission remain unfinished.
 Facets, key and native-equivalence graduation remain pending.
 
 ## Purpose

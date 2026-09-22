@@ -432,3 +432,21 @@ Up-classification and down-projection now have focused native/browser evidence.
 Full TableSpec binding acceptance still requires the combined entrypoints, current
 five-system Field/Nullability gate refresh and broader priority regression. Cardinality
 ideal admission and the other four native Cardinality bindings remain unfinished.
+
+
+### TableSpec qualified binding acceptance
+
+The [acceptance record](../../../../fixtures/validation/tablespec-cardinality-acceptance-evidence.json)
+supersedes the pending TableSpec acceptance statements above. The combined Bun native
+and browser entrypoints pass, with fresh declared-shape/source recovery and explicit
+carrier/ideal recovery checks. All 68 refresh commands pass, including the existing
+five-system Field/Nullability native/browser checks and the four Cardinality core
+browser probes. The priority regression passes 365 tests / 34,378 assertions
+across 119 files; both prior conformance gates pass separately after publication.
+
+Qualification is confined to the profiles described above: declared column shape;
+explicit scalar/vector carriers; retained native archives and authored ideals;
+strict refusal/report residuals for vector restrictions, item obligations, exact
+values and maps. A carrier-only report candidate is not a map encoding. No complete
+pipeline, native-equivalence or general data conversion claim follows. The other
+four Cardinality bindings and at-least-two-system admission remain unfinished.

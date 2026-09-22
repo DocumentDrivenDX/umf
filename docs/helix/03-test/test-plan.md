@@ -2695,3 +2695,15 @@ acceptance records, then run the Field and Nullability conformance gates against
 those records. Exclude both conformance test files from the pre-publication sweep;
 stale evidence must not be bypassed by weakening the gate or updating hashes
 without the corresponding native/browser checks.
+
+
+## TableSpec Cardinality acceptance
+
+The combined native and Chromium commands are
+`bun scripts/core-ideals/cardinality-tablespec-oracle.ts` and
+`bun scripts/core-ideals/cardinality-tablespec-browser.ts`. They retain classification,
+projection, profile discrepancies, explicit loss and both recovery directions as
+separate evidence. The [acceptance record](../../../fixtures/validation/tablespec-cardinality-acceptance-evidence.json)
+records 365 priority regression tests / 34,378 assertions and fresh prior
+gates. The remaining four Cardinality bindings and concept admission gate are still
+required; this one-system qualification cannot satisfy US-042-AC8/9 on its own.

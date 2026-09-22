@@ -223,7 +223,7 @@
     "fixtures/validation/field-avro-projection-browser.json": "0d27a157279949dcfd3c84f0060d00eda6391a2577e5b816e4ff77a676f220f2",
     "fixtures/validation/field-avro-projection-corpus.json": "948380b3e112dc66f0bf333de4639e74c1bec4d8bf991b55d9b600a412037b41",
     "fixtures/validation/field-avro-projection-native.json": "d64d11443ae86cae1ca11be7909689beee67b90cbe0b3cf831d8dafac5d594f4",
-    "fixtures/validation/field-gate-refresh-evidence.json": "0860dafc7d8de57e28ecd731f23acdb2be8430266903a9a1b288b8341163d638",
+    "fixtures/validation/field-gate-refresh-evidence.json": "525bf5a12d894f818459c2492f9de866d54a24c99049825a9cedc160c3cc99c0",
     "fixtures/validation/field-parquet-browser.json": "27c1a3594cfece2a753ccc3a5284eddb5858d36446cf8b790cc72a57cf72bb89",
     "fixtures/validation/field-parquet-corpus.json": "c8aca4b31faca39d2a08189e00f3778da47e0fb626255843c4c49a3437a243b9",
     "fixtures/validation/field-parquet-native.json": "3b44461502826b3e19e642d9a86ff635e512eb8a1c2002a66206d86b29c3dab7",
@@ -339,6 +339,7 @@
     "spec/core/cardinality-document.schema.json": "04ce91d7af9a4d144a6b51fb8ae35ddd0ed3d9158f68208a06b3a717799a7018",
     "spec/core/cardinality-operation.schema.json": "d4110cace2e97c968d6b906515036c7a46a2007d6a45a79cbbd8d72967aa7560",
     "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
+    "spec/core/cardinality-tablespec-projection.schema.json": "90295503a98d3e86d69a882cccc99bf961524d4ec6364d336863e49fd45e30a1",
     "spec/core/cardinality-transition.schema.json": "5ebf87ec95c193716add27bc17c5324050b60519b74fcc50c807ef7fca80e8db",
     "spec/core/element-selection.schema.json": "f371d1ad3c8ab0db2147dad7a453992066b55bd5969d4f33cc107a665d987c11",
     "spec/core/extension-package.schema.json": "fe26a341e31ee0ef9433411122dbb43c5c809037bc96e277ec046b145221e794",
@@ -389,6 +390,7 @@
     "spec/core/sqlserver-nullability-classification.schema.json": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
     "spec/core/sqlserver-record-classification.schema.json": "470252f52e8d2a31b1b5c957e2ce893567de40caed414ab9e240b8d6da46c064",
     "spec/core/structured-classification-inspection.schema.json": "b16d8d4562eeda2832f29b9f2c4e8a9fbd6c7a278864ad72a79f8feb07056dda",
+    "spec/core/tablespec-cardinality-classification.schema.json": "43e08e8352b173239d35ec7dc709deb5aa35ff2c0742fa5dc956c281bf7183ae",
     "spec/core/tablespec-field-classification.schema.json": "93fa06c201f728f7f333fd23f2731e466a68c344c4171ab770799fd77a13f22f",
     "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
     "spec/core/tablespec-record-classification.schema.json": "57031cb3d4c6dc6bb50e757a476ceecd4bb22059dcf9c404ad5f5925ceeebb4c",
@@ -591,6 +593,8 @@
     "spec/extensions/sqlserver/index-metadata.schema.json": "1b5eab1662017e640d3cccb156f17d6070bbfdda0ac4658ad84f8267aa835f50",
     "spec/extensions/sqlserver/package.json": "c35f2141af1824182fbc974cb9640fd29f8cc114e42856b3f2e4660cb01eff8e",
     "spec/extensions/sqlserver/schema.json": "e80213a90a876497f99b66d72b526fcc10efba759c53eab283ec3acc14a4c807",
+    "spec/extensions/tablespec-cardinality/package.json": "65e8c9c48183ae232327cd59176796abbaf80363297af7b8b7f8d839c4429423",
+    "spec/extensions/tablespec-cardinality/schema.json": "357014ebffaebab780de96aa743a9c35adc55fd36451562ed24ca5ff52752cd7",
     "spec/extensions/tablespec-nullability/package.json": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
     "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
     "spec/extensions/tablespec/native-model.schema.json": "e40eb20a6d1294d407de261762e52ad62b04a58320aee39acb8470b3ceb754b1",
@@ -766,6 +770,8 @@
     "src/core-ideals/avro-record-type.ts": "33b6e4845af04f14c91eb21294510ff8e39ac82d4f9b8e6a6e6902fbcb19bdfc",
     "src/core-ideals/avro-record.ts": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1",
     "src/core-ideals/avro-records.ts": "35d8e5d3a864f35c71f8dfccc40cbc2db1503fc7a394fb8f7ada4f189927c3ca",
+    "src/core-ideals/cardinality-tablespec-projection.ts": "f73c2429a75bf5a77ef7020a105975f11e78d5817dd03a4487a974e37c2c2052",
+    "src/core-ideals/cardinality-tablespec.ts": "e63b7438c04f01d52996d9970cf242881fc3f00773fc5e78b24e4cc448de94c1",
     "src/core-ideals/classification-report.ts": "f2181216f73568e9f51206ef6ff330efa97de529a59807de39c41e222418164a",
     "src/core-ideals/field-avro-projection.ts": "58343a9b56c27ce4e9cc6b432eb370b90fcba481c3e5ab71c7bcef7e6f3314c5",
     "src/core-ideals/field-parquet-projection.ts": "0f63e386f6fced5edce476badd85e40a4660497c0de3db75929ea27c90218b7f",
@@ -805,7 +811,7 @@
     "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/index.ts": "a57618a9ff71b117a71ac61541fd250a7f92da37df26d7fc1967a9b2b74bbbdd",
+    "src/index.ts": "313c72a2509e0256a56558ac0f1bd7534f4771557ce138fe94ee7cd629d40465",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "8020f13f7422e05678334bc93394ad8bf89f8b838db63469e081919043878fa2",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -879,19 +885,11 @@
     "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9"
   },
   "revalidation": {
-    "reason": "Revalidate five-system Field and Nullability bindings after core 0.4.0 Cardinality schema, authoring, versioned operation and selection additions; native Cardinality bindings remain pending.",
+    "reason": "Revalidate existing five-system Field/Nullability and Cardinality core after TableSpec Cardinality classification/projection additions; new binding acceptance is recorded separately.",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "fixtures/validation/field-gate-refresh-evidence.json": "6abe3e254615590232c395539fcf66750c528cfb842fc8c1ec79ee24182d7807",
-      "src/index.ts": "b2ff6e73830b8a2cea8e024d54c95575aebd42d98d441a7fa8e99da882115a16",
-      "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
-      "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
-      "src/model/record-type.ts": "67d486d3f87b5b78755e2a02dae35d89a5404efdaabb3589f9cd19c9b37524e0",
-      "src/model/selection-verification.ts": "8497e9c734a691b16774df7b39ae517dfdb47424938d021142ae0b9c5dffd160",
-      "src/model/selection.ts": "74e0ad24586e9dad1c1ebe8e9651336bf0129675f93d465c91a95a6568c88979",
-      "src/model/types.ts": "68ab29ccfcd07c4add8fec8506184452ce97fafe53e125c4b575b9fdb65aedfd",
-      "src/validation/document.ts": "a2c7e7992f2365ab60e5651ab797a2a2a7c5e140745d2ab95564c6e3967e9b7c",
-      "src/validation/schema.ts": "1bcf83123ddec50c3df5704aed3bc144718c0f8f4250288141a3ae4f4d49ade6"
+      "fixtures/validation/field-gate-refresh-evidence.json": "0860dafc7d8de57e28ecd731f23acdb2be8430266903a9a1b288b8341163d638",
+      "src/index.ts": "a57618a9ff71b117a71ac61541fd250a7f92da37df26d7fc1967a9b2b74bbbdd"
     },
     "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Cardinality dependencies are fingerprinted without widening native Field support."
   },
@@ -963,6 +961,23 @@
         "src/index.ts": "c76823d99d466fb202a114c8440406a30300bbd716b528c068833d69324aa060"
       },
       "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
+    },
+    {
+      "reason": "Revalidate five-system Field and Nullability bindings after core 0.4.0 Cardinality schema, authoring, versioned operation and selection additions; native Cardinality bindings remain pending.",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "fixtures/validation/field-gate-refresh-evidence.json": "6abe3e254615590232c395539fcf66750c528cfb842fc8c1ec79ee24182d7807",
+        "src/index.ts": "b2ff6e73830b8a2cea8e024d54c95575aebd42d98d441a7fa8e99da882115a16",
+        "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
+        "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+        "src/model/record-type.ts": "67d486d3f87b5b78755e2a02dae35d89a5404efdaabb3589f9cd19c9b37524e0",
+        "src/model/selection-verification.ts": "8497e9c734a691b16774df7b39ae517dfdb47424938d021142ae0b9c5dffd160",
+        "src/model/selection.ts": "74e0ad24586e9dad1c1ebe8e9651336bf0129675f93d465c91a95a6568c88979",
+        "src/model/types.ts": "68ab29ccfcd07c4add8fec8506184452ce97fafe53e125c4b575b9fdb65aedfd",
+        "src/validation/document.ts": "a2c7e7992f2365ab60e5651ab797a2a2a7c5e140745d2ab95564c6e3967e9b7c",
+        "src/validation/schema.ts": "1bcf83123ddec50c3df5704aed3bc144718c0f8f4250288141a3ae4f4d49ade6"
+      },
+      "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Cardinality dependencies are fingerprinted without widening native Field support."
     }
   ]
 }

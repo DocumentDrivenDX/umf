@@ -137,8 +137,12 @@ Core-task acceptance now passes all 66 refresh commands, 358 tests /
 The refresh reruns native/browser checks for all five existing Field and Nullability
 bindings and all four Cardinality core browser probes. See the
 [core acceptance record](../../../fixtures/validation/cardinality-core-acceptance-evidence.json).
-All five native Cardinality bindings remain pending; ideal admission and all-five
-delivery require their separate gate. Facets and key retain their ordered dependencies. Existing untracked bootstrap implementation/evidence must
+TableSpec Cardinality now passes qualified binding acceptance after 68 refresh
+commands, 365 priority regression tests / 34,378 assertions across 119 files,
+and both separate prior conformance gates. See the
+[TableSpec acceptance record](../../../fixtures/validation/tablespec-cardinality-acceptance-evidence.json).
+PostgreSQL, SQL Server, Avro and Parquet Cardinality bindings remain pending;
+ideal admission and all-five delivery require their separate gate. Facets and key retain their ordered dependencies. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not
 that those future implementation commands already pass.

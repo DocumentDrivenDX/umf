@@ -1,0 +1,43 @@
+{
+  "scope": "Qualified classification/projection and retained recovery in real Chromium; no host globals or external requests",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "classification": {
+      "cases": 336,
+      "recoveries": 452,
+      "blocks": 110,
+      "tampered": 226
+    },
+    "projection": {
+      "cases": 78,
+      "recoveries": 88,
+      "blocks": 34,
+      "tampered": 44
+    }
+  },
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-classification-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/cardinality-tablespec-browser.ts": "245f8e604b76ed8f74f00542a39711863d893b4962a6de11020be06e7803dcd3",
+    "dist/umf.js": "3291acf4d3a037e138381595ee59e4d27a12fdf3f63b56cc4d8220b3c3d21177",
+    "scripts/core-ideals/cardinality-tablespec-classification-browser.ts": "7f2eea1bbfe443eeb220aa7550f1c0e5bf9676780abb5cfa1bd1ff09614d5e64",
+    "fixtures/validation/cardinality-tablespec-classification-browser.json": "4f7307248d15939688cdd12645a4f98db47a427b64aacf6620242fe4c80ed4f1",
+    "scripts/core-ideals/cardinality-tablespec-projection-browser.ts": "e40d6b26945a256553e1f00a685f397781450b31e65738974017974d7c256cb9",
+    "fixtures/validation/cardinality-tablespec-projection-browser.json": "800ffb3ef449e843b8132120d5af18cf632c7e2beae45ecee761d068f2527f7f"
+  }
+}
