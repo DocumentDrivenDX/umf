@@ -1,0 +1,34 @@
+{
+  "scope": "Common metadata for existing record/composite/type and raw DDL classification operations; no expansion of native support claims",
+  "commands": [
+    "bun test tests/core-ideals/structured-report.test.ts",
+    "bun scripts/core-ideals/structured-report-corpus.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/structured-report-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 253,
+    "operationKinds": 9,
+    "browserCases": 17,
+    "browserReportRecoveries": 34,
+    "typecheck": "passed",
+    "schemasPassed": 208,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10123930
+  },
+  "sha256": {
+    "src/core-ideals/structured-report.ts": "df386c3c90ba9b773746fad8c83e07ecc31a14e5bc3f2fcd9fdc96ee331864a7",
+    "spec/core/structured-classification-inspection.schema.json": "b16d8d4562eeda2832f29b9f2c4e8a9fbd6c7a278864ad72a79f8feb07056dda",
+    "scripts/core-ideals/structured-report-schema.ts": "15cfc8897753f45bc46b2dfbc997301452b29162048d351ef2bb74ad46beb5db",
+    "scripts/core-ideals/structured-report-cases.ts": "d37203b7ab5ad428491784374155eebee7f495b1b587587e6ea911ba76ccafea",
+    "scripts/core-ideals/structured-report-corpus.ts": "10e0753d28c98b97205c4c24d262e7b347c455de0e1f2286e2a5b53a6e3a4691",
+    "scripts/core-ideals/structured-report-browser.ts": "353d25c793f65a1aca6c092d92badf099beb3c7ffb1471cc79757ce3b78c0e83",
+    "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9",
+    "fixtures/validation/structured-report-corpus.json": "d9ab73910d6e45b236e798875cf1b06034dbd8ae99608253a69b058f9bc16bd5",
+    "fixtures/validation/structured-report-browser.json": "ebb4f399be65b4f69c03ede9de5df708229401cdc4ef008169b9d8d586f9c278"
+  }
+}

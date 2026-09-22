@@ -255,3 +255,4 @@ export * from './core-ideals/parquet-record-type';
 export * from './core-ideals/field-report';
 export * from './core-ideals/record-report';
 export * from './core-ideals/classification-report';
+export * from './core-ideals/structured-report';

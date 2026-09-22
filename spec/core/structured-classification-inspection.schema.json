@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:structured-classification-inspection:1.0.0",
+  "title": "Verified common record and type classification metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "receipt",
+    "mappings",
+    "residuals",
+    "diagnostics",
+    "nativeContext"
+  ],
+  "properties": {
+    "operation": {
+      "const": "inspect-structured-classification"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "receipt": {
+      "oneOf": [
+        {
+          "$ref": "urn:umf:core:tablespec-record-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:postgresql-record-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:sqlserver-record-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:avro-record-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:parquet-record-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:avro-record-type-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:parquet-record-type-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:postgresql-composite-classification:1.0.0"
+        },
+        {
+          "$ref": "urn:umf:core:postgresql-ddl-kinds:1.0.0"
+        }
+      ]
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sourcePath",
+          "sourceValue",
+          "targetPath",
+          "outcome",
+          "reason",
+          "binding",
+          "recovery"
+        ],
+        "properties": {
+          "sourcePath": {
+            "type": "string"
+          },
+          "sourceValue": {},
+          "targetPath": {
+            "type": "null"
+          },
+          "outcome": {
+            "const": "unknown"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "binding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "version",
+              "nativeVersion",
+              "subset"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "nativeVersion": {
+                "type": "string"
+              },
+              "subset": {
+                "type": "string"
+              }
+            }
+          },
+          "recovery": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "strategy",
+              "receiptPath",
+              "instruction"
+            ],
+            "properties": {
+              "strategy": {
+                "const": "retained-source-and-receipt"
+              },
+              "receiptPath": {
+                "const": "/receipt/source"
+              },
+              "instruction": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "origin",
+          "idealPath",
+          "nativePath",
+          "binding",
+          "basis",
+          "outcome",
+          "kind",
+          "nativeFragment"
+        ],
+        "properties": {
+          "origin": {
+            "const": "classified"
+          },
+          "idealPath": {
+            "type": "string"
+          },
+          "nativePath": {
+            "type": "string"
+          },
+          "binding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "version",
+              "nativeVersion",
+              "subset"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "nativeVersion": {
+                "type": "string"
+              },
+              "subset": {
+                "type": "string"
+              }
+            }
+          },
+          "basis": {
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "field",
+              "record",
+              "record-type"
+            ]
+          },
+          "nativeFragment": {},
+          "dependencyId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "nativeContext": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "namespaceResolution"
+          ],
+          "properties": {
+            "scope": {
+              "const": "declared-only"
+            },
+            "namespaceResolution": {
+              "enum": [
+                "explicit",
+                "create-schema-context",
+                "unresolved"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

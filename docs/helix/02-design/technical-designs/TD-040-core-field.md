@@ -1341,3 +1341,30 @@ The fixtures reuse native captures already qualified by their adapters. No nativ
 execution was rerun for this report layer, and no broader native conformance is
 claimed. Raw DDL, record/type classification common reports and nested projections
 remain required before the Field gate can close.
+
+## Shared structured classification reports
+
+`inspectStructuredClassification` now recomputes the five record classifiers,
+PostgreSQL catalog composites, Avro/Parquet record-type classifiers and PostgreSQL
+raw DDL table/composite classification. Ordered mappings preserve native fragments,
+paths, dependency identity, membership/type basis and the complete versioned binding.
+Residuals retain source values, unknown outcomes and native recovery instructions.
+`verifyStructuredClassificationInspection` rejects modified mappings or summaries.
+
+Raw PostgreSQL DDL explicitly exposes declared-only scope and namespace resolution.
+Its caller must supply the pinned backend; an unresolved search path stays unresolved
+in both the retained receipt and common context, including report-mode candidates.
+Catalog and declaration claims are not merged. The wrapper does not expand any
+native binding's version, subset, execution or type-resolution guarantees.
+
+Two Bun tests pass 253 assertions over seventeen cases spanning nine operation kinds.
+Chromium 148 matches all seventeen reports and thirty-four JSON/YAML verifications,
+including forged-basis rejection. Typechecking, browser build, PostgreSQL WASM
+runtime build and all 208 schema / 32 package audits pass. Native execution was not
+rerun for this metadata layer; it uses previously qualified adapter fixtures and
+recomputes their operations. See [structured report evidence](../../../../fixtures/validation/structured-report-evidence.json).
+
+The common inspection profile now covers all currently implemented Field/record
+projection and classification operation families. This does not establish that the
+underlying native/reference/nested-projection coverage is complete; those gaps and
+the Field admission/delivery audit remain open.

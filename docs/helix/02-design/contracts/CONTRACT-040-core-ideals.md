@@ -274,3 +274,11 @@ outcome and the binding/recovery instruction; they do not become authored intent
 The initial profile covers TableSpec captured columns, PostgreSQL/SQL Server
 catalog columns, Avro members and checked Parquet primitive leaves. Raw DDL and
 record/type classifications require separately declared coverage.
+
+Shared structured-classification inspection covers existing record mappings,
+PostgreSQL captured composites, and Avro/Parquet record-type links by retaining
+ordered mappings and recomputing their exact adapter operations. PostgreSQL raw
+DDL inspection additionally exposes `declared-only` scope and namespace-resolution
+state. It requires the explicit pinned backend and cannot imply catalog expansion,
+execution, or resolution of an unspecified search path. Record/type coverage is
+limited to each retained binding's published version and subset.
