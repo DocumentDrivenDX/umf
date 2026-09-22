@@ -1,0 +1,9 @@
+{
+  "reason": "README pending-implementation statement corrected after initial acceptance fingerprints were captured. Cardinality behavior passed, but evidence test rejected stale README hash. Repeat gates against final documentation before acceptance. Runtime refresh inputs unchanged.",
+  "failedGateLog": "fixtures/validation/sqlserver-facets-cardinality-stale-docs.log",
+  "documentation": "docs/helix/README.md",
+  "sha256": {
+    "fixtures/validation/sqlserver-facets-cardinality-stale-docs.log": "4f60f6416fca086589335f31090af3f1530c613ebe3d8859acfd7138f92a2a73",
+    "docs/helix/README.md": "d379ed1a2a02c36b612cfc63cebd13947d3731067c482b20dd410aecbeaadbc1"
+  }
+}

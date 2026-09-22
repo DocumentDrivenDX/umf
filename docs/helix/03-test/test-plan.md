@@ -2937,3 +2937,38 @@ exact-input failure. Native payloads are never removed by core labels.
 This closes the PostgreSQL facet binding only. SQL Server, Avro and Parquet facet
 bindings, the separate facet ideal admission/five-system delivery gate, and Key
 remain required. No native-equivalence graduation is claimed.
+
+
+### Qualified SQL Server facet binding
+
+The [acceptance record](../../../fixtures/validation/sqlserver-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 SQL Server
+2022 16.0.4295.3 facet classification, authored projection, strict/report losses
+and both retained recovery directions. It supersedes earlier checkpoints' pending
+refresh status; their counts and fingerprints remain historical.
+
+All 84 refresh steps pass, including 492 core/priority tests with
+51,613 assertions across 156 files, typechecking,
+271 schemas, 45 packages, browser builds and five-system native/browser checks.
+Field, Nullability and Cardinality gates pass after evidence revalidation; accepted
+TableSpec and PostgreSQL facets remain qualified. A metadata-only browser evidence
+label was corrected before its stage ran, with a separate typecheck. Runtime
+behavior and assertions were unchanged; the adjustment is archived.
+
+Four native stages and six Chromium 148 workflows cover discovery, CHECK
+association, 238 projection cases (145 emitted, 93 blocked), 27 projection value
+probes, and composed native/ideal recovery. The 145 emitted cases recover authored
+facets directly in 57 cases and retain explicit residuals in 88. Browser composition
+passes 290 ideal and 290 native-view recoveries, two full-catalog recoveries and
+24 scoped association cases. Extra native refinements do not become author intent.
+
+Qualification covers direct supported scalar carriers, bounded CHECK expressions,
+explicit non-null stored/ordinary-checked-write scopes and separately identified
+logical Fields. Disabled, untrusted, replication-exempt, cross-column, Unicode,
+padding, alias/computed and input-conversion distinctions stay explicit. The only
+exact string bound inferred is the qualified zero-byte variable-string domain.
+Arbitrary SQL conversion, complete inventory, source authentication and composition
+with earlier native availability/container operations are not claimed.
+
+This completes the SQL Server facet binding only. Avro, Parquet, the separate
+facet ideal admission/delivery gate and Key remain required. Native equivalence
+is unclaimed; native payloads and unknown content remain recoverable.

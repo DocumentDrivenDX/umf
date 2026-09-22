@@ -81,12 +81,13 @@ full compatibility refresh and prior concept gates. The binding preserves native
 value scopes, unknown refinements and explicit projection losses; all 145 emitted
 schemas have composed native/ideal recovery evidence. See the
 [PostgreSQL facet acceptance record](../../fixtures/validation/postgresql-facets-acceptance-evidence.json).
-SQL Server, Avro and Parquet facet bindings remain required before the separate
-five-system facet admission/delivery gate. No native equivalence is claimed.
-SQL Server facet discovery now has pinned native counterexamples and an internal
-native-type decoder with Bun/Chromium evidence. Public classification, projection
-and binding acceptance remain open. See the
-[SQL Server discovery checkpoint](04-build/evidence/sqlserver-facet-discovery.md).
+SQL Server facets also pass qualified binding acceptance; see the
+[acceptance record](../../fixtures/validation/sqlserver-facets-acceptance-evidence.json).
+Avro and Parquet facet bindings remain required before the separate five-system
+facet admission/delivery gate. No native equivalence is claimed.
+The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
+records discovery, classification, authored projection and composed recovery,
+including the native counterexamples that limit each qualified profile.
 Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

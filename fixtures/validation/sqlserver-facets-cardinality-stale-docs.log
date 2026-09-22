@@ -1,0 +1,33 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/cardinality-conformance.test.ts:
+(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [309513.98ms]
+26 |  async function verify(record:any,label:string){
+27 |   assert.ok(record.sha256&&Object.keys(record.sha256).length,`${label}: missing fingerprints`);
+28 |   for(const [path,expected] of Object.entries(record.sha256)){
+29 |    const local=relative(process.cwd(),resolve(path));
+30 |    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!path.split('/').includes('..'),`${label}: unsafe evidence path`);
+31 |    assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
+                                                               ^
+AssertionError: cardinality-core-acceptance-evidence: stale docs/helix/README.md
++ actual - expected
+
++ 'd379ed1a2a02c36b612cfc63cebd13947d3731067c482b20dd410aecbeaadbc1'
+- '25b47bd9541c3b591f96e87717513926f42ca188378933237d85e35e5636a67a'
+
+ generatedMessage: false,
+     actual: "d379ed1a2a02c36b612cfc63cebd13947d3731067c482b20dd410aecbeaadbc1",
+   expected: "25b47bd9541c3b591f96e87717513926f42ca188378933237d85e35e5636a67a",
+   operator: "strictEqual",
+       code: "ERR_ASSERTION"
+
+      at verify (/home/erik/Projects/umf/scripts/core-ideals/cardinality-conformance.ts:31:59)
+      at verifyCardinalityEvidence (/home/erik/Projects/umf/scripts/core-ideals/cardinality-conformance.ts:57:73)
+      at /home/erik/Projects/umf/tests/core-ideals/cardinality-conformance.test.ts:9:12
+      at processTicksAndRejections (native:7:39)
+(fail) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [108.15ms]
+
+ 1 pass
+ 1 fail
+ 41 expect() calls
+Ran 2 tests across 1 file. [312.26s]

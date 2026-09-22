@@ -1,0 +1,9 @@
+{
+  "reason": "Correct copied aggregate evidence wording from Chromium/WASM to Chromium JavaScript before the SQL Server browser stage executes. No public library, schema, native fixture, assertion or browser stage command changed.",
+  "path": "scripts/core-ideals/facets-sqlserver-browser.ts",
+  "previousSha256": "2370a0eac28d513771f246aec6bd2da692791601abd6794f535292286e85a9e1",
+  "currentSha256": "2f4b696950a85fc6a8961bfacbc3cc049c1ef91c3674bb7a3c62b6090c933cb5",
+  "completedCommandsAtCorrection": 20,
+  "sqlServerBrowserStageExecuted": false,
+  "validation": "Typecheck rerun separately after this metadata-only correction; the final aggregate executes the corrected source."
+}
