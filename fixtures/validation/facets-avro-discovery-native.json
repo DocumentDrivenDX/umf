@@ -1,0 +1,7193 @@
+{
+  "scope": "Native API facet discovery, not UMF binding acceptance, core admission or native equivalence",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "profiles": {
+    "apache": "schema.parse, io.validate, DatumWriter.write, DatumReader.read",
+    "fastavro": "parse_schema, validation.validate(raise_errors=False), schemaless_writer(strict=True), schemaless_reader"
+  },
+  "decimalContext": "Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[Inexact, Rounded], traps=[InvalidOperation, DivisionByZero, Overflow])",
+  "cases": [
+    {
+      "id": "int-0",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "-2147483649"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"-2147483649\" provided for \"None\" is not an example of the schema \"int\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "int-0",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "-2147483649"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "8180808010",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-2147483649",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-2147483649",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-1",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "-2147483648"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "ffffffff0f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-2147483648",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-2147483648",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-1",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "-2147483648"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "ffffffff0f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-2147483648",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-2147483648",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-2",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "2147483647"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "feffffff0f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "2147483647",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "2147483647",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-2",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "2147483647"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "feffffff0f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "2147483647",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "2147483647",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-3",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "2147483648"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"2147483648\" provided for \"None\" is not an example of the schema \"int\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "int-3",
+      "schema": "int",
+      "input": {
+        "type": "int",
+        "repr": "2147483648"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "8080808010",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "2147483648",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "2147483648",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-4",
+      "schema": "int",
+      "input": {
+        "type": "bool",
+        "repr": "True"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "02",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-4",
+      "schema": "int",
+      "input": {
+        "type": "bool",
+        "repr": "True"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "02",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-5",
+      "schema": "int",
+      "input": {
+        "type": "float",
+        "repr": "1.5"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1.5\" provided for \"None\" is not an example of the schema \"int\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "int-5",
+      "schema": "int",
+      "input": {
+        "type": "float",
+        "repr": "1.5"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "02",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-6",
+      "schema": "int",
+      "input": {
+        "type": "str",
+        "repr": "'1'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1\" provided for \"None\" is not an example of the schema \"int\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "int-6",
+      "schema": "int",
+      "input": {
+        "type": "str",
+        "repr": "'1'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "an integer is required",
+        "warnings": []
+      }
+    },
+    {
+      "id": "int-custom-width-0",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "-1"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-custom-width-0",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "-1"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-custom-width-1",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "255"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "fe03",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-custom-width-1",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "255"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "fe03",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-custom-width-2",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "256"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "8004",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "int-custom-width-2",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "256"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "8004",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-0",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "-9223372036854775809"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"-9223372036854775809\" provided for \"None\" is not an example of the schema \"long\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-0",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "-9223372036854775809"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "OverflowError",
+        "message": "Python int too large to convert to C long",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-1",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "-9223372036854775808"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "ffffffffffffffffff01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-9223372036854775808",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-9223372036854775808",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-1",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "-9223372036854775808"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "ffffffffffffffffff01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-9223372036854775808",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-9223372036854775808",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-2",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "9223372036854775807"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "feffffffffffffffff01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "9223372036854775807",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "9223372036854775807",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-2",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "9223372036854775807"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "feffffffffffffffff01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "9223372036854775807",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "9223372036854775807",
+            "bytesConsumed": 10,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-3",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "9223372036854775808"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"9223372036854775808\" provided for \"None\" is not an example of the schema \"long\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-3",
+      "schema": "long",
+      "input": {
+        "type": "int",
+        "repr": "9223372036854775808"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "OverflowError",
+        "message": "Python int too large to convert to C long",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-4",
+      "schema": "long",
+      "input": {
+        "type": "bool",
+        "repr": "True"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "02",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-4",
+      "schema": "long",
+      "input": {
+        "type": "bool",
+        "repr": "True"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "02",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-5",
+      "schema": "long",
+      "input": {
+        "type": "float",
+        "repr": "1.5"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1.5\" provided for \"None\" is not an example of the schema \"long\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-5",
+      "schema": "long",
+      "input": {
+        "type": "float",
+        "repr": "1.5"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "02",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "1",
+            "bytesConsumed": 1,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-6",
+      "schema": "long",
+      "input": {
+        "type": "str",
+        "repr": "'1'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1\" provided for \"None\" is not an example of the schema \"long\"",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-6",
+      "schema": "long",
+      "input": {
+        "type": "str",
+        "repr": "'1'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "an integer is required",
+        "warnings": []
+      }
+    },
+    {
+      "id": "long-custom-width-0",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "-1"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-custom-width-0",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "-1"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "01",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "-1",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-custom-width-1",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "255"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "fe03",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-custom-width-1",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "255"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "fe03",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "255",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-custom-width-2",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "256"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "8004",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "long-custom-width-2",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "input": {
+        "type": "int",
+        "repr": "256"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "8004",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "int",
+            "repr": "256",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-0",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "1.0000000000000002"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000803f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-0",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "1.0000000000000002"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000803f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-1",
+      "schema": "float",
+      "input": {
+        "type": "int",
+        "repr": "9007199254740993"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000005a",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-1",
+      "schema": "float",
+      "input": {
+        "type": "int",
+        "repr": "9007199254740993"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000005a",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-2",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "inf"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000807f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-2",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "inf"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000807f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-3",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "nan"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000c07f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-3",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "nan"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000c07f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 4,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-4",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "-0.0"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "00000080",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "float-4",
+      "schema": "float",
+      "input": {
+        "type": "float",
+        "repr": "-0.0"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "00000080",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-0",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "1.0000000000000002"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "010000000000f03f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0000000000000002",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0000000000000002",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-0",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "1.0000000000000002"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "010000000000f03f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0000000000000002",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "1.0000000000000002",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-1",
+      "schema": "double",
+      "input": {
+        "type": "int",
+        "repr": "9007199254740993"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000000000004043",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-1",
+      "schema": "double",
+      "input": {
+        "type": "int",
+        "repr": "9007199254740993"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000000000004043",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "9007199254740992.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-2",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "inf"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "000000000000f07f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-2",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "inf"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "000000000000f07f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "inf",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-3",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "nan"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "000000000000f87f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-3",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "nan"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "000000000000f87f",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "nan",
+            "bytesConsumed": 8,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-4",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "-0.0"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000000000000080",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "double-4",
+      "schema": "double",
+      "input": {
+        "type": "float",
+        "repr": "-0.0"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000000000000080",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "float",
+            "repr": "-0.0",
+            "bytesConsumed": 8,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-0",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "''"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "00",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-0",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "''"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "00",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-1",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'\\x00'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\\x00'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\\x00'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-1",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'\\x00'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\\x00'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\\x00'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-2",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'\ud83d\ude00'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "08f09f9880",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-2",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'\ud83d\ude00'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "08f09f9880",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-3",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'e\u0301'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0665cc81",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'e\u0301'",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'e\u0301'",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-3",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'e\u0301'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0665cc81",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'e\u0301'",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'e\u0301'",
+            "bytesConsumed": 4,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-4",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'\\ud800'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "UnicodeEncodeError",
+        "message": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed",
+        "warnings": []
+      }
+    },
+    {
+      "id": "string-4",
+      "schema": "string",
+      "input": {
+        "type": "str",
+        "repr": "'\\ud800'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "UnicodeEncodeError",
+        "message": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed",
+        "warnings": []
+      }
+    },
+    {
+      "id": "string-max-metadata-0",
+      "schema": {
+        "type": "string",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "str",
+        "repr": "'ab'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "046162",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-max-metadata-0",
+      "schema": {
+        "type": "string",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "str",
+        "repr": "'ab'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "046162",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-max-metadata-1",
+      "schema": {
+        "type": "string",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "str",
+        "repr": "'\ud83d\ude00'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "08f09f9880",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "string-max-metadata-1",
+      "schema": {
+        "type": "string",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "str",
+        "repr": "'\ud83d\ude00'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "08f09f9880",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "str",
+            "repr": "'\ud83d\ude00'",
+            "bytesConsumed": 5,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "bytes-max-metadata-0",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "00",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "bytes-max-metadata-0",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "00",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "bytes-max-metadata-1",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0261",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "bytes-max-metadata-1",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0261",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "bytes-max-metadata-2",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "046162",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "bytes-max-metadata-2",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "046162",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-0-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 0,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 0,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-0-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 0,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b''",
+            "bytesConsumed": 0,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-0-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'a'\" provided for \"F0\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F0\",\n  \"size\": 0\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-0-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 1 does not match schema size: {'type': 'fixed', 'name': 'F0', 'size': 0}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-0-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'ab'\" provided for \"F0\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F0\",\n  \"size\": 0\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-0-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 2 does not match schema size: {'type': 'fixed', 'name': 'F0', 'size': 0}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-0-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'abc'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'abc'\" provided for \"F0\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F0\",\n  \"size\": 0\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-0-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'abc'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 3 does not match schema size: {'type': 'fixed', 'name': 'F0', 'size': 0}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-1-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b''\" provided for \"F1\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F1\",\n  \"size\": 1\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-1-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 0 does not match schema size: {'type': 'fixed', 'name': 'F1', 'size': 1}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-1-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "61",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-1-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "61",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'a'",
+            "bytesConsumed": 1,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-1-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'ab'\" provided for \"F1\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F1\",\n  \"size\": 1\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-1-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 2 does not match schema size: {'type': 'fixed', 'name': 'F1', 'size': 1}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-1-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'abc'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'abc'\" provided for \"F1\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F1\",\n  \"size\": 1\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-1-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'abc'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 3 does not match schema size: {'type': 'fixed', 'name': 'F1', 'size': 1}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-2-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b''\" provided for \"F2\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F2\",\n  \"size\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-2-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b''"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 0 does not match schema size: {'type': 'fixed', 'name': 'F2', 'size': 2}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-2-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'a'\" provided for \"F2\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F2\",\n  \"size\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-2-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'a'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 1 does not match schema size: {'type': 'fixed', 'name': 'F2', 'size': 2}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-2-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "6162",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-2-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'ab'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "6162",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'ab'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "fixed-2-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'abc'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'abc'\" provided for \"F2\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"name\": \"F2\",\n  \"size\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "fixed-2-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'abc'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 3 does not match schema size: {'type': 'fixed', 'name': 'F2', 'size': 2}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0.00')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0.00')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-2",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.2')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "020c",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.12')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.12')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-2",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.2')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0278",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-3",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.20')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0278",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-3",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.20')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0278",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-4",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.200')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroOutOfScaleException",
+        "message": "The exponent of 1.200, -3, is too large for the schema scale of 2",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-4",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.200')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-5",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('9.99')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0403e7",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-5",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('9.99')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0403e7",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-6",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('-9.99')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "04fc19",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-6",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('-9.99')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "04fc19",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-7",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('12.34')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0404d2",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 3,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 3,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-7",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('12.34')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-8",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1E+2')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0201",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.01')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.01')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-8",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1E+2')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "042710",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('100')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('100')",
+            "bytesConsumed": 3,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-9",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('NaN')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "invalid literal for int() with base 10: 'n'",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-9",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('NaN')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "can only concatenate str (not \"int\") to str",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "can only concatenate str (not \"int\") to str",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-10",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('Infinity')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "invalid literal for int() with base 10: 'F'",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-10",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('Infinity')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "can only concatenate str (not \"int\") to str",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "can only concatenate str (not \"int\") to str",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-physical-input-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x00'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'\\x00'\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 3,\n  \"scale\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-physical-input-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x00'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0200",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-bytes-physical-input-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x04\\xd2'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'\\x04\\xd2'\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 3,\n  \"scale\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-bytes-physical-input-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x04\\xd2'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0404d2",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 3,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 3,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-0",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-0",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-1",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0.00')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-1",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('0.00')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0000",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.00')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-2",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.2')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "000c",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.12')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.12')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-2",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.2')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0078",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-3",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.20')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0078",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-3",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.20')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0078",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('1.20')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-4",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.200')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroOutOfScaleException",
+        "message": "The exponent of 1.200, -3, is too large for the schema scale of 2",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-4",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1.200')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-5",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('9.99')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "03e7",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-5",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('9.99')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "03e7",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-6",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('-9.99')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "fc19",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-6",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('-9.99')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "fc19",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('-9.99')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-7",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('12.34')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "04d2",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-7",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('12.34')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-8",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1E+2')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0001",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.01')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('0.01')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-8",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1E+2')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "2710",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('100')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('100')",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "decimal-fixed-9",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('NaN')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "invalid literal for int() with base 10: 'n'",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-9",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('NaN')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "bad operand type for unary -: 'str'",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "bad operand type for unary -: 'str'",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-10",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('Infinity')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "invalid literal for int() with base 10: 'F'",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-10",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('Infinity')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "bad operand type for unary -: 'str'",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "bad operand type for unary -: 'str'",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-physical-input-0",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x00'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'\\x00'\" provided for \"DecimalFixed\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 3,\n  \"scale\": 2,\n  \"name\": \"DecimalFixed\",\n  \"size\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-physical-input-0",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x00'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "data of length 1 does not match schema size: {'logicalType': 'decimal', 'precision': 3, 'scale': 2, 'type': 'fixed', 'name': 'DecimalFixed', 'size': 2}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-physical-input-1",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x04\\xd2'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"b'\\x04\\xd2'\" provided for \"DecimalFixed\" is not an example of the schema {\n  \"type\": \"fixed\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 3,\n  \"scale\": 2,\n  \"name\": \"DecimalFixed\",\n  \"size\": 2\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "decimal-fixed-physical-input-1",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x04\\xd2'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "04d2",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        },
+        "fastavro": {
+          "ok": true,
+          "result": {
+            "type": "Decimal",
+            "repr": "Decimal('12.3')",
+            "bytesConsumed": 2,
+            "exactTypedInput": false
+          },
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 0, 'scale': 0}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x01'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": [
+          "Invalid decimal precision 0. Must be a positive integer."
+        ]
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0201",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'\\x01'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": [
+            "Invalid decimal precision 0. Must be a positive integer."
+          ]
+        },
+        "fastavro": {
+          "ok": false,
+          "error": "ValueError",
+          "message": "valid range for prec is [1, MAX_PREC]",
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 0, 'scale': 0}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 0
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x01'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0201",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'\\x01'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": [
+            "Invalid decimal precision 0. Must be a positive integer."
+          ]
+        },
+        "fastavro": {
+          "ok": false,
+          "error": "ValueError",
+          "message": "valid range for prec is [1, MAX_PREC]",
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 0, 'scale': 0}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 0
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": [
+          "Invalid decimal precision 0. Must be a positive integer."
+        ]
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 0,\n  \"scale\": 0\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 0, 'scale': 0}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 0
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": true,
+        "warnings": []
+      },
+      "validate": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "The decimal precision is bigger than allowed by schema",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': 4}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 4
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x01'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": [
+          "Invalid decimal scale 4. Cannot be greater than precision 3."
+        ]
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0201",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'\\x01'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": [
+            "Invalid decimal scale 4. Cannot be greater than precision 3."
+          ]
+        },
+        "fastavro": {
+          "ok": false,
+          "error": "SchemaParseException",
+          "message": "decimal scale must be less than or equal to the precision of 3",
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': 4}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 4
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x01'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": false,
+        "error": "SchemaParseException",
+        "message": "decimal scale must be less than or equal to the precision of 3",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': 4}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 4
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": [
+          "Invalid decimal scale 4. Cannot be greater than precision 3."
+        ]
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 3,\n  \"scale\": 4\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': 4}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 4
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": false,
+        "error": "SchemaParseException",
+        "message": "decimal scale must be less than or equal to the precision of 3",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': -1}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x01'"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": [
+          "Invalid decimal scale -1. Must be a non-negative integer."
+        ]
+      },
+      "validate": {
+        "ok": true,
+        "result": true,
+        "warnings": []
+      },
+      "write": {
+        "ok": true,
+        "result": "0201",
+        "warnings": []
+      },
+      "reads": {
+        "apache": {
+          "ok": true,
+          "result": {
+            "type": "bytes",
+            "repr": "b'\\x01'",
+            "bytesConsumed": 2,
+            "exactTypedInput": true
+          },
+          "warnings": [
+            "Invalid decimal scale -1. Must be a non-negative integer."
+          ]
+        },
+        "fastavro": {
+          "ok": false,
+          "error": "SchemaParseException",
+          "message": "decimal scale must be a positive integer, not -1",
+          "warnings": []
+        }
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': -1}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "input": {
+        "type": "bytes",
+        "repr": "b'\\x01'"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": false,
+        "error": "SchemaParseException",
+        "message": "decimal scale must be a positive integer, not -1",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': -1}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1')"
+      },
+      "writer": "apache",
+      "parse": {
+        "ok": true,
+        "warnings": [
+          "Invalid decimal scale -1. Must be a non-negative integer."
+        ]
+      },
+      "validate": {
+        "ok": true,
+        "result": false,
+        "warnings": []
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 3,\n  \"scale\": -1\n}",
+        "warnings": []
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': -1}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "input": {
+        "type": "Decimal",
+        "repr": "Decimal('1')"
+      },
+      "writer": "fastavro",
+      "parse": {
+        "ok": false,
+        "error": "SchemaParseException",
+        "message": "decimal scale must be a positive integer, not -1",
+        "warnings": []
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "float-0",
+      "engine": "apache",
+      "path": "write.result",
+      "expected": "0000803f"
+    },
+    {
+      "id": "float-0",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "1.0"
+    },
+    {
+      "id": "int-4",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "1"
+    },
+    {
+      "id": "fixed-0-0",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "b''"
+    },
+    {
+      "id": "int-custom-width-0",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "-1"
+    },
+    {
+      "id": "int-custom-width-2",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "256"
+    },
+    {
+      "id": "string-max-metadata-0",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "'ab'"
+    },
+    {
+      "id": "float-0",
+      "engine": "apache",
+      "path": "reads.fastavro.result.repr",
+      "expected": "1.0"
+    },
+    {
+      "id": "int-4",
+      "engine": "apache",
+      "path": "reads.fastavro.result.repr",
+      "expected": "1"
+    },
+    {
+      "id": "fixed-0-0",
+      "engine": "apache",
+      "path": "reads.fastavro.result.repr",
+      "expected": "b''"
+    },
+    {
+      "id": "int-custom-width-0",
+      "engine": "apache",
+      "path": "reads.fastavro.result.repr",
+      "expected": "-1"
+    },
+    {
+      "id": "int-custom-width-2",
+      "engine": "apache",
+      "path": "reads.fastavro.result.repr",
+      "expected": "256"
+    },
+    {
+      "id": "string-max-metadata-0",
+      "engine": "apache",
+      "path": "reads.fastavro.result.repr",
+      "expected": "'ab'"
+    },
+    {
+      "id": "fixed-0-1",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "fixed-0-2",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "fixed-0-3",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "string-4",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-9",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-10",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "float-0",
+      "engine": "fastavro",
+      "path": "write.result",
+      "expected": "0000803f"
+    },
+    {
+      "id": "float-0",
+      "engine": "fastavro",
+      "path": "reads.apache.result.repr",
+      "expected": "1.0"
+    },
+    {
+      "id": "int-4",
+      "engine": "fastavro",
+      "path": "reads.apache.result.repr",
+      "expected": "1"
+    },
+    {
+      "id": "fixed-0-0",
+      "engine": "fastavro",
+      "path": "reads.apache.result.repr",
+      "expected": "b''"
+    },
+    {
+      "id": "int-custom-width-0",
+      "engine": "fastavro",
+      "path": "reads.apache.result.repr",
+      "expected": "-1"
+    },
+    {
+      "id": "int-custom-width-2",
+      "engine": "fastavro",
+      "path": "reads.apache.result.repr",
+      "expected": "256"
+    },
+    {
+      "id": "string-max-metadata-0",
+      "engine": "fastavro",
+      "path": "reads.apache.result.repr",
+      "expected": "'ab'"
+    },
+    {
+      "id": "float-0",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "1.0"
+    },
+    {
+      "id": "int-4",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "1"
+    },
+    {
+      "id": "fixed-0-0",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "b''"
+    },
+    {
+      "id": "int-custom-width-0",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "-1"
+    },
+    {
+      "id": "int-custom-width-2",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "256"
+    },
+    {
+      "id": "string-max-metadata-0",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "'ab'"
+    },
+    {
+      "id": "fixed-0-1",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "fixed-0-2",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "fixed-0-3",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "string-4",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-9",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-10",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "int-3",
+      "engine": "apache",
+      "path": "validate.result",
+      "expected": false
+    },
+    {
+      "id": "int-3",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "int-3",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": true
+    },
+    {
+      "id": "int-3",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "2147483648"
+    },
+    {
+      "id": "decimal-bytes-2",
+      "engine": "apache",
+      "path": "validate.result",
+      "expected": true
+    },
+    {
+      "id": "decimal-bytes-2",
+      "engine": "apache",
+      "path": "write.result",
+      "expected": "020c"
+    },
+    {
+      "id": "decimal-bytes-2",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "Decimal('0.12')"
+    },
+    {
+      "id": "decimal-bytes-2",
+      "engine": "fastavro",
+      "path": "write.result",
+      "expected": "0278"
+    },
+    {
+      "id": "decimal-bytes-2",
+      "engine": "fastavro",
+      "path": "reads.fastavro.result.repr",
+      "expected": "Decimal('1.20')"
+    },
+    {
+      "id": "decimal-bytes-7",
+      "engine": "apache",
+      "path": "validate.result",
+      "expected": true
+    },
+    {
+      "id": "decimal-bytes-7",
+      "engine": "apache",
+      "path": "write.result",
+      "expected": "0404d2"
+    },
+    {
+      "id": "decimal-bytes-7",
+      "engine": "apache",
+      "path": "reads.apache.result.repr",
+      "expected": "Decimal('12.3')"
+    },
+    {
+      "id": "decimal-bytes-7",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-4",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-physical-input-1",
+      "engine": "apache",
+      "path": "write.ok",
+      "expected": false
+    },
+    {
+      "id": "decimal-bytes-physical-input-1",
+      "engine": "fastavro",
+      "path": "write.ok",
+      "expected": true
+    }
+  ],
+  "limitations": [
+    "Selected host API profiles only; schema declaration does not certify enforcement or exact conversion.",
+    "No UMF classification, authored projection, native schema recovery or Chromium parity is claimed here.",
+    "Physical bytes with decimal annotations can bypass logical conversion; preserve this refinement."
+  ],
+  "sha256": {
+    "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-discovery-native.py": "20e4c51560e00dee6f4a0beba207e2a80f974237a9598625aca9bfd12bb56f40"
+  }
+}

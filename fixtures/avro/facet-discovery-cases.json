@@ -1,0 +1,950 @@
+{
+  "profile": "native-facet-discovery-v1",
+  "cases": [
+    {
+      "id": "int-0",
+      "schema": "int",
+      "datum": {
+        "kind": "integer",
+        "text": "-2147483649"
+      }
+    },
+    {
+      "id": "int-1",
+      "schema": "int",
+      "datum": {
+        "kind": "integer",
+        "text": "-2147483648"
+      }
+    },
+    {
+      "id": "int-2",
+      "schema": "int",
+      "datum": {
+        "kind": "integer",
+        "text": "2147483647"
+      }
+    },
+    {
+      "id": "int-3",
+      "schema": "int",
+      "datum": {
+        "kind": "integer",
+        "text": "2147483648"
+      }
+    },
+    {
+      "id": "int-4",
+      "schema": "int",
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      }
+    },
+    {
+      "id": "int-5",
+      "schema": "int",
+      "datum": {
+        "kind": "float",
+        "text": "1.5"
+      }
+    },
+    {
+      "id": "int-6",
+      "schema": "int",
+      "datum": {
+        "kind": "string",
+        "value": "1"
+      }
+    },
+    {
+      "id": "int-custom-width-0",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "datum": {
+        "kind": "integer",
+        "text": "-1"
+      }
+    },
+    {
+      "id": "int-custom-width-1",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "datum": {
+        "kind": "integer",
+        "text": "255"
+      }
+    },
+    {
+      "id": "int-custom-width-2",
+      "schema": {
+        "type": "int",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "datum": {
+        "kind": "integer",
+        "text": "256"
+      }
+    },
+    {
+      "id": "long-0",
+      "schema": "long",
+      "datum": {
+        "kind": "integer",
+        "text": "-9223372036854775809"
+      }
+    },
+    {
+      "id": "long-1",
+      "schema": "long",
+      "datum": {
+        "kind": "integer",
+        "text": "-9223372036854775808"
+      }
+    },
+    {
+      "id": "long-2",
+      "schema": "long",
+      "datum": {
+        "kind": "integer",
+        "text": "9223372036854775807"
+      }
+    },
+    {
+      "id": "long-3",
+      "schema": "long",
+      "datum": {
+        "kind": "integer",
+        "text": "9223372036854775808"
+      }
+    },
+    {
+      "id": "long-4",
+      "schema": "long",
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      }
+    },
+    {
+      "id": "long-5",
+      "schema": "long",
+      "datum": {
+        "kind": "float",
+        "text": "1.5"
+      }
+    },
+    {
+      "id": "long-6",
+      "schema": "long",
+      "datum": {
+        "kind": "string",
+        "value": "1"
+      }
+    },
+    {
+      "id": "long-custom-width-0",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "datum": {
+        "kind": "integer",
+        "text": "-1"
+      }
+    },
+    {
+      "id": "long-custom-width-1",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "datum": {
+        "kind": "integer",
+        "text": "255"
+      }
+    },
+    {
+      "id": "long-custom-width-2",
+      "schema": {
+        "type": "long",
+        "umfWidth": 8,
+        "unsigned": true
+      },
+      "datum": {
+        "kind": "integer",
+        "text": "256"
+      }
+    },
+    {
+      "id": "float-0",
+      "schema": "float",
+      "datum": {
+        "kind": "float",
+        "text": "1.0000000000000002"
+      }
+    },
+    {
+      "id": "float-1",
+      "schema": "float",
+      "datum": {
+        "kind": "integer",
+        "text": "9007199254740993"
+      }
+    },
+    {
+      "id": "float-2",
+      "schema": "float",
+      "datum": {
+        "kind": "float",
+        "text": "inf"
+      }
+    },
+    {
+      "id": "float-3",
+      "schema": "float",
+      "datum": {
+        "kind": "float",
+        "text": "nan"
+      }
+    },
+    {
+      "id": "float-4",
+      "schema": "float",
+      "datum": {
+        "kind": "float",
+        "text": "-0.0"
+      }
+    },
+    {
+      "id": "double-0",
+      "schema": "double",
+      "datum": {
+        "kind": "float",
+        "text": "1.0000000000000002"
+      }
+    },
+    {
+      "id": "double-1",
+      "schema": "double",
+      "datum": {
+        "kind": "integer",
+        "text": "9007199254740993"
+      }
+    },
+    {
+      "id": "double-2",
+      "schema": "double",
+      "datum": {
+        "kind": "float",
+        "text": "inf"
+      }
+    },
+    {
+      "id": "double-3",
+      "schema": "double",
+      "datum": {
+        "kind": "float",
+        "text": "nan"
+      }
+    },
+    {
+      "id": "double-4",
+      "schema": "double",
+      "datum": {
+        "kind": "float",
+        "text": "-0.0"
+      }
+    },
+    {
+      "id": "string-0",
+      "schema": "string",
+      "datum": {
+        "kind": "string",
+        "value": ""
+      }
+    },
+    {
+      "id": "string-1",
+      "schema": "string",
+      "datum": {
+        "kind": "string",
+        "value": "\u0000"
+      }
+    },
+    {
+      "id": "string-2",
+      "schema": "string",
+      "datum": {
+        "kind": "string",
+        "value": "\ud83d\ude00"
+      }
+    },
+    {
+      "id": "string-3",
+      "schema": "string",
+      "datum": {
+        "kind": "string",
+        "value": "e\u0301"
+      }
+    },
+    {
+      "id": "string-4",
+      "schema": "string",
+      "datum": {
+        "kind": "string",
+        "value": "\ud800"
+      }
+    },
+    {
+      "id": "string-max-metadata-0",
+      "schema": {
+        "type": "string",
+        "maxLength": 1
+      },
+      "datum": {
+        "kind": "string",
+        "value": "ab"
+      }
+    },
+    {
+      "id": "string-max-metadata-1",
+      "schema": {
+        "type": "string",
+        "maxLength": 1
+      },
+      "datum": {
+        "kind": "string",
+        "value": "\ud83d\ude00"
+      }
+    },
+    {
+      "id": "bytes-max-metadata-0",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": ""
+      }
+    },
+    {
+      "id": "bytes-max-metadata-1",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "61"
+      }
+    },
+    {
+      "id": "bytes-max-metadata-2",
+      "schema": {
+        "type": "bytes",
+        "maxLength": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "6162"
+      }
+    },
+    {
+      "id": "fixed-0-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": ""
+      }
+    },
+    {
+      "id": "fixed-0-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "61"
+      }
+    },
+    {
+      "id": "fixed-0-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "6162"
+      }
+    },
+    {
+      "id": "fixed-0-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F0",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "616263"
+      }
+    },
+    {
+      "id": "fixed-1-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": ""
+      }
+    },
+    {
+      "id": "fixed-1-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "61"
+      }
+    },
+    {
+      "id": "fixed-1-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "6162"
+      }
+    },
+    {
+      "id": "fixed-1-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F1",
+        "size": 1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "616263"
+      }
+    },
+    {
+      "id": "fixed-2-0",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": ""
+      }
+    },
+    {
+      "id": "fixed-2-1",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "61"
+      }
+    },
+    {
+      "id": "fixed-2-2",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "6162"
+      }
+    },
+    {
+      "id": "fixed-2-3",
+      "schema": {
+        "type": "fixed",
+        "name": "F2",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "616263"
+      }
+    },
+    {
+      "id": "decimal-bytes-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "0"
+      }
+    },
+    {
+      "id": "decimal-bytes-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "0.00"
+      }
+    },
+    {
+      "id": "decimal-bytes-2",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1.2"
+      }
+    },
+    {
+      "id": "decimal-bytes-3",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1.20"
+      }
+    },
+    {
+      "id": "decimal-bytes-4",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1.200"
+      }
+    },
+    {
+      "id": "decimal-bytes-5",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "9.99"
+      }
+    },
+    {
+      "id": "decimal-bytes-6",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "-9.99"
+      }
+    },
+    {
+      "id": "decimal-bytes-7",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "12.34"
+      }
+    },
+    {
+      "id": "decimal-bytes-8",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1E+2"
+      }
+    },
+    {
+      "id": "decimal-bytes-9",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "NaN"
+      }
+    },
+    {
+      "id": "decimal-bytes-10",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "Infinity"
+      }
+    },
+    {
+      "id": "decimal-bytes-physical-input-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "00"
+      }
+    },
+    {
+      "id": "decimal-bytes-physical-input-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "04d2"
+      }
+    },
+    {
+      "id": "decimal-fixed-0",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "0"
+      }
+    },
+    {
+      "id": "decimal-fixed-1",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "0.00"
+      }
+    },
+    {
+      "id": "decimal-fixed-2",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1.2"
+      }
+    },
+    {
+      "id": "decimal-fixed-3",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1.20"
+      }
+    },
+    {
+      "id": "decimal-fixed-4",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1.200"
+      }
+    },
+    {
+      "id": "decimal-fixed-5",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "9.99"
+      }
+    },
+    {
+      "id": "decimal-fixed-6",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "-9.99"
+      }
+    },
+    {
+      "id": "decimal-fixed-7",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "12.34"
+      }
+    },
+    {
+      "id": "decimal-fixed-8",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1E+2"
+      }
+    },
+    {
+      "id": "decimal-fixed-9",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "NaN"
+      }
+    },
+    {
+      "id": "decimal-fixed-10",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "Infinity"
+      }
+    },
+    {
+      "id": "decimal-fixed-physical-input-0",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "00"
+      }
+    },
+    {
+      "id": "decimal-fixed-physical-input-1",
+      "schema": {
+        "type": "fixed",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 2,
+        "name": "DecimalFixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "04d2"
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 0, 'scale': 0}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "01"
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 0, 'scale': 0}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 0
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1"
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': 4}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 4
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "01"
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': 4}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": 4
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1"
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': -1}-0",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "datum": {
+        "kind": "bytes",
+        "hex": "01"
+      }
+    },
+    {
+      "id": "invalid-decimal-{'precision': 3, 'scale': -1}-1",
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "datum": {
+        "kind": "decimal",
+        "text": "1"
+      }
+    }
+  ]
+}

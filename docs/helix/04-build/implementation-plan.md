@@ -4304,3 +4304,26 @@ with earlier native availability/container operations are not claimed.
 This completes the SQL Server facet binding only. Avro, Parquet, the separate
 facet ideal admission/delivery gate and Key remain required. Native equivalence
 is unclaimed; native payloads and unknown content remain recoverable.
+
+### Avro facet native discovery checkpoint
+
+The Avro facet bead is now in progress. TD-043 separates declared domains,
+validation, writer conversion, encoded coefficients and reader behavior before
+public API/schema changes. Apache Avro Python 1.12.0 and fastavro 1.12.2 exercise
+84 inputs, 168 writer cases, 109 successful writes and 218 cross-codec read
+attempts. Fifty-four assertions retain reviewed counterexamples: float narrowing,
+integer overflow acceptance differences, boolean conversion, unenforced width and
+length metadata, fixed-zero bounds and decimal conversion/bypass differences.
+Errors remain recorded rather than converted into passes.
+
+`bun scripts/core-ideals/facets-avro-discovery.ts` passes the native assertions
+and 34 JSON/YAML tree recoveries over 17 distinct schemas. `bun run typecheck`
+passes. See the [discovery checkpoint](evidence/avro-facet-discovery.md).
+No public library implementation, new facet package, browser qualification or
+binding acceptance is claimed. Existing accepted profiles retain their earlier
+snapshots while new source and governing-document changes accumulate.
+
+Next: internal schema-domain interpretation with retained native refinements,
+then complete public schemas and classification/projection, named/union/default
+composition, both retained recovery directions, native/browser evidence and full
+binding acceptance. Parquet, facet admission/delivery and Key remain required.

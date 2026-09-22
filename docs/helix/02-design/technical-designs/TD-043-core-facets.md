@@ -744,3 +744,43 @@ with earlier native availability/container operations are not claimed.
 This completes the SQL Server facet binding only. Avro, Parquet, the separate
 facet ideal admission/delivery gate and Key remain required. Native equivalence
 is unclaimed; native payloads and unknown content remain recoverable.
+
+### Avro facet binding decisions
+
+The next binding targets Apache Avro Python 1.12.0 and fastavro 1.12.2 under
+CONTRACT-007. Separate the declared schema value domain, validator acceptance,
+writer conversion, encoded representation and reader result. A parser accepting
+an annotation does not establish any of the later properties. A core facet may
+describe the declared ideal while the extension retains codec-specific residuals.
+
+`int` and `long` declare signed 32/64-bit domains; arbitrary host inputs require
+separate exactness evidence. Custom width/unsigned metadata does not enforce a
+narrower domain. Float narrowing remains a permanent counterexample. Native
+fixed size is an exact byte count, so it cannot replace a maximum-length ideal:
+shorter ideal values would be rejected. Size zero is a candidate exact empty-byte
+mapping and must be qualified independently. String/bytes maximum metadata has
+no demonstrated enforcement in the pinned writer profiles.
+
+Decimal precision/scale declarations require valid exact metadata and carrier
+capacity checks. Retain bytes versus fixed, signed coefficients, scale, logical
+conversion and reader behavior separately. Apache Python validation accepts
+Decimal values whose writer or reader changes meaning; fastavro also permits
+physical bytes to bypass Decimal input checks. Neither raw carrier acceptance nor
+the annotation alone certifies exact input conversion or enforced coefficient
+precision. Invalid annotations and unknown logical types stay attached, with
+their native fallback/refusal outcomes reported rather than normalized away.
+
+Classification must select a logical scalar Field and preserve named references,
+union branches, defaults, aliases and unknown properties. Existing authored facets
+need verified provenance and conflict checks. Do not assign a Field's facet to an
+array/map container or infer author intent from a matching native annotation.
+Native-text recovery requires a retained original archive: the existing native
+tree codec preserves exact numeric tokens but does not preserve whitespace.
+
+Public classification/projection schemas and the extension package must precede
+their exports. Both strict/report projections need explicit obligations and both
+retained recovery directions, followed by composed native recapture and Chromium
+parity. The [native discovery checkpoint](../../04-build/evidence/avro-facet-discovery.md)
+is groundwork only; it does not qualify the binding or widen earlier receipts to
+core 0.5.0. Java exploratory results use a different version and are not part of
+this binding's evidence.
