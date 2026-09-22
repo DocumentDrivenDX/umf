@@ -5,7 +5,8 @@ source=Path('native/tablespec/sources/src/tablespec/models/umf.py')
 UMF=runpy.run_path(str(source))['UMF']
 fixture=Path('fixtures/validation/field-tablespec-projection.json')
 rows=[]
-for case in json.loads(fixture.read_text())['rows']:
+corpus=json.loads(fixture.read_text())
+for case in corpus['rows']:
     if case['result']['status']=='blocked':
         assert 'target' not in case['result'] and 'text' not in case
         continue
@@ -15,7 +16,12 @@ for case in json.loads(fixture.read_text())['rows']:
     assert model.columns[0].data_type==case['request']['nativeType']
     rows.append({'nativeType':model.columns[0].data_type,'mode':case['request']['mode'],'accepted':True})
 record_rows=[]
-for case in json.loads(fixture.read_text()).get('records',[]):
+for case in corpus['records']:
+    if case['variant']=='empty-namespace':
+        assert case['result']['status']=='projected' and not case['result']['residuals']
+    if case['variant']=='clean':
+        assert case['result']['status']==('blocked' if case['request']['mode']=='strict' else 'projected')
+        assert {r['path'] for r in case['result']['residuals']}=={'/modules/0/namespace','/modules/1/namespace'}
     if case['result']['status']=='blocked':
         assert 'target' not in case['result'] and 'text' not in case
         continue
@@ -25,6 +31,7 @@ for case in json.loads(fixture.read_text()).get('records',[]):
     expected={f['columnName']:f['nativeType'] for f in case['request']['fields']}
     assert all(column.data_type==expected[column.name] for column in model.columns)
     record_rows.append({'variant':case['variant'],'mode':case['request']['mode'],'accepted':True,'columns':len(model.columns)})
+assert {r['mode'] for r in record_rows if r['variant']=='empty-namespace'}=={'strict','report'}
 result={'records':record_rows,'scope':'Native schema model acceptance and column identity for explicit carriers; no row value or storage enforcement equivalence','pydantic':pydantic.__version__,'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'inputSha256':hashlib.sha256(fixture.read_bytes()).hexdigest(),'cases':rows}
 Path('fixtures/validation/field-tablespec-projection-native.json').write_text(json.dumps(result,indent=2)+'\n')
 print({'nativeAccepted':len(rows),'nativeRecordsAccepted':len(record_rows)})

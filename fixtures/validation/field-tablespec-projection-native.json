@@ -1,6 +1,12 @@
 {
   "records": [
     {
+      "variant": "empty-namespace",
+      "mode": "strict",
+      "accepted": true,
+      "columns": 3
+    },
+    {
       "variant": "clean",
       "mode": "report",
       "accepted": true,
@@ -11,12 +17,18 @@
       "mode": "report",
       "accepted": true,
       "columns": 3
+    },
+    {
+      "variant": "empty-namespace",
+      "mode": "report",
+      "accepted": true,
+      "columns": 3
     }
   ],
   "scope": "Native schema model acceptance and column identity for explicit carriers; no row value or storage enforcement equivalence",
-  "pydantic": "2.13.5",
+  "pydantic": "2.11.10",
   "sourceSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
-  "inputSha256": "39080ede9b5603fbae7bf31718a383656f76ecdb146d524dd022925e4637016f",
+  "inputSha256": "e46367165ea68783d8341b8c81e9e6149cb89a9c7769ffcba080170e0a5e66bd",
   "cases": [
     {
       "nativeType": "BOOLEAN",

@@ -1394,3 +1394,31 @@ Their previous classification-only commands were insufficient for their scope.
 Core authoring acceptance does not admit Field, complete any native binding, or
 establish equivalence. The envelope remains experimental until the separate
 `umf-97221618-c4baf8f1` gate passes. Nullability remains behind that gate.
+
+### TableSpec Field binding acceptance
+
+`umf-97221618-8beaed05` now has refreshed bidirectional evidence for TableSpec
+commit `647e8e566ad78b864282ec65c0b0b2237aa63084`, model version 1.0, Pydantic
+2.11.10 and Chromium 148. All 17 captured source files match their pinned manifest.
+The acceptance record is `fixtures/validation/field-tablespec-acceptance-evidence.json`;
+its log records 35 passing tests and 1,381 assertions over nine test files. Typecheck,
+208 schemas, 32 packages and the browser build pass.
+
+The browser-generated corpora were regenerated before both native oracle runs.
+Classification verifies 32 column and 32 record cases, 64 exact native recoveries
+and two authored-kind conflict blocks. Projection verifies 40 Field cases (30
+outputs, ten strict namespace-loss blocks), 60 ideal recoveries, and eight flat
+record cases (four outputs, four blocks), with eight record ideal recoveries.
+The native model agrees on 64 classification comparisons and accepts all 30 Field
+and four record outputs. Two new empty-namespace record controls establish useful
+strict/report output without removing namespace residuals from existing cases.
+
+This binding interprets table/member roles and emits flat records using explicit
+native carriers. Unknown column types, contextual metadata, split archives and
+uninterpreted refinements remain retained; unknown types do not acquire native
+validity or scalar meaning. Split archive checks here are Bun preservation tests,
+not a fresh independent native loader run. Record-valued/organizational structures
+without a supported flat mapping refuse or retain residuals. No row-domain,
+coercion, default, nullability, cardinality, facet, key or execution equivalence is
+claimed. This satisfies the scoped binding bead, not the two-system admission
+record or all-five Field gate.

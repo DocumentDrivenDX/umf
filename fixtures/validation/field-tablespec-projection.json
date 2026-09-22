@@ -6,8 +6,8 @@
     "projections": 40,
     "idealRecoveries": 60,
     "lossPolicies": 2,
-    "recordCases": 6,
-    "recordRecoveries": 4,
+    "recordCases": 8,
+    "recordRecoveries": 8,
     "recordBlocks": 4
   },
   "externalRequests": [],
@@ -12572,6 +12572,1434 @@
       }
     },
     {
+      "variant": "empty-namespace",
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "orders",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "Order",
+                  "name": "Orders",
+                  "description": "Order record",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "id"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "label"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "id",
+                  "name": "id",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "active",
+                  "name": "active",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "orders",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "Order",
+                  "name": "Orders",
+                  "description": "Order record",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "id"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "label"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "id",
+                  "name": "id",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "active",
+                  "name": "active",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "Order"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "record",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-orders",
+        "tableName": "Orders",
+        "mode": "strict",
+        "fields": [
+          {
+            "author": {
+              "operation": "declare-core-kind",
+              "version": "1.0.0",
+              "source": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "target": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "identity": {
+                "module": "fields",
+                "element": "active"
+              },
+              "provenance": {
+                "origin": "authored",
+                "idealPath": "/modules/1/elements/2/kind",
+                "kind": "field",
+                "binding": {
+                  "id": "umf.core.kind.authoring",
+                  "version": "1.0.0"
+                },
+                "basis": "explicit-author-declaration",
+                "nativePath": null
+              }
+            },
+            "columnName": "active",
+            "nativeType": "BOOLEAN"
+          },
+          {
+            "author": {
+              "operation": "declare-core-kind",
+              "version": "1.0.0",
+              "source": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "target": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "identity": {
+                "module": "fields",
+                "element": "label"
+              },
+              "provenance": {
+                "origin": "authored",
+                "idealPath": "/modules/1/elements/1/kind",
+                "kind": "field",
+                "binding": {
+                  "id": "umf.core.kind.authoring",
+                  "version": "1.0.0"
+                },
+                "basis": "explicit-author-declaration",
+                "nativePath": null
+              }
+            },
+            "columnName": "label",
+            "nativeType": "TEXT"
+          },
+          {
+            "author": {
+              "operation": "declare-core-kind",
+              "version": "1.0.0",
+              "source": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "target": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "identity": {
+                "module": "fields",
+                "element": "id"
+              },
+              "provenance": {
+                "origin": "authored",
+                "idealPath": "/modules/1/elements/0/kind",
+                "kind": "field",
+                "binding": {
+                  "id": "umf.core.kind.authoring",
+                  "version": "1.0.0"
+                },
+                "basis": "explicit-author-declaration",
+                "nativePath": null
+              }
+            },
+            "columnName": "id",
+            "nativeType": "INTEGER"
+          }
+        ]
+      },
+      "result": {
+        "operation": "project-record-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "orders",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "Order",
+                  "name": "Orders",
+                  "description": "Order record",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "id"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "label"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "id",
+                  "name": "id",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "active",
+                  "name": "active",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "orders",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "Order",
+                    "name": "Orders",
+                    "description": "Order record",
+                    "kind": "record",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "id"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "label"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "active"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "fields",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "id",
+                    "name": "id",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "label",
+                    "name": "label",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "active",
+                    "name": "active",
+                    "kind": "field",
+                    "scalarType": "boolean",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "orders",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "Order",
+                    "name": "Orders",
+                    "description": "Order record",
+                    "kind": "record",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "id"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "label"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "active"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "fields",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "id",
+                    "name": "id",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "label",
+                    "name": "label",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "active",
+                    "name": "active",
+                    "kind": "field",
+                    "scalarType": "boolean",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "Order"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "record",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-orders",
+          "tableName": "Orders",
+          "mode": "strict",
+          "fields": [
+            {
+              "author": {
+                "operation": "declare-core-kind",
+                "version": "1.0.0",
+                "source": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "target": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "identity": {
+                  "module": "fields",
+                  "element": "active"
+                },
+                "provenance": {
+                  "origin": "authored",
+                  "idealPath": "/modules/1/elements/2/kind",
+                  "kind": "field",
+                  "binding": {
+                    "id": "umf.core.kind.authoring",
+                    "version": "1.0.0"
+                  },
+                  "basis": "explicit-author-declaration",
+                  "nativePath": null
+                }
+              },
+              "columnName": "active",
+              "nativeType": "BOOLEAN"
+            },
+            {
+              "author": {
+                "operation": "declare-core-kind",
+                "version": "1.0.0",
+                "source": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "target": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "identity": {
+                  "module": "fields",
+                  "element": "label"
+                },
+                "provenance": {
+                  "origin": "authored",
+                  "idealPath": "/modules/1/elements/1/kind",
+                  "kind": "field",
+                  "binding": {
+                    "id": "umf.core.kind.authoring",
+                    "version": "1.0.0"
+                  },
+                  "basis": "explicit-author-declaration",
+                  "nativePath": null
+                }
+              },
+              "columnName": "label",
+              "nativeType": "TEXT"
+            },
+            {
+              "author": {
+                "operation": "declare-core-kind",
+                "version": "1.0.0",
+                "source": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "target": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "identity": {
+                  "module": "fields",
+                  "element": "id"
+                },
+                "provenance": {
+                  "origin": "authored",
+                  "idealPath": "/modules/1/elements/0/kind",
+                  "kind": "field",
+                  "binding": {
+                    "id": "umf.core.kind.authoring",
+                    "version": "1.0.0"
+                  },
+                  "basis": "explicit-author-declaration",
+                  "nativePath": null
+                }
+              },
+              "columnName": "id",
+              "nativeType": "INTEGER"
+            }
+          ]
+        },
+        "binding": {
+          "id": "umf.core.record.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Authored record with explicit flat field carriers; no value-domain or execution equivalence"
+        },
+        "mappings": [
+          {
+            "origin": "authored",
+            "kind": "record",
+            "idealPath": "/modules/0/elements/0/kind",
+            "nativePath": "",
+            "outcome": "exact"
+          },
+          {
+            "origin": "authored",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/0/kind",
+            "nativePath": "/columns/0",
+            "outcome": "exact"
+          },
+          {
+            "origin": "authored",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/columns/1",
+            "outcome": "exact"
+          },
+          {
+            "origin": "authored",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/columns/2",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native-orders",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Orders"
+                  },
+                  "description": {
+                    "kind": "string",
+                    "value": "Order record"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "id"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "label"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "active"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "BOOLEAN"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"description\":\"Order record\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"label\",\"data_type\":\"TEXT\"},{\"name\":\"active\",\"data_type\":\"BOOLEAN\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Orders",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "id",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:2",
+                  "name": "active",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"description\":\"Order record\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"label\",\"data_type\":\"TEXT\"},{\"name\":\"active\",\"data_type\":\"BOOLEAN\"}]}\n"
+    },
+    {
       "variant": "clean",
       "author": {
         "operation": "declare-core-kind",
@@ -16535,6 +17963,1434 @@
           }
         ]
       }
+    },
+    {
+      "variant": "empty-namespace",
+      "author": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "orders",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "Order",
+                  "name": "Orders",
+                  "description": "Order record",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "id"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "label"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "id",
+                  "name": "id",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "active",
+                  "name": "active",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "orders",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "Order",
+                  "name": "Orders",
+                  "description": "Order record",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "id"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "label"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "id",
+                  "name": "id",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "active",
+                  "name": "active",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "Order"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "record",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "request": {
+        "id": "native-orders",
+        "tableName": "Orders",
+        "mode": "report",
+        "fields": [
+          {
+            "author": {
+              "operation": "declare-core-kind",
+              "version": "1.0.0",
+              "source": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "target": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "identity": {
+                "module": "fields",
+                "element": "active"
+              },
+              "provenance": {
+                "origin": "authored",
+                "idealPath": "/modules/1/elements/2/kind",
+                "kind": "field",
+                "binding": {
+                  "id": "umf.core.kind.authoring",
+                  "version": "1.0.0"
+                },
+                "basis": "explicit-author-declaration",
+                "nativePath": null
+              }
+            },
+            "columnName": "active",
+            "nativeType": "BOOLEAN"
+          },
+          {
+            "author": {
+              "operation": "declare-core-kind",
+              "version": "1.0.0",
+              "source": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "target": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "identity": {
+                "module": "fields",
+                "element": "label"
+              },
+              "provenance": {
+                "origin": "authored",
+                "idealPath": "/modules/1/elements/1/kind",
+                "kind": "field",
+                "binding": {
+                  "id": "umf.core.kind.authoring",
+                  "version": "1.0.0"
+                },
+                "basis": "explicit-author-declaration",
+                "nativePath": null
+              }
+            },
+            "columnName": "label",
+            "nativeType": "TEXT"
+          },
+          {
+            "author": {
+              "operation": "declare-core-kind",
+              "version": "1.0.0",
+              "source": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "target": {
+                "umf": "0.2.0",
+                "id": "orders",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "sales",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "Order",
+                        "name": "Orders",
+                        "description": "Order record",
+                        "kind": "record",
+                        "extensions": {},
+                        "references": [
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "id"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "label"
+                          },
+                          {
+                            "role": "member",
+                            "module": "fields",
+                            "element": "active"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "fields",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "id",
+                        "name": "id",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "label",
+                        "name": "label",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "active",
+                        "name": "active",
+                        "kind": "field",
+                        "scalarType": "boolean",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "identity": {
+                "module": "fields",
+                "element": "id"
+              },
+              "provenance": {
+                "origin": "authored",
+                "idealPath": "/modules/1/elements/0/kind",
+                "kind": "field",
+                "binding": {
+                  "id": "umf.core.kind.authoring",
+                  "version": "1.0.0"
+                },
+                "basis": "explicit-author-declaration",
+                "nativePath": null
+              }
+            },
+            "columnName": "id",
+            "nativeType": "INTEGER"
+          }
+        ]
+      },
+      "result": {
+        "operation": "project-record-tablespec",
+        "version": "1.0.0",
+        "status": "projected",
+        "source": {
+          "umf": "0.2.0",
+          "id": "orders",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "Order",
+                  "name": "Orders",
+                  "description": "Order record",
+                  "kind": "record",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "id"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "label"
+                    },
+                    {
+                      "role": "member",
+                      "module": "fields",
+                      "element": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "id",
+                  "name": "id",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "active",
+                  "name": "active",
+                  "kind": "field",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "author": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "orders",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "Order",
+                    "name": "Orders",
+                    "description": "Order record",
+                    "kind": "record",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "id"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "label"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "active"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "fields",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "id",
+                    "name": "id",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "label",
+                    "name": "label",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "active",
+                    "name": "active",
+                    "kind": "field",
+                    "scalarType": "boolean",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "orders",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "Order",
+                    "name": "Orders",
+                    "description": "Order record",
+                    "kind": "record",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "id"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "label"
+                      },
+                      {
+                        "role": "member",
+                        "module": "fields",
+                        "element": "active"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "fields",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "id",
+                    "name": "id",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "label",
+                    "name": "label",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "active",
+                    "name": "active",
+                    "kind": "field",
+                    "scalarType": "boolean",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "Order"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "record",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "request": {
+          "id": "native-orders",
+          "tableName": "Orders",
+          "mode": "report",
+          "fields": [
+            {
+              "author": {
+                "operation": "declare-core-kind",
+                "version": "1.0.0",
+                "source": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "target": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "identity": {
+                  "module": "fields",
+                  "element": "active"
+                },
+                "provenance": {
+                  "origin": "authored",
+                  "idealPath": "/modules/1/elements/2/kind",
+                  "kind": "field",
+                  "binding": {
+                    "id": "umf.core.kind.authoring",
+                    "version": "1.0.0"
+                  },
+                  "basis": "explicit-author-declaration",
+                  "nativePath": null
+                }
+              },
+              "columnName": "active",
+              "nativeType": "BOOLEAN"
+            },
+            {
+              "author": {
+                "operation": "declare-core-kind",
+                "version": "1.0.0",
+                "source": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "target": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "identity": {
+                  "module": "fields",
+                  "element": "label"
+                },
+                "provenance": {
+                  "origin": "authored",
+                  "idealPath": "/modules/1/elements/1/kind",
+                  "kind": "field",
+                  "binding": {
+                    "id": "umf.core.kind.authoring",
+                    "version": "1.0.0"
+                  },
+                  "basis": "explicit-author-declaration",
+                  "nativePath": null
+                }
+              },
+              "columnName": "label",
+              "nativeType": "TEXT"
+            },
+            {
+              "author": {
+                "operation": "declare-core-kind",
+                "version": "1.0.0",
+                "source": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "target": {
+                  "umf": "0.2.0",
+                  "id": "orders",
+                  "vocabularies": {},
+                  "modules": [
+                    {
+                      "id": "sales",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "Order",
+                          "name": "Orders",
+                          "description": "Order record",
+                          "kind": "record",
+                          "extensions": {},
+                          "references": [
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "id"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "label"
+                            },
+                            {
+                              "role": "member",
+                              "module": "fields",
+                              "element": "active"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "fields",
+                      "namespace": "",
+                      "elements": [
+                        {
+                          "id": "id",
+                          "name": "id",
+                          "kind": "field",
+                          "scalarType": "integer",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "label",
+                          "name": "label",
+                          "kind": "field",
+                          "scalarType": "string",
+                          "extensions": {}
+                        },
+                        {
+                          "id": "active",
+                          "name": "active",
+                          "kind": "field",
+                          "scalarType": "boolean",
+                          "extensions": {}
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "identity": {
+                  "module": "fields",
+                  "element": "id"
+                },
+                "provenance": {
+                  "origin": "authored",
+                  "idealPath": "/modules/1/elements/0/kind",
+                  "kind": "field",
+                  "binding": {
+                    "id": "umf.core.kind.authoring",
+                    "version": "1.0.0"
+                  },
+                  "basis": "explicit-author-declaration",
+                  "nativePath": null
+                }
+              },
+              "columnName": "id",
+              "nativeType": "INTEGER"
+            }
+          ]
+        },
+        "binding": {
+          "id": "umf.core.record.tablespec",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Authored record with explicit flat field carriers; no value-domain or execution equivalence"
+        },
+        "mappings": [
+          {
+            "origin": "authored",
+            "kind": "record",
+            "idealPath": "/modules/0/elements/0/kind",
+            "nativePath": "",
+            "outcome": "exact"
+          },
+          {
+            "origin": "authored",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/0/kind",
+            "nativePath": "/columns/0",
+            "outcome": "exact"
+          },
+          {
+            "origin": "authored",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/1/kind",
+            "nativePath": "/columns/1",
+            "outcome": "exact"
+          },
+          {
+            "origin": "authored",
+            "kind": "field",
+            "idealPath": "/modules/1/elements/2/kind",
+            "nativePath": "/columns/2",
+            "outcome": "exact"
+          }
+        ],
+        "residuals": [],
+        "diagnostics": [],
+        "target": {
+          "umf": "0.1.0",
+          "id": "native-orders",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Orders"
+                  },
+                  "description": {
+                    "kind": "string",
+                    "value": "Order record"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "id"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "label"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "active"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "BOOLEAN"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"description\":\"Order record\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"label\",\"data_type\":\"TEXT\"},{\"name\":\"active\",\"data_type\":\"BOOLEAN\"}]}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Orders",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "id",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:2",
+                  "name": "active",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"description\":\"Order record\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"label\",\"data_type\":\"TEXT\"},{\"name\":\"active\",\"data_type\":\"BOOLEAN\"}]}\n"
     }
   ]
 }

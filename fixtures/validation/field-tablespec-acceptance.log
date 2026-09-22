@@ -1,0 +1,59 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-tablespec.test.ts:
+(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [113.42ms]
+(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [193.15ms]
+(pass) stale author receipts and metadata cannot be used as a native classification basis [63.83ms]
+(pass) split sources retain sidecars and shadowed metadata after classification [45.73ms]
+(pass) native classification receipts reject tampering and subsequent native changes [63.59ms]
+(pass) new results always diagnose conflicts while historical receipts remain verifiable [93.43ms]
+
+tests/core-ideals/field-tablespec-projection.test.ts:
+(pass) authored field projects to a complete native table and recovers author meaning with retained receipt [701.28ms]
+(pass) strict blocks omitted meaning while report retains every residual and source assertion [35.37ms]
+(pass) record/group cannot lower to a single column and name changes are explicit loss [34.55ms]
+(pass) receipt tampering, stale native text, malformed policy and metadata omission cannot pass silently [41.01ms]
+(pass) diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks [67.32ms]
+(pass) empty namespace permits strict projection but discarded namespace receipts cannot claim exactness [25.10ms]
+
+tests/core-ideals/record-tablespec.test.ts:
+(pass) whole native table becomes a record with ordered explicit member references and unknown type preservation [109.00ms]
+(pass) one conflicting member blocks the whole table in both modes without partial candidate [181.83ms]
+(pass) verified member authors are retained; stale, duplicate and unrelated receipts block [222.40ms]
+(pass) record classification retains split files and empty tables without inventing grouping semantics [62.50ms]
+(pass) changed member references, receipts and native content invalidate classification [131.46ms]
+
+tests/core-ideals/record-tablespec-projection.test.ts:
+(pass) record projection orders columns by declared membership and recovers the complete ideal [140.33ms]
+(pass) missing, duplicate, non-member and name-colliding bindings block atomically under either policy [26.16ms]
+(pass) scalar mismatch and renamed columns are reportable but strict refuses them [43.12ms]
+(pass) unknown metadata and relationship refinements survive as residuals [35.66ms]
+(pass) stale member provenance and edited native/receipt data cannot claim ideal recovery [44.79ms]
+(pass) an empty-namespace record can project strictly without erasing namespaced inputs [34.83ms]
+
+tests/core-ideals/projection-policy.test.ts:
+(pass) field-tablespec schema enforces strict/report loss and atomic candidate rules [2.49ms]
+(pass) record-tablespec schema enforces strict/report loss and atomic candidate rules [3.29ms]
+(pass) field-postgresql schema enforces strict/report loss and atomic candidate rules [4.90ms]
+(pass) record-postgresql schema enforces strict/report loss and atomic candidate rules [5.60ms]
+
+tests/core-ideals/field-report.test.ts:
+(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [866.90ms]
+(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [185.74ms]
+
+tests/core-ideals/record-report.test.ts:
+(pass) common record reports retain ordered membership, member carriers and all blocked residuals [2998.95ms]
+(pass) member basis and source receipt tampering are rejected, and backend remains explicit [643.44ms]
+
+tests/core-ideals/classification-report.test.ts:
+(pass) five native classifiers retain classified provenance, exact fragments and conflict residuals [3677.63ms]
+(pass) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [970.25ms]
+
+tests/core-ideals/structured-report.test.ts:
+(pass) record, composite, type-link and raw DDL reports retain scoped ordered native evidence [12332.51ms]
+(pass) declared-only context and record mappings cannot be forged or silently resolved [3205.37ms]
+
+ 35 pass
+ 0 fail
+ 1381 expect() calls
+Ran 35 tests across 9 files. [28.40s]

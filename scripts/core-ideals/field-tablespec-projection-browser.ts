@@ -12,9 +12,15 @@ for(const nativeType of ['BOOLEAN','INTEGER','DECIMAL','FLOAT','TEXT','VARCHAR',
  const result=projectFieldToTableSpec(author,request);if(result.status!==(namespace&&mode==='strict'?'blocked':'projected'))throw Error('Namespace policy');rows.push({author,request,result,...(result.target?{text:exportTableSpec(result.target)}:{})});
 }
 const records:any[]=[];
-for(const mode of ['strict','report'] as const)for(const variant of ['clean','mismatch','missing']){
- const {author,request}=recordCase();request.mode=mode;if(variant==='mismatch')request.fields[0]!.nativeType='INTEGER';if(variant==='missing')request.fields.pop();
+for(const mode of ['strict','report'] as const)for(const variant of ['clean','mismatch','missing','empty-namespace']){
+ let {source,author,request}=recordCase();request.mode=mode;if(variant==='mismatch')request.fields[0]!.nativeType='INTEGER';if(variant==='missing')request.fields.pop();
+ if(variant==='empty-namespace'){
+  source.modules.forEach(module=>module.namespace='');
+  author=declareCoreElementKind(source,author.identity,'record');
+  request.fields=request.fields.map(field=>({...field,author:declareCoreElementKind(source,field.author.identity,'field')}));
+ }
  const result=projectRecordToTableSpec(author,request);records.push({variant,author,request,result,...(result.target?{text:exportTableSpec(result.target)}:{})});
+ if(variant==='empty-namespace'&&(result.status!=='projected'||result.residuals.length))throw Error('Strict record control must have no loss');
 }
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(rows);if(path==='/records')return Response.json(records);return new Response('<!doctype html><html><body>Field projection</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;
