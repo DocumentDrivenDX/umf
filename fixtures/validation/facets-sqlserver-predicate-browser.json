@@ -1,0 +1,20 @@
+{
+  "scope": "Internal bounded CHECK syntax inspection; native definitions reused from SQL Server 2022 discovery. No native syntax acceptance, enforcement, public binding or ideal admission claim.",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 75,
+    "candidates": 20,
+    "unsupported": 55,
+    "getterCalls": 0,
+    "invalidIdentifiers": 2
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/adapters/sqlserver/facet-predicate.ts": "53edc4e5f5611c91c06170551fde20c280f5a65cbf64e857e87c7b584d08d579",
+    "scripts/core-ideals/facets-sqlserver-predicate-cases.ts": "31da51547d93e8f7abe310bd575f46652bd2af989ff3ecfec41d06af88b6b460",
+    "scripts/core-ideals/facets-sqlserver-predicate-browser.ts": "477b76d281e344b33276f10cf3fa8bc7b9089fd7824556bdf0da80ecd4b39e57",
+    "tests/core-ideals/facets-sqlserver-predicate.test.ts": "bc6d32828c650f7fefa6ff6078338fac6fe84c3878c1885b743f328d6a9f3245",
+    "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
+    "dist/sqlserver-facet-predicate.js": "d45ce1372aba859d862644055e2039436458dc0fc003fa864180e6150699a9cc"
+  }
+}

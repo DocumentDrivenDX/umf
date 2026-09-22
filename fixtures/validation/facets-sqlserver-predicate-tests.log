@@ -1,0 +1,17 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [1.17ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [2.61ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [2.53ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.43ms]
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [6.02ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [4.37ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.92ms]
+
+ 7 pass
+ 0 fail
+ 545 expect() calls
+Ran 7 tests across 2 files. [2.45s]

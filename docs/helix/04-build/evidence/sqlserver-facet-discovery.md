@@ -67,6 +67,33 @@ verify both retained recovery directions, then run complete binding acceptance.
 Prior accepted bindings retain their recorded evidence snapshots. This discovery
 checkpoint does not close the SQL Server facet bead or the five-system facet gate.
 
+## Bounded CHECK syntax checkpoint
+
+An internal expression inspector now recognizes numeric bounds, LEN/DATALENGTH
+bounds, the scoped trailing-space sentinel pattern, and ROUND truncation equality.
+It retains the complete expression and exact decimal tokens. Recognition returns
+only syntax candidates with an explicit requirement for catalog type, column
+association, enforcement and collation evidence. It does not assert core facets.
+
+The captured native corpus contains ten recognized expressions and one refused
+custom function. Three recognized expressions belong to disabled, untrusted or
+replication-specific checks. Their syntax provides no unconditional guarantee.
+Unsupported conjuncts refuse the entire expression; OR, casts, collation overrides,
+qualified/custom functions, case-mismatched columns, malformed syntax and resource
+limit violations retain their native text without partial interpretation.
+
+Seven targeted Bun tests pass with 545 assertions, including the prior discovery
+tests. Typechecking passes. Chromium 148 verifies 75 expressions: 20 candidates,
+55 refusals, retained text, invalid-identifier refusal and a getter guard, with no
+host globals or external requests. Browser parity is not independent proof of
+T-SQL acceptance. See the
+[predicate checkpoint](../../../../fixtures/validation/facets-sqlserver-predicate-evidence.json).
+
+Next: qualify candidates against catalog association, type, enforcement state and
+collation; independently probe any additional accepted native expression shapes.
+Then implement public schemas and both facet operations. The public package and
+binding acceptance remain unchanged by this internal syntax checkpoint.
+
 ## Primary reference material
 
 The native fixture is the qualification evidence. These Microsoft references

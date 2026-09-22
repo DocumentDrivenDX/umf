@@ -591,3 +591,10 @@ The next public classifier/projector requires complete operation and extension
 schemas, strict/report handling and both retained round trips. Native discovery,
 the internal decoder and its Chromium parity do not admit that binding. Full
 compatibility refresh and prior concept gates remain part of binding acceptance.
+
+The bounded internal CHECK inspector now implements syntax recognition with exact
+literal retention and atomic refusal of unknown conjuncts. Its result explicitly
+requires catalog/type/column association, enforcement and collation qualification;
+none of its candidates is a core guarantee. Captured disabled/untrusted predicates
+exercise this boundary. See the [syntax checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#bounded-check-syntax-checkpoint).
+Public schemas and APIs remain pending that qualification.

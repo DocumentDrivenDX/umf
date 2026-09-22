@@ -1,0 +1,41 @@
+{
+  "scope": "Internal bounded CHECK syntax recognition; not enforcement qualification or public facet binding acceptance",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "tests": {
+    "passed": 7,
+    "assertions": 545
+  },
+  "typecheck": true,
+  "browser": {
+    "cases": 75,
+    "candidates": 20,
+    "unsupported": 55,
+    "getterCalls": 0,
+    "invalidIdentifiers": 2
+  },
+  "nativeDefinitions": {
+    "recognized": 10,
+    "unsupported": 1,
+    "recognizedWithEnforcementCaveats": 3
+  },
+  "remaining": [
+    "catalog association/type/enforcement/collation qualification",
+    "additional native expression qualification",
+    "public schemas and classifier/projector",
+    "both retained recovery paths",
+    "full compatibility and binding acceptance"
+  ],
+  "sha256": {
+    "src/adapters/sqlserver/facet-predicate.ts": "53edc4e5f5611c91c06170551fde20c280f5a65cbf64e857e87c7b584d08d579",
+    "scripts/core-ideals/facets-sqlserver-predicate-cases.ts": "31da51547d93e8f7abe310bd575f46652bd2af989ff3ecfec41d06af88b6b460",
+    "scripts/core-ideals/facets-sqlserver-predicate-browser.ts": "477b76d281e344b33276f10cf3fa8bc7b9089fd7824556bdf0da80ecd4b39e57",
+    "tests/core-ideals/facets-sqlserver-predicate.test.ts": "bc6d32828c650f7fefa6ff6078338fac6fe84c3878c1885b743f328d6a9f3245",
+    "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
+    "dist/sqlserver-facet-predicate.js": "d45ce1372aba859d862644055e2039436458dc0fc003fa864180e6150699a9cc",
+    "fixtures/validation/facets-sqlserver-predicate-browser.json": "aeccba2a4b10f1ff3fd000b4348ca61ffc06d30b674943aff2efb0e1f67b8ee9",
+    "fixtures/validation/facets-sqlserver-predicate-tests.log": "1152619898aa1d99a19bd04ccc3654b1376b9cce951bea89eca7e0857d1539fd",
+    "fixtures/validation/facets-sqlserver-predicate-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+  }
+}

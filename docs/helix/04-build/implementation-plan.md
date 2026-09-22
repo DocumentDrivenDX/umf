@@ -4174,3 +4174,18 @@ Next: bounded CHECK interpretation, public classification/projection schemas and
 implementations, retained recovery and full binding qualification. SQL Server
 acceptance, Avro and Parquet facets, the five-system facet gate and Key remain open.
 No native-equivalence graduation is claimed.
+
+### SQL Server facet CHECK syntax checkpoint
+
+Bounded internal CHECK inspection now retains full native expressions and exact
+numeric tokens while distinguishing syntax recognition from enforcement. Ten of
+the eleven captured CHECK definitions are recognized; the custom function is
+refused. Disabled, untrusted and replication-specific recognized predicates still
+require separate qualification. Unknown conjuncts and unsupported syntax refuse
+atomically. Seven targeted Bun tests / 545 assertions, typechecking and 75 Chromium
+cases pass; see the [checkpoint record](../../../fixtures/validation/facets-sqlserver-predicate-evidence.json).
+
+Next: qualify type/column association, trust and enforcement scope, and collation;
+then implement public schemas, classification/projection, retained recovery and
+full acceptance. The SQL Server facet bead remains in progress. No new ideal
+admission or equivalence graduation is claimed.
