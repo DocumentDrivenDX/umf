@@ -17,20 +17,15 @@ Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
 has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
 migration/rollback, selection and versioned Field APIs are implemented.
-TableSpec, PostgreSQL and SQL Server Nullability bindings have passed qualified
-acceptance, including explicit scope/carrier metadata, strict/report projection
-and both retained recovery directions. Native checks preserve distinctions
-between stored availability, accepted write inputs and query-produced NULL.
-All five prior Field bindings have fresh native/browser evidence and the Field
-conformance gate passes. SQL Server's authored DDL also passes under opposing
-session null-default settings. See the
-[SQL Server acceptance record](../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
-Avro Nullability now has scoped underlying-value classification and retained
-native recovery, plus authored projection with two-codec evidence. Its final
-binding acceptance and the Parquet binding remain. The
-prior Field gate needs its required refresh after the new public API. The
-experimental 0.3.0 concept has not passed
-its five-system delivery gate. No native equivalence is claimed.
+TableSpec, PostgreSQL, SQL Server and Avro Nullability bindings have passed
+qualified acceptance, including explicit scope/carrier metadata, strict/report
+projection and both retained recovery directions. Native checks preserve the
+differences between stored values, writer inputs, reader resolution and query
+results. All five prior Field bindings have fresh native/browser evidence and
+the Field conformance gate passes. See the
+[Avro acceptance record](../../fixtures/validation/avro-nullability-acceptance-evidence.json).
+Parquet Nullability remains; the experimental 0.3.0 concept has not passed its
+five-system delivery gate. No native equivalence is claimed.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

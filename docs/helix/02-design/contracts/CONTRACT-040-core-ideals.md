@@ -439,3 +439,26 @@ order and unknown exact metadata. Unresolved structural types become explicit
 residuals/refusals. This scoped classification does not validate all native
 semantics, replace native concepts, or complete authored projection and binding
 acceptance. TD-041 records the implementation and remaining evidence obligations.
+
+
+### Avro Nullability binding qualification
+
+TD-041 records the fourth qualified binding: Avro 1.12.0 underlying-field-value
+classification and authored single-Field projection, with pinned Apache Avro
+Python 1.12.0 and fastavro 1.12.2 evidence. The containing record must be present;
+writer omission, reader defaults, ancestor availability and logical constraints
+remain separate. Full source/dependency text and unknown native content stay
+attached and recoverable.
+
+Required projects to a non-null carrier and absent-allowed to a null-first union
+or null-only type. Unspecified leaves the chosen carrier unchanged and preserves
+no-authored-requirement provenance. Null-only cannot satisfy required; strict
+blocks and report retains the explicit loss. No reader default is generated.
+Native-only reclassification cannot reconstruct unspecified author intent;
+receipt-based recovery preserves it along with every report-mode residual.
+
+The [acceptance record](../../../../fixtures/validation/avro-nullability-acceptance-evidence.json)
+includes fresh five-system Field and four-binding Nullability evidence. It
+supersedes the in-progress Avro status above. Parquet and the Nullability delivery
+gate remain open. This qualification never deletes native payloads or constitutes
+native-equivalence graduation.

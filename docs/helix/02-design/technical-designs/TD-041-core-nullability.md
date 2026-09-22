@@ -1005,3 +1005,31 @@ The [projection checkpoint](../../../../fixtures/validation/nullability-avro-pro
 records six tests / 681 assertions, typechecking, 227 schema audits / 36 packages
 and browser build. Chromium passes 88 projection cases with 136 ideal recoveries
 and 68 altered-receipt refusals; classification still passes all 304 cases.
+
+
+### Avro binding acceptance
+
+The [qualified acceptance record](../../../../fixtures/validation/avro-nullability-acceptance-evidence.json)
+closes the Avro binding implementation criteria and supersedes its pending status
+above. Classification requires core 0.3.0 Field kind and explicit
+underlying-field-value/avro-null scope, retaining complete schema/dependency
+texts. Authored projection covers one Field and the 15 existing explicit carriers.
+Apache Avro Python 1.12.0 and fastavro 1.12.2 are the independent native codecs;
+avsc 5.7.9 checks the structural type view in the portable library.
+
+All 58 refresh commands pass. The broader Bun regression passes 332 tests / 25,725 assertions across 111 files,
+covering core/core-ideals and TableSpec, PostgreSQL, SQL Server, Avro and Parquet
+adapter tests. The separate Field gate passes three tests / 24 assertions after
+the actual five-system native/browser rerun. Typechecking, 227 schema audits,
+36 package audits and browser build pass. Earlier result counts remain historical.
+
+The native projection check retains 612 outcomes for 68 emitted schemas,
+136 ideal recoveries and 136 native recoveries. Chromium verifies 136 ideal
+recoveries and the 304-case classification matrix with 342 source recoveries.
+Defaults, writer omission, boolean input coercion, ancestor availability and
+logical annotations remain distinct from underlying null permission. Float
+narrowing remains a counterexample; no general value conversion is claimed.
+
+Four bindings now have qualified evidence. Parquet Nullability and the five-system
+delivery gate remain open. No native payload is replaced, and acceptance does not
+graduate native equivalence or complete the broader UMF extension goal.

@@ -1,31 +1,31 @@
 {
   "version": "1.0.0",
-  "bead": "umf-97221618-4069e519",
-  "scope": "Qualified SQL Server 16.0.4295.3 captured-column classification and authored single-column DDL under explicit stored-relation/SQL-NULL policy; retained ideal/native recovery",
-  "outcome": "SQL Server binding acceptance passed within the documented profiles; Avro and Parquet Nullability and five-system delivery remain open",
+  "bead": "umf-97221618-891e0275",
+  "scope": "Avro 1.12.0 underlying-field-value classification with exact native bundles and authored single-Field projection across 15 explicit carriers",
+  "outcome": "Avro binding acceptance passed within the documented profiles; Parquet Nullability and five-system delivery remain open",
   "nativeEquivalence": false,
   "criteria": {
-    "AC1": "Both binding test files pass in the current broader regression, covering loss, unknown metadata, provenance and both recovery directions",
-    "AC2": "Native discovery passes 24 probes with ten expected rejections; supplement v2 retains bound-rule and visibility evidence",
-    "AC3": "Native projection passes 79 policy cases and 126 executions under opposing ANSI defaults; NULL/omitted/present writes, comments, type identity and both recoveries verified",
-    "AC4": "Classification Chromium checks pass for 288 cases, both serializations and altered receipts",
-    "AC5": "Projection Chromium checks pass for 79 cases, DDL parity, 126 ideal recoveries, altered receipts and invalid identifiers",
-    "AC6": "Typecheck, 224 schemas, 35 packages, browser build and all 54 refreshed commands pass",
-    "AC7": "Field conformance passes after the actual five-system native/browser rerun; governing documents state versions, profiles and remaining work"
+    "AC1": "Both binding test files pass within the broader regression, including strict/report loss, unknown metadata, conflicts and both recovery directions",
+    "AC2": "Discovery passes in Apache Avro 1.12.0 and fastavro 1.12.2 after exact source recovery and independent null-carrier comparison",
+    "AC3": "Projection corpus passes native codec checks for every emitted schema, omission/default/boolean coercion distinctions, float narrowing and both recoveries",
+    "AC4": "Classification Chromium matrix passes 304 cases, both serializations and altered receipts without host globals or external requests",
+    "AC5": "Projection Chromium passes 88 cases, schema parity, 136 ideal recoveries and altered-receipt/name refusals",
+    "AC6": "Typecheck, 227 schema audits, 36 package audits, browser build, broader priority-binding regression and all 58 refreshed commands pass",
+    "AC7": "Separate Field gate passes after the actual five-system native/browser rerun; governing documents state supported profiles and remaining Parquet work"
   },
   "results": {
     "failures": 0,
     "typecheck": "passed",
-    "schemas": 224,
-    "packages": 35,
-    "browserBuildBytes": 10281028,
+    "schemas": 227,
+    "packages": 36,
+    "browserBuildBytes": 10316870,
     "regression": {
-      "tests": 234,
-      "assertions": 16414,
-      "files": 68,
+      "tests": 332,
+      "assertions": 25725,
+      "files": 111,
       "failures": 0,
-      "scope": "All tests/core, tests/core-ideals, tests/postgresql and tests/sqlserver test files except field-conformance.test.ts, run separately after evidence refresh.",
-      "log": "fixtures/validation/sqlserver-nullability-field-refresh-regression.log"
+      "scope": "All tests/core, tests/core-ideals, tests/postgresql, tests/sqlserver, tests/tablespec, tests/avro and tests/parquet test files except field-conformance.test.ts, run separately after evidence refresh.",
+      "log": "fixtures/validation/avro-nullability-field-refresh-regression.log"
     },
     "fieldGateTests": {
       "tests": 3,
@@ -33,59 +33,56 @@
       "failures": 0
     },
     "discovery": {
-      "cases": 24,
-      "expectedRejections": 10
+      "schemas": 19,
+      "nativeChecks": 171,
+      "recoveredNativeChecks": 342,
+      "nativeClassificationComparisons": 76,
+      "unionOrderResolutions": 8,
+      "floatNarrowingChecks": 2
     },
     "classificationBrowser": {
-      "nativeCasesRetained": 24,
-      "catalogTreeRecoveries": 2,
-      "sidecarPreserved": true,
-      "classificationCases": 288,
-      "classified": 156,
-      "blocked": 132,
-      "exactSourceRecoveries": 312,
-      "forgedRefusals": 156
+      "cases": 304,
+      "classified": 171,
+      "blocked": 133,
+      "recoveries": 342,
+      "forgedRefusals": 171
     },
-    "projectionNative": {
-      "executed": 126,
-      "blocked": 16,
-      "idealRecoveries": 63,
-      "classified": 63,
-      "nativeRecoveries": 63,
-      "controls": [
-        {
-          "setting": "nullable",
-          "is_nullable": true
-        },
-        {
-          "setting": "required",
-          "is_nullable": false
-        }
-      ]
+    "projection": {
+      "cases": 88,
+      "blocked": 20,
+      "emitted": 68,
+      "nativeOutcomes": 612,
+      "idealRecoveries": 136,
+      "nativeRecoveries": 136
     },
     "projectionBrowser": {
-      "cases": 79,
-      "blocked": 16,
-      "recoveries": 126,
-      "forgedRefusals": 63,
-      "identifierRefusals": 6
+      "cases": 88,
+      "blocked": 20,
+      "recoveries": 136,
+      "forgedRefusals": 68,
+      "identifierRefusals": 5
     }
   },
   "commandsEvidence": "fixtures/validation/field-gate-refresh-evidence.json",
-  "nativeVersion": "SQL Server 2022 16.0.4295.3, pinned image digest recorded in native oracles",
   "limits": [
-    "Classification requires captured catalog-v3, core 0.3.0 Field kind and explicit stored-relation/SQL-NULL scope; modified captures require recapture.",
-    "Absence permission additionally requires supplement v2, visible metadata and no unresolved constraint/rule/trigger/computed/generated interactions. Legacy supplements remain retained but cannot prove permission.",
-    "Computed columns, assembly types, enabled checks, foreign-key interactions, bound rules and unknown refinements remain explicit residuals or refusals; arbitrary expressions are not evaluated.",
-    "Stored-value availability does not determine accepted write inputs: identity and rowversion have different explicit-NULL behavior; query-produced NULL remains separate.",
-    "Authored projection supports a single Field, 14 existing scalar carriers, permanent identifiers and bounded description metadata in an existing schema; other source obligations require residuals or refusal.",
-    "Unspecified uses explicit NULL to avoid ambient session/database defaults, with no-authored-requirement provenance. Native classification cannot reconstruct that author intent; the retained receipt does.",
-    "Present-value probes do not establish scalar width, precision, value-domain or cross-system type equivalence.",
-    "Receipts check reproducibility and unchanged artifacts, not authenticity or live server state. Native payloads are never replaced by core labels.",
-    "Three priority bindings now have qualified evidence; Avro/Parquet and the experimental Nullability delivery gate remain unfinished."
+    "Classification requires core 0.3.0 Field kind, retained schema/dependency bundle and explicit underlying-field-value/avro-null scope.",
+    "The claim applies only when the containing record is present. Ancestor availability, writer omission, reader defaults and logical constraints remain separate.",
+    "avsc 5.7.9 checks a temporary structural view; excluded native metadata remains retained. This is not full native schema/default/logical conformance.",
+    "Unknown numeric metadata remains exact; unresolved structural/name cases need explicit residuals or refusal.",
+    "Projection supports a single Field and 15 existing explicit carriers, with no generated reader default. Other obligations require residuals or strict refusal.",
+    "Unspecified retains no-authored-requirement intent; native-only classification cannot reconstruct authorship. Null-only cannot satisfy required.",
+    "Apache Avro Python 1.12.0 and fastavro 1.12.2 differ on input omission, boolean None coercion and reader union defaults; no implementation-wide claim is made.",
+    "Float narrowing and local-timestamp codec differences prevent general value-domain or logical-type equivalence claims.",
+    "Receipts verify reproducibility and unchanged artifacts, not authenticity. Core labels never replace native payloads.",
+    "Four priority bindings now have qualified evidence; Parquet and the experimental Nullability delivery gate remain unfinished."
   ],
   "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-native.py": "71be3dd319b6bd4bdbef146b02d2a5a55d836f959b19b1d97717c7fe204cd53e",
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-projection-native.py": "10604b68ffb6df62784354fe06f6db3e4e9f26f9d2b2cbfb1b18c15fa4a90e96",
     "dist/umf.js": "2a5ef707295f68dff2675e4fb3428575fb0dd410e960889852215dec8b490ffd",
+    "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
+    "fixtures/validation/avro-nullability-field-gate-tests.log": "3a9cb38a49d730af76a63cb388a35d196993f115727f23b8196ad13da7d7e17c",
+    "fixtures/validation/avro-nullability-field-refresh-regression.log": "afa31f0c2b9df0a8c31536fd7e01ed5802a0f7d77cf185bd5c2a03afafbeeaa6",
     "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
     "fixtures/validation/field-conformance.json": "ec8b575dd12ac5e3022cff4d92a38dfb15e2d06e51db1bb34baab7a4e26c3cf6",
     "fixtures/validation/field-gate-refresh-evidence.json": "fce90dc643f42c8798cf240f445b819fb12f776d550a915d2b0aaebf93c09fce",
@@ -98,6 +95,12 @@
     "fixtures/validation/field-sqlserver-native.json": "8527d58fb7e180e8a19dd1fbd8b3ec8db684d51030fc3f639c44aea89b7fcbc3",
     "fixtures/validation/field-sqlserver-projection-browser.json": "97934076eb522d181412d51f529f870e5481f78c6de2843a828a807c80295756",
     "fixtures/validation/field-sqlserver-projection-native.json": "767e9a5bd9b32f534e669c84f9facd9ce8e3803a172292b32abf1b00fb6c8b8b",
+    "fixtures/validation/nullability-avro-browser.json": "9e2fb357063e1e48530f4f0096fb5e02c5be1d5d5e273a91ec0c084c1badb384",
+    "fixtures/validation/nullability-avro-native.json": "22149d3bea8eae49d9f683aa21cb56350636689495f221b9692706c53932ffa6",
+    "fixtures/validation/nullability-avro-projection-browser.json": "890a10030d9377f0a952815929a61047a53a2ea88a17c2921ba4515c4449da10",
+    "fixtures/validation/nullability-avro-projection-corpus.json": "330efb6e9ba6358ccf70a2b6d8fab4f5f9ba507479481584c41dbd94ecc26021",
+    "fixtures/validation/nullability-avro-projection-native.json": "eacee76ccc840d48fa29fd8c02a80384f697aba4d95b4fb1f6061a16cbae311a",
+    "fixtures/validation/nullability-avro-recovered.json": "7e575f902c90b1c8330c31ad3ac4646f0e27a012f89cb37019da7dbf4dd9a86b",
     "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
     "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
     "fixtures/validation/nullability-postgresql-browser.json": "4e65b61922773958061e40d1d282921647cbaf35b4721928130f410717f04021",
@@ -123,7 +126,7 @@
     "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
     "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "0f74925878ba0c76d7d451f726db75abaa9c29d22e695bfe4813a7637de410fd",
     "fixtures/validation/postgresql-nullability-field-refresh-regression.log": "925333e4fa2b7572f1a183e547a4515e97a808034ea4708270dae0a68a1c0194",
-    "fixtures/validation/sqlserver-nullability-field-gate-tests.log": "c649a97dd1239f0330c932e1ec00b4f063f6c7ec46d0217d2baa95e63994561b",
+    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "48a48073027fafb153ea08413d9e04622c7b56509c95c0df1e944ff507005a95",
     "fixtures/validation/sqlserver-nullability-field-refresh-regression.log": "a8ebbd33c3c4d121765d401281029a7b78d4c0198a348cb56fab3cdc34e4100f",
     "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "598149923933760388674cc17bbbbe20fd5f5eb1b12d35e06a6b561f7991b143",
     "fixtures/validation/tablespec-nullability-field-refresh-regression.log": "45608bc86a98842c15ad9ba130c889ae4511d382477f7edc9716c986b45fddc0",
@@ -134,6 +137,16 @@
     "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c",
     "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
     "scripts/core-ideals/field-conformance.ts": "f9c2b4ebc9beb6fd1d652465d1f57a399c0af15e90479248cb074ad65e20aa0c",
+    "scripts/core-ideals/nullability-avro-browser.ts": "356f374d28c503e120cb08821cf19d4e218dbcba7fa9666355c3003575f992cd",
+    "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
+    "scripts/core-ideals/nullability-avro-native.py": "71be3dd319b6bd4bdbef146b02d2a5a55d836f959b19b1d97717c7fe204cd53e",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "b44d498bb04abbea018db09a4031712ccfe3038c39c5a11ae723af68a6862866",
+    "scripts/core-ideals/nullability-avro-projection-browser.ts": "58eaf83a6b53e41e03f3620a57da3d58e5822e16b191955e5a39c9ff9415dc34",
+    "scripts/core-ideals/nullability-avro-projection-cases.ts": "0348866e612d3bb80c7931270337b13a62217497bf94d7d1e39305f1dc243aa3",
+    "scripts/core-ideals/nullability-avro-projection-native.py": "10604b68ffb6df62784354fe06f6db3e4e9f26f9d2b2cbfb1b18c15fa4a90e96",
+    "scripts/core-ideals/nullability-avro-projection-oracle.ts": "c3f50781e82610676de594aff3de4b7868c0dd7445e5f395de7c1db94b9b728c",
+    "scripts/core-ideals/nullability-avro-projection-schema.ts": "41ff692ec38a17d9d68e0c25aa5d236878710a5d8ef2a9442f87bd7c5d6b777c",
+    "scripts/core-ideals/nullability-avro-schema.ts": "f01e468ad9af694e78cb96dc0f7f3f953bc873c2da7e26e8b7b24cf743d620ed",
     "scripts/core-ideals/nullability-postgresql-browser.ts": "3d1d7d90365fa5026d6e15528d29319e79dd9cc2488da54320e5909c00294bae",
     "scripts/core-ideals/nullability-postgresql-cases.ts": "59861630c559b69d14afb03c39dd610059fb1f5fd224e6d85dc499dc1b4e4434",
     "scripts/core-ideals/nullability-postgresql-oracle.ts": "f38365d8ae70f8f072c4dc5e20145df926e1972d29f406bde9a4eb191c2c7555",
@@ -153,7 +166,9 @@
     "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts": "6e04f803b521b7cd2415aacb1fcee9d7f963e8e32085740100fcebebd3ef9af5",
     "scripts/core-ideals/nullability-sqlserver-projection-schema.ts": "33abbcecf2994caeda0a76d376d825e2894ce84e731212b153f01eb85e90cf0f",
     "scripts/core-ideals/nullability-sqlserver-schema.ts": "f1227f226debdd911a2e29af6078b10b5655c982d6d63c120d3139ffb1a2f6d3",
+    "spec/core/avro-nullability-classification.schema.json": "d8a7d23eb55464227eabad5c2c94d2fa6cb51c5056675c81949a77b51318d616",
     "spec/core/kind-operation-v2.schema.json": "6178c17dcfff69d517ce7e2cb3eaa75e62910fce82c10b7413532a276f87501b",
+    "spec/core/nullability-avro-projection.schema.json": "2b5ba7a9dd226d9a5c9aa063cf77a85183971f5152db0d1e1c4e06aa1a4887a1",
     "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
     "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
     "spec/core/nullability-postgresql-projection.schema.json": "073104796361bc965b6b51655d0d27dad59b90094d1c6d8f8279286f2f684570",
@@ -165,6 +180,8 @@
     "spec/core/record-type-operation-v2.schema.json": "972607c0cb34bf5d8db5cf11575f07a9a28f3537489ea2df0c79c3c3979beff9",
     "spec/core/sqlserver-nullability-classification.schema.json": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
     "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
+    "spec/extensions/avro-nullability/package.json": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7",
+    "spec/extensions/avro-nullability/schema.json": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26",
     "spec/extensions/postgresql-nullability/package.json": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b",
     "spec/extensions/postgresql-nullability/schema.json": "2bc17a61ba27967d199bd3dc2dd175170841bd897b62f88dfb604e6b4426eea1",
     "spec/extensions/sqlserver-nullability/native.schema.json": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0",
@@ -172,6 +189,10 @@
     "spec/extensions/sqlserver-nullability/schema.json": "e05d7cad7550802d9014958dd0664c75571de8f71554779ed3ca6a65a1bf65a7",
     "spec/extensions/tablespec-nullability/package.json": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
     "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
+    "src/core-ideals/nullability-avro-projection.ts": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff",
+    "src/core-ideals/nullability-avro.ts": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606",
     "src/core-ideals/nullability-postgresql-projection.ts": "76baf46987fed262226d3a023584da6a581fe45cb4c4c0bc9510088f7480e954",
     "src/core-ideals/nullability-postgresql.ts": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259",
     "src/core-ideals/nullability-sqlserver-projection.ts": "28bf3e24af429b80539ec5039a333d69248682465beb9d3615bbdff5c4d8d042",
@@ -180,6 +201,7 @@
     "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
     "src/index.ts": "c76823d99d466fb202a114c8440406a30300bbd716b528c068833d69324aa060",
     "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
     "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
     "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
     "src/model/record-type.ts": "67d486d3f87b5b78755e2a02dae35d89a5404efdaabb3589f9cd19c9b37524e0",
@@ -188,27 +210,11 @@
     "src/validation/document.ts": "a2c7e7992f2365ab60e5651ab797a2a2a7c5e140745d2ab95564c6e3967e9b7c",
     "src/validation/schema.ts": "1bcf83123ddec50c3df5704aed3bc144718c0f8f4250288141a3ae4f4d49ade6",
     "tests/core-ideals/field-conformance.test.ts": "be4f1942612afd9c007c4fbd03220b9774f6a9e16be3e31f71bf4136cc4d0fc2",
+    "tests/core-ideals/nullability-avro-projection.test.ts": "2d92640d70d213f97b329fa4934405fd50a5919bbcc2254e1f37d9a34103e2f7",
+    "tests/core-ideals/nullability-avro.test.ts": "746a21952dba8f65e27b1a7a82a0e616e33f8eee3e9c63f74a3f1f7c235d6bdf",
     "tests/core-ideals/nullability-postgresql-projection.test.ts": "4be5e69407bad5ba9adf89a3dfdd3c4114df1ad933687a13bc24fe9adbd4803e",
     "tests/core-ideals/nullability-postgresql.test.ts": "016c77d573ad603647a98097f2757dde5c4a25b4b18a737728cf3754435e4f29",
     "tests/core-ideals/nullability-sqlserver-projection.test.ts": "4f1ab7e46915085466e8270e618031c58d3e3f67c665a157f69a6462f99208bc",
     "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3"
-  },
-  "revalidation": {
-    "reason": "Existing native/browser bindings rerun after Avro Nullability library additions",
-    "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
-    "previousFingerprints": {
-      "dist/umf.js": "58f3b9bd0ecdce45ffa54f594c4f2344aedecbb53b12a9e9ade77bd3f32b4d13",
-      "fixtures/validation/field-conformance.json": "db8b3835a73c0ff137f9e49e2c1a5a70fdd5cf40d08fa0946a85f793694a4e12",
-      "fixtures/validation/field-gate-refresh-evidence.json": "263b482cef73ae85ad8bd75e2508a1f316bc1ebecf47e4fe17a82ca72ed40b57",
-      "fixtures/validation/nullability-postgresql-browser.json": "b7a75148c091c7753f2a37c58b80d67acb025d777f4ef0cce9644fe5462567a3",
-      "fixtures/validation/nullability-postgresql-projection-browser.json": "325288f38f5547f449a692d27764ce3569fed1e9c22fa0a0847629e3e86e3071",
-      "fixtures/validation/nullability-sqlserver-browser.json": "ef451be08226754028d5ec3b7a9d65000cee047b22faecde103139645792bba8",
-      "fixtures/validation/nullability-sqlserver-native.json": "b10e30213132a327675b79ad8fa443217de9e00160beecb452bb728aabf85465",
-      "fixtures/validation/nullability-sqlserver-projection-browser.json": "5172249338c40ee8d7ef2dc9ba19b6a78d2577ac361e77eac81151e4c33f46f9",
-      "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "aa42bbd8335e422eb849d8a2708723f7d1e24e3a51b9447b27e6da1c8c433109",
-      "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "140b1682b8244746348590615b53a18ce3fa4bdb1cc33c0d014d5c5ced769699",
-      "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110"
-    },
-    "note": "Original result counts and remaining-binding status are historical; current refresh records current regression/build evidence. Avro acceptance is separate."
   }
 }

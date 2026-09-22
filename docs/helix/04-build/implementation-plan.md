@@ -102,12 +102,17 @@ current broader regression passes 234 tests / 16,414 assertions across 68 files;
 separate Field gate passes three tests / 24 assertions. This supersedes the older
 refresh counts above. See the
 [SQL Server acceptance record](../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
-Avro Nullability is in progress with scoped underlying-value classification,
-retained native bundles and its own extension package. The native discovery
-corpus distinguishes defaults, omission and null. Authored projection now has
-two-codec execution evidence and both recovery directions; broader refresh and
-final binding acceptance remain unfinished. The Field gate requires a new fingerprint
-refresh after this public API addition. Parquet Nullability is ready;
+Avro has now passed qualified binding acceptance for underlying-field-value
+classification and authored single-Field projection with retained native bundles.
+The two pinned codecs preserve their differences in omission, reader defaults,
+boolean coercion and logical types. All 58 refresh commands pass, including the
+five-system Field checks and all four implemented Nullability bindings. The
+current broader regression passes 332 tests / 25,725 assertions across 111 files, covering
+core/core-ideals and all five priority adapter test directories. The separate
+Field gate passes three tests / 24 assertions. This supersedes the previous
+refresh counts and stale-fingerprint status above. See the
+[Avro acceptance record](../../../fixtures/validation/avro-nullability-acceptance-evidence.json).
+Parquet Nullability is ready;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not
