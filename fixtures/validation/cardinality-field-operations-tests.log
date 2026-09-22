@@ -1,0 +1,17 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/cardinality-field-operations.test.ts:
+(pass) versioned kind and record receipts retain old profiles and preserve 0.4 Cardinality [547.98ms]
+(pass) Nullability authoring and inspection use v2 on containers without changing item meaning [48.33ms]
+(pass) container record meaning belongs on its item Field and dependent kind edits refuse [9.77ms]
+(pass) cross-version, stale and forged receipts refuse without changing original profiles [10.14ms]
+
+tests/core-ideals/nullability-field-operations.test.ts:
+(pass) versioned kind and record type receipts preserve availability, recursion and native content [190.12ms]
+(pass) availability prevents role erasure and receipts refuse changed versions, sources and provenance [90.73ms]
+(pass) new roles allow availability authoring, with whole-document receipt freshness [3.08ms]
+
+ 7 pass
+ 0 fail
+ 1139 expect() calls
+Ran 7 tests across 2 files. [1143.00ms]

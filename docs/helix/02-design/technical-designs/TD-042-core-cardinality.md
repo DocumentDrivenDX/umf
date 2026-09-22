@@ -219,3 +219,29 @@ clear and scalar conflict alongside the earlier schema/transition matrix. This
 supersedes the authoring/inspection-pending status above. Consumer selection,
 versioned Field/Nullability/record-type operations, fresh prior-gate evidence and
 full core-task acceptance remain unfinished, as do all five native bindings.
+
+
+### Versioned existing-operation integration
+
+Core 0.4.0 uses kind/record-type operation version 3.0.0 and Nullability operation
+version 2.0.0. Prior schemas remain unchanged: kind/record-type v1 serves 0.2.0,
+v2 serves 0.3.0, and Nullability v1 continues its original profiles. Inspectors
+recognize the new envelope without treating existing Field/Nullability labels as
+legacy. Forged version substitutions and cross-version record-author pairs refuse.
+
+Nullability authoring changes container availability independently of cardinality
+and item meaning. Kind authoring validates the entire resulting model, including
+item references, so changing a referenced item Field into a record/group refuses.
+Direct record-type authoring on a 0.4.0 array/map or unknown cardinality refuses;
+author the record type on the referenced item/value Field instead. Missing, one
+and unspecified cardinality do not invent a container and retain the existing
+direct record-type operation. Generic native reference role strings remain
+unverified content rather than implicit author receipts.
+
+The [integration checkpoint](../../../../fixtures/validation/cardinality-field-operations-evidence.json)
+records old/new version matrices, recursion, qualified IDs, unknown payloads,
+serialized verification and conflicts. Chromium additionally verifies record-valued
+item Fields and independent container availability. Existing operation schemas
+were extended by new versions, not rewritten. Cardinality consumer selection and
+full core-task acceptance remain unfinished; both prior gates still require their
+post-library-change evidence refresh, followed by the five native bindings.

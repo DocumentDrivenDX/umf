@@ -7,15 +7,19 @@ import legacy from '../../spec/core/schema.json';import fields from '../../spec/
 import availability from '../../spec/core/nullability-document.schema.json';
 import kindsV2 from '../../spec/core/kind-operation-v2.schema.json';
 import schemaV2 from '../../spec/core/record-type-operation-v2.schema.json';
+import containers from '../../spec/core/cardinality-document.schema.json';
+import kindsV3 from '../../spec/core/kind-operation-v3.schema.json';
+import schemaV3 from '../../spec/core/record-type-operation-v3.schema.json';
+export {default as coreRecordTypeOperationV3Schema} from '../../spec/core/record-type-operation-v3.schema.json';
 export {default as coreRecordTypeOperationV2Schema} from '../../spec/core/record-type-operation-v2.schema.json';
 export {default as coreRecordTypeOperationSchema} from '../../spec/core/record-type-operation.schema.json';
 export interface CoreRecordTypeDeclaration {
- operation:'declare-core-record-type';version:'1.0.0'|'2.0.0';source:Document;target:Document;fieldAuthor:CoreKindDeclaration;recordAuthor:CoreKindDeclaration;
+ operation:'declare-core-record-type';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;target:Document;fieldAuthor:CoreKindDeclaration;recordAuthor:CoreKindDeclaration;
  reference:{role:'record-type';module:string;element:string};
- provenance:{origin:'authored';idealPath:string;recordPath:string;nativePath:null;basis:'explicit-record-type-declaration';binding:{id:'umf.core.record-type.authoring';version:'1.0.0'|'2.0.0'}};
+ provenance:{origin:'authored';idealPath:string;recordPath:string;nativePath:null;basis:'explicit-record-type-declaration';binding:{id:'umf.core.record-type.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'}};
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);validator.addSchema(availability);validator.addSchema(kindsV2);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2);
-const checker=(version:unknown)=>version==='2.0.0'?checkV2:checkV1;
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);validator.addSchema(availability);validator.addSchema(kindsV2);validator.addSchema(containers);validator.addSchema(kindsV3);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3);
+const checker=(version:unknown)=>version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;
 /** Explicit type relationship. Generic role strings are never treated as author receipts. */
 export function declareCoreRecordType(fieldInput:CoreKindDeclaration,recordInput:CoreKindDeclaration):CoreRecordTypeDeclaration {
  const copiedField=copyJson(fieldInput) as unknown as CoreKindDeclaration,copiedRecord=copyJson(recordInput) as unknown as CoreKindDeclaration;
@@ -24,10 +28,11 @@ export function declareCoreRecordType(fieldInput:CoreKindDeclaration,recordInput
  const mi=source.modules.findIndex(m=>m.id===fieldAuthor.identity.module),ei=source.modules[mi]!.elements.findIndex(e=>e.id===fieldAuthor.identity.element),field=source.modules[mi]!.elements[ei]!;
  if(field.scalarType!==undefined)throw new UmfError('CORE_RECORD_TYPE_SCALAR','Scalar family cannot also assert a record type');
  if(field.references?.some(r=>r.role==='record-type'))throw new UmfError('CORE_RECORD_TYPE_EXISTING','Existing record-type reference requires separate provenance reconciliation');
+ if(source.umf==='0.4.0'&&field.cardinality!==undefined&&!['one','unspecified'].includes(field.cardinality as string))throw new UmfError('CORE_RECORD_TYPE_CARDINALITY','Direct record type requires non-container meaning; declare the item/value Field record type separately');
  const reference={role:'record-type' as const,...recordAuthor.identity},target=copyJson(source) as unknown as Document;
  const selected=target.modules[mi]!.elements[ei]!;selected.references=[...(selected.references??[]),reference];
  const validation=validateDocument(target);if(!validation.valid)throw new UmfError('CORE_RECORD_TYPE_TARGET',JSON.stringify(validation.diagnostics));
- const version=source.umf==='0.3.0'?'2.0.0':'1.0.0';
+ const version=source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0';
  const result:CoreRecordTypeDeclaration={operation:'declare-core-record-type',version,source,target,fieldAuthor,recordAuthor,reference,provenance:{origin:'authored',idealPath:`/modules/${mi}/elements/${ei}/references/${selected.references.length-1}`,recordPath:recordAuthor.provenance.idealPath.slice(0,-5),nativePath:null,basis:'explicit-record-type-declaration',binding:{id:'umf.core.record-type.authoring',version}}};
  const output=copyJson(result),check=checker(version);if(!check(output))throw new UmfError('CORE_RECORD_TYPE_RESULT',JSON.stringify(check.errors));return output as unknown as CoreRecordTypeDeclaration;
 }

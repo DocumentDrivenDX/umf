@@ -1,0 +1,96 @@
+{
+  "scope": "Core 0.4.0 versioned kind, Nullability and direct/item record-type authoring; old operation profiles retained",
+  "bead": "umf-97221618-231a08d7",
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "tests": 72,
+    "assertions": 2496,
+    "files": 14,
+    "failures": 0,
+    "focusedTests": 7,
+    "focusedAssertions": 1139,
+    "focusedIncludedInRegression": true,
+    "browser": {
+      "cases": 45,
+      "recoveries": 90,
+      "availabilityRecoveries": 24,
+      "itemRecordRecoveries": 2,
+      "refusals": 253,
+      "versionedReceipts": true
+    },
+    "typecheck": "passed",
+    "schemas": 236,
+    "packages": 37,
+    "browserBuildBytes": 10404235
+  },
+  "commands": [
+    [
+      "bun",
+      "test",
+      "./tests/core/cardinality-ideals.test.ts",
+      "./tests/core/cardinality-operations.test.ts",
+      "./tests/core/core.test.ts",
+      "./tests/core/field-ideals.test.ts",
+      "./tests/core/field-kind.test.ts",
+      "./tests/core/field-transition.test.ts",
+      "./tests/core/native-json.test.ts",
+      "./tests/core/nullability-authoring.test.ts",
+      "./tests/core/nullability-ideals.test.ts",
+      "./tests/core/nullability-transition.test.ts",
+      "./tests/core/scalar.test.ts",
+      "./tests/core/selection.test.ts",
+      "./tests/core-ideals/cardinality-field-operations.test.ts",
+      "./tests/core-ideals/nullability-field-operations.test.ts"
+    ],
+    [
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    [
+      "bun",
+      "run",
+      "test:schemas"
+    ],
+    [
+      "bun",
+      "run",
+      "build"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-field-operations-browser.ts"
+    ]
+  ],
+  "limits": [
+    "Kind/record-type v3 and Nullability v2 apply to core 0.4.0; earlier receipt versions retain original core profiles.",
+    "Direct record typing refuses known arrays/maps and unknown cardinality in 0.4.0. Record-valued items use their explicit item/value Field.",
+    "Generic native reference roles do not confer author provenance; all native and unknown payloads remain retained.",
+    "Receipt verification proves consistency against retained inputs and unchanged target, not authentication or native enforcement.",
+    "Cardinality consumer selection, full core acceptance and prior Field/Nullability evidence refresh remain unfinished.",
+    "All five native Cardinality bindings and ideal admission remain unfinished."
+  ],
+  "sha256": {
+    "dist/umf.js": "e79345fbfe8b74313b64715fe5c6b7b01a1a63c37988227c95935465f0721e58",
+    "fixtures/validation/cardinality-field-operations-browser.json": "0671e935f6a2ba4f5d4cc138eff83072916d54b30f4f37d1b373ad237afcede7",
+    "fixtures/validation/cardinality-field-operations-browser.log": "3982b2b247a3031418556e509ba8b88f9715cf7bfd81a4f77ceb1badc46e5eb3",
+    "fixtures/validation/cardinality-field-operations-build.log": "9163ce57d6e9a1a21aae17b658c0f9d441f9011e37945cc269ce9617817816fc",
+    "fixtures/validation/cardinality-field-operations-core-regression.log": "fb3afc92cc55d241e1f7e4d02c3a7fd79bf6d1661be2508afbefea0b35beb340",
+    "fixtures/validation/cardinality-field-operations-schemas.log": "ddc324d62aacd86b60a58c52f33b59e99ff3ba0d40008cd016e419aba831b657",
+    "fixtures/validation/cardinality-field-operations-tests.log": "02813eb1fddf65cd6345301d03b6b0983ce3532f38987d54416b7a211f7697e6",
+    "fixtures/validation/cardinality-field-operations-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-ideals/cardinality-field-operations-browser.ts": "bafca7508d77efcbf86d8e2b7c4352c97ec21da58c1cbdde6c6f446352fa8ddb",
+    "scripts/core-ideals/cardinality-field-operations-cases.ts": "cc5917e23e76835f84e069a319e4c5e35242a49c4b4547d03c334e524bf2a347",
+    "scripts/core-ideals/cardinality-field-operations-schema.ts": "8c5f4748b24cd796e24d10d3647df28b85a16173767edfbca5cdcbac5b78f477",
+    "spec/core/kind-operation-v3.schema.json": "ef1385c869cabdae8c7886bc35e26427562cadf99b2bf5b49fa2f7c02dd2dc15",
+    "spec/core/nullability-operation-v2.schema.json": "088b084df6c938f4244d39f72ecdf338c1fb0c800928098a69c9978784a197ad",
+    "spec/core/record-type-operation-v3.schema.json": "20b19a83b6e61c3c8ed0a220f9295f13db27fa4f68dd3b83a11f4c6c13c84586",
+    "src/model/field-kind.ts": "09729722819abfa480a1f14c5215d66f4db38359af3a38d633cfaccdd8d14424",
+    "src/model/nullability.ts": "1d3d840a2fc1d11ab917af9191b9b5e1c52ee13d47a6805d9bf3d0da5e6b801d",
+    "src/model/record-type.ts": "7d590d8f6ba3ee24a05d92fc12257daa834ffc94b854e1267191513d188efcf5",
+    "tests/core-ideals/cardinality-field-operations.test.ts": "9cf6b81c7e52941b947321dca439a1c815235643ded11c0fece79ade60ce68a0",
+    "tests/core-ideals/nullability-field-operations.test.ts": "ea9bf7729be73885a0632fa2300a9389ed02aebf3e34d55b3b5fd4aba7d8cbec"
+  }
+}

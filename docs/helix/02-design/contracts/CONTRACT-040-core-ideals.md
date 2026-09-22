@@ -561,3 +561,14 @@ meaning without inventing author provenance or native interpretation. Only 0.4.0
 labels have this core interpretation. Receipt verification recomputes the complete
 declaration and requires the unchanged current target; this is consistency checking,
 not proof of a person's identity or native equivalence.
+
+
+### Cardinality and record-type authoring
+
+For core 0.4.0, a direct authored record-type association must not describe an
+array/map container or an unknown cardinality. Use the container's itemType Field
+and author that Field's record type. The container and item remain separate
+identities with independently stated availability. Existing raw native reference
+roles are retained without automatically acquiring record-type author provenance.
+Versioned kind and Nullability operations preserve item references and reject
+incompatible edits; their older receipt versions retain their original envelopes.
