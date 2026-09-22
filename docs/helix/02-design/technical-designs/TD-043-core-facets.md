@@ -20,8 +20,11 @@ ddx:
 ## Scope
 
 Implement US-043 under CONTRACT-040. Architecture is the direct parent; no
-separate solution design exists for this core slice. The current envelope only
-implements scalar-family metadata. This design is planned, not executed evidence.
+separate solution design exists for this core slice. Field, Nullability and Cardinality
+have passed their qualified five-system gates. Implementation starts from experimental
+core 0.4.0 with explicit item/value Field references. Facets remain unimplemented
+until the evidence checkpoints below say otherwise; native bindings and admission
+are separate tasks.
 
 ## Technical Approach
 
@@ -75,10 +78,11 @@ Consumer selection must preserve source identity and source paths, not merge nam
 
 ## Data Model Changes
 
-Add this concept incrementally, retaining author/classification provenance and
-native extension data. An absent member on an old model asserts nothing. No
-schema file changes are made in this documentation evolution. No database migration
-is implicit; native DDL is reviewable output, executed only by isolated test harnesses.
+Reserve `Element.facets` only in experimental core 0.5.0. Keep the 0.1–0.4
+schemas and receipts immutable. The normative representation and transition are
+specified in CONTRACT-040's facet decision below. Existing unknown facet-shaped
+content is never reinterpreted by changing a schema registry entry. Native DDL
+remains reviewable output executed only by isolated test harnesses.
 
 ## Integration Points
 
@@ -146,3 +150,92 @@ and follow-up bindings; report mode must never imply execution enforcement.
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
 - [ ] Schema/version transition, five bindings and regression evidence implemented.
+
+
+### Facet representation and implementation decision
+
+Use `spec/core/facet-document.schema.json` with `$id: urn:umf:core:0.5.0`.
+Reuse the 0.4.0 Field, availability, cardinality and item/value reference semantics.
+Only scalar value Fields may carry facets; known array/map containers and direct
+record-valued Fields cannot. Missing/one/unspecified cardinality does not invent
+additional shape or availability. Unknown cardinality blocks facet interpretation.
+
+Numeric bounds use JSON integers in [0, 9007199254740991], with positive precision
+and bit count. This is the existing core interoperable JSON numeric profile,
+not a restriction on represented integer/decimal *values*: integerWidth describes
+mathematical powers of two and decimal precision/scale describes coefficients.
+Do not allocate those powers while validating metadata. Raw JSON/YAML goes through
+`readJsonValue` before numeric conversion; unsafe or rounded numeric tokens reject.
+A caller-supplied JavaScript number has already lost its lexical history, which
+UMF cannot reconstruct. Native adapters must retain their original exact token
+before conversion and report bounds that cannot fit this core metadata profile.
+
+JSON Schema checks local domains, required pairs, scalar family and container
+compatibility. `scale <= precision` is a semantic validation rule described in the
+schema; do not introduce a nonstandard `$data` dependency. Missing facets assert
+nothing; an empty object asserts no bounds. Unknown facet members and nested
+qualifiers remain copied and diagnosed. Unknown nonempty length-unit labels remain
+uninterpreted and block exact projection. Known length units require their matching
+string/binary family; a length facet with an unknown unit still requires a string
+or binary Field. Unknown qualifiers never certify an exact native mapping.
+
+`upgradeFacetEnvelope` explicitly accepts 0.4.0, archives every element's existing
+`facets` member (including null, false and apparently valid bounds), removes that
+member from the 0.5.0 target, and retains the full source. Rollback verifies the
+receipt by recomputation, restores the original 0.4.0 document and separately
+retains the entire current 0.5.0 document. It must not apply later assertions to
+an old opaque member. Unknown content elsewhere is copied without interpretation.
+
+`inspectCoreFacets` returns copied interpreted members and explicit unknown paths,
+or missing/legacy/inapplicable meaning. It does not infer author provenance.
+`declareCoreFacets` receives an explicit Field identity and a patch of known facet
+groups. Precision and scale must be supplied together. Omitted groups are retained;
+updates preserve unknown nested members and archive prior assertions. An unknown
+unit cannot be overwritten by this operation. Removing groups or unknown content
+is not an implicit consequence of authoring another facet. Every declaration has
+a copied source/target, authored provenance and a recomputable receipt; stale or
+forged receipts refuse use by projections.
+
+Extend versioned Field, record-type, Nullability and Cardinality authoring and
+selection for 0.5.0, retaining every existing receipt verifier. Selection follows
+item/value links and preserves facets rather than inferring constraints from native
+payloads. Direct record-type assignment to a faceted Field must conflict atomically.
+Update the complete operation/transition/selection schemas before public exports.
+Native bindings remain explicitly versioned; old bindings must not silently accept
+0.5.0 input using a 0.4.0 receipt schema.
+
+Implement and check the candidate facet schema and internal semantic validator
+first, then integrate the version transition, public authoring and consumers.
+A candidate schema or internal validator is not full 0.5.0 runtime support. Core
+acceptance requires positive/negative exact-token fixtures, all nine scalar families,
+Unicode versus byte units, paired decimals, signed/unsigned widths, recursive item
+Fields, legacy collisions, unknown qualifiers and both JSON/YAML recoveries in Bun
+and Chromium. Refresh the priority regression excluding all three existing concept
+gates, then revalidate their evidence and run Field, Nullability and Cardinality
+gates in order. Complete this core task before native facet binding acceptance;
+finish the five-system facet gate before starting key implementation.
+
+
+### Facet candidate validation checkpoint
+
+The candidate 0.5.0 JSON Schema and internal `validateFacetElement` validator now
+have Bun and [Chromium 148 evidence](../../../../fixtures/validation/core-facet-candidate-browser.json). Three focused tests pass with
+887 assertions. The 99-case matrix covers nine scalar families, roles/container
+conflicts, length units, decimal pairing/order, signed/unsigned integer widths,
+maximum safe counts and retained unknown members/units. Browser checks recover
+198 JSON/YAML values and check 18 numeric-token cases without host globals or
+external requests. Accessors are refused without execution. Structural JSON Schema
+and the additional scale/precision semantic check are distinguished explicitly.
+
+Typechecking, the standard build and audits of 254 schemas / 42 packages pass.
+The public browser bundle remains byte-identical to the accepted 0.4.0 build.
+Reproduce with `bun test ./tests/core/facet-ideals.test.ts`,
+`bun scripts/core-facet-schema.ts` and `bun scripts/core-facet-browser.ts`
+(with the configured Chromium executable).
+
+This is a candidate schema/internal-validator checkpoint. The public document API
+still refuses 0.5.0. Explicit migration/rollback, facet authoring/inspection,
+versioned existing operations and selection remain required before core-task
+acceptance; all five native facet bindings and facet admission remain pending.
+No new native enforcement or equivalence is claimed. Existing 0.4.0 gate evidence
+is retained with documentation-only revalidation; it does not qualify facets.

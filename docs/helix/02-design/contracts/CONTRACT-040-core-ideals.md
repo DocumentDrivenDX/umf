@@ -614,3 +614,30 @@ unencoded author intent. SQL array bounds, TableSpec vector constraints, JSON an
 Parquet MAP uniqueness/key-carrier losses remain explicit; a report candidate does
 not establish enforcement. Existing float-narrowing and filtered/disabled-index
 counterexamples remain binding constraints. Core 0.4.0 stays experimental.
+
+
+### Facet representation and version decision
+
+The next experimental envelope is 0.5.0. It reserves `Element.facets` only after
+explicit migration from 0.4.0, preserving the original document and archiving every
+preexisting facet-shaped member without interpreting it. Rollback restores that
+original and retains subsequent 0.5.0 assertions separately. This decision does not
+claim implementation, native support, facet admission or equivalence.
+
+Facet counts are exact safe JSON integers under the existing core numeric profile:
+length maximum and scale are nonnegative; precision and integer bit count are
+positive; all are at most 9007199254740991. IntegerWidth and decimal facets describe
+mathematical value domains, not JavaScript-number domains. Raw JSON/YAML tokens must
+pass the existing exact parser before host-number conversion. Already rounded
+caller-supplied numbers cannot establish their lost lexical value. Native bounds
+outside this metadata profile remain in native payloads with an explicit residual.
+
+A facets object, including an empty or future-only object, belongs to a Field with
+missing, one or unspecified cardinality and no direct record-type association.
+Known facet members require the compatible scalar family from the normative table.
+Precision and scale appear together, with scale no greater than precision; this
+cross-member rule is enforced by semantic validation in addition to JSON Schema.
+Unknown members and nested qualifiers are retained and diagnosed. Unknown nonempty
+length units are retained without interpretation on string/binary Fields; they
+cannot satisfy an exactness request. Neither missing bounds nor native defaults
+supply new author assertions. See TD-043 for versioned APIs and acceptance order.

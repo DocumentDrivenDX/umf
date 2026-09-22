@@ -3961,3 +3961,28 @@ unencoded author intent. SQL array bounds, TableSpec vector constraints, JSON an
 Parquet MAP uniqueness/key-carrier losses remain explicit; a report candidate does
 not establish enforcement. Existing float-narrowing and filtered/disabled-index
 counterexamples remain binding constraints. Core 0.4.0 stays experimental.
+
+
+### Facet candidate validation checkpoint
+
+The candidate 0.5.0 JSON Schema and internal `validateFacetElement` validator now
+have Bun and [Chromium 148 evidence](../../../fixtures/validation/core-facet-candidate-browser.json). Three focused tests pass with
+887 assertions. The 99-case matrix covers nine scalar families, roles/container
+conflicts, length units, decimal pairing/order, signed/unsigned integer widths,
+maximum safe counts and retained unknown members/units. Browser checks recover
+198 JSON/YAML values and check 18 numeric-token cases without host globals or
+external requests. Accessors are refused without execution. Structural JSON Schema
+and the additional scale/precision semantic check are distinguished explicitly.
+
+Typechecking, the standard build and audits of 254 schemas / 42 packages pass.
+The public browser bundle remains byte-identical to the accepted 0.4.0 build.
+Reproduce with `bun test ./tests/core/facet-ideals.test.ts`,
+`bun scripts/core-facet-schema.ts` and `bun scripts/core-facet-browser.ts`
+(with the configured Chromium executable).
+
+This is a candidate schema/internal-validator checkpoint. The public document API
+still refuses 0.5.0. Explicit migration/rollback, facet authoring/inspection,
+versioned existing operations and selection remain required before core-task
+acceptance; all five native facet bindings and facet admission remain pending.
+No new native enforcement or equivalence is claimed. Existing 0.4.0 gate evidence
+is retained with documentation-only revalidation; it does not qualify facets.

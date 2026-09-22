@@ -1,0 +1,104 @@
+{
+  "scope": "Candidate core 0.5.0 facet schema and internal facet-local validator; no public 0.5.0 runtime or native binding acceptance",
+  "bead": "umf-97221618-c0b3f203",
+  "candidateVerified": true,
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "tests": 3,
+    "assertions": 887,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 254,
+    "packages": 42,
+    "browser": "148.0.7778.0",
+    "checks": {
+      "cases": 99,
+      "accepted": 31,
+      "rejected": 68,
+      "recoveries": 198,
+      "tokenChecks": 18,
+      "accessorRefused": true
+    },
+    "existingGateEvidenceTests": {
+      "tests": 3,
+      "assertions": 34,
+      "matrixTestsFilteredOut": 4,
+      "failures": 0
+    },
+    "publicBrowserBundleUnchanged": true,
+    "publicBrowserBundleSha256": "d2cd47996b4bcd5059bb8643e4d54ec9b7adba02bd2e34794ed9bf8c12db6fad"
+  },
+  "commands": [
+    {
+      "command": "bun scripts/core-facet-schema.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun test ./tests/core/facet-ideals.test.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run test:schemas",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run build",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run build:postgresql",
+      "exitCode": 0
+    },
+    {
+      "command": "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-facet-browser.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun test ./tests/core-ideals/field-conformance.test.ts ./tests/core-ideals/nullability-conformance.test.ts ./tests/core-ideals/cardinality-conformance.test.ts --test-name-pattern evidence",
+      "exitCode": 0
+    }
+  ],
+  "remaining": [
+    "Public 0.5.0 document validation integration and explicit collision-preserving migration/rollback",
+    "Typed facet authoring/inspection and verified complete operation schemas",
+    "Versioned existing operations, old receipt compatibility and selection in 0.5.0",
+    "Core acceptance with current affected native/browser evidence and all three existing conformance gates",
+    "All five native facet bindings, useful ideal admission, qualified delivery and separate native equivalence if pursued"
+  ],
+  "limits": [
+    "Internal facet-local validation does not replace document identity/reference checks or general unknown-core diagnostics.",
+    "JSON Schema describes structural facet rules; scale <= precision requires the additional semantic check.",
+    "Exact-token guarantees apply to source text parsed before conversion, not lexical history already lost by a caller.",
+    "Prior runtime and native/browser matrices are retained unchanged; only documentation/evidence dependencies were revalidated. No native facet support is claimed."
+  ],
+  "sha256": {
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "e2c2e176dbb39d1d4594d2a53636406028cb78e6d2671491c1322ba8d7a4da9c",
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": "dad1a816a1ab8fa2be4c0e45ae65ce07fee50d3780bff474fdb2eec8dddea9ae",
+    "docs/helix/03-test/test-plan.md": "89fd6df763bf0ba5fc75997b2a166f6fbc872193c2a2991052053aa53aa60277",
+    "docs/helix/04-build/implementation-plan.md": "4e0afd5223809604e05057a4a566c80758158e16199ab82edc4f1eb338408115",
+    "docs/helix/README.md": "0df47fbb8193e55a66c13048d4e42e47363b547e67c1558d4207a80f3f15c6f1",
+    "fixtures/validation/cardinality-conformance.json": "4a91fbeba8435e473eab84e48bae9aeef8cfab60902fd5f7df0f62d1e6f5f4ad",
+    "fixtures/validation/cardinality-gate-acceptance-evidence.json": "60d5feb16b8ede034f6ed5cade7abf485b6c14d51c7ec9a0e656d3d3e54d65b1",
+    "fixtures/validation/core-facet-candidate-browser.json": "d40d4c76d0c830d86faee6c50f4a3de14546bf36da18392b28846ffa3767b0a5",
+    "fixtures/validation/core-facet-candidate-build.log": "c501aac5e039f80ca111588436f3d1d605a467b0b38262be906871c646d65356",
+    "fixtures/validation/core-facet-candidate-prior-evidence-tests.log": "104f4c501d6bf3a16d80beffeb06a282cf2d4f15f01330b561185744626912d4",
+    "fixtures/validation/core-facet-candidate-schemas.log": "88951640addc63ec6b1f42b5f835d63b9d8f16ac847a65042c8e99c0519794b3",
+    "fixtures/validation/core-facet-candidate-tests.log": "57be4d3f66bc4d38562e229624b0ad152b55ac3d5f587203f61da95e892a8ef7",
+    "fixtures/validation/core-facet-candidate-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-facet-browser.ts": "c5ca6f88823adc81367f1a4ed81fc79f684ec8ae3f7ad281a37963849a968004",
+    "scripts/core-facet-cases.ts": "bfe5272b0af27e34b8b10cf7071b1cbc02f7308f0b8c0f8f0d7802631f84c329",
+    "scripts/core-facet-schema.ts": "32d822c4a27b96a5e2b69b6e9e52c118a0045dc07f66155d30f9b054cb5465e8",
+    "spec/core/facet-document.schema.json": "7ef36fb7461411dad2f7354b7eb50a760d397d3b67cc500eddf2a806a80820cb",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/validation/schema.ts": "1d849a74dae576b8c70307981595778289fd41ae1d4ffc74caa64024260dc69a",
+    "tests/core/facet-ideals.test.ts": "d4646466a88fe81b4d11ee928d2780b86d40fbe1ab3c1d5d732d27f953007a5f"
+  }
+}

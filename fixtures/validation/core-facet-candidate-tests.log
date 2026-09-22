@@ -1,0 +1,11 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [54.00ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [3.55ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.98ms]
+
+ 3 pass
+ 0 fail
+ 887 expect() calls
+Ran 3 tests across 1 file. [178.00ms]

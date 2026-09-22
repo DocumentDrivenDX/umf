@@ -1,0 +1,16 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-conformance.test.ts:
+(pass) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [350.63ms]
+
+tests/core-ideals/nullability-conformance.test.ts:
+(pass) Nullability gate requires current core and five native/browser evidence records [240.03ms]
+
+tests/core-ideals/cardinality-conformance.test.ts:
+(pass) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [277.73ms]
+
+ 3 pass
+ 4 filtered out
+ 0 fail
+ 34 expect() calls
+Ran 3 tests across 3 files. [2.84s]

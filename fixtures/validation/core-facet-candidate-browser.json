@@ -1,0 +1,25 @@
+{
+  "scope": "Internal candidate 0.5.0 facet schema/semantic validation and JSON/YAML metadata recovery; public document integration, migration, authoring, native bindings and admission remain pending",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 99,
+    "accepted": 31,
+    "rejected": 68,
+    "recoveries": 198,
+    "tokenChecks": 18,
+    "accessorRefused": true
+  },
+  "externalRequests": [],
+  "bundleSha256": "4dfb27a9bbb6833282f65d0351b6d509da76709844bd91447fe7289c1d9782eb",
+  "sha256": {
+    "scripts/core-facet-browser.ts": "c5ca6f88823adc81367f1a4ed81fc79f684ec8ae3f7ad281a37963849a968004",
+    "scripts/core-facet-cases.ts": "bfe5272b0af27e34b8b10cf7071b1cbc02f7308f0b8c0f8f0d7802631f84c329",
+    "scripts/core-facet-schema.ts": "32d822c4a27b96a5e2b69b6e9e52c118a0045dc07f66155d30f9b054cb5465e8",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/validation/schema.ts": "1d849a74dae576b8c70307981595778289fd41ae1d4ffc74caa64024260dc69a",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "spec/core/facet-document.schema.json": "7ef36fb7461411dad2f7354b7eb50a760d397d3b67cc500eddf2a806a80820cb",
+    "tests/core/facet-ideals.test.ts": "d4646466a88fe81b4d11ee928d2780b86d40fbe1ab3c1d5d732d27f953007a5f"
+  }
+}

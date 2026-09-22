@@ -63,11 +63,11 @@
   ],
   "sha256": {
     "docs/helix/01-frame/user-stories/US-041-core-nullability.md": "f9e8134b4068a0cca1a1de2993bdd2feed1f0a49e97b878d33b0c40f5ea51505",
-    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "9763bdf43a8a6dc23adfcaec5bcaed2564f1847dbc572e9ca74f5c1a09715664",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "e2c2e176dbb39d1d4594d2a53636406028cb78e6d2671491c1322ba8d7a4da9c",
     "docs/helix/02-design/technical-designs/TD-041-core-nullability.md": "93baa1fe3f9f159e7a725abc33e15934bdecbedea9c6922231bdda1638418093",
-    "docs/helix/03-test/test-plan.md": "9e2d95acd53840433f3ae10b8e6cda0843ae96dd0765017d3e302b50a6604cc5",
-    "docs/helix/04-build/implementation-plan.md": "c7272ae1d8649058da4bddb103ecf531adf983688a5ced477ce2770d5c2dd7c2",
-    "docs/helix/README.md": "3d2f1dfd21b3e4ba679942849a64537f4d07df06dc93ca4d1e1d123c3fd98d28",
+    "docs/helix/03-test/test-plan.md": "89fd6df763bf0ba5fc75997b2a166f6fbc872193c2a2991052053aa53aa60277",
+    "docs/helix/04-build/implementation-plan.md": "4e0afd5223809604e05057a4a566c80758158e16199ab82edc4f1eb338408115",
+    "docs/helix/README.md": "0df47fbb8193e55a66c13048d4e42e47363b547e67c1558d4207a80f3f15c6f1",
     "fixtures/validation/avro-nullability-acceptance-evidence.json": "9724c7bc65b53890380e429283ecf3c60d95ae9efa37e48ebfa3ea492e51c79a",
     "fixtures/validation/cardinality-avro-field-gate-command.log": "ccff0c3471045a93407bc11776423cc534a9464c7beab4af404803dca4cba546",
     "fixtures/validation/cardinality-avro-field-gate-tests.log": "95147d118c536186bcfbd2720e8deb13ecba6f4b22fdf2c4858009fdeb34200b",
@@ -332,6 +332,16 @@
         "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
         "docs/helix/03-test/test-plan.md": "8a23762d255693e2e8f2df47c94dc4dfba808c7821f3432d1bfdb0021dec8a8d",
         "docs/helix/04-build/implementation-plan.md": "08473aa3d86f0c20c878f917d8d8ee75f31fcaba6b86e1878825829fb977d967"
+      }
+    },
+    {
+      "reason": "Facet candidate design/schema/internal validation checkpoint only; public 0.4.0 library source and browser bundle are unchanged. Original runtime tests and native/browser runs are retained, not rerun or claimed as facet support. Revalidate changed documentation references and their dependent evidence records.",
+      "previousRecordSha256": "36bfc6b3b662ebe4f160877d77dedf9062565736973f0e14fba77244638d929d",
+      "previousFingerprints": {
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "9763bdf43a8a6dc23adfcaec5bcaed2564f1847dbc572e9ca74f5c1a09715664",
+        "docs/helix/03-test/test-plan.md": "9e2d95acd53840433f3ae10b8e6cda0843ae96dd0765017d3e302b50a6604cc5",
+        "docs/helix/04-build/implementation-plan.md": "c7272ae1d8649058da4bddb103ecf531adf983688a5ced477ce2770d5c2dd7c2",
+        "docs/helix/README.md": "3d2f1dfd21b3e4ba679942849a64537f4d07df06dc93ca4d1e1d123c3fd98d28"
       }
     }
   ]
