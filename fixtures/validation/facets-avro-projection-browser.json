@@ -1,19 +1,25 @@
 {
-  "scope": "Internal Avro facet projection browser bundle; no public export or binding acceptance",
+  "scope": "Public Avro facet projection and native classification composition; no binding acceptance",
   "browser": "148.0.7778.0",
   "checks": {
     "cases": 558,
     "projected": 388,
     "blocked": 170,
     "idealRecoveries": 776,
+    "nativeRecoveries": 776,
+    "exactFacetRecoveries": 238,
+    "explicitResiduals": 150,
     "forgedRejected": true,
     "getterCalls": 0
   },
   "externalRequests": [],
   "sha256": {
-    "scripts/core-ideals/facets-avro-projection-browser-entry.ts": "8b0151c2dd4304a10c759a91c237e05d0a212f90529e4a6953457bc98459786b",
-    "dist/avro-facet-projection.js": "e2e2d1086972a0350a0548a2fe1d85f0d927254e08f08da15aa81cdd0299b27f",
-    "scripts/core-ideals/facets-avro-projection-browser.ts": "a5eea55b18191ff2d8a824d1c819698a2184ea53f48f57a3e1a2b1882c7da160",
+    "src/index.ts": "7a22775a7a7620da88e4b8bd1ab589683aa60e051e0dd03803ca1b046f617e7a",
+    "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
+    "spec/extensions/avro-facets/package.json": "040c50a035988606e715bf4a675087a2bec5b501455291155cab590a840463e2",
+    "fixtures/validation/facets-avro-composition.json": "cc73bf851957358b3fbd9f7dd4a8941ada819e333789d94c8fdfb4eb24cf6037",
+    "dist/umf.js": "0c5ff5a8e1317565a5fba695b788645635847f5da29b721508cd2f2042364096",
+    "scripts/core-ideals/facets-avro-projection-browser.ts": "fd6aeee96cbf46d8fc01c41b5948e5d7abd72ba64c253a9b70c42529aa0eae7d",
     "scripts/core-ideals/facets-avro-projection-cases.ts": "2050e1ad1f5bef37f4552fd5f3cc2d0bc3ae317b766f6aadea748938e59ee85a",
     "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
     "spec/core/facets-avro-projection.schema.json": "3032f6daf14e6f80f352126f55a03278353a4bf38511038126f3e5615e3ca3f4"

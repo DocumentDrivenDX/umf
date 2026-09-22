@@ -4369,3 +4369,12 @@ remain explicit, including Apache's ignored local-timestamp annotation. See the
 [projection checkpoint](evidence/avro-facet-discovery.md#authored-projection-native-and-browser-checkpoint).
 Composition, public integration and full compatibility acceptance remain next;
 the Avro bead stays in progress and package export support is not yet claimed.
+
+Avro facet projection is now public and its package declares experimental export
+support. Native re-import/classification composition passes for 388 targets:
+776 ideal and 776 native-text recoveries, 76 directly recovered nonempty authored
+facet sets, 150 explicit residual cases and 162 facetless controls. Public
+Chromium parity covers all 558 projection cases and both recovery directions.
+See the [public composition checkpoint](evidence/avro-facet-discovery.md#public-projection-and-composition-checkpoint).
+Full compatibility and prior concept-gate refresh remain required before closing
+the Avro binding. Facet admission and native equivalence are not claimed.

@@ -304,3 +304,5 @@ export * from './core-ideals/facets-sqlserver';
 export * from './core-ideals/facets-sqlserver-projection';
 
 export * from './core-ideals/facets-avro';
+
+export * from './core-ideals/facets-avro-projection';

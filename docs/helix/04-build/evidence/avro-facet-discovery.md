@@ -179,3 +179,33 @@ Public exports and the import-only package capability remain unchanged.
 Next qualify native recapture/classification composition, then integrate the
 public export and refresh public-browser and compatibility evidence. Avro binding
 acceptance, facet admission and native equivalence remain unclaimed.
+
+### Public projection and composition checkpoint
+
+The public entrypoint now exports `projectFacetsToAvro`,
+`recoverFacetsFromAvro`, their request/result types and the closed operation
+schema. The extension package declares experimental import/export capability.
+This does not mark the binding accepted.
+
+All 388 emitted schemas compose with native re-import and profile-qualified
+classification. JSON/YAML receipts recover the original ideal 776 times and the
+exact emitted native text 776 times. Of the cases with nonempty authored facets,
+76 recover those facets directly and 150 retain explicit residuals. Another 162
+facetless carrier controls pass; they are not evidence of authored facet recovery.
+Native refinements stay separate from author assertions, and classification
+leaves the native bundle's schema and dependencies unchanged. See
+[composition results](../../../../fixtures/validation/facets-avro-composition.json).
+
+The native projection proof is fingerprint-checked before composition; this
+checkpoint reuses those native codec results rather than claiming a fresh engine
+execution. Full compatibility and prior concept-gate refresh remain required.
+
+The public browser bundle passes the same 558-case matrix: 388 projections,
+170 refusals, 776 ideal recoveries and 776 native recoveries. Chromium's facet
+comparison counts match Bun (238 direct matches including the 162 facetless
+controls, and 150 residual cases). Forged receipts and getters refuse; no host
+globals or external requests occur. The current
+[browser record](../../../../fixtures/validation/facets-avro-projection-browser.json)
+supersedes the internal-bundle checkpoint above. Eleven scoped Bun tests with
+263 assertions, typechecking, 274 schema/46 package audits and the public plus
+optional PostgreSQL builds pass.

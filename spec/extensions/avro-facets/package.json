@@ -2,7 +2,7 @@
   "id": "umf.avro.facets",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental Avro scalar facet classification with retained native semantics",
+  "description": "Experimental Avro scalar facet classification and authored projection with retained native semantics",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:avro:facet-binding:1.0.0",
@@ -134,14 +134,15 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification is experimental; authored projection and binding acceptance remain pending",
+  "semantics": "CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding acceptance remains pending",
   "scopes": [
     "element"
   ],
   "capabilities": {
     "validation": "structural",
     "directions": [
-      "import"
+      "import",
+      "export"
     ],
     "native": {
       "system": "Avro",
@@ -151,7 +152,9 @@
     "evidence": [
       "tests/core-ideals/facets-avro.test.ts",
       "fixtures/validation/facets-avro-discovery-native.json",
-      "fixtures/validation/facets-avro-selection-native.json"
+      "fixtures/validation/facets-avro-selection-native.json",
+      "tests/core-ideals/facets-avro-projection.test.ts",
+      "fixtures/validation/facets-avro-projection-native.json"
     ]
   }
 }

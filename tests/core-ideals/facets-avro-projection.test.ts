@@ -1,6 +1,7 @@
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
-import {projectFacetsToAvro as project,recoverFacetsFromAvro as recover,type FacetsAvroRequest} from '../../src/core-ideals/facets-avro-projection';
+import type {FacetsAvroRequest} from '../../src';
+const {projectFacetsToAvro:project,recoverFacetsFromAvro:recover}=u;
 const identity={module:'m',element:'value'};
 function ideal(scalarType:string):u.Document{return {umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]};}
 const request:FacetsAvroRequest={id:'native',recordName:'Record',namespace:'example',fieldName:'value',nativeType:'int',mode:'strict',encoding:'native-type',profile:'declared-schema',obligation:'value-domain'};
