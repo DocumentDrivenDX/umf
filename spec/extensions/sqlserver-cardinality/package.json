@@ -1,0 +1,78 @@
+{
+  "id": "umf.sqlserver.cardinality",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Qualified SQL Server column shape observations with native refinements retained",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:sqlserver:cardinality-binding:1.0.0",
+    "title": "Retained SQL Server Cardinality scope",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "physicalColumn",
+      "binding",
+      "profile",
+      "interpretation",
+      "nativePath",
+      "basis"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "physicalColumn": {
+        "type": "string",
+        "minLength": 1
+      },
+      "binding": {
+        "const": {
+          "id": "umf.sqlserver.cardinality",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "native-scalar",
+          "json-array",
+          "json-object",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      },
+      "basis": {
+        "const": "Explicit representation selection and pinned catalog constraint profile; physical column and logical Field remain distinct"
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-042; experimental core 0.4.0 shape classification, not native replacement",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "SQL Server",
+      "version": "16.0.4295.3",
+      "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/cardinality-sqlserver.test.ts",
+      "fixtures/validation/cardinality-sqlserver-profile-native.json"
+    ]
+  }
+}

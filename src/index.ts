@@ -280,3 +280,4 @@ export * from './core-ideals/cardinality-tablespec-projection';
 export * from './adapters/postgresql/cardinality-catalog';
 export * from './core-ideals/cardinality-postgresql';
 export * from './core-ideals/cardinality-postgresql-projection';
+export * from './core-ideals/cardinality-sqlserver';

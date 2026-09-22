@@ -543,3 +543,30 @@ JSONB refinements, explicit carriers and both recovery directions. Item conversi
 unrestricted map equivalence and authenticated capture provenance are not claimed.
 SQL Server, Avro, Parquet and the separate Cardinality admission/delivery gate
 remain unfinished.
+
+### SQL Server representation selection
+
+SQL Server JSON containers are stored in text columns. Native column metadata
+therefore retains its string scalar family. Logical Cardinality classification
+must use an explicitly selected representation and a separate, caller-named Field
+identity linked to the captured column through the SQL Server binding. It must not
+remove the captured column's scalar family or relax native export consistency.
+Existing logical identities are conflicts, including authored Fields; this initial
+operation does not overwrite or reconcile them. Source and logical Fields remain
+separately selectable by consumers.
+
+The initial JSON profile recognizes only the exact catalog form emitted by the
+pinned SQL Server 2022 ISJSON ARRAY/OBJECT fixture. The request selects a constraint
+by name, and classification checks its column association, definition, disabled,
+trust and replication flags. Arbitrary equivalent expressions remain unresolved.
+Plain text and unqualified ISJSON do not establish an array/object interpretation.
+A trusted enabled array check establishes outer sequence shape, not member types,
+member availability or value-domain equivalence. Object checks permit duplicate
+keys, so map classification requires an explicit approximation residual. Disabled
+or untrusted checks cannot establish a stored-data shape guarantee. SQL NULL stays
+separate from logical member availability; no row decoder or value conversion is
+implied. Both exact native text and unknown metadata remain recoverable.
+
+These are implementation decisions, not SQL Server binding acceptance. The native
+82-case discovery record is `cardinality-sqlserver-profile-native.json`; schemas,
+classification/projection APIs and their qualified acceptance remain in progress.

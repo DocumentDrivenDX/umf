@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:sqlserver-cardinality-classification:1.0.0",
+  "title": "SQL Server declared Cardinality classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-sqlserver-cardinality"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "column",
+        "nativeSource",
+        "mode",
+        "profile",
+        "identity",
+        "constraint"
+      ],
+      "properties": {
+        "column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "native-scalar",
+            "json-array",
+            "json-object",
+            "unresolved"
+          ]
+        },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "module",
+            "element"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "constraint": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.sqlserver.cardinality",
+        "version": "1.0.0",
+        "nativeVersion": "16.0.4295.3",
+        "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "nativeFragment",
+        "cardinality",
+        "interpretation",
+        "outcome",
+        "basis"
+      ],
+      "properties": {
+        "origin": {
+          "const": "classified"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeFragment": {
+          "$ref": "urn:umf:native-json:0.1.0"
+        },
+        "cardinality": {
+          "enum": [
+            "one",
+            "array",
+            "map",
+            "unspecified"
+          ]
+        },
+        "interpretation": {
+          "enum": [
+            "declared",
+            "unknown",
+            "unsupported"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "approximated",
+            "unknown",
+            "not-expressible"
+          ]
+        },
+        "basis": {
+          "const": "Explicit representation selection and pinned catalog constraint profile; physical column and logical Field remain distinct"
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Retain original native archive and author assertions; classification does not replace native meaning"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              },
+              "interpretation": {
+                "const": "declared"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
