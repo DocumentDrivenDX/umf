@@ -300,3 +300,51 @@ native Nullability classifications, strict/report projections, absence-carrier
 counterexamples, recovery tests and admission/delivery gate. The five binding
 beads can now proceed; TableSpec is the next implementation focus. Cardinality,
 facets and key remain behind the Nullability delivery gate.
+
+### TableSpec binding discovery: native metadata boundaries
+
+The TableSpec binding bead is in progress. The first native probe uses the captured
+model and checked-in schema from commit `647e8e566ad78b864282ec65c0b0b2237aa63084`,
+verifying all 17 captured source hashes before execution. Pydantic 2.11.10 and the
+checked-in JSON Schema disagree on six of 21 nullable inputs: booleans and scalar
+coercions accepted by the runtime are rejected by the checked schema.
+
+`Nullable` allows arbitrary extra values, not just booleans. Its aggregate helper
+uses truthiness after excluding null entries: `{"MD":"false"}` reports nullable,
+`{"MD":null}` becomes an empty map for that helper, and missing nullable metadata
+also reports nullable. `{"MD":false,"MP":true}` reports required for *some*
+context. None of these aggregate results establishes availability for an arbitrary
+selected context. The probe does not execute a row validator or a pipeline.
+
+These observations refine the implementation obligations:
+
+| Native input | Binding obligation |
+| --- | --- |
+| Explicit boolean | Require a selected runtime profile; checked-schema disagreement cannot be hidden |
+| Context map with exact boolean at selected key | Keep the selected context and original map in provenance; do not generalize to other contexts |
+| Missing/null nullable or absent/null selected key | Preserve missing/unknown intent; do not adopt the helper's permissive default |
+| Strings, numbers, arrays or objects used as nullable values | Report coercion or uninterpreted refinement; do not use JavaScript/Python truthiness as core meaning |
+| Mixed contexts without selected context | Unspecified plus a diagnostic; strict exact projection cannot invent a context |
+| No established absence carrier | No claim about omitted members, present null, defaults or row enforcement |
+
+The down-projection must choose a profile and context explicitly, disclose where
+its output fails the other profile, and retain all source obligations under report
+mode. The up-classification must distinguish declared booleans from runtime
+coercion/defaults and preserve the original text. The result contract and native
+absence-carrier tests must be authored before exposing those APIs. A successful
+metadata parse is not evidence that a native pipeline enforces ideal availability.
+
+`nullability-tablespec-profile-oracle.py` records the 21 native observations.
+`nullability-tablespec-profile.ts` exercises both native formats and adds a second
+variant with an unknown root field containing exact integer `9007199254740993`.
+Both native validators reject that extra field; UMF retains it unchanged. Across
+84 source cases, existing Field classification and explicit 0.3.0 migration yield
+168 exact JSON/YAML recoveries without inferring nullability. The native oracle
+checks accepted/rejected outcomes and exact recovered values; Chromium checks the
+same transformations and source recovery without host globals or external requests.
+See `fixtures/validation/nullability-tablespec-profile-evidence.json`.
+
+These are discovery and preservation results. They do not close the TableSpec
+binding bead, establish either Nullability round-trip direction, or provide native
+Nullability admission. Classification, strict/report projection, selected-context
+and absence-carrier execution tests remain required.

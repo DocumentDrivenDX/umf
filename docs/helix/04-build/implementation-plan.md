@@ -83,8 +83,11 @@ Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
 has passed acceptance with the experimental 0.3.0 envelope, typed authoring,
 migration/rollback, selection and versioned Field kind/record-type receipts.
 Prior Field native/browser evidence has been rerun and its current gate passes.
-The five native Nullability bindings are next, beginning with TableSpec; every
-later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
+The TableSpec native Nullability binding is in progress: pinned schema/runtime
+coercion and contextual boundaries now have native and browser preservation
+evidence in TD-041. Its classification/projection and absence-carrier tests remain
+pending. The other four native bindings are ready; every later concept remains
+behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not
 that those future implementation commands already pass.

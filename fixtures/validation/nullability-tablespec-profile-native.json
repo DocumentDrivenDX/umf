@@ -1,0 +1,590 @@
+{
+  "scope": "Pinned TableSpec metadata acceptance, normalization and aggregate helper behavior. No selected-context resolver, ideal availability binding, generated GX rule or row-execution claim.",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "pydantic": "2.11.10",
+  "jsonschema": "4.25.1",
+  "rows": [
+    {
+      "case": "missing",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR"
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": null,
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": "<omitted>"
+      }
+    },
+    {
+      "case": "null",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": null
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": null,
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": "<omitted>"
+      }
+    },
+    {
+      "case": "false",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": false
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": false,
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": false
+      }
+    },
+    {
+      "case": "true",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": true
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": true,
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": true
+      }
+    },
+    {
+      "case": "empty-map",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {}
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {},
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": {}
+      }
+    },
+    {
+      "case": "mixed-map",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": false,
+              "MP": true
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": false,
+          "MP": true
+        },
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": {
+          "MD": false,
+          "MP": true
+        }
+      }
+    },
+    {
+      "case": "all-true",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": true,
+              "MP": true
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": true,
+          "MP": true
+        },
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": {
+          "MD": true,
+          "MP": true
+        }
+      }
+    },
+    {
+      "case": "all-false",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": false,
+              "MP": false
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": false,
+          "MP": false
+        },
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": {
+          "MD": false,
+          "MP": false
+        }
+      }
+    },
+    {
+      "case": "custom-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "production": false,
+              "staging": true
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "production": false,
+          "staging": true
+        },
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": {
+          "production": false,
+          "staging": true
+        }
+      }
+    },
+    {
+      "case": "null-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": null
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": null
+        },
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": {}
+      }
+    },
+    {
+      "case": "string-false-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": "false"
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": "false"
+        },
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": {
+          "MD": "false"
+        }
+      }
+    },
+    {
+      "case": "empty-string-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": ""
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": ""
+        },
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": {
+          "MD": ""
+        }
+      }
+    },
+    {
+      "case": "zero-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": 0
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": 0
+        },
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": {
+          "MD": 0
+        }
+      }
+    },
+    {
+      "case": "one-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": 1
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": 1
+        },
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": {
+          "MD": 1
+        }
+      }
+    },
+    {
+      "case": "empty-list-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": []
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": []
+        },
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": {
+          "MD": []
+        }
+      }
+    },
+    {
+      "case": "object-context",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": {
+              "MD": {
+                "unknown": true
+              }
+            }
+          }
+        ]
+      },
+      "checkedSchemaAccepted": true,
+      "schemaErrorPaths": [],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": {
+          "MD": {
+            "unknown": true
+          }
+        },
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": {
+          "MD": {
+            "unknown": true
+          }
+        }
+      }
+    },
+    {
+      "case": "scalar-string-false",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": "false"
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": false,
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": false
+      }
+    },
+    {
+      "case": "scalar-string-true",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": "true"
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": true,
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": true
+      }
+    },
+    {
+      "case": "scalar-zero",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": 0
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": false,
+        "nullableForAllContexts": false,
+        "requiredForAnyContext": true,
+        "dumpWithoutNone": false
+      }
+    },
+    {
+      "case": "scalar-one",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": 1
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": true,
+        "normalizedNullable": true,
+        "nullableForAllContexts": true,
+        "requiredForAnyContext": false,
+        "dumpWithoutNone": true
+      }
+    },
+    {
+      "case": "array",
+      "source": {
+        "version": "1.0",
+        "table_name": "Availability",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR",
+            "nullable": []
+          }
+        ]
+      },
+      "checkedSchemaAccepted": false,
+      "schemaErrorPaths": [
+        "/columns/0/nullable"
+      ],
+      "runtime": {
+        "accepted": false,
+        "errorType": "ValidationError"
+      }
+    }
+  ],
+  "nativeRecoveryComparisons": 168,
+  "recoveryInputSha256": "a84e6b6408aee4c6c84e7f902f94014153684a9fddfdfb06a0b243c353e21a25",
+  "sha256": {
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-tablespec-profile-oracle.py": "397fd775821360510139aa2626e0bc8a2bac19f6b63e40bcab46f746e6b8cf4e"
+  }
+}

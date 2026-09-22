@@ -1,0 +1,52 @@
+{
+  "bead": "umf-97221618-f316ff75",
+  "scope": "Pinned TableSpec nullable metadata discovery and preservation through existing Field/Nullability envelope APIs; binding implementation remains pending",
+  "commands": [
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/nullability-tablespec-profile-oracle.py",
+    "bun scripts/core-ideals/nullability-tablespec-profile.ts",
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/nullability-tablespec-profile-oracle.py",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-tablespec-profile-browser.ts",
+    "bun run typecheck"
+  ],
+  "results": {
+    "typecheck": "passed",
+    "nativeCases": 21,
+    "nativeRuntimeAccepted": 20,
+    "nativeCheckedSchemaAccepted": 14,
+    "schemaRuntimeDisagreements": 6,
+    "nativeRecoveries": 168,
+    "browser": {
+      "scope": "Native availability counterexample preservation through Field classification and Nullability migration; no native Nullability binding claim",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "cases": 84,
+        "recoveries": 168,
+        "inferredAvailability": 0
+      },
+      "externalRequests": []
+    }
+  },
+  "initialFinding": "Unknown root metadata is rejected by both native validators. Expanded the corpus to retain accepted native controls alongside unknown-root variants, with separate expected native acceptance and identical source recovery obligations.",
+  "limits": [
+    "No native Nullability classification or down-projection API is implemented by these probes.",
+    "No native row/absence-carrier execution or selected-context resolver is tested; runtime aggregate helper truthiness is not an ideal semantic rule.",
+    "No Nullability ideal admission or native equivalence is claimed.",
+    "Browser uses the existing unchanged library build validated at core acceptance; no new library source or public schema was introduced."
+  ],
+  "sha256": {
+    "scripts/core-ideals/nullability-tablespec-profile-oracle.py": "397fd775821360510139aa2626e0bc8a2bac19f6b63e40bcab46f746e6b8cf4e",
+    "scripts/core-ideals/nullability-tablespec-profile.ts": "4d08642ec71c04cf5c84ec618b956f6cd2a8779675752ce2899f4eee5fa89d10",
+    "scripts/core-ideals/nullability-tablespec-profile-browser.ts": "0b725a70e15834788eb7c13dad6885e32d05f38f862c803ca6f70355d4910529",
+    "fixtures/validation/nullability-tablespec-profile-native.json": "85b10f5808262587c8847bcf6551a41de08c91f0590410b4119b5dffc3522fc4",
+    "fixtures/validation/nullability-tablespec-profile.json": "a84e6b6408aee4c6c84e7f902f94014153684a9fddfdfb06a0b243c353e21a25",
+    "fixtures/validation/nullability-tablespec-profile-browser.json": "c640cc5da2b9ebce45fcbbe29c2feb9366672a174aba5c8b25eedaa282f64375",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "src/adapters/tablespec/index.ts": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8",
+    "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+    "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882"
+  }
+}
