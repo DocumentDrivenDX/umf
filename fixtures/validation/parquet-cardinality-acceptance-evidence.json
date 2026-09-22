@@ -1,24 +1,56 @@
 {
-  "reason": "Revalidate existing five-system Field/Nullability and Cardinality core after Parquet Cardinality classification/projection additions; new binding acceptance is recorded separately.",
-  "previousEvidenceSha256": "b246666d1a5a29e61229af585c906ae79ed1fa3e31296c0461e4b5101813c195",
-  "regression": {
-    "tests": 407,
-    "assertions": 38324,
-    "files": 131,
-    "failures": 0,
-    "scope": "All tests/core, tests/core-ideals, tests/postgresql, tests/sqlserver, tests/tablespec, tests/avro and tests/parquet test files except field-conformance.test.ts and nullability-conformance.test.ts, both run separately after evidence refresh.",
-    "log": "fixtures/validation/cardinality-parquet-refresh-regression.log"
+  "version": "1.0.0",
+  "bead": "umf-97221618-a6759629",
+  "bindingAccepted": true,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "scope": "Checked Parquet logical value roles and explicit nested native schema projection; retained native bytes and ideal recovery, PyArrow 21.0.0 and Chromium 148 evidence",
+  "results": {
+    "regression": {
+      "tests": 407,
+      "assertions": 38324,
+      "files": 131,
+      "failures": 0,
+      "scope": "All tests/core, tests/core-ideals, tests/postgresql, tests/sqlserver, tests/tablespec, tests/avro and tests/parquet test files except field-conformance.test.ts and nullability-conformance.test.ts, both run separately after evidence refresh.",
+      "log": "fixtures/validation/cardinality-parquet-refresh-regression.log"
+    },
+    "gates": {
+      "field": {
+        "tests": 3,
+        "assertions": 25,
+        "failures": 0,
+        "log": "fixtures/validation/cardinality-parquet-field-gate-tests.log",
+        "conformance": "fixtures/validation/field-conformance.json"
+      },
+      "nullability": {
+        "tests": 2,
+        "assertions": 17,
+        "failures": 0,
+        "log": "fixtures/validation/cardinality-parquet-nullability-gate-tests.log",
+        "conformance": "fixtures/validation/nullability-conformance.json"
+      }
+    },
+    "refreshCommands": 76,
+    "schemas": 253,
+    "packages": 42,
+    "typecheck": "passed",
+    "browserBuildBytes": 10631748,
+    "failures": 0
   },
-  "runs": [
+  "criteria": {
+    "AC1": "Classification and projection tests cover positive, refusal, approximation, unknown, nested/cyclic items and both recovery directions",
+    "AC2": "Pinned native combined command runs schema/value counterexamples and composed fresh ingestion/classification/recovery checks",
+    "AC3": "Real Chromium reproduces classification/projection receipts and both JSON/YAML recovery directions without host globals or external requests; native codecs independently verify generated candidate schemas",
+    "AC4": "All schemas pass audit; item references, independent availability, unknown metadata and strict/report boundaries have explicit tests"
+  },
+  "commands": [
     {
       "command": [
         "bun",
         "run",
         "typecheck"
       ],
-      "exitCode": 0,
-      "stdout": "",
-      "stderr": "$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json\n"
+      "exitCode": 0
     },
     {
       "command": [
@@ -26,9 +58,7 @@
         "run",
         "test:schemas"
       ],
-      "exitCode": 0,
-      "stdout": "{\n  \"packages\": 42,\n  \"passed\": 42,\n  \"failures\": []\n}\n{\n  \"schemas\": 253,\n  \"passed\": 253,\n  \"failures\": []\n}\n",
-      "stderr": "$ bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts\n"
+      "exitCode": 0
     },
     {
       "command": [
@@ -36,9 +66,7 @@
         "run",
         "build"
       ],
-      "exitCode": 0,
-      "stdout": "Browser ESM built: 10631748 bytes; declarations emitted.\n",
-      "stderr": "$ bun scripts/build.ts\n"
+      "exitCode": 0
     },
     {
       "command": [
@@ -46,648 +74,504 @@
         "run",
         "build:postgresql"
       ],
-      "exitCode": 0,
-      "stdout": "Optional PostgreSQL parser/deparser browser runtime built\n",
-      "stderr": "$ bun scripts/build-postgresql.ts\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-field-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"scope\":\"Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; authored provenance and typed lookup; no native classification or binding claim\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":40,\"recoveries\":56,\"transitions\":40,\"kindLookups\":28,\"authorDeclarations\":40,\"hostGlobalsAbsent\":true},\"externalRequests\":[]}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-tablespec-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"browser\":\"148.0.7778.0\",\"checks\":{\"classifications\":32,\"recoveries\":64,\"conflicts\":2,\"records\":32}}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-tablespec-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"fieldBlocks\":10,\"projections\":40,\"idealRecoveries\":60,\"lossPolicies\":2,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "/home/erik/Projects/tablespec/.venv/bin/python",
         "scripts/core-ideals/field-tablespec-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{'comparisons': 64, 'nativeAccepted': 64}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "/home/erik/Projects/tablespec/.venv/bin/python",
         "scripts/core-ideals/field-tablespec-projection-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{'nativeAccepted': 30, 'nativeRecordsAccepted': 4}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-avro-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         ".venv/bin/python",
         "scripts/core-ideals/field-avro-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"schemas\": 4, \"fields\": 13, \"records\": 7}\n",
-      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown future-meaning, using bytes.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-avro-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"fields\":13,\"recoveries\":26,\"conflicts\":2,\"records\":7,\"recordRecoveries\":14}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-avro-projection-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         ".venv/bin/python",
         "scripts/core-ideals/field-avro-projection-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"schemas\": 15, \"sampleRoundTrips\": 15, \"floatNarrowingConfirmed\": true, \"recordCases\": 9, \"recordsAccepted\": 5}\n",
-      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown local-timestamp-micros, using long.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-avro-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"recordCases\":9,\"recordRecoveries\":10,\"recordBlocks\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":4,\"identifierRefusals\":4}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/avro-record-type-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         ".venv/bin/python",
         "scripts/core-ideals/avro-record-type-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{'runtime': 'Apache Avro 1.12.0', 'bundles': 5, 'directRecords': 5, 'nonDirectTypes': 12, 'scope': 'Qualified native record-type resolution and ordered members; no value-domain equivalence'}\n",
-      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown future-meaning, using bytes.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/avro-record-type-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"fields\":5,\"recoveries\":10,\"blocked\":12}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-parquet-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         ".venv/bin/python",
         "scripts/core-ideals/field-parquet-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"files\": 16, \"fields\": 26, \"recordTypes\": 5, \"records\": 21, \"blockedRecords\": 22}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-parquet-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"fields\":26,\"recoveries\":52,\"blocked\":27,\"records\":21,\"recordRecoveries\":42,\"blockedRecords\":22,\"recordTypes\":5,\"typeRecoveries\":10,\"blockedTypes\":22}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-parquet-projection-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         ".venv/bin/python",
         "scripts/core-ideals/field-parquet-projection-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{'runtime': 'PyArrow 21.0.0', 'schemas': 36, 'records': 5, 'blockedRecords': 4, 'scope': 'Native empty-file reading, physical types and repetition levels; no row-value encoding claim'}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-parquet-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"fields\":36,\"recoveries\":72,\"records\":5,\"blockedRecords\":4,\"recordRecoveries\":10}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         ".venv/bin/python",
         "scripts/core-ideals/field-avro-fastavro-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"membershipBundles\": 4, \"directRecords\": 5, \"nonDirectTypes\": 12, \"fieldSamples\": 15, \"recordSamples\": 5}\n",
-      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown local-timestamp-micros, using long.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-postgresql-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"columns\":20,\"recoveries\":40,\"records\":4,\"recordRecoveries\":8,\"composites\":4,\"compositeRecoveries\":8,\"version\":\"170004\"}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-postgresql-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"composites\":4,\"compositeRecoveries\":8,\"columns\":20,\"recoveries\":40,\"conflicts\":2,\"records\":4,\"recordRecoveries\":8,\"viewBlocked\":true,\"staleReceiptBlocked\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-postgresql-projection-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"executed\":15,\"classified\":24,\"comments\":15,\"recordCases\":7,\"executedRecords\":4}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-postgresql-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"namespaceChecks\":4,\"namespaceRecoveries\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":2,\"identifierRefusals\":4,\"recordCases\":7,\"recordRecoveries\":8,\"recordBlocks\":3}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":12,\"classifications\":14,\"blocked\":10}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":24,\"recoveries\":28,\"blocked\":10}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-sqlserver-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"columns\":34,\"recoveries\":68,\"records\":3,\"recordRecoveries\":6,\"version\":\"16.0.4295.3\"}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-sqlserver-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"records\":3,\"recordRecoveries\":6,\"columns\":34,\"recoveries\":68,\"conflicts\":2,\"staleReceiptBlocked\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"projections\":14,\"idealRecoveries\":28,\"nativeClassifications\":14,\"recordCases\":8,\"recordEmitted\":4,\"guardChecked\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/field-sqlserver-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"namespaceChecks\":4,\"namespaceRecoveries\":4,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4,\"projections\":14,\"recoveries\":28,\"lossPolicies\":2,\"identifierRefusals\":4}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-nullability-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"scope\":\"Experimental nullability envelope, typed inspection/authoring, explicit migration/rollback and JSON/YAML preservation; native bindings remain pending\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":150,\"recoveries\":218,\"legacyCollisions\":90,\"refusals\":41,\"transitions\":100,\"tamperedReceipts\":100,\"inspections\":109,\"authorDeclarations\":60},\"externalRequests\":[]}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-selection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":5,\"recoveries\":10,\"refusals\":5,\"legacyVerified\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-field-operations-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":18,\"recoveries\":36,\"refusals\":72,\"versionedReceipts\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-tablespec-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":504,\"classified\":272,\"blocked\":232,\"recoveries\":544}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "/home/erik/Projects/tablespec/.venv/bin/python",
         "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\": 504, \"declared\": 40, \"recoveries\": 544}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":504,\"recoveries\":544,\"blocks\":232,\"tampered\":272}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":204,\"targets\":146,\"blocks\":58,\"recoveries\":292}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "/home/erik/Projects/tablespec/.venv/bin/python",
         "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\": 204, \"nativeTargets\": 146, \"idealRecoveries\": 292, \"scalarBooleanDisagreements\": 26}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":204,\"recoveries\":292,\"blocks\":58,\"tampered\":146}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "/home/erik/Projects/tablespec/.venv/bin/python",
         "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\": 10, \"executed\": 5, \"noConstraint\": 4, \"nativeRefusals\": 1}\n",
-      "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 08:22:29 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-postgresql-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"serverVersion\":170004,\"cases\":18,\"rejections\":6,\"serializationRecoveries\":2}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-postgresql-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"nativeCasesRetained\":18,\"catalogTreeRecoveries\":2,\"classificationCases\":176,\"classified\":91,\"blocked\":85,\"exactSourceRecoveries\":182,\"forgedRefusals\":91}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":73,\"executed\":60,\"blocked\":13,\"idealRecoveries\":60,\"classified\":60,\"nativeRecoveries\":60}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":73,\"blocked\":13,\"recoveries\":120,\"forgedRefusals\":60,\"identifierRefusals\":4}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-sqlserver-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":24,\"rejections\":10,\"columns\":18,\"serializationRecoveries\":2}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-sqlserver-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"nativeCasesRetained\":24,\"catalogTreeRecoveries\":2,\"sidecarPreserved\":true,\"classificationCases\":288,\"classified\":156,\"blocked\":132,\"exactSourceRecoveries\":312,\"forgedRefusals\":156}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":79,\"executed\":126,\"blocked\":16,\"idealRecoveries\":63,\"classified\":63,\"nativeRecoveries\":63,\"ambientControls\":2}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":79,\"blocked\":16,\"recoveries\":126,\"forgedRefusals\":63,\"identifierRefusals\":6}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-avro-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"schemas\": 19, \"nativeChecks\": 171, \"recoveredNativeChecks\": 342, \"unionResolution\": 8, \"floatNarrowing\": 2}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-avro-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":304,\"classified\":171,\"blocked\":133,\"recoveries\":342,\"forgedRefusals\":171}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-avro-projection-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"nativeSchemas\": 136, \"outcomes\": 612}\n{\"cases\":88,\"blocked\":20,\"classified\":68,\"idealRecoveries\":136,\"nativeRecoveries\":136}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-avro-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":88,\"blocked\":20,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":5}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-parquet-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{'cases': 120, 'accepted': 100, 'rejected': 20}\n{\"nativeRecoveredFiles\": 264, \"exactSchemaAndValues\": true}\n{\"files\":100,\"columns\":132,\"recoveries\":264}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-parquet-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"files\":100,\"columns\":132,\"recoveries\":200,\"classificationCases\":640,\"classified\":360,\"blocked\":280,\"classificationRecoveries\":720,\"forgedRefusals\":360}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n{\"cases\":91,\"blocked\":25,\"classified\":66,\"idealRecoveries\":132,\"nativeRecoveries\":132}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/nullability-parquet-projection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":91,\"blocked\":25,\"recoveries\":132,\"forgedRefusals\":66,\"identifierRefusals\":3}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-cardinality-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"recoveries\":18,\"transitions\":16,\"refusals\":14,\"getterCalls\":0}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-cardinality-operations-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"recoveries\":18,\"transitions\":16,\"refusals\":14,\"getterCalls\":0,\"authorRecoveries\":8,\"authorRefusals\":5}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-field-operations-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":45,\"recoveries\":90,\"availabilityRecoveries\":24,\"itemRecordRecoveries\":2,\"refusals\":253,\"versionedReceipts\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-selection-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":12,\"recoveries\":24,\"refusals\":16,\"legacyVerified\":true}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-tablespec-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"declarations\": 28, \"profileDisagreements\": 5, \"rawGeneratorControls\": 4, \"valueCases\": 13, \"valueDisagreements\": 6, \"floatNarrowings\": 1}\n{\"scope\":\"TableSpec Cardinality native discovery only\",\"declarations\":28,\"valueCases\":13,\"checkedFingerprints\":7,\"bindingImplemented\":false}\n{\"cases\":336,\"recoveries\":452}\n{\"cases\": 336, \"declared\": 116, \"nativeRecoveries\": 452}\n{\"cases\":78,\"projected\":44,\"recoveries\":88}\n{\"cases\": 78, \"emitted\": 44, \"idealRecoveries\": 88, \"vectorValueChecks\": 105, \"floatNarrowings\": 15}\n{\"nativeCommands\":5,\"proofs\":3}\n",
-      "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 08:32:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\nWARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 08:33:28 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n"
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-tablespec-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":336,\"recoveries\":452,\"blocks\":110,\"tampered\":226}\n{\"cases\":78,\"recoveries\":88,\"blocks\":34,\"tampered\":44}\n{\"classification\":{\"cases\":336,\"recoveries\":452,\"blocks\":110,\"tampered\":226},\"projection\":{\"cases\":78,\"recoveries\":88,\"blocks\":34,\"tampered\":44}}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-postgresql-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":37,\"columns\":26,\"types\":24}\n{\"cases\":48,\"executed\":26,\"blocked\":22,\"idealRecoveries\":26,\"nativeRecoveries\":26}\n{\"nativeCommands\":2,\"proofs\":2}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-postgresql-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"resolved\":26,\"refused\":5,\"classified\":26,\"recovered\":26,\"strictScalars\":18,\"exactUnknownToken\":true}\n{\"cases\":48,\"blocked\":22,\"recoveries\":52,\"forgedRefusals\":26,\"identifierRefusals\":4}\n{\"catalog\":{\"resolved\":26,\"refused\":5,\"classified\":26,\"recovered\":26,\"strictScalars\":18,\"exactUnknownToken\":true},\"projection\":{\"cases\":48,\"blocked\":22,\"recoveries\":52,\"forgedRefusals\":26,\"identifierRefusals\":4}}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":82,\"rejections\":27,\"columns\":7,\"serializationRecoveries\":2}\n{\"cases\":104,\"executed\":68,\"blocked\":36,\"idealRecoveries\":68,\"nativeRecoveries\":68}\n{\"nativeCommands\":2,\"proofs\":2}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-sqlserver-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"classified\":36,\"blocked\":20,\"recoveries\":72,\"forgedRefusals\":36}\n{\"cases\":104,\"blocked\":36,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":6}\n{\"classification\":{\"classified\":36,\"blocked\":20,\"recoveries\":72,\"forgedRefusals\":36},\"projection\":{\"cases\":104,\"blocked\":36,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":6}}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-avro-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"schemas\": 20, \"crossCodecChecks\": 80, \"duplicateKeyStreams\": 4, \"refusals\": 10, \"unionResolution\": 24, \"floatNarrowings\": 4}\n{\"nativeCrossCodecChecks\": 208, \"floatNarrowings\": 12}\n{\"cases\":78,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104}\n{\"nativeCommands\":2,\"proofs\":3}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-avro-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\":20,\"duplicateStreams\":2,\"valueDisagreements\":1,\"floatNarrowings\":1,\"externalRequests\":0}\n{\"cases\":80,\"classified\":58,\"blocked\":22,\"recoveries\":116,\"forgedRefusals\":58}\n{\"cases\":78,\"projected\":52,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104,\"forgedRefusals\":52}\n{\"profile\":{\"rows\":[{\"id\":\"empty-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":[]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"ordered-duplicates\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"060002040000\",\"decoded\":{\"value\":[null,2,null]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nested-arrays\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"0400060402040000\",\"decoded\":{\"value\":[[],[2,1,2]]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-of-maps\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"0400020261020000\",\"decoded\":{\"value\":[{},{\"a\":1}]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"map-of-arrays\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"040261060402040002620000\",\"decoded\":{\"value\":{\"a\":[2,1,2],\"b\":[]}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"empty-map\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":{}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"exact-string-keys\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604c3a9020665cc8104000600\",\"decoded\":{\"value\":{\"\u00e9\":1,\"e\u0301\":2,\"\":3}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"special-property-keys\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600\",\"decoded\":{\"value\":{\"constructor\":2,\"toString\":3}},\"keys\":[\"value\"],\"exactInputRecovery\":false,\"nativeValueAgreement\":false},{\"id\":\"nullable-map-values\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"040261000262020400\",\"decoded\":{\"value\":{\"a\":null,\"b\":2}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nested-maps\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"040261000262020263040000\",\"decoded\":{\"value\":{\"a\":{},\"b\":{\"c\":2}}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-present\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"020604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-null\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":null},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-null-last\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"000604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-map-union-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"unspecified\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"000604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-map-union-map\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"unspecified\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"020202610400\",\"decoded\":{\"value\":{\"a\":2}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"recursive-record-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"record\"},\"name\":{\"kind\":\"string\",\"value\":\"Item\"},\"fields\":{\"kind\":\"array\",\"items\":[{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"id\"},\"type\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"children\"},\"type\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"Item\"}}}}}]}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"record\"},\"name\":{\"kind\":\"string\",\"value\":\"Item\"},\"fields\":{\"kind\":\"array\",\"items\":[{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"id\"},\"type\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"children\"},\"type\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"Item\"}}}}}]}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"02020204000000\",\"decoded\":{\"value\":[{\"id\":1,\"children\":[{\"id\":2,\"children\":[]}]}]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"enum-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"enum\"},\"name\":{\"kind\":\"string\",\"value\":\"Choice\"},\"symbols\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"A\"},{\"kind\":\"string\",\"value\":\"B\"}]}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"enum\"},\"name\":{\"kind\":\"string\",\"value\":\"Choice\"},\"symbols\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"A\"},{\"kind\":\"string\",\"value\":\"B\"}]}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0602000200\",\"decoded\":{\"value\":[\"B\",\"A\",\"B\"]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"unknown-logical-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"},\"logicalType\":{\"kind\":\"string\",\"value\":\"future-sequence\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"float-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"float\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"float\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"020000803f00\",\"decoded\":{\"value\":[1]},\"keys\":[\"value\"],\"exactInputRecovery\":false,\"nativeValueAgreement\":true}],\"streams\":[{\"id\":\"positive-block\",\"sourceHex\":\"0402610202610400\",\"rewrittenHex\":\"0202610400\",\"decoded\":{\"a\":2},\"exactByteRecovery\":false},{\"id\":\"negative-block\",\"sourceHex\":\"030c02610202610400\",\"rewrittenHex\":\"0202610400\",\"decoded\":{\"a\":2},\"exactByteRecovery\":false}]},\"classification\":{\"cases\":80,\"classified\":58,\"blocked\":22,\"recoveries\":116,\"forgedRefusals\":58},\"projection\":{\"cases\":78,\"projected\":52,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104,\"forgedRefusals\":52}}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-parquet-oracle.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"cases\": 30, \"refusals\": 2, \"floatNarrowings\": 2}\n{\"runtime\": \"PyArrow 21.0.0\", \"files\": 80, \"rows\": 176, \"floatNarrowings\": 6}\n{\"runtime\": \"PyArrow 21.0.0\", \"files\": 132, \"rows\": 282, \"floatNarrowings\": 10}\n{\"cases\":160,\"projected\":132,\"blocked\":28,\"idealRecoveries\":264,\"nativeRecoveries\":264}\n{\"nativeCommands\":3,\"proofs\":3}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
         "bun",
         "scripts/core-ideals/cardinality-parquet-browser.ts"
       ],
-      "exitCode": 0,
-      "stdout": "{\"files\":30,\"columns\":44,\"containers\":34,\"embeddedSchemas\":15,\"recoveries\":60}\n{\"files\":80,\"recoveries\":160}\n{\"cases\":120,\"classified\":76,\"blocked\":44,\"recoveries\":152,\"forgedRefusals\":76}\n{\"cases\":160,\"projected\":132,\"blocked\":28,\"recoveries\":264,\"nativeRecoveries\":264,\"forgedRefusals\":132}\n{\"browserCommands\":4,\"checks\":{\"profile\":{\"files\":30,\"columns\":44,\"containers\":34,\"embeddedSchemas\":15,\"recoveries\":60},\"carrier\":{\"files\":80,\"recoveries\":160},\"classification\":{\"cases\":120,\"classified\":76,\"blocked\":44,\"recoveries\":152,\"forgedRefusals\":76},\"projection\":{\"cases\":160,\"projected\":132,\"blocked\":28,\"recoveries\":264,\"nativeRecoveries\":264,\"forgedRefusals\":132}}}\n",
-      "stderr": ""
+      "exitCode": 0
     },
     {
       "command": [
@@ -825,16 +709,55 @@
         "./tests/tablespec/table-edits.test.ts",
         "./tests/tablespec/table-metadata.test.ts"
       ],
-      "exitCode": 0,
-      "stdout": "bun test v1.3.14 (0d9b296a)\n\ntests/avro/bundle.test.ts:\n(pass) US-007-AC7: explicit ordered dependencies resolve native names and survive intact [307.62ms]\n(pass) US-007-AC8: duplicate declarations and unknown dependency representation cannot imply complete support [84.74ms]\n\ntests/avro/candidate-edit.test.ts:\n(pass) US-007-AC9 explicit Avro candidates preserve logical annotations, unknown metadata and exact defaults [706.94ms]\n(pass) US-007-AC9 candidates cannot erase representation content or attached field identity [235.46ms]\n\ntests/avro/corpus.test.ts:\n(pass) US-007-AC6: pinned Apache schema corpus survives with per-file interpretation status [1988.90ms]\n\ntests/avro/integer-metadata.test.ts:\n(pass) CONTRACT-007 decimal metadata never promotes rounded precision, scale or fixed size [1847.87ms]\n\ntests/avro/metadata.test.ts:\n(pass) CONTRACT-007 core scalar metadata retains Avro field semantics [211.03ms]\n(pass) CONTRACT-007 nested records, namespaces and dependency fields retain source paths [30.01ms]\n(pass) CONTRACT-007 edits cannot silently reassociate attached field metadata [55.82ms]\n\ntests/avro/native-schema.test.ts:\n(pass) CONTRACT-007 native syntax schema describes every schema constructor while retaining annotation limits [2453.08ms]\n\ntests/avro/native.test.ts:\n(pass) US-007-AC1: native Avro structure, metadata and logical types survive core serializations [127.18ms]\n(pass) US-007-AC2: precise long defaults and newer union defaults remain explicit incomplete profiles [82.86ms]\n(pass) US-007-AC3: edits are atomic, copies isolated, and unknown representation fields never discarded [121.14ms]\n\ntests/avro/projection.test.ts:\n(pass) US-008-AC1: Avro shapes project with explicit losses and independently validated instances [166.92ms]\n(pass) US-008-AC2: strict policy and unresolved interpretation block, dependencies and recursion stay qualified [154.94ms]\n(pass) US-008-AC5: official corpus projections retain sources and validate native targets [1510.02ms]\n\ntests/avro/tablespec-projection.test.ts:\n(pass) CONTRACT-038 Avro record projections retain defaults, named dependencies and unknown metadata in source [541.25ms]\n(pass) CONTRACT-038 carrier families round trip through TableSpec with independent loss reports [106.03ms]\n(pass) CONTRACT-038 unsupported logical types, numeric widths, names and nullability cannot be guessed [408.01ms]\n\ntests/avro/temporal-metadata.test.ts:\n(pass) CONTRACT-007 temporal core classification requires exact annotation and carrier [4553.51ms]\n\ntests/core-ideals/avro-cardinality-type.test.ts:\n(pass) native discovery types retain outer shape, branch order and item paths without claiming item or availability equivalence [4.66ms]\n(pass) qualified dependency and recursive references retain separate definition locations [1.06ms]\n(pass) ambiguous, missing and invalid structural type syntax refuses rather than defaulting to one [1.46ms]\n(pass) nested item/value traversal uses registered type locations and keeps container/member availability separate [1.74ms]\n\ntests/core-ideals/avro-namespace.test.ts:\n(pass) Avro namespace changes report loss for both Field and record projections [267.19ms]\n\ntests/core-ideals/avro-record-type.test.ts:\n(pass) Avro direct/qualified/recursive record links preserve bundle text; containers and unions block [8638.24ms]\n(pass) author conflicts, existing type assertions and stale sources cannot be overwritten [1153.47ms]\n\ntests/core-ideals/cardinality-avro-projection.test.ts:\n(pass) explicit native shape mismatches and absent item meaning are residuals with exact ideal recovery [2164.51ms]\n(pass) nested item and value types map recursively with independent availability and qualified scalar families [157.72ms]\n(pass) cycles, unknown metadata, native diagnostics and target edits remain explicit and recoverable [236.03ms]\n(pass) dependency changes and large uninterpreted native tokens cannot be hidden by ideal recovery [319.91ms]\n(pass) fresh native ingestion composes with retained ideal recovery without inventing original author intent [24994.26ms]\n\ntests/core-ideals/cardinality-avro.test.ts:\n(pass) schema shape classification publishes nested logical Fields and preserves exact native text through both receipt formats [13236.48ms]\n(pass) unknown profiles, unknown item shapes and existing identities never silently acquire meaning [704.54ms]\n(pass) named dependencies retain exact text and qualified scalar item meaning without losing unknown metadata [431.71ms]\n\ntests/core-ideals/cardinality-field-operations.test.ts:\n(pass) versioned kind and record receipts retain old profiles and preserve 0.4 Cardinality [468.11ms]\n(pass) Nullability authoring and inspection use v2 on containers without changing item meaning [47.00ms]\n(pass) container record meaning belongs on its item Field and dependent kind edits refuse [7.93ms]\n(pass) cross-version, stale and forged receipts refuse without changing original profiles [8.16ms]\n\ntests/core-ideals/cardinality-parquet-projection.test.ts:\n(pass) Parquet projection reports shape mismatch and unasserted item meaning, recovering every emitted ideal [10688.82ms]\n(pass) nested item Fields retain independent availability; MAP uniqueness and exactness block strict lowering [608.81ms]\n(pass) cycles, metadata, unknown native carrier content and altered receipts cannot be silently normalized [322.30ms]\n\ntests/core-ideals/cardinality-parquet.test.ts:\n(pass) Parquet logical classification preserves nested Fields, map residuals and exact native bytes [15134.07ms]\n(pass) unresolved profiles, wrappers and key-only maps retain residuals rather than invented meaning [538.83ms]\n(pass) conflicts, forged receipts, stale targets and invalid input refuse without erasing unknown content [689.38ms]\n\ntests/core-ideals/cardinality-postgresql-catalog.test.ts:\n(pass) resolves observed arrays, domain wrappers and domain members without category guessing [17.82ms]\n(pass) rejects ambiguity, broken edges, impossible observations and domain cycles [18.50ms]\n(pass) preserves exact unknown tokens and source text; unknown versions are unqualified [8.77ms]\n(pass) does not return rounded unknown metadata in interpreted views [4.30ms]\n(pass) correlates capture observations and refuses mismatches without asserting transaction provenance [658.09ms]\n\ntests/core-ideals/cardinality-postgresql-projection.test.ts:\n(pass) explicit carriers block losses in strict mode and retain ideal recovery in report mode [348.33ms]\n(pass) exact-value requests, tampering, SQL injection and forged receipts are refused [23.16ms]\n(pass) nested and cyclic items retain independent availability and unknown extensions [315.39ms]\n\ntests/core-ideals/cardinality-postgresql.test.ts:\n(pass) all observed native shapes retain paired archives through report classification and serialized recovery [19262.73ms]\n(pass) author conflict and forged or stale recovery receipts are refused [702.77ms]\n(pass) a matched basic scalar declaration classifies exactly without asserting item or availability meaning [337.51ms]\n(pass) classification retains authored cyclic item references, independent availability and unknown native tokens [1099.79ms]\n\ntests/core-ideals/cardinality-selection.test.ts:\n(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [58.38ms]\n(pass) forged item paths, missing boundaries, metadata, filters and traversal scope cannot verify [4.44ms]\n(pass) older item/cardinality members remain opaque and do not add traversal edges [8.00ms]\n(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.50ms]\n\ntests/core-ideals/cardinality-sqlserver-projection.test.ts:\n(pass) scalar/JSON carriers retain nested/cyclic items, availability and unknown metadata through both formats [235.70ms]\n(pass) unsafe types, malformed identifiers, exact-value demands and changed receipts refuse [11.70ms]\n\ntests/core-ideals/cardinality-sqlserver.test.ts:\n(pass) logical representations retain physical scalar metadata and exact native text [12673.50ms]\n(pass) existing logical and physical identities, altered receipts and stale models cannot be overwritten [289.42ms]\n(pass) unknown native numeric tokens survive separate logical representation [191.82ms]\n(pass) constraint association, replication exemptions and unrecognized expressions cannot prove JSON shape [554.04ms]\n\ntests/core-ideals/cardinality-tablespec-projection.test.ts:\n(pass) authored shapes and item obligations project or explicitly residualize, with both retained recovery formats [2473.38ms]\n(pass) invalid native carriers, dimensions, names, getters and forged receipts cannot publish meaning [39.33ms]\n\ntests/core-ideals/cardinality-tablespec.test.ts:\n(pass) native declaration profiles classify shape with explicit refusals and retain source text through both formats [13132.14ms]\n(pass) authored intent, item references and opaque assertions cannot be overwritten by native observations [115.06ms]\n(pass) tampered and stale receipts, malformed requests and legacy source versions refuse [68.17ms]\n(pass) unsafe numeric coercion stays residual while exact large integer tokens remain native [394.93ms]\n(pass) split archives preserve comments, unknown siblings and opaque files after classification [72.00ms]\n\ntests/core-ideals/classification-policy.test.ts:\n(pass) tablespec-field-classification rejects inconsistent success and blocked metadata [2.38ms]\n(pass) tablespec-record-classification rejects inconsistent success and blocked metadata [2.48ms]\n(pass) postgresql-field-classification rejects inconsistent success and blocked metadata [5.06ms]\n(pass) postgresql-record-classification rejects inconsistent success and blocked metadata [6.92ms]\n(pass) postgresql-composite-classification rejects inconsistent success and blocked metadata [4.41ms]\n(pass) postgresql-ddl-kinds rejects inconsistent success and blocked metadata [5.59ms]\n\ntests/core-ideals/classification-report.test.ts:\n(pass) five native classifiers retain classified provenance, exact fragments and conflict residuals [3577.23ms]\n(pass) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [970.59ms]\n\ntests/core-ideals/field-avro-projection.test.ts:\n(pass) explicit Avro carriers preserve field docs and recover ideal through serialized reports [1412.23ms]\n(pass) strict/report loss, invalid names, structured-kind refusals and stale schemas fail explicitly [156.73ms]\n\ntests/core-ideals/field-avro.test.ts:\n(pass) Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles [2983.54ms]\n(pass) missing/reordered dependency archives, authored conflicts and stale receipts are refused [353.80ms]\n\ntests/core-ideals/field-parquet-projection.test.ts:\n(pass) explicit Parquet carrier/repetition schemas recover authored meaning through both formats [4997.45ms]\n(pass) unsupported meaning is explicit and malformed names or wrong roles never project [176.51ms]\n\ntests/core-ideals/field-parquet.test.ts:\n(pass) Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields [17254.72ms]\n(pass) Parquet rejects unknown indices, invalid topology, conflicts and stale recovery [1256.83ms]\n\ntests/core-ideals/field-postgresql-projection.test.ts:\n(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [1146.28ms]\n(pass) unsafe or truncating identifiers are rejected before parser invocation [9.37ms]\n(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [19.09ms]\n(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [22.22ms]\n\ntests/core-ideals/field-postgresql.test.ts:\n(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [6552.42ms]\n(pass) native text formatting and unknown numeric metadata survive both receipt formats [920.41ms]\n(pass) verified authored conflict blocks both modes without a partial target [490.98ms]\n(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [662.30ms]\n\ntests/core-ideals/field-report.test.ts:\n(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [714.39ms]\n(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [162.45ms]\n\ntests/core-ideals/field-selection.test.ts:\n(pass) 0.2 selection schema and report verifier cover qualified cycles and reference boundaries [26.44ms]\n(pass) report structure and recomputation reject forged selections and preserve legacy interpretation [4.68ms]\n(pass) selection verification uses the same caller registry as source validation [7.70ms]\n\ntests/core-ideals/field-sqlserver-projection.test.ts:\n(pass) explicit carriers emit complete SQL artifacts and retained receipts recover authored fields [29.39ms]\n(pass) strict/report loss, structured-kind refusal, Unicode guards and stale artifacts remain explicit [5.19ms]\n\ntests/core-ideals/field-sqlserver.test.ts:\n(pass) SQL Server captured members classify independently of scalar/alias/index semantics [7235.13ms]\n(pass) authored conflicts block both policies, while matching authored fields remain explicit [468.22ms]\n(pass) capture formatting, unknown numeric detail and index constraints survive without identity promotion [161.83ms]\n(pass) stale metadata, archives, author receipts and unsupported versions cannot claim recovery [285.71ms]\n\ntests/core-ideals/field-tablespec-projection.test.ts:\n(pass) authored field projects to a complete native table and recovers author meaning with retained receipt [542.98ms]\n(pass) strict blocks omitted meaning while report retains every residual and source assertion [30.81ms]\n(pass) record/group cannot lower to a single column and name changes are explicit loss [31.47ms]\n(pass) receipt tampering, stale native text, malformed policy and metadata omission cannot pass silently [36.67ms]\n(pass) diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks [69.87ms]\n(pass) empty namespace permits strict projection but discarded namespace receipts cannot claim exactness [23.80ms]\n\ntests/core-ideals/field-tablespec.test.ts:\n(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [61.80ms]\n(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [153.59ms]\n(pass) stale author receipts and metadata cannot be used as a native classification basis [51.12ms]\n(pass) split sources retain sidecars and shadowed metadata after classification [35.87ms]\n(pass) native classification receipts reject tampering and subsequent native changes [51.10ms]\n(pass) new results always diagnose conflicts while historical receipts remain verifiable [75.99ms]\n\ntests/core-ideals/nullability-avro-projection.test.ts:\n(pass) authored Avro availability projects null carriers and recovers every ideal and residual [7440.69ms]\n(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [89.38ms]\n(pass) native changes, forged source/meaning and invalid Avro names refuse [127.75ms]\n(pass) unmapped document, module, relationship and extension meaning remains recoverable [85.95ms]\n\ntests/core-ideals/nullability-avro.test.ts:\n(pass) Avro underlying-value availability matrix preserves exact source, scope and both formats [25162.87ms]\n(pass) author conflicts, stale/forged receipts and malformed requests refuse without losing unknown content [555.64ms]\n(pass) native names, dependencies and recursive fields resolve without claiming parent availability [448.32ms]\n(pass) invalid structural types and unresolved names stay native with explicit report residuals [995.63ms]\n\ntests/core-ideals/nullability-field-operations.test.ts:\n(pass) versioned kind and record type receipts preserve availability, recursion and native content [193.48ms]\n(pass) availability prevents role erasure and receipts refuse changed versions, sources and provenance [82.91ms]\n(pass) new roles allow availability authoring, with whole-document receipt freshness [3.33ms]\n\ntests/core-ideals/nullability-parquet-projection.test.ts:\n(pass) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [10685.06ms]\n(pass) scope, cardinality, defaults and precision obligations remain explicit losses [717.69ms]\n(pass) changed bytes, forged receipts, stale authors and invalid native names refuse [222.34ms]\n(pass) document/module metadata and relationships survive report-mode ideal recovery [132.35ms]\n\ntests/core-ideals/nullability-parquet.test.ts:\n(pass) native-backed row/entry context matrix preserves exact bytes, metadata and both serializations [157420.50ms]\n(pass) optional ancestors contribute absence while repeated paths require an explicit entry context [473.67ms]\n(pass) author conflicts, altered scope/ancestry, changed targets and unsafe requests refuse [1511.60ms]\n(pass) legacy repeated primitive entries remain required within the selected entry, with exact byte recovery [888.72ms]\n\ntests/core-ideals/nullability-postgresql-projection.test.ts:\n(pass) authored availability projects with explicit scope and recovers every residual through both formats [2535.84ms]\n(pass) stale SQL, forged receipts and source changes cannot recover author meaning [43.55ms]\n(pass) identifiers cannot be truncated and strict loss does not invoke the parser [11.22ms]\n(pass) programmatic metadata and unknown extension obligations survive report recovery [26.14ms]\n\ntests/core-ideals/nullability-postgresql.test.ts:\n(pass) native catalog availability matrix retains source and scope through both serializations [47927.71ms]\n(pass) domain NOT NULL, CHECK UNKNOWN, NOT VALID and generated expressions do not become column permission [1175.06ms]\n(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1354.62ms]\n(pass) unknown exact native content remains recoverable while uncertain permission is withheld [580.56ms]\n(pass) missing flags, triggers, unsupported profiles and source state remain explicit [861.00ms]\n\ntests/core-ideals/nullability-selection.test.ts:\n(pass) 0.3 reports retain availability distinctions, namespaces, recursive boundaries and native refinements [23.52ms]\n(pass) forged availability, erased native refinements, changed query, diagnostics and boundaries cannot verify [3.87ms]\n(pass) 0.2 availability remains opaque through the old selection schema [1.99ms]\n\ntests/core-ideals/nullability-sqlserver-projection.test.ts:\n(pass) authored availability projects with explicit scope and recovers every residual through both formats [176.46ms]\n(pass) stale SQL, forged receipts and source changes cannot recover author meaning [7.03ms]\n(pass) invalid permanent identifiers refuse and native nullability is always explicit [32.97ms]\n(pass) programmatic metadata and unknown extension obligations survive report recovery [7.20ms]\n\ntests/core-ideals/nullability-sqlserver.test.ts:\n(pass) native catalog availability matrix retains source and scope through both serializations [58385.56ms]\n(pass) CHECK UNKNOWN and untrusted constraints do not become unconditional permission [495.43ms]\n(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1011.20ms]\n(pass) unknown native fields, legacy evidence and rules retain residuals with exact source recovery [2568.15ms]\n(pass) modified captures, incorrect envelope versions and unsafe numeric refinements refuse interpretation [567.49ms]\n\ntests/core-ideals/nullability-tablespec-projection.test.ts:\n(pass) authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery [10375.01ms]\n(pass) names, unknown obligations, scalar mismatches and unsafe or forged inputs cannot silently succeed [73.22ms]\n(pass) context keys are exact data and other elements/modules remain explicit residuals [123.61ms]\n\ntests/core-ideals/nullability-tablespec.test.ts:\n(pass) selected profile/context classification separates exact declarations, coercions and unknowns [24205.27ms]\n(pass) unresolved carrier blocks strict mode and retains explicit residuals in report mode [55.90ms]\n(pass) author provenance, role conflicts, stale models and forged binding metadata refuse [176.50ms]\n(pass) unknown native precision, escaped context keys and split sidecars remain exact [116.90ms]\n\ntests/core-ideals/parquet-cardinality-carrier.test.ts:\n(pass) native nested schema carriers preserve exact bytes and match checked logical roles [3286.83ms]\n(pass) carrier writer refuses malformed, cyclic, oversized and unknown inputs instead of dropping content [122.64ms]\n\ntests/core-ideals/parquet-cardinality-shape.test.ts:\n(pass) Parquet Cardinality shape keeps nested roles, member meaning and native bytes separate [993.05ms]\n(pass) legacy container layouts retain wrappers and key-only uncertainty; malformed structures refuse [637.02ms]\n(pass) invalid indexes refuse and returned shape metadata cannot mutate the native source [65.80ms]\n(pass) legacy unannotated repeated values remain unresolved without an explicit interpretation [57.70ms]\n\ntests/core-ideals/parquet-record-type.test.ts:\n(pass) interpreted LIST struct values link to separate records without changing repetition or bytes [1872.30ms]\n(pass) wrappers, primitives, root selection, author conflicts and tampered receipts refuse [1423.62ms]\n\ntests/core-ideals/postgresql-composite.test.ts:\n(pass) catalog composites expose ordered fields without formatted-type guessing and recover exact source [3073.63ms]\n(pass) collisions, duplicate names/order, ambiguity and stale archives cannot publish false roles [1028.16ms]\n(pass) unknown composite refinements remain recoverable and future server versions are refused [191.10ms]\n\ntests/core-ideals/postgresql-ddl-kinds.test.ts:\n(pass) declared records retain source SQL and distinguish unresolved namespace from catalog facts [3141.69ms]\n(pass) collisions, edited AST archives and stale receipts cannot silently publish new roles [256.83ms]\n(pass) composite attributes preserve collations and unresolved nested types without scalar flattening [403.25ms]\n\ntests/core-ideals/projection-policy.test.ts:\n(pass) field-tablespec schema enforces strict/report loss and atomic candidate rules [7.33ms]\n(pass) record-tablespec schema enforces strict/report loss and atomic candidate rules [8.44ms]\n(pass) field-postgresql schema enforces strict/report loss and atomic candidate rules [4.70ms]\n(pass) record-postgresql schema enforces strict/report loss and atomic candidate rules [6.68ms]\n\ntests/core-ideals/record-avro-projection.test.ts:\n(pass) ordered and empty authored records emit complete Avro schemas with recoverable loss reports [600.59ms]\n(pass) duplicate/colliding members, stale authors, invalid native names and edited targets fail safely [145.13ms]\n\ntests/core-ideals/record-avro.test.ts:\n(pass) declared empty, nested, recursive and dependency records retain ordered direct members [3244.09ms]\n(pass) one conflicting member, stale provenance, collisions or a non-declaration selection cannot publish a record [1899.98ms]\n\ntests/core-ideals/record-parquet-projection.test.ts:\n(pass) Parquet records preserve member order, explicit native repetition and authored recovery [1502.50ms]\n(pass) collisions, duplicate bindings, stale authors and report tampering cannot yield partial records [136.75ms]\n\ntests/core-ideals/record-parquet.test.ts:\n(pass) Parquet root records keep ordered value slots separate from container and struct definitions [3940.27ms]\n(pass) Parquet LIST wrappers block; interpreted two-level struct elements supply records [778.14ms]\n(pass) Parquet record conflicts, collisions and receipt edits block atomically [714.12ms]\n\ntests/core-ideals/record-postgresql-projection.test.ts:\n(pass) record members compile in ideal order and recover source through both receipt formats [162.79ms]\n(pass) strict losses and missing bindings expose no partial SQL or target [105.43ms]\n(pass) name collisions, unknown bindings and unsafe identifiers fail without partial output [8.17ms]\n(pass) stale author declarations, native edits and changed receipts fail recovery [29.12ms]\n\ntests/core-ideals/record-postgresql.test.ts:\n(pass) qualified relations remain distinct records and only selected members receive kinds [856.56ms]\n(pass) one member conflict blocks the whole record in both policies [446.19ms]\n(pass) ambiguous relations, unsupported kinds, collisions and stale receipts cannot imply record equivalence [1002.87ms]\n(pass) duplicate native member names and inconsistent ordinal order block whole-record publication [763.61ms]\n\ntests/core-ideals/record-report.test.ts:\n(pass) common record reports retain ordered membership, member carriers and all blocked residuals [2635.12ms]\n(pass) member basis and source receipt tampering are rejected, and backend remains explicit [669.63ms]\n\ntests/core-ideals/record-sqlserver-projection.test.ts:\n(pass) record member order and strict/report policies produce atomic SQL with exact ideal recovery [68.62ms]\n(pass) empty records, collisions, stale provenance and altered SQL cannot publish or recover false meaning [16.94ms]\n\ntests/core-ideals/record-sqlserver.test.ts:\n(pass) whole captured tables become ordered records with exact source recovery [10547.70ms]\n(pass) one member conflict blocks the whole record and provenance cannot be silently replaced [7793.75ms]\n(pass) collisions, missing identities, non-increasing ordinals and stale receipts fail safely [7814.26ms]\n\ntests/core-ideals/record-tablespec-projection.test.ts:\n(pass) record projection orders columns by declared membership and recovers the complete ideal [141.52ms]\n(pass) missing, duplicate, non-member and name-colliding bindings block atomically under either policy [18.57ms]\n(pass) scalar mismatch and renamed columns are reportable but strict refuses them [39.70ms]\n(pass) unknown metadata and relationship refinements survive as residuals [31.87ms]\n(pass) stale member provenance and edited native/receipt data cannot claim ideal recovery [38.37ms]\n(pass) an empty-namespace record can project strictly without erasing namespaced inputs [29.83ms]\n\ntests/core-ideals/record-tablespec.test.ts:\n(pass) whole native table becomes a record with ordered explicit member references and unknown type preservation [93.58ms]\n(pass) one conflicting member blocks the whole table in both modes without partial candidate [168.54ms]\n(pass) verified member authors are retained; stale, duplicate and unrelated receipts block [209.41ms]\n(pass) record classification retains split files and empty tables without inventing grouping semantics [59.75ms]\n(pass) changed member references, receipts and native content invalidate classification [120.66ms]\n\ntests/core-ideals/record-type.test.ts:\n(pass) record-valued slots preserve qualified identity, cycles and unknown native meaning [25.74ms]\n(pass) scalar/record conflicts, legacy roles and stale or forged receipt paths refuse [8.90ms]\n\ntests/core-ideals/sql-namespace.test.ts:\n(pass) PostgreSQL and SQL Server schema moves disclose every selected namespace [73.95ms]\n\ntests/core-ideals/structured-report.test.ts:\n(pass) record, composite, type-link and raw DDL reports retain scoped ordered native evidence [12195.30ms]\n(pass) declared-only context and record mappings cannot be forged or silently resolved [3259.60ms]\n\ntests/core/cardinality-ideals.test.ts:\n(pass) Cardinality is explicit Field meaning with independent item/value references and availability [6.43ms]\n(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [1.97ms]\n(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [1.46ms]\n(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [29.83ms]\n(pass) rollback retains later assertions separately and refuses forged receipts or changed identities [1.14ms]\n\ntests/core/cardinality-operations.test.ts:\n(pass) authored Cardinality and item meaning survive serialized verified receipts without source mutation [12.50ms]\n(pass) item omission preserves meaning; explicit set or clear retains previous meaning in archived source [0.93ms]\n(pass) legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning [1.82ms]\n(pass) invalid requests and item/scalar conflicts fail atomically; no getters execute [0.42ms]\n(pass) forged or stale author receipts cannot confer provenance [1.72ms]\n\ntests/core/core.test.ts:\n(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [0.92ms]\n(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [24.66ms]\n(pass) US-001-AC2: native semantics are not inferred by extension structural validation [8.59ms]\n(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [11.70ms]\n(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [8.43ms]\n(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [4.73ms]\n(pass) US-001-AC2: validator exceptions never become successful validation [4.11ms]\n(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [2.07ms]\n(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [0.39ms]\n(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.52ms]\n(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.12ms]\n(pass) US-001-AC4: document depth and size limits fail explicitly [1.27ms]\n(pass) US-001-AC1: generated unknown content survives repeated portable serialization [52.32ms]\n(pass) registry captures a frozen copy, independent of subsequent package edits [5.14ms]\n(pass) published minimal document fixture validates with independent namespaces and references [15.12ms]\n(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.55ms]\n(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [6.53ms]\n\ntests/core/field-ideals.test.ts:\n(pass) field kinds are explicit; missing kind is never inferred from scalar family [1.81ms]\n(pass) legacy collisions stay opaque, including names that are now known [2.99ms]\n(pass) new profile refuses malformed kinds and structured scalar claims atomically [1.02ms]\n(pass) unknown future kind and other open metadata survive without semantic completion [0.46ms]\n(pass) future envelope versions and unsafe getter inputs cannot be interpreted [0.08ms]\n\ntests/core/field-kind.test.ts:\n(pass) kind lookup separates legacy, unknown, missing and defined roles without inventing provenance [6.89ms]\n(pass) author provenance survives serialization, verification and rollback without claiming native meaning [5.96ms]\n(pass) authoring blocks unknown meaning, legacy versions and structured/scalar conflicts atomically [0.42ms]\n(pass) provenance verification rejects forged paths, altered assertions and stale native or unrelated content [1.43ms]\n\ntests/core/field-transition.test.ts:\n(pass) upgrade explicitly archives every legacy collision and preserves all other metadata [0.42ms]\n(pass) serialized receipts support exact model rollback while retaining later assertions and native edits [3.56ms]\n(pass) tampered or stale receipts fail without overwriting source or edited model [1.97ms]\n(pass) null, method-like names, unknown content, and malformed inputs retain copy safety [2.28ms]\n\ntests/core/native-json.test.ts:\n(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [7.07ms]\n(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.83ms]\n(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.25ms]\n(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.39ms]\n\ntests/core/nullability-authoring.test.ts:\n(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [1.28ms]\n(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [5.27ms]\n(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.44ms]\n(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.74ms]\n\ntests/core/nullability-ideals.test.ts:\n(pass) explicit nullability requires a Field and survives both formats without native interpretation [1.63ms]\n(pass) missing availability does not inherit native nullable flags or defaults [0.44ms]\n(pass) older envelopes preserve all colliding nullability values as opaque content [6.14ms]\n(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [0.94ms]\n(pass) unsafe getters and unsupported future versions cannot be interpreted [0.07ms]\n\ntests/core/nullability-transition.test.ts:\n(pass) explicit upgrade archives every old label and preserves roles, native refinements and references [0.76ms]\n(pass) both receipt formats roll back original model while retaining subsequent availability and native edits [4.67ms]\n(pass) null, empty, known, future and method-like collisions remain recoverable [3.96ms]\n(pass) forged receipts, wrong identity, wrong versions and malformed current states refuse atomically [2.66ms]\n(pass) 0.1.0 requires the Field transition first and the inverse chain preserves both collisions [1.11ms]\n(pass) getter inputs are refused without invoking artifact code [0.05ms]\n\ntests/core/scalar.test.ts:\n(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [1.13ms]\n(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [0.38ms]\n\ntests/core/selection.test.ts:\n(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [4.58ms]\n(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [128.58ms]\n(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [10.07ms]\n(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [968.60ms]\n\ntests/parquet/arrow-nested.test.ts:\n(pass) US-019-AC23 structural LIST/MAP correspondence retains distinct labels and inverse meaning [8996.87ms]\n\ntests/parquet/arrow-rename.test.ts:\n(pass) US-019-AC23 coordinated renames retain data, metadata and reversible field intent [41371.13ms]\n(pass) US-019-AC23 missing correspondence and invalid policies cannot produce partial files [964.76ms]\n\ntests/parquet/arrow-schema.test.ts:\n(pass) CONTRACT-019 embedded Arrow schema preserves meanings absent from physical Parquet [387.64ms]\n(pass) CONTRACT-019 embedded schema rejects ambiguity and malformed framing without losing source [884.71ms]\n(pass) CONTRACT-019 extracted Arrow messages re-encode and support detached schema transforms [654.93ms]\n\ntests/parquet/avro-arrow-loss.test.ts:\n(pass) CONTRACT-035 Arrow refinements require explicit losses even when physical Avro schemas agree [742.51ms]\n(pass) CONTRACT-035 malformed or ambiguous Arrow metadata blocks physical-only projection [418.27ms]\n\ntests/parquet/avro-projection.test.ts:\n(pass) CONTRACT-035 nested Parquet shapes preserve nullable lists, map entries and scalar precision in Avro [636.38ms]\n(pass) CONTRACT-035 logical and legacy container corpora lower or report blocked source shapes [2008.07ms]\n(pass) CONTRACT-035 unknown native fields on normalized-away LIST wrappers still block lowering [43.62ms]\n\ntests/parquet/bodies.test.ts:\n(pass) US-019-AC14: bounded physical page bodies and CRCs match independent native decompression [2381.30ms]\n(pass) US-019-AC14: Snappy copy/literal variants match native vectors and malformed blocks fail [15.00ms]\n(pass) US-019-AC14: actual corrupted bodies fail without publishing partial pages [85.88ms]\n\ntests/parquet/capture.test.ts:\n(pass) US-019-AC1: bounded binary source copies exact bytes including malformed input and preserves unknown representation [59.31ms]\n(pass) US-019-AC2: footer region checks do not imply metadata validity or plaintext columns [58.70ms]\n(pass) US-019-AC3: pinned Parquet source hashes survive both UMF serializations [1026.57ms]\n\ntests/parquet/containers.test.ts:\n(pass) US-019-AC9: container interpretations preserve source and match qualified native evidence [1546.88ms]\n(pass) US-019-AC9: preserve key-only map intent and diagnose repeated map values [50.35ms]\n\ntests/parquet/field-metadata.test.ts:\n(pass) CONTRACT-019 core field families respect native logical and physical meanings [2230.20ms]\n(pass) CONTRACT-019 native rename synchronizes materialized fields without losing attachments [266.98ms]\n\ntests/parquet/footer.test.ts:\n(pass) US-019-AC5: exact footer trees match independent Apache Thrift observations [1229.96ms]\n(pass) US-019-AC5: malformed and excessive wire values fail without partial interpretation [132.64ms]\n(pass) US-019-AC5: unknown UUID fields and trailing bytes remain distinct from native validity [24.33ms]\n\ntests/parquet/hybrid.test.ts:\n(pass) US-019-AC15: hybrid decoding matches independently read native dictionary pages [1.21ms]\n(pass) US-019-AC15: unsigned widths, final padding and strict bounds do not allocate from hostile run counts [0.21ms]\n\ntests/parquet/levels.test.ts:\n(pass) US-019-AC16: bounded page-level integration covers existing native files [2939.09ms]\n(pass) US-019-AC16: native-authored required/optional/repeated/list pages and malformed levels [723.97ms]\n\ntests/parquet/logical.test.ts:\n(pass) US-019-AC8: scalar annotations match native acceptance while preserving all sources [1752.55ms]\n(pass) US-019-AC8: local time meaning, legacy defaults/conflicts and incomplete containers remain explicit [57.79ms]\n\ntests/parquet/metadata.test.ts:\n(pass) US-019-AC6: named metadata matches native generated IDL classes for every fixture [1236.98ms]\n(pass) US-019-AC6: future enum codes and repeated unknown fields survive the named view [21.88ms]\n(pass) US-019-AC6: missing, duplicate or mistyped known fields block mapping while retaining wire/source [71.14ms]\n\ntests/parquet/offset-repair.test.ts:\n(pass) US-019-AC20: explicit legacy offset repair preserves source and every byte before footer [1034.87ms]\n(pass) US-019-AC20: already-correct files and damaged dictionaries do not produce repair candidates [331.91ms]\n\ntests/parquet/pages.test.ts:\n(pass) US-019-AC13: page headers and declared budgets match native corpus evidence [1666.61ms]\n(pass) US-019-AC13: malformed declarations block without decoding payloads; payload corruption remains explicit [555.72ms]\n\ntests/parquet/physical.test.ts:\n(pass) US-019-AC17: physical carrier decoding matches independent corpus results [5038.38ms]\n(pass) US-019-AC17: native physical boundaries preserve widths, bits, binary and dictionary carriers [1327.48ms]\n(pass) US-019-AC17: malformed PLAIN counts, lengths and fixed widths are rejected [0.26ms]\n(pass) US-019-AC17: dictionary range and expansion budgets block without partial values [174.90ms]\n\ntests/parquet/rename.test.ts:\n(pass) US-019-AC11: rename every field in nested native files with exact data-prefix preservation [5791.86ms]\n(pass) US-019-AC11: reject semantic wrapper changes, collisions, stale metadata and invalid requests [361.55ms]\n\ntests/parquet/rows.test.ts:\n(pass) US-019-AC18: assembled corpus rows match native-value evidence without source changes [5399.23ms]\n(pass) US-019-AC18: inconsistent shared columns and row-node expansion cannot publish partial rows [3060.36ms]\n\ntests/parquet/schema.test.ts:\n(pass) US-019-AC7: physical schema trees and levels match native columns [1330.93ms]\n(pass) US-019-AC7: inconsistent topology/links block; literal dots remain path components [271.55ms]\n\ntests/parquet/transform.test.ts:\n(pass) US-019-AC10: encoding preserves all native wire observations and guarded metadata transforms preserve data [4426.23ms]\n(pass) US-019-AC10: unsafe metadata edits fail without losing source or publishing output [243.33ms]\n(pass) US-019-AC10: encoder rejects lossy or oversized wire inputs and preserves UUID bits [13.55ms]\n\ntests/parquet/values-trial.test.ts:\n(pass) US-019-AC12 experiment: exact nested decimals, ordered maps, hostile names and temporal meaning match native values [85.72ms]\n\ntests/parquet/values.test.ts:\n(pass) US-019-AC19: bounded logical projections match native values and preserve sources [6957.95ms]\n(pass) US-019-AC19: logical value constraints block while exact/opaque carriers remain available [1031.90ms]\n(pass) US-019-AC19: bounded implementation agrees with the prior native nested-decimal/map experiment [423.53ms]\n(pass) US-019-AC19: logical floating views retain NaN payloads and signed zero exactly [202.75ms]\n(pass) US-019-AC19: JSON syntax validation preserves duplicates/exact text and bounds structure [11.21ms]\n\ntests/postgresql/avro-projection.test.ts:\n(pass) CONTRACT-034 PostgreSQL captured columns project with explicit restricted domains and native recovery [980.36ms]\n(pass) CONTRACT-034 numeric typmods are decoded without truncation or inventing unconstrained precision [1774.62ms]\n(pass) CONTRACT-034 unsupported mappings, ambiguity, stale metadata and modified captures block [2813.15ms]\n\ntests/postgresql/catalog.test.ts:\n(pass) US-015-AC6: captured PostgreSQL metadata, exact unknowns and reconstruction archives survive both UMF formats [867.38ms]\n(pass) US-015-AC6: candidate edits cannot expose stale reconstruction SQL as synchronized [822.33ms]\n(pass) US-015-AC6: ambiguity and unknown representation data are preserved and reported [269.71ms]\n(pass) US-015-AC6: unsupported minor-version evidence and conflicting capture state cannot overclaim readiness [149.02ms]\n(pass) US-015-AC7: v1 captures remain readable while v2 requires its additional native object families [292.57ms]\n(pass) US-015-AC8: dependency identities distinguish native objects and preserve copied edges [190.58ms]\n\ntests/postgresql/ddl-edits.test.ts:\n(pass) US-015-AC12 edited native DDL evidence binds current proposals and fresh catalog recovery [443.44ms]\n\ntests/postgresql/declarations.test.ts:\n(pass) CONTRACT-015 raw DDL exposes copied declarations without resolving search_path, LIKE or ALTER state [323.24ms]\n(pass) CONTRACT-015 DDL type inventory respects native edits, unknown type syntax, foreign tables and version guards [179.95ms]\n\ntests/postgresql/edit-preservation.test.ts:\n(pass) CONTRACT-015 candidate edits cannot erase unknown tagged representation content [2330.02ms]\n\ntests/postgresql/integer-tokens.test.ts:\n(pass) CONTRACT-015 exact catalog integers prevent false scalar classification through rounding [3705.40ms]\n\ntests/postgresql/metadata.test.ts:\n(pass) CONTRACT-015 catalog identities drive core families without flattening native meaning [816.73ms]\n(pass) CONTRACT-015 legacy captures do not guess types and field metadata cannot be lost [672.89ms]\n\ntests/postgresql/native.test.ts:\n(pass) US-015-AC1: PostgreSQL DDL source and native AST survive UMF and native round trips [368.98ms]\n(pass) US-015-AC2: native candidate edits propagate without modifying the original source [59.81ms]\n(pass) US-015-AC3: unknown AST and representation fields cannot disappear through Protobuf or deparse [60.64ms]\n(pass) US-015-AC3: typed AST schema covers native samples, unions and known field types without stripping unknowns [25.36ms]\n(pass) US-015-AC3: typed Boolean construction repairs the wrapper without hiding raw codec loss [116.28ms]\n(pass) US-015-AC2: Boolean candidate edit uses the native false representation [58.16ms]\n\ntests/postgresql/projection.test.ts:\n(pass) US-015-AC9: explicit PostgreSQL row encodings produce a qualified JSON Schema and quoted query [94.44ms]\n(pass) US-015-AC9: strict policy, unsafe encodings and edited metadata block projection [520.79ms]\n(pass) US-015-AC9: generated SQL quotes identifiers and keys instead of interpolating executable fragments [169.30ms]\n(pass) US-015-AC9: projection result schema distinguishes blocked results from executable results [119.59ms]\n(pass) US-015-AC9: boolean, smallint and SQL/JSON null encodings retain their distinct contracts [65.06ms]\n\ntests/sqlserver/avro-projection.test.ts:\n(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [231.47ms]\n(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [313.27ms]\n(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [819.16ms]\n\ntests/sqlserver/catalog.test.ts:\n(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [181.50ms]\n(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [292.05ms]\n(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [105.54ms]\n\ntests/sqlserver/constraint-projection.test.ts:\n(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [590.71ms]\n(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [96.58ms]\n\ntests/sqlserver/constraints.test.ts:\n(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [157.18ms]\n(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [294.23ms]\n\ntests/sqlserver/ddl.test.ts:\n(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [680.32ms]\n(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [635.54ms]\n(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [34.63ms]\n(pass) CONTRACT-037 native evidence matches current generation and records declared physical losses [257.33ms]\n(pass) CONTRACT-037 copied edits survive native DDL execution without changing original captures [1548.80ms]\n\ntests/sqlserver/indexes.test.ts:\n(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [211.61ms]\n(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [430.84ms]\n(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [494.23ms]\n\ntests/sqlserver/integer-tokens.test.ts:\n(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2399.13ms]\n\ntests/tablespec/avro-integers.test.ts:\n(pass) CONTRACT-033 interpreted numeric qualifiers cannot round into supported decimal or vector shapes [1050.17ms]\n\ntests/tablespec/avro-projection.test.ts:\n(pass) CONTRACT-033 TableSpec primitive, temporal and vector bindings retain source and report constraints [403.85ms]\n(pass) CONTRACT-033 missing context, default precision and incompatible choices never get inferred [589.39ms]\n\ntests/tablespec/avro-table-loss.test.ts:\n(pass) CONTRACT-033 table keys, context dispatch and opaque metadata survive edits and report path-specific losses [314.69ms]\n\ntests/tablespec/boundaries.test.ts:\n(pass) CONTRACT-030 edit mappings reject non-JSON inputs without evaluating accessors or mutating source [228.20ms]\n(pass) CONTRACT-030 split column suffixes match native glob and preserve unmatched files [32.38ms]\n\ntests/tablespec/roundtrip.test.ts:\n(pass) CONTRACT-030 TableSpec ingestion exposes core scalars and preserves contextual and unknown native metadata [93.41ms]\n(pass) CONTRACT-030 copied native edits synchronize scalar metadata and retain unknown content [115.60ms]\n\ntests/tablespec/split.test.ts:\n(pass) CONTRACT-030 split bundle preserves every file and derives ordered columns [96.15ms]\n(pass) CONTRACT-030 split bundle rejects ambiguous or unmapped changes [33.74ms]\n(pass) CONTRACT-030 filenames follow native Unicode code-point order [11.19ms]\n\ntests/tablespec/table-edits.test.ts:\n(pass) CONTRACT-030 table edits repair native references and preserve monolithic/split sources [464.66ms]\n(pass) CONTRACT-030 table edits cannot replace column identities or bypass encoding guards [86.31ms]\n\ntests/tablespec/table-metadata.test.ts:\n(pass) CONTRACT-030 table metadata inspection is exact, isolated and distinct from split source recovery [118.79ms]\n\n 407 pass\n 0 fail\n 38324 expect() calls\nRan 407 tests across 131 files. [793.43s]\n",
-      "stderr": ""
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-conformance.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-conformance.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/field-conformance.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/nullability-conformance.test.ts"
+      ],
+      "exitCode": 0
     }
   ],
-  "typecheck": "passed",
-  "schemas": 253,
-  "packages": 42,
-  "browserBuildBytes": 10631748,
+  "limits": [
+    "Five qualified bindings do not replace the separate Cardinality ideal admission/all-five conformance gate.",
+    "Classification concerns checked present-value roles; wrappers, key-only maps and unannotated repetition remain unresolved without explicit interpretation.",
+    "Projection emits empty native schema files from explicit bounded carriers; it does not convert arbitrary row data.",
+    "MAP uniqueness and non-string keys remain residuals; shape/scalar families do not prove value exactness, including binary32 narrowing.",
+    "Native-only reclassification need not recover author intent; retained receipts recover it.",
+    "Embedded Arrow refinements, unknown content and original physical bytes are retained independently; no implicit record associations or default execution.",
+    "Regression scope is core and five priority systems, not the full repository."
+  ],
   "sha256": {
+    "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "933e3ac5b26d7217b85681089e6b867714204df242075bc590882dc9f603657b",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "cec6f25eae5a043f86be63c1d0eb676901df9fc5c98c9da5672f74cbcc11d3a0",
+    "docs/helix/03-test/test-plan.md": "8a23762d255693e2e8f2df47c94dc4dfba808c7821f3432d1bfdb0021dec8a8d",
+    "docs/helix/04-build/implementation-plan.md": "08473aa3d86f0c20c878f917d8d8ee75f31fcaba6b86e1878825829fb977d967",
+    "docs/helix/README.md": "505c4c3cefdbec30c359d781077e01a2387b096a714aebf7d4ab05925aa8f8ca",
     "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
     "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
     "fixtures/parquet/cardinality-carriers/array-binary-0.parquet": "e3ca1e5d92e37a5f6d44d8c88dc8b9e072905603d9b579cf6c48451f869aa7fe",
@@ -1182,6 +1105,7 @@
     "fixtures/postgresql/cardinality-scalars.sql": "c0d311d5fdf922491b1edd52869d51fc608aaf1efd119af178c0f33afd139957",
     "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
     "fixtures/sqlserver/cardinality.sql": "c348d6a4f4fc774919db246e1078c11724357e0e4185a4ab89fc9d5566cf4edb",
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": "a24233e0770a666bc7c30baaab0b274301cf77e63c0c3f4e59da63b5736e97e3",
     "fixtures/validation/avro-nullability-field-refresh-regression.log": "afa31f0c2b9df0a8c31536fd7e01ed5802a0f7d77cf185bd5c2a03afafbeeaa6",
     "fixtures/validation/cardinality-avro-browser.json": "cfd5e244bf10b6151ba86d1509bd37deb451a7c7c368e5aadedfbd435e75c870",
     "fixtures/validation/cardinality-avro-classification-browser.json": "da50393004a438fe0d2b1db79ae79940dd4c44622bc10c10628f4eea16090599",
@@ -1193,6 +1117,7 @@
     "fixtures/validation/cardinality-avro-projection-native.json": "4671521ca86c13d4c7afad1ad9d810f7aabc19a18ca3352bfd153c051e16e124",
     "fixtures/validation/cardinality-avro-projection-oracle.json": "ddf9fbb846b857ed79b5d745721b2476bec378ec818ad7c0719fb7b2cc1b80f2",
     "fixtures/validation/cardinality-avro-refresh-regression.log": "795ce59bc67ebf95e92bbe66141cb47b2bed964190b7ed39559fcd12e6918c25",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "3791c66fd8e425c8bdcc161ace2f00746817c3b1ca0b6abd7fc0bcc0aa3bbf74",
     "fixtures/validation/cardinality-core-refresh-regression.log": "4e4ebca3b561f9a824e742f93f90f76aa1038545402780824ba14f2385d3c284",
     "fixtures/validation/cardinality-field-operations-browser.json": "e01c20e7da998428ec5bae084ba4d4b372fc86240f1a30e14ba1b28b6cc6940c",
     "fixtures/validation/cardinality-parquet-browser.json": "9ac5c4eff21364670ba87ff2db0a6e4ca88afaa507688d811b3ea852dae24dfd",
@@ -1200,7 +1125,11 @@
     "fixtures/validation/cardinality-parquet-carrier-corpus.json": "90c4e50745d86560822d1b219e4843bb931dbef36e1788270ef83d0f46a722e7",
     "fixtures/validation/cardinality-parquet-carrier-native.json": "322b43d38d68191fdd07a13b49d572e550628f5bb5f7cc29f951d933ecc74b27",
     "fixtures/validation/cardinality-parquet-classification-browser.json": "1322b4f26a516334eb28d62c492895cfaf2dd32b65b183d488ebc7d1ea9a7d82",
+    "fixtures/validation/cardinality-parquet-field-gate-command.log": "80e1929c7499d72d17e005b1e921ef455e8fe831ca50f4510b49e17db7186809",
+    "fixtures/validation/cardinality-parquet-field-gate-tests.log": "5898464c7aaae52e9b15315c47224bd73ae0e58b0a4daf4ae5b50c08f263028d",
     "fixtures/validation/cardinality-parquet-native.json": "75e275339d081838e2c01b78a24262d43c509eb41a662b12ac2a7cee7fda6e2c",
+    "fixtures/validation/cardinality-parquet-nullability-gate-command.log": "28448924bacc3861a353a5b14681acb2af702814ff7c86ab5bd106878c201c7c",
+    "fixtures/validation/cardinality-parquet-nullability-gate-tests.log": "dd9d2eacc0bf9687670fe8194d4a023b2a03350c49331a593f433926eb23c9f2",
     "fixtures/validation/cardinality-parquet-profile-browser.json": "c63d258e86b20c6d175a9613e33ac06eb4bfbf9ec736525ce6fda4ba1d203df6",
     "fixtures/validation/cardinality-parquet-profile-native.json": "99d2631a03970579c9a562017152305eefb7190e68d86241cde209546afa08ec",
     "fixtures/validation/cardinality-parquet-projection-browser.json": "21208a01032ccc2f59bae02053af2c47124dacdfa040d0c6e60e5822faaa6c20",
@@ -1236,6 +1165,8 @@
     "fixtures/validation/core-cardinality-browser.json": "bdaf805b7f97121d419da5b0d1b2dd8a017e4cc2be69f336d3cd5fddd97e5589",
     "fixtures/validation/core-cardinality-operations-browser.json": "9f4ca5cd900c4273590f13ad452927953d13e1f9efc930112d276e44739674a3",
     "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
+    "fixtures/validation/field-conformance.json": "e7e1f548dc6a54528c4049485ce6fe0938f6c207c90442de578e02670fa1da6e",
+    "fixtures/validation/field-gate-refresh-evidence.json": "c71b765f45f8ba2e80d2bc2ab670ac1f175af98e04c8780ea3377864b1b8c08a",
     "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
     "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
     "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
@@ -1251,8 +1182,10 @@
     "fixtures/validation/nullability-avro-projection-corpus.json": "330efb6e9ba6358ccf70a2b6d8fab4f5f9ba507479481584c41dbd94ecc26021",
     "fixtures/validation/nullability-avro-projection-native.json": "bd7679d5f76263dbab488cecf5aebfe64b418e3fff41439492ad5c7a2649b49c",
     "fixtures/validation/nullability-avro-recovered.json": "7e575f902c90b1c8330c31ad3ac4646f0e27a012f89cb37019da7dbf4dd9a86b",
+    "fixtures/validation/nullability-conformance.json": "300372529b222fbd0bf004d35cb09c13603d5785d6a4c328bee125b8f1eddf0a",
     "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
     "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": "419969f04afe59599428810eeca4e390000c41e45612de25424cb94163f8d75e",
     "fixtures/validation/nullability-parquet-browser.json": "4b15c45c8d2236b4ec5f928135189e1cc5cfade88a29607f6efa2cd9a489ae9a",
     "fixtures/validation/nullability-parquet-native.json": "e59c49b0777358e53ede72436479d3ed2be779b33f9c1fce6940ba37945e467c",
     "fixtures/validation/nullability-parquet-projection-browser.json": "e79f97a89844a7598caf145ec2f1ca204e79dcad0544b472fd47b04113be2726",
@@ -1282,10 +1215,13 @@
     "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
     "fixtures/validation/parquet-nullability-field-refresh-regression.log": "9e0a4d2628a8215ddea709b6ab72a47c01501258337cecdb9d68147f68a9d949",
     "fixtures/validation/parquet-nullability-refresh-interrupted-attempt.json": "27454e5a335f282c390f211861e95e1e530c92b265b5ec6fb9c6b186ef6e48df",
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": "99d2435715346484398eb9c45c47ac64faafac690ef646697e87cc7672839927",
     "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
     "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
     "fixtures/validation/postgresql-nullability-field-refresh-regression.log": "925333e4fa2b7572f1a183e547a4515e97a808034ea4708270dae0a68a1c0194",
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": "e155ecd47cf694e1950785a63a1ff5ae28d1d372e8cad8a1674224d2e10f281f",
     "fixtures/validation/sqlserver-nullability-field-refresh-regression.log": "a8ebbd33c3c4d121765d401281029a7b78d4c0198a348cb56fab3cdc34e4100f",
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "de4bb95d8734f1be28b58dad705ebd99320e8d094bb1786fe3b8c09079227d66",
     "fixtures/validation/tablespec-nullability-field-refresh-regression.log": "45608bc86a98842c15ad9ba130c889ae4511d382477f7edc9716c986b45fddc0",
     "native/postgresql/catalog/cardinality-v1.sql": "534e8996085e600c697a5d1e799e4ab4816ee0663290a44283b46a1195952344",
     "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",

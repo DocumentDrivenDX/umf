@@ -2749,3 +2749,25 @@ these are not counted as data equivalence. The
 [acceptance record](../../../fixtures/validation/avro-cardinality-acceptance-evidence.json)
 records the full refresh and 395 priority regression tests.
 Parquet and the concept admission/delivery gate remain required.
+
+
+### Parquet Cardinality acceptance
+
+The [acceptance record](../../../fixtures/validation/parquet-cardinality-acceptance-evidence.json) supersedes earlier Parquet acceptance-pending notes.
+All 76 refresh steps pass, including 407 priority tests / 38,324
+assertions across 131 files, followed by the separate Field and Nullability
+gates. Native evidence uses PyArrow 21.0.0; browser evidence uses Chromium 148.
+
+Run `bun scripts/core-ideals/cardinality-parquet-oracle.ts` and
+`bun scripts/core-ideals/cardinality-parquet-browser.ts` with the configured
+Chromium executable. Classification covers 120 cases, 152 native recoveries and
+76 forged refusals. Projection covers 160 cases, 132 candidates, 28 strict blocks,
+264 retained ideal recoveries, 264 fresh-native recoveries and 132 forged refusals.
+PyArrow verifies 282 rows written independently under emitted schemas, with ten
+explicit float narrowings. These are schema transforms and retained recovery,
+not an implicit row converter. MAP uniqueness/non-string keys, legacy repetition,
+wrappers, Arrow refinements and unavailable record associations remain qualified
+or residualized. No native equivalence is claimed.
+
+All five qualified bindings are now implemented. The separate Cardinality
+admission/delivery conformance gate remains unfinished before facets proceed.
