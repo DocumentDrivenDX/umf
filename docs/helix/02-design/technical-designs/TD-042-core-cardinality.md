@@ -277,3 +277,21 @@ authoring, inspection, versioned APIs and selection now have focused evidence.
 Full core acceptance still requires the broader regression and fresh Field and
 Nullability gate evidence after all library additions. Native Cardinality bindings
 and ideal admission remain unfinished.
+
+
+### Core-task acceptance
+
+The [core acceptance record](../../../../fixtures/validation/cardinality-core-acceptance-evidence.json)
+supersedes the pending core-task status in earlier checkpoints. All 66 refresh
+commands pass: typechecking, 237 schemas / 37 extension packages, browser build,
+fresh five-system Field/Nullability native and Chromium checks, the four Cardinality
+browser probes, and a priority regression of 358 tests / 31,542 assertions
+across 117 files. The Field and Nullability conformance tests pass separately
+after evidence publication; each now rejects missing 0.4.0 dependency fingerprints.
+
+This accepts the experimental core representation, authoring, migration, inspection,
+versioned operation integration and metadata selection. It does not admit Cardinality
+as a useful cross-system ideal yet. TableSpec, PostgreSQL, SQL Server, Avro and
+Parquet Cardinality bindings remain pending, with strict/report loss handling,
+qualified native up-classification and both recovery directions required. No native
+equivalence, row-value validation or automatic native shape inference is claimed.

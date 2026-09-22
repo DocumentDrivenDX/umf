@@ -20,9 +20,10 @@ ddx:
 # CONTRACT-040: UMF core ideals and qualified native bindings
 
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
-revision 1. **Status:** Field ideal admitted for the qualified bindings recorded
-below; Nullability core APIs have passed core-task acceptance but have no native
-binding admission. Its five native bindings and the later ideals remain incomplete.
+revision 1. **Status:** Field and Nullability ideals have passed their qualified
+five-system admission/delivery gates. Experimental Cardinality core 0.4.0 has passed
+core-task acceptance; its five native bindings and ideal admission remain unfinished.
+Facets, key and native-equivalence graduation remain pending.
 
 ## Purpose
 

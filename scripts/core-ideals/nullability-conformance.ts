@@ -35,6 +35,7 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   assert.equal(record.results.failures,0,`${name}: failures`);assert.equal(record.results.typecheck,'passed');
   if(name!=='nullability-core-acceptance-evidence')assert.equal(record.nativeEquivalence,false);
   for(const required of ['src/index.ts','spec/core/nullability-document.schema.json','src/model/nullability.ts'])assert.ok(Object.hasOwn(record.sha256,required),`${name}: missing required proof ${required}`);
+  if(name==='nullability-core-acceptance-evidence')for(const required of ['spec/core/cardinality-document.schema.json','spec/core/cardinality-operation.schema.json','spec/core/cardinality-transition.schema.json','spec/core/cardinality-selection.schema.json','spec/core/kind-operation-v3.schema.json','spec/core/record-type-operation-v3.schema.json','spec/core/nullability-operation-v2.schema.json','src/model/cardinality.ts','src/model/cardinality-transition.ts']){assert.ok(Object.hasOwn(record.sha256,required),`${name}: missing required proof ${required}`);}
   if(name!=='nullability-core-acceptance-evidence'){
    const system=name.replace('-nullability-acceptance-evidence','');
    const suffixes=system==='tablespec'?['classification-native','classification-browser','projection-native','projection-browser','execution-native']:['native','browser','projection-native','projection-browser'];

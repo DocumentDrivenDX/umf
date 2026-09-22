@@ -18,7 +18,8 @@ const evidenceFiles=['field-core-acceptance-evidence','field-tablespec-acceptanc
 const requiredProofs:Record<string,string[]>={
  'field-core-acceptance-evidence':['spec/core/field-document.schema.json','src/model/field-kind.ts','src/model/field-transition.ts','fixtures/validation/core-field-browser.json',
   'spec/core/nullability-document.schema.json','spec/core/kind-operation-v2.schema.json','spec/core/record-type-operation-v2.schema.json',
-  'src/model/nullability.ts','src/model/nullability-transition.ts'],
+  'src/model/nullability.ts','src/model/nullability-transition.ts',
+  'spec/core/cardinality-document.schema.json','spec/core/cardinality-operation.schema.json','spec/core/cardinality-transition.schema.json','spec/core/cardinality-selection.schema.json','spec/core/kind-operation-v3.schema.json','spec/core/record-type-operation-v3.schema.json','spec/core/nullability-operation-v2.schema.json','src/model/cardinality.ts','src/model/cardinality-transition.ts'],
  'field-tablespec-acceptance-evidence':['field-tablespec-classification','field-tablespec-native','field-tablespec-projection','field-tablespec-projection-native'].map(n=>`fixtures/validation/${n}.json`),
  'field-postgresql-acceptance-evidence':['field-postgresql-native','field-postgresql-browser','field-postgresql-projection-native','field-postgresql-projection-browser','postgresql-ddl-kinds-native','postgresql-ddl-kinds-browser'].map(n=>`fixtures/validation/${n}.json`),
  'remaining-field-bindings-acceptance-evidence':[

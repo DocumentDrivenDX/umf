@@ -7,6 +7,11 @@ test('five Nullability bindings preserve ideals, native payloads and explicit lo
 test('Nullability gate requires current core and five native/browser evidence records',async()=>{
  const evidence=await verifyNullabilityEvidence();expect(evidence.systems).toEqual([...nullabilitySystems]);expect(evidence.records).toHaveLength(6);expect(evidence.fingerprints).toBeGreaterThan(0);
  const reader=async(path:string)=>new Uint8Array(await Bun.file(path).arrayBuffer());
+ await expect(verifyNullabilityEvidence(async path=>{
+  const bytes=await reader(path);if(!path.endsWith('nullability-core-acceptance-evidence.json'))return bytes;
+  const record=JSON.parse(new TextDecoder().decode(bytes));delete record.sha256['spec/core/cardinality-document.schema.json'];
+  return new TextEncoder().encode(JSON.stringify(record));
+ })).rejects.toThrow('missing required proof');
  await expect(verifyNullabilityEvidence(async path=>path==='src/model/nullability.ts'?new TextEncoder().encode('changed'):reader(path))).rejects.toThrow('stale');
  await expect(verifyNullabilityEvidence(async path=>{if(path.endsWith('parquet-nullability-acceptance-evidence.json'))throw Error('Missing native evidence');return reader(path);})).rejects.toThrow('Missing native evidence');
  async function mutate(path:string,change:(record:any)=>void){const value=JSON.parse(new TextDecoder().decode(await reader(path)));change(value);return new TextEncoder().encode(JSON.stringify(value));}

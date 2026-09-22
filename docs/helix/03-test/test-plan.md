@@ -51,6 +51,16 @@ concept at a time in field → nullability → cardinality → facets → key or
   A blocked mapping with retained residual may satisfy its explicit refusal case;
   it cannot be counted as native support for enforcing the ideal.
 
+## Cardinality core acceptance checkpoint
+
+Core 0.4.0 representation, authoring, retained receipts, versioned APIs and selection
+pass 358 priority regression tests / 31,542 assertions across 117 files.
+All four core Chromium probes and fresh five-system Field/Nullability checks pass.
+Both conformance gates run separately after evidence publication and reject missing
+0.4.0 dependency fingerprints. See the
+[acceptance record](../../../fixtures/validation/cardinality-core-acceptance-evidence.json).
+Native Cardinality bindings and their ideal-admission/delivery gates remain required.
+
 ## Testing Strategy
 
 TableSpec table-edit checks must cover monolithic/split export, namespace refresh,

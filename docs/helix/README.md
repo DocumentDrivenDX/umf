@@ -34,9 +34,12 @@ references, explicit collision-preserving migration/rollback, authoring and
 inspection have Bun and Chromium evidence. Versioned Field, Nullability and
 record-type APIs now support 0.4.0 while retaining older receipts. Selection
 now follows explicit item/value links with separate boundaries and shape filters.
-Full core acceptance and all five native Cardinality bindings remain unfinished. The Field
-and Nullability gate records above are the last accepted baseline; both need fresh
-evidence after these library additions. Facets and key follow Cardinality. See the
+Cardinality core-task acceptance now passes: 358 tests / 31,542 assertions,
+fresh native/browser checks for all five existing Field and Nullability bindings,
+and both separate conformance gates. See the
+[core acceptance record](../../fixtures/validation/cardinality-core-acceptance-evidence.json).
+All five native Cardinality bindings and Cardinality ideal admission remain unfinished.
+Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038

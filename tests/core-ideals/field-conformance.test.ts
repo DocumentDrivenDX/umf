@@ -12,6 +12,11 @@ test('all five binding contracts enforce policy and recover ideal/native represe
 test('current native/browser evidence fingerprints pass; changed inputs and missing evidence fail',async()=>{
  const evidence=await verifyFieldEvidence();expect(evidence.systems).toEqual([...fieldSystems]);expect(evidence.records).toHaveLength(4);
  const reader=async(path:string)=>new Uint8Array(await Bun.file(path).arrayBuffer());
+ await expect(verifyFieldEvidence(async path=>{
+  const bytes=await reader(path);if(!path.endsWith('field-core-acceptance-evidence.json'))return bytes;
+  const record=JSON.parse(new TextDecoder().decode(bytes));delete record.sha256['spec/core/cardinality-document.schema.json'];
+  return new TextEncoder().encode(JSON.stringify(record));
+ })).rejects.toThrow('missing required proof');
  await expect(verifyFieldEvidence(async path=>path==='src/model/types.ts'?new TextEncoder().encode('changed'):reader(path))).rejects.toThrow('stale');
  await expect(verifyFieldEvidence(async path=>{if(path.endsWith('remaining-field-bindings-acceptance-evidence.json'))throw Error('Missing native evidence');return reader(path);})).rejects.toThrow('Missing native evidence');
  await expect(verifyFieldEvidence(async path=>{
