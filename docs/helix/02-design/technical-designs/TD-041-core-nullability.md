@@ -853,3 +853,55 @@ and does not equate either native representation with the ideal. Stored
 availability does not claim write-input or query-result behavior. Avro and
 Parquet Nullability and the five-system delivery gate remain open; three
 qualified bindings do not graduate native equivalence.
+
+
+### Avro Nullability native discovery
+
+The 19-schema authored corpus in `fixtures/avro/nullability-cases.json` distinguishes
+present null, omitted writer API input and a field absent from the writer schema.
+It covers both null-union orders, defaults matching either branch, null-only and
+multi-value unions, arrays/maps with nullable members versus nullable containers,
+required/optional record parents, recursive named types, enums and an unknown
+logical annotation. Unknown metadata includes an integer beyond binary64's exact
+range; retained source text must preserve it exactly.
+
+The [Avro 1.12 specification](https://avro.apache.org/docs/1.12.0/specification/)
+separates field defaults used during reader resolution from encoding-time field
+optionality. Native evidence is qualified to Apache Avro Python 1.12.0 and
+fastavro 1.12.2, not all language implementations:
+
+- Both codecs encode omitted nullable fields as null in their default writer
+  APIs, but a missing writer-schema field still requires a reader default.
+- fastavro's default writer fills an omitted integer from its field default;
+  Apache's writer rejects that input. With a nullable union and integer default,
+  Apache writes null while fastavro writes the default. Explicit null remains
+  separate from omission.
+- Apache reader resolution rejects defaults that match only a non-first union
+  branch in two cases; fastavro accepts them. Source branch order/defaults stay
+  intact, and successful schema parsing alone proves neither reader behavior.
+- fastavro's strict writer rejects all 19 omitted-field inputs, including those
+  permitted by its default API mode. No single observed API mode establishes
+  portable member-omission semantics.
+- A null-only field has a zero-byte datum representation. Null branches in other
+  unions retain their branch indices; reader union reordering still resolves by
+  type. Nullable container elements do not permit a null container.
+
+`bun scripts/core-ideals/nullability-avro-oracle.ts` uses the existing Field
+archival receipts and both UMF formats before independently replaying native
+operations. It asserts 171 native outcomes, 342 recovered-source outcomes, eight
+reader/writer union-order resolutions and two permanent binary64-to-binary32
+narrowing counterexamples. Error object addresses are normalized for stable
+comparison; error classes and other message content remain recorded. Chromium
+retains all 19 schemas through 38 exact source recoveries and rejects 19 altered
+receipts without host globals or external requests.
+
+These checks establish native counterexamples and archival fidelity. Core
+Nullability up-classification, authored down-projection, operation/result schemas
+and their strict/report/residual tests remain unfinished. The binding must scope
+an explicit null-value carrier independently of writer-input and reader-resolution
+behavior, retain nested/name/default/logical refinements, and avoid assigning a
+scalar cardinality to container fields. No new native-equivalence claim follows.
+
+The [discovery checkpoint](../../../../fixtures/validation/nullability-avro-discovery-evidence.json)
+records source/runtime fingerprints, six existing Avro Field tests / 334 assertions
+and typechecking. It is not final binding acceptance.

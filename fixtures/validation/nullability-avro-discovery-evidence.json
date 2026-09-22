@@ -1,0 +1,48 @@
+{
+  "scope": "Avro Nullability native discovery and existing Field archival recovery only; core Nullability operations remain unfinished",
+  "bead": "umf-97221618-891e0275",
+  "bindingAccepted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "schemas": 19,
+    "nativeChecks": 171,
+    "recoveredNativeChecks": 342,
+    "unionResolution": 8,
+    "floatNarrowing": 2,
+    "browserRecoveries": 38,
+    "alteredReceiptRefusals": 19,
+    "typecheck": "passed",
+    "tests": 6,
+    "assertions": 334,
+    "failures": 0
+  },
+  "commands": [
+    "bun scripts/core-ideals/nullability-avro-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-avro-browser.ts",
+    "bun run typecheck",
+    "bun test tests/core-ideals/field-avro.test.ts tests/core-ideals/field-avro-projection.test.ts tests/core-ideals/record-avro.test.ts"
+  ],
+  "remaining": [
+    "Core 0.3.0 scoped Nullability classification and extension package",
+    "Authored strict/report projection and ideal recovery",
+    "Complete operation/result schemas, tests and browser parity",
+    "Broader acceptance and five-system Nullability delivery"
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-native.py": "6055dadb97361ece8678ccd89ae9c1b1aaa706e8357af0cf083b2d6872e804d6",
+    "dist/umf.js": "58f3b9bd0ecdce45ffa54f594c4f2344aedecbb53b12a9e9ade77bd3f32b4d13",
+    "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
+    "fixtures/validation/nullability-avro-browser.json": "9813020059e88afcfa43d1dd5673c4960f519b7a14917fafa4efbbeb716b4ec2",
+    "fixtures/validation/nullability-avro-discovery-tests.log": "396c75264dc432a1b672c0bc62b400f2ae56381f5bf496d3058b90dab950e096",
+    "fixtures/validation/nullability-avro-native.json": "d6f6433a19e3850d63ca4eb39dd3e7c713d2d87d7f6af65764cd4b571fbd6a1f",
+    "fixtures/validation/nullability-avro-recovered.json": "e6682bdc5c20038486f4662834ac268056f5871f32e6ffc808a70472ea69f38d",
+    "scripts/core-ideals/nullability-avro-browser.ts": "979c587e06cd5532c8e0796cc4a507b765382d859893ffd949f11cd710cf6914",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "54d8eabcc4a1b8533818d0a879e7996b383c6cc6b57f0176be719737211f053e",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "src/core-ideals/avro-field.ts": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "tests/core-ideals/field-avro.test.ts": "a0615a73ebe7af25f5a905e7f96fb6df4985e50c6918f6c17ba9414b982373c7",
+    "tests/core-ideals/field-avro-projection.test.ts": "284dfb6a2131653493d1f35645b99f347b051f93f6fd144cbfe3999e41bc05a2",
+    "tests/core-ideals/record-avro.test.ts": "5018d36a2787915cc3b832416580917a6db11a81b5809f11dd8f8f8e84c87b06"
+  }
+}

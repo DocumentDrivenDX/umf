@@ -1,0 +1,1801 @@
+{
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "checks": [
+    {
+      "id": "integer",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": []
+    },
+    {
+      "id": "integer",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema \"int\""
+    },
+    {
+      "id": "integer",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema \"int\""
+    },
+    {
+      "id": "integer",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": \"int\",\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "integer",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": []
+    },
+    {
+      "id": "integer",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "an integer is required on field value"
+    },
+    {
+      "id": "integer",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "integer",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "integer",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "integer-default",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": []
+    },
+    {
+      "id": "integer-default",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema \"int\""
+    },
+    {
+      "id": "integer-default",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema \"int\""
+    },
+    {
+      "id": "integer-default",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "integer-default",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": []
+    },
+    {
+      "id": "integer-default",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "an integer is required on field value"
+    },
+    {
+      "id": "integer-default",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": []
+    },
+    {
+      "id": "integer-default",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "integer-default",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-first",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "null-first",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "null-first",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-last",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "null-last",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "null-last",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-null",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "InvalidDefaultException",
+      "message": "(<avro.schema.PrimitiveSchema object at <object-address>>, None)"
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-null",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "InvalidDefaultException",
+      "message": "(<avro.schema.PrimitiveSchema object at <object-address>>, 7)"
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-first-default-int",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-last-default-int",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "null-only",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": \"null\",\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "null-only",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "",
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "null-only",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "multiple-values",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": "hello"
+      },
+      "hex": "000a68656c6c6f",
+      "warnings": []
+    },
+    {
+      "id": "multiple-values",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "multiple-values",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "multiple-values",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"string\",\n        \"null\",\n        \"int\"\n      ],\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "multiple-values",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": "hello"
+      },
+      "hex": "000a68656c6c6f",
+      "warnings": []
+    },
+    {
+      "id": "multiple-values",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "multiple-values",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "id": "multiple-values",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "multiple-values",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": [
+          null,
+          7
+        ]
+      },
+      "hex": "0400020e00",
+      "warnings": []
+    },
+    {
+      "id": "array-null-items",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"array\",\n  \"items\": [\n    \"null\",\n    \"int\"\n  ]\n}"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"array\",\n  \"items\": [\n    \"null\",\n    \"int\"\n  ]\n}"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"int\"\n        ]\n      },\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": [
+          null,
+          7
+        ]
+      },
+      "hex": "0400020e00",
+      "warnings": []
+    },
+    {
+      "id": "array-null-items",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "'NoneType' object is not iterable on field value"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "array-null-items",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "nullable-array",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": []
+      },
+      "hex": "0200",
+      "warnings": []
+    },
+    {
+      "id": "nullable-array",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-array",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-array",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ],\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "nullable-array",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": []
+      },
+      "hex": "0200",
+      "warnings": []
+    },
+    {
+      "id": "nullable-array",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-array",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-array",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "nullable-array",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 7
+        }
+      },
+      "hex": "040261000262020e00",
+      "warnings": []
+    },
+    {
+      "id": "map-null-values",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"map\",\n  \"values\": [\n    \"null\",\n    \"int\"\n  ]\n}"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"map\",\n  \"values\": [\n    \"null\",\n    \"int\"\n  ]\n}"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": [\n          \"null\",\n          \"int\"\n        ]\n      },\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 7
+        }
+      },
+      "hex": "040261000262020e00",
+      "warnings": []
+    },
+    {
+      "id": "map-null-values",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "object of type 'NoneType' has no len() on field value"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "map-null-values",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "nullable-map",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {}
+      },
+      "hex": "0200",
+      "warnings": []
+    },
+    {
+      "id": "nullable-map",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-map",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-map",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"map\",\n          \"values\": \"int\"\n        }\n      ],\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "nullable-map",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {}
+      },
+      "hex": "0200",
+      "warnings": []
+    },
+    {
+      "id": "nullable-map",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-map",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "nullable-map",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "nullable-map",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "required-parent",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "item": null
+        }
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "required-parent",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"Child\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"name\": \"item\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "required-parent",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"Child\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"name\": \"item\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "required-parent",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Child\",\n        \"namespace\": \"availability\",\n        \"fields\": [\n          {\n            \"type\": [\n              \"null\",\n              \"int\"\n            ],\n            \"name\": \"item\"\n          }\n        ]\n      },\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "required-parent",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "item": null
+        }
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "required-parent",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "'NoneType' object is not iterable on field value"
+    },
+    {
+      "id": "required-parent",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "required-parent",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "required-parent",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "optional-parent",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "item": null
+        }
+      },
+      "hex": "0200",
+      "warnings": []
+    },
+    {
+      "id": "optional-parent",
+      "codec": "apache",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "optional-parent",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "optional-parent",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"Child\",\n          \"namespace\": \"availability\",\n          \"fields\": [\n            {\n              \"type\": [\n                \"null\",\n                \"int\"\n              ],\n              \"name\": \"item\"\n            }\n          ]\n        }\n      ],\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "optional-parent",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "item": null
+        }
+      },
+      "hex": "0200",
+      "warnings": []
+    },
+    {
+      "id": "optional-parent",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "optional-parent",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "optional-parent",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "optional-parent",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "recursive",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "next": null
+        }
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "recursive",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"Node\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        \"availability.Node\"\n      ],\n      \"name\": \"next\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "recursive",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"Node\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": [\n        \"null\",\n        \"availability.Node\"\n      ],\n      \"name\": \"next\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "recursive",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Node\",\n        \"namespace\": \"availability\",\n        \"fields\": [\n          {\n            \"type\": [\n              \"null\",\n              \"availability.Node\"\n            ],\n            \"name\": \"next\"\n          }\n        ]\n      },\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "recursive",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": {
+          "next": null
+        }
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "recursive",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "'NoneType' object is not iterable on field value"
+    },
+    {
+      "id": "recursive",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "recursive",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "recursive",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": [
+        "Unknown futureAvailability, using int."
+      ]
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"int\",\n  \"logicalType\": \"futureAvailability\"\n}"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"int\",\n  \"logicalType\": \"futureAvailability\"\n}"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"futureAvailability\"\n      },\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "0e",
+      "warnings": []
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "TypeError",
+      "message": "an integer is required on field value"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "unknown-logical",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    },
+    {
+      "id": "enum",
+      "codec": "apache",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": "A"
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "enum",
+      "codec": "apache",
+      "operation": "null",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"enum\",\n  \"name\": \"Choice\",\n  \"namespace\": \"availability\",\n  \"symbols\": [\n    \"A\",\n    \"B\"\n  ]\n}"
+    },
+    {
+      "id": "enum",
+      "codec": "apache",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "AvroTypeException",
+      "message": "The datum \"None\" provided for \"value\" is not an example of the schema {\n  \"type\": \"enum\",\n  \"name\": \"Choice\",\n  \"namespace\": \"availability\",\n  \"symbols\": [\n    \"A\",\n    \"B\"\n  ]\n}"
+    },
+    {
+      "id": "enum",
+      "codec": "apache",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionException",
+      "message": "No default value for field value\nWriter's Schema: {\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": []\n}\nReader's Schema: {\n  \"type\": \"record\",\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  },\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"type\": {\n        \"type\": \"enum\",\n        \"name\": \"Choice\",\n        \"namespace\": \"availability\",\n        \"symbols\": [\n          \"A\",\n          \"B\"\n        ]\n      },\n      \"name\": \"value\"\n    }\n  ]\n}"
+    },
+    {
+      "id": "enum",
+      "codec": "fastavro",
+      "operation": "present",
+      "status": "accepted",
+      "value": {
+        "value": "A"
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "id": "enum",
+      "codec": "fastavro",
+      "operation": "null",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "None is not in list"
+    },
+    {
+      "id": "enum",
+      "codec": "fastavro",
+      "operation": "omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "no value and no default for value"
+    },
+    {
+      "id": "enum",
+      "codec": "fastavro",
+      "operation": "reader-missing-field",
+      "status": "rejected",
+      "error": "SchemaResolutionError",
+      "message": "No default value for field value in availability.Example"
+    },
+    {
+      "id": "enum",
+      "codec": "fastavro",
+      "operation": "strict-omitted",
+      "status": "rejected",
+      "error": "ValueError",
+      "message": "Field value is specified in the schema but missing from the record"
+    }
+  ],
+  "scope": "Pinned Python binary datum writers/readers; API omission behavior is not schema-level optionality",
+  "fingerprints": {
+    "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-native.py": "6055dadb97361ece8678ccd89ae9c1b1aaa706e8357af0cf083b2d6872e804d6",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "54d8eabcc4a1b8533818d0a879e7996b383c6cc6b57f0176be719737211f053e",
+    "fixtures/validation/nullability-avro-recovered.json": "e6682bdc5c20038486f4662834ac268056f5871f32e6ffc808a70472ea69f38d"
+  },
+  "recoveredNativeChecks": 342,
+  "unionResolution": [
+    {
+      "codec": "apache",
+      "writer": "null-first",
+      "reader": "null-last",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "codec": "apache",
+      "writer": "null-first",
+      "reader": "null-last",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "codec": "apache",
+      "writer": "null-last",
+      "reader": "null-first",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "codec": "apache",
+      "writer": "null-last",
+      "reader": "null-first",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    },
+    {
+      "codec": "fastavro",
+      "writer": "null-first",
+      "reader": "null-last",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "00",
+      "warnings": []
+    },
+    {
+      "codec": "fastavro",
+      "writer": "null-first",
+      "reader": "null-last",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "020e",
+      "warnings": []
+    },
+    {
+      "codec": "fastavro",
+      "writer": "null-last",
+      "reader": "null-first",
+      "status": "accepted",
+      "value": {
+        "value": null
+      },
+      "hex": "02",
+      "warnings": []
+    },
+    {
+      "codec": "fastavro",
+      "writer": "null-last",
+      "reader": "null-first",
+      "status": "accepted",
+      "value": {
+        "value": 7
+      },
+      "hex": "000e",
+      "warnings": []
+    }
+  ],
+  "floatNarrowing": [
+    {
+      "codec": "apache",
+      "input": 1.0000000000000002,
+      "status": "accepted",
+      "value": {
+        "value": 1.0
+      },
+      "hex": "0000803f",
+      "warnings": []
+    },
+    {
+      "codec": "fastavro",
+      "input": 1.0000000000000002,
+      "status": "accepted",
+      "value": {
+        "value": 1.0
+      },
+      "hex": "0000803f",
+      "warnings": []
+    }
+  ],
+  "limitations": [
+    "These are native availability counterexamples, not an implemented core Nullability binding.",
+    "Apache and fastavro differ in writer omission/default and reader union-default handling.",
+    "Unknown logical annotations are native refinements; accepted underlying values do not establish their meaning.",
+    "No writer API behavior is generalized to all Avro implementations or interpreted as portable member omission."
+  ]
+}

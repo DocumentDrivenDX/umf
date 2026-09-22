@@ -1,0 +1,17 @@
+{
+  "scope": "Existing Field archival receipts retain the Avro availability discovery corpus; Nullability classification and projection remain unfinished",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "schemas": 19,
+    "recoveries": 38,
+    "forgedRefusals": 19
+  },
+  "externalRequests": [],
+  "fingerprints": {
+    "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
+    "dist/umf.js": "58f3b9bd0ecdce45ffa54f594c4f2344aedecbb53b12a9e9ade77bd3f32b4d13",
+    "scripts/core-ideals/nullability-avro-browser.ts": "979c587e06cd5532c8e0796cc4a507b765382d859893ffd949f11cd710cf6914",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "src/core-ideals/avro-field.ts": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f"
+  }
+}

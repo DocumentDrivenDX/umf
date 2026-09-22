@@ -102,7 +102,9 @@ current broader regression passes 234 tests / 16,414 assertions across 68 files;
 separate Field gate passes three tests / 24 assertions. This supersedes the older
 refresh counts above. See the
 [SQL Server acceptance record](../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
-Avro and Parquet Nullability are ready;
+Avro Nullability is in progress with a 19-schema, two-codec native discovery
+corpus and exact source recovery in Chromium. Classification and authored
+projection remain unfinished. Parquet Nullability is ready;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

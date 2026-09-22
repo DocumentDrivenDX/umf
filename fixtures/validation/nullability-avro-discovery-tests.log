@@ -1,0 +1,18 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-avro.test.ts:
+(pass) Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles [3755.99ms]
+(pass) missing/reordered dependency archives, authored conflicts and stale receipts are refused [438.42ms]
+
+tests/core-ideals/record-avro.test.ts:
+(pass) declared empty, nested, recursive and dependency records retain ordered direct members [3622.68ms]
+(pass) one conflicting member, stale provenance, collisions or a non-declaration selection cannot publish a record [2074.15ms]
+
+tests/core-ideals/field-avro-projection.test.ts:
+(pass) explicit Avro carriers preserve field docs and recover ideal through serialized reports [1538.23ms]
+(pass) strict/report loss, invalid names, structured-kind refusals and stale schemas fail explicitly [218.27ms]
+
+ 6 pass
+ 0 fail
+ 334 expect() calls
+Ran 6 tests across 3 files. [11.89s]
