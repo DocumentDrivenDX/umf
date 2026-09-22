@@ -1,0 +1,64 @@
+{
+  "phase": "PostgreSQL authored Nullability projection checkpoint",
+  "bindingAcceptance": false,
+  "nativeEquivalence": false,
+  "scope": "Single authored core 0.3.0 Field, explicit built-in scalar carrier and stored-relation SQL-NULL policy; native PostgreSQL 17.4 execution, WASM receipt parity and retained-report ideal recovery; no value-domain equivalence",
+  "native": {
+    "serverVersion": 170004,
+    "executed": 60,
+    "blocked": 13,
+    "idealRecoveries": 60,
+    "classified": 60,
+    "nativeRecoveries": 60
+  },
+  "browser": {
+    "cases": 73,
+    "blocked": 13,
+    "recoveries": 120,
+    "forgedRefusals": 60,
+    "identifierRefusals": 4
+  },
+  "classificationBrowser": {
+    "nativeCasesRetained": 18,
+    "catalogTreeRecoveries": 2,
+    "classificationCases": 176,
+    "classified": 91,
+    "blocked": 85,
+    "exactSourceRecoveries": 182,
+    "forgedRefusals": 91
+  },
+  "regression": {
+    "command": "bun test tests/core-ideals/nullability-postgresql-projection.test.ts tests/core-ideals/field-postgresql-projection.test.ts tests/core/nullability-authoring.test.ts",
+    "tests": 12,
+    "assertions": 674,
+    "files": 3,
+    "failures": 0
+  },
+  "checks": {
+    "typecheck": "passed",
+    "browserBuildBytes": 10240446,
+    "jsonSchemas": 220,
+    "extensionPackages": 34
+  },
+  "remaining": [
+    "Broader Field/core regression",
+    "Refresh five-system Field native/browser evidence after library changes",
+    "Full PostgreSQL Nullability binding acceptance"
+  ],
+  "fingerprints": {
+    "src/index.ts": "b01825233a3e3b54d7f59dc52a1d8cd09e4f2d3cfec7b956cb4e082977d014aa",
+    "src/core-ideals/nullability-postgresql-projection.ts": "76baf46987fed262226d3a023584da6a581fe45cb4c4c0bc9510088f7480e954",
+    "src/core-ideals/postgresql-syntax.ts": "250d017292534a0bbc3afa2f03c57ef10b423d5cd89816c0368f7c12c9f0ca50",
+    "spec/core/nullability-postgresql-projection.schema.json": "073104796361bc965b6b51655d0d27dad59b90094d1c6d8f8279286f2f684570",
+    "scripts/core-ideals/nullability-postgresql-projection-schema.ts": "92b1b9daf4aefa094724269ce510da9e04a7aee3c5477102797afc3373e64941",
+    "scripts/core-ideals/nullability-postgresql-projection-cases.ts": "7df2a9b288347165aa9e72d4af292d1b1d823fdfb04bd671a77d9c32edefca35",
+    "scripts/core-ideals/nullability-postgresql-projection-oracle.ts": "53c051764634b40d59a4132953c23d3e1d1233642f14bc786390af83999a3ae2",
+    "scripts/core-ideals/nullability-postgresql-projection-browser.ts": "de25312cbcee465ba26d0541b3ad943fcb8b2203d34bb6fe85818d4ad6bd2f45",
+    "tests/core-ideals/nullability-postgresql-projection.test.ts": "4be5e69407bad5ba9adf89a3dfdd3c4114df1ad933687a13bc24fe9adbd4803e",
+    "fixtures/validation/nullability-postgresql-projection-tests.log": "44a25224725c5ff26cb8c85a5dc6b8ecec71702d2b1104feddd322898e0cf29d",
+    "fixtures/validation/nullability-postgresql-projection-native.json": "25c6ecc8ea0aabeed8fb1da15d187e0476a8d78a29a0e89d932ac2546c3e2525",
+    "fixtures/validation/nullability-postgresql-projection-browser.json": "060bc5e644cca24709222d15ad7d88ab518a5845da2c79b9337162f1f1789b1f",
+    "fixtures/validation/nullability-postgresql-browser.json": "3a1c93319062b3e0ab5eadf8618b415386e93ead39bf97720aafe8cfcb7fb17d",
+    "dist/umf.js": "f1ddf2700d02e045dc3ff0782780e35141bfc3f3a1a53784a203d61c03644990"
+  }
+}

@@ -1,0 +1,24 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [7.94ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [24.71ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.74ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [4.64ms]
+
+tests/core-ideals/field-postgresql-projection.test.ts:
+(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [1363.15ms]
+(pass) unsafe or truncating identifiers are rejected before parser invocation [11.60ms]
+(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [24.54ms]
+(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [30.43ms]
+
+tests/core-ideals/nullability-postgresql-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [2854.32ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [50.07ms]
+(pass) identifiers cannot be truncated and strict loss does not invoke the parser [13.22ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [29.23ms]
+
+ 12 pass
+ 0 fail
+ 674 expect() calls
+Ran 12 tests across 3 files. [4.70s]

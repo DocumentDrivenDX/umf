@@ -88,7 +88,9 @@ scope metadata, both recovery directions and qualified native row checks.
 Prior five-system Field evidence passed its rerun at the TableSpec checkpoint.
 PostgreSQL is in progress: native discovery and scoped up-classification now
 preserve capture text through JSON/YAML, with a retained scope extension and
-explicit refusal/residual paths. Authored projection and ideal recovery remain.
+explicit refusal/residual paths. Authored PostgreSQL projection and retained-report
+ideal recovery are now implemented and have native/browser evidence; the broader
+evidence refresh and binding acceptance remain.
 The preceding Field gate record is historical after this new library API;
 its native/browser checks must be refreshed before PostgreSQL binding acceptance.
 SQL Server, Avro and Parquet are the three remaining ready bindings;

@@ -23,7 +23,8 @@ projection, both recovery directions and qualified native row checks have passed
 binding acceptance. The other four native bindings and Nullability admission
 remain unfinished. PostgreSQL discovery now has 18 passing native probes and
 scoped classification with retained provenance and capture-text recovery.
-Its authored projection remains unfinished; the earlier Field gate fingerprints
+Authored PostgreSQL projection now has native execution and browser recovery
+evidence. Binding acceptance and the earlier Field gate fingerprints still
 need revalidation after this library change.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).

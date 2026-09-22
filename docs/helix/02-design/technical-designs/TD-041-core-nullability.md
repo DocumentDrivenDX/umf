@@ -595,3 +595,50 @@ classification cases, 182 exact source recoveries and 91 altered-receipt refusal
 219 JSON Schemas and 34 extension packages. Source and evidence hashes qualify
 this checkpoint. The native oracle still measures native behavior separately
 from the browser classifier; it does not establish authored native projection.
+
+
+### PostgreSQL authored projection implementation checkpoint
+
+`projectNullabilityToPostgresql` now accepts verified core 0.3.0 availability
+authorship and an explicit native scalar carrier. Required maps to column
+`NOT NULL`; absent-allowed maps to explicit `NULL`; unspecified emits no
+availability clause. Required/absent-allowed need stored-relation scope and the
+SQL-NULL carrier. An unresolved carrier or a query/input scope becomes a residual:
+strict blocks without a target, while report emits a candidate without that
+availability assertion. Unspecified carries no availability obligation and does
+not acquire one from native defaults.
+
+The projection audits document, module and Field metadata. Other elements,
+unknown refinements, vocabulary semantics, conflicting namespaces/names and scalar
+family mismatches remain explicit residuals. Selected descriptions become escaped
+column comments; native type names are qualified with `pg_catalog`. Identifiers
+are quoted and must fit PostgreSQL's 63-byte UTF-8 limit. This binding creates a
+single table column in an existing schema; it does not execute defaults or infer
+facets, keys or lifecycle semantics.
+
+`recoverNullabilityFromPostgresql` checks the complete receipt against a fresh
+projection and requires unchanged native SQL before returning the original
+model, including unprojected assertions. Native-only reclassification establishes
+an observation with its own provenance. In particular, SQL generated from an
+authored unspecified is observed as absent-allowed; the author intent is recovered
+from the receipt, not guessed from the catalog. Report-mode loss remains visible
+when an unprojected required assertion produced a nullable candidate.
+
+The native corpus includes all 14 existing PostgreSQL scalar carriers, the three
+availability ideals, strict/report policies, unresolved carrier/scope, namespace
+and scalar-family conflicts, unknown metadata and quoted identifiers. Native
+checks execute generated DDL, attempt NULL, omitted and present values, inspect
+captured declarations, recover author models and reclassify captured columns.
+Browser checks use the pinned WASM parser and compare full projection receipts
+with the native-run corpus through both serializations. These checks do not claim
+value-domain equivalence. Final binding acceptance still requires the broader
+Field/core regression and native/browser evidence refresh.
+
+The [authored projection checkpoint](../../../../fixtures/validation/nullability-postgresql-projection-evidence.json)
+records 73 policy cases: 60 native targets execute and 13 strict cases block.
+Native checks recover 60 author models and 60 captured sources; Chromium recovers
+120 author models across JSON/YAML and refuses 60 altered receipts. The current
+classification browser rerun still passes 176 cases / 182 source recoveries.
+Twelve focused Bun tests / 674 assertions, typecheck, browser builds and audits of
+220 JSON Schemas / 34 packages pass. The PostgreSQL bead remains in progress until
+the broader evidence refresh and acceptance review complete.

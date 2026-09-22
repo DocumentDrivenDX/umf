@@ -1,0 +1,11 @@
+import base from '../../spec/core/field-postgresql-projection.schema.json';
+const schema:any=structuredClone(base);
+schema.$id='urn:umf:core:nullability-postgresql-projection:1.0.0';schema.title='Authored availability projection to PostgreSQL stored columns';
+schema.properties.operation.const='project-nullability-postgresql';schema.properties.source.$ref='urn:umf:core:0.3.0';
+schema.properties.author.$ref='urn:umf:core:nullability-operation:1.0.0#/$defs/declaration';
+schema.properties.binding.const={id:'umf.core.nullability.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored Field availability with explicit pg_catalog carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence'};
+const req=schema.properties.request;
+Object.assign(req.properties,{scope:{enum:['stored-relation','query-result','write-input','unresolved']},carrier:{enum:['sql-null','unresolved']}});req.required.push('scope','carrier');
+const mapping=schema.properties.mapping;
+Object.assign(mapping.properties,{nullability:{enum:['required','absent-allowed','unspecified']},encoding:{enum:['not-null','null','omitted']},scope:req.properties.scope,carrier:req.properties.carrier});mapping.required.push('nullability','encoding','scope','carrier');
+await Bun.write('spec/core/nullability-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
