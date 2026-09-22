@@ -669,7 +669,7 @@
   "sha256": {
     "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
     "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "2173c00063b7404bc2f79a1a7886022f529343fed085caa330bcef1037b06807",
-    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "3f0bcccc5ecae72e61b709b8d8a5692d4c7f39bdcfd1a45248b266c2253e21de",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "e9c49b4ca93135d523866734e3f1863889de0361f09ce73f936ccf8865aeba6b",
     "docs/helix/03-test/test-plan.md": "69c70ec0a80addcfeca0835c12745b65532a6956d864e04d1d89f3a7b4a22f22",
     "docs/helix/04-build/implementation-plan.md": "0c70e9c709a9ddb15270483fe969417e819e621abcf373cbb87f655934291dc2",
     "docs/helix/README.md": "fcc21674662d7d74d9ebd42eafc4e8f4d3d8dd89a3f7b73e9ba34e160b5da98d",
@@ -980,5 +980,14 @@
     "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3",
     "tests/core/cardinality-ideals.test.ts": "542fc37156602067ca4c6beb5cebb4abfaf754f6969fb7977b0f68842dc1ea5b",
     "tests/core/cardinality-operations.test.ts": "e1be48e863f741d8dbd2fa8197e7f211bcf03a8c8b69a62f98c47d92ac357d15"
+  },
+  "revalidation": {
+    "reason": "TD-042 adds native TableSpec discovery and pending binding requirements; no core/library/schema behavior changed",
+    "previousFingerprints": {
+      "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "3f0bcccc5ecae72e61b709b8d8a5692d4c7f39bdcfd1a45248b266c2253e21de"
+    },
+    "unchangedImplementationProofsChecked": 312,
+    "nativeEvidence": "fixtures/validation/cardinality-tablespec-profile-native.json",
+    "note": "Core acceptance remains unchanged. This documentation refresh does not accept or admit a native Cardinality binding."
   }
 }

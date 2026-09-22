@@ -1,0 +1,1940 @@
+{
+  "scope": "Pinned TableSpec declaration acceptance and generated JSON Schema / PySpark value behavior. Native discovery only; UMF Cardinality classification/projection and recovery remain unfinished.",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "versions": {
+    "pydantic": "2.11.10",
+    "jsonschema": "4.25.1",
+    "spark": "4.0.1",
+    "java": "21.0.2"
+  },
+  "declarations": [
+    {
+      "case": "VARCHAR",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "VARCHAR",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", StringType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value STRING\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "DECIMAL",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "DECIMAL"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "DECIMAL",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", DecimalType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value DECIMAL\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "decimal(10,0)",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "INTEGER",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "INTEGER",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", IntegerType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value INTEGER\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "DATE",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "DATE"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "DATE",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", StringType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value DATE\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "DATETIME",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "DATETIME"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "DATETIME",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", TimestampType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value DATETIME\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "timestamp",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "TIMESTAMP",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "TIMESTAMP"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "TIMESTAMP",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", TimestampType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value TIMESTAMP\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "timestamp",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "BOOLEAN",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "BOOLEAN"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "BOOLEAN",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "boolean",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", BooleanType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value BOOLEAN\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "boolean",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "TEXT",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "TEXT"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "TEXT",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", StringType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value TEXT\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "CHAR",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "CHAR"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "CHAR",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", StringType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value CHAR\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "FLOAT",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "FLOAT"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "FLOAT",
+        "dimension": null,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": null
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", FloatType(), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value FLOAT\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "float",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "ARRAY",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "ARRAY",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "ARRAY<FLOAT>",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "MAP",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "MAP",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "STRUCT",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "STRUCT",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING(3)",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "embedding",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "embedding",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING_FUTURE",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "embedding-missing",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING"
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": true,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "embedding-null",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": null
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": true,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "embedding-one",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": 1
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "EMBEDDING",
+        "dimension": 1,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": null,
+            "items": {
+              "type": "number"
+            },
+            "minItems": 1,
+            "maxItems": 1
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value ARRAY<FLOAT>\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "embedding-three",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "EMBEDDING",
+        "dimension": 3,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": null,
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value ARRAY<FLOAT>\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "embedding-zero",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": 0
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "embedding-negative",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": -1
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "embedding-fraction",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": 1.5
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": false,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "embedding-string",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": "3"
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": false,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "EMBEDDING",
+        "dimension": 3,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": null,
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value ARRAY<FLOAT>\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "embedding-boolean",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": true
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": false,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "EMBEDDING",
+        "dimension": 1,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": null,
+            "items": {
+              "type": "number"
+            },
+            "minItems": 1,
+            "maxItems": 1
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value ARRAY<FLOAT>\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER",
+            "dimension": 3
+          }
+        ]
+      },
+      "expectedRuntime": false,
+      "expectedSchema": true,
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "future-column-content",
+      "source": {
+        "version": "1.0",
+        "table_name": "Cardinality",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "EMBEDDING",
+            "dimension": 3,
+            "future_shape": {
+              "unknown": [
+                1,
+                2
+              ]
+            }
+          }
+        ]
+      },
+      "expectedRuntime": true,
+      "expectedSchema": true,
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "normalizedColumn": {
+        "name": "value",
+        "canonical_name": null,
+        "aliases": null,
+        "data_type": "EMBEDDING",
+        "dimension": 3,
+        "position": null,
+        "description": null,
+        "nullable": null,
+        "sample_values": null,
+        "length": null,
+        "precision": null,
+        "scale": null,
+        "title": null,
+        "format": null,
+        "fallback_formats": null,
+        "notes": null,
+        "source": null,
+        "key_type": null,
+        "exclude_from_change_detection": false,
+        "internal": false,
+        "reporting_requirement": null,
+        "report_sheet": null,
+        "derived_from": null,
+        "derivation_mapping": null,
+        "derivation_expression": null,
+        "domain_type": null,
+        "derivation": null,
+        "provenance_policy": null,
+        "provenance_notes": null,
+        "pivot_field": null,
+        "pivot_source_table": null,
+        "pivot_source_column": null,
+        "pivot_index": null,
+        "pivot_max_count": null,
+        "default": null,
+        "profiling": null,
+        "null_output_value": null,
+        "preserve_literal_null": false,
+        "merge_strategy": null,
+        "merge_source": null,
+        "merge_condition": null
+      },
+      "generatedJsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": null,
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": null,
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "generatedJsonSchemaValid": false,
+      "generatedSparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])",
+      "generatedSql": "-- DDL for Cardinality\n-- Generated from UMF specification\n\nCREATE TABLE Cardinality (\n    value ARRAY<FLOAT>\n)\n;",
+      "generatedSparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      }
+    }
+  ],
+  "rawGeneratorControls": [
+    {
+      "case": "EMBEDDING_FUTURE",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": "Schema for Cardinality table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])"
+    },
+    {
+      "case": "embedding",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": "Schema for Cardinality table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])"
+    },
+    {
+      "case": "embedding-missing",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": "Schema for Cardinality table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType, ArrayType\n\ncardinality_schema = StructType([\n    StructField(\"value\", ArrayType(FloatType()), True)\n])"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Cardinality Schema",
+        "type": "object",
+        "description": "Schema for Cardinality table",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSource": "# PySpark Schema for Cardinality\n# Generated from UMF specification\n# NOTE: Includes data + filename-sourced columns; excludes meta_* provenance columns\n\nfrom pyspark.sql.types import StructType, StructField\nfrom pyspark.sql.types import StringType, IntegerType, LongType, DecimalType\nfrom pyspark.sql.types import FloatType, DoubleType, BooleanType, DateType, TimestampType\n\ncardinality_schema = StructType([\n    StructField(\"value\", IntegerType(), True)\n])"
+    }
+  ],
+  "valueSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Cardinality Schema",
+    "type": "object",
+    "description": "Schema for Cardinality table",
+    "properties": {
+      "value": {
+        "type": "array",
+        "description": "",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 3,
+        "maxItems": 3
+      }
+    },
+    "required": []
+  },
+  "values": [
+    {
+      "case": "ordered",
+      "input": {
+        "value": [
+          3.0,
+          1.0,
+          2.0
+        ]
+      },
+      "jsonAccepted": true,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": [
+          3.0,
+          1.0,
+          2.0
+        ]
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "duplicates",
+      "input": {
+        "value": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "jsonAccepted": true,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "empty",
+      "input": {
+        "value": []
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": []
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "short",
+      "input": {
+        "value": [
+          1.0
+        ]
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": [
+          1.0
+        ]
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "long",
+      "input": {
+        "value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ]
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": [
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ]
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "null-item",
+      "input": {
+        "value": [
+          1.0,
+          null,
+          2.0
+        ]
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": [
+          1.0,
+          null,
+          2.0
+        ]
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "null-container",
+      "input": {
+        "value": null
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": null
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "narrowing",
+      "input": {
+        "value": [
+          1.0000000000000002,
+          1.0,
+          2.0
+        ]
+      },
+      "jsonAccepted": true,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": [
+          1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "sparkErrorType": null
+    },
+    {
+      "case": "nested",
+      "input": {
+        "value": [
+          [
+            1.0
+          ],
+          [
+            2.0
+          ],
+          [
+            3.0
+          ]
+        ]
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": false,
+      "sparkValue": null,
+      "sparkErrorType": "PySparkTypeError"
+    },
+    {
+      "case": "map",
+      "input": {
+        "value": {
+          "x": 1.0
+        }
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": false,
+      "sparkValue": null,
+      "sparkErrorType": "PySparkTypeError"
+    },
+    {
+      "case": "string",
+      "input": {
+        "value": "[1,2,3]"
+      },
+      "jsonAccepted": false,
+      "sparkAccepted": false,
+      "sparkValue": null,
+      "sparkErrorType": "PySparkTypeError"
+    },
+    {
+      "case": "integer-items",
+      "input": {
+        "value": [
+          1,
+          2,
+          3
+        ]
+      },
+      "jsonAccepted": true,
+      "sparkAccepted": false,
+      "sparkValue": null,
+      "sparkErrorType": "PySparkTypeError"
+    },
+    {
+      "case": "omitted",
+      "input": {},
+      "jsonAccepted": true,
+      "sparkAccepted": true,
+      "sparkValue": {
+        "value": null
+      },
+      "sparkErrorType": null
+    }
+  ],
+  "limits": [
+    "Only the named generator paths and synthetic rows are executed; no complete TableSpec ingestion pipeline or GX execution claim.",
+    "SQL output is retained but not executed by this probe.",
+    "Value validation uses the checked raw-input generated JSON Schema. Full normalized model dumps produce invalid null-valued description annotations; that output is recorded but not claimed valid.",
+    "Unknown column metadata is accepted then dropped by Pydantic normalization; UMF must retain the original source.",
+    "EMBEDDING dimensionality is enforced by generated JSON Schema but absent from the generated Spark data type. Item-null and numeric precision rules also differ.",
+    "Runtime normalization of dimension strings/booleans is observed, never permission to infer exact authored integer metadata.",
+    "UMF native archive recovery, strict/report projections and Chromium checks remain required binding work."
+  ],
+  "sha256": {
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd"
+  }
+}

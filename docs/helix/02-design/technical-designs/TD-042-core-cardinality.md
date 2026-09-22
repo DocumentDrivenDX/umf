@@ -295,3 +295,58 @@ as a useful cross-system ideal yet. TableSpec, PostgreSQL, SQL Server, Avro and
 Parquet Cardinality bindings remain pending, with strict/report loss handling,
 qualified native up-classification and both recovery directions required. No native
 equivalence, row-value validation or automatic native shape inference is claimed.
+
+### TableSpec native discovery and binding requirements
+
+The [native profile probe](../../../../fixtures/validation/cardinality-tablespec-profile-native.json)
+executes the pinned TableSpec model, checked-in schema and schema generators at
+`647e8e566ad78b864282ec65c0b0b2237aa63084`, with Pydantic 2.11.10 and Spark 4.0.1.
+It covers all ten scalar declarations, EMBEDDING dimensions, unsupported containers,
+unknown column content, raw generator bypasses and thirteen synthetic value cases.
+This is discovery evidence; the Cardinality binding is not implemented or admitted.
+
+The binding must preserve these distinctions:
+
+- The ten recognized scalar declarations generate singular fields. General ARRAY,
+  MAP and STRUCT declarations are rejected. Permissive native helper fallbacks and
+  prefix matching do not establish a supported declaration.
+- EMBEDDING is a vector declaration with a runtime-required positive dimension.
+  The checked-in schema also accepts missing dimensions and dimensions on scalar
+  fields that the runtime rejects. Runtime coercion accepts string/boolean dimensions
+  rejected by that schema. Select the declaration profile explicitly; do not copy
+  a coerced dimension back as an authored exact integer.
+- Generated Spark schemas use `ArrayType(FloatType(), containsNull=True)` without
+  enforcing dimension. Generated JSON schemas from raw declarations enforce exact
+  length and numeric, non-null items. Empty/short/long vectors and null members are
+  therefore profile-dependent. Container availability remains a separate obligation.
+- Spark preserves order and duplicate vector values, but narrows the existing
+  binary64 counterexample to binary32. JSON numeric acceptance does not prove float
+  representation fidelity; an unqualified float family cannot discharge exactness.
+- Unknown column properties pass native declaration validation but disappear from
+  Pydantic dumps. Retain the original native text/column content independently.
+- Full normalized dumps contain null-valued descriptions that this generator copies
+  into invalid JSON Schema annotations. The value oracle validates and executes the
+  raw-input generated JSON schema instead. Raw and normalized generator inputs are
+  different profiles, not interchangeable views.
+
+Implementation must classify a checked EMBEDDING as a container, never a scalar.
+A caller-selected execution profile may supply qualified item metadata; retain
+vector dimensions, float width and member-null behavior in the native extension.
+Do not infer an item definition merely from a column name or scalar family. Nested
+item references, unknown labels and authored conflicts still obey the core rules.
+
+Down-projection requires an explicit native carrier. A general ideal array is not
+identical to a fixed-dimension float vector: added length/item restrictions, member
+nullability and precision loss must block strict mode or remain report residuals.
+No native map declaration exists in this profile. Any text/JSON encoding must be an
+explicit separate encoding with shape/enforcement loss; report mode cannot emit
+unsupported MAP syntax. Retained author receipts recover meaning that native syntax
+alone cannot reconstruct. Both native archive recovery and Chromium parity remain
+required before the binding bead can close.
+
+Run the discovery probe through `bun scripts/core-ideals/cardinality-tablespec-profile-oracle.ts`.
+The Python entrypoint asserts native behavior and emits source fingerprints; the Bun
+entrypoint verifies those fingerprints after successful completion. This command
+executes no complete ingestion pipeline, GX expectations or generated SQL. The public
+classification/projection APIs, extension package, operation schemas, retained-recovery
+tests and browser evidence are the remaining TableSpec binding work.
