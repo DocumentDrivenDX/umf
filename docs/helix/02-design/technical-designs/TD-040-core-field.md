@@ -1031,3 +1031,33 @@ See [Parquet record evidence](../../../../fixtures/validation/record-parquet-evi
 This does not implement authored Parquet projections, general organizational-group
 classification, nested type-reference resolution, or complete common residual
 metadata. Field and the overall implementation goal remain open.
+
+## Authored Parquet Field projection
+
+`projectFieldToParquet` now writes an empty PAR1 data file carrying a single-field
+schema through the browser-compatible Compact Protocol encoder. The caller must
+select a carrier and required/optional/repeated native repetition explicitly.
+Twelve carriers cover boolean, int32/int64, binary32/binary64, binary, UTF-8 string,
+date, millisecond/microsecond time and UTC timestamp. Temporal/string carriers use
+explicit legacy converted annotations supported by the pinned format binding.
+This is schema projection, not a row-value writer or facet/exactness guarantee.
+
+Unsupported ideal metadata, including namespace and description, remains in a
+residual. Strict mode blocks; report mode can return a complete native schema.
+Wrong record/group roles block both modes. Invalid names, stale native bytes or
+modified receipts cannot recover an asserted authored source. Recovery retains
+original author meaning through the receipt; native-only reimport does not infer
+it. Empty-file byte recovery does not demonstrate binary64-to-binary32 value
+exactness, and the existing narrowing counterexample still governs future facets.
+
+Two Bun tests pass 155 assertions. PyArrow 21.0.0 opens and reads all 36 empty files,
+checking physical/logical types and definition/repetition levels for twelve carriers
+across three repetition modes. Chromium 148 matches all 36 outputs and 72 JSON/YAML
+source recoveries, without external requests or host globals. Typechecking,
+browser build, and all 199 schema / 32 package audits pass. An inferred-type cycle
+in the corpus generator was corrected with an explicit path annotation before the
+passing typecheck. See [Field projection evidence](../../../../fixtures/validation/field-parquet-projection-evidence.json).
+
+Authored multi-field/nested records, additional carriers/facets, row writing,
+structured references and full common residual metadata remain required. The
+existing Field work item and overall implementation goal remain open.

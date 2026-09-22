@@ -1,0 +1,36 @@
+{
+  "scope": "Single authored Field to empty Parquet schema files; explicit physical/logical carriers and native repetition; not row-value encoding or facet equivalence",
+  "commands": [
+    "bun test tests/core-ideals/field-parquet-projection.test.ts",
+    "bun scripts/core-ideals/field-parquet-projection-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-parquet-projection-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-parquet-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 155,
+    "nativeSchemas": 36,
+    "browserRecoveries": 72,
+    "typecheck": "passed",
+    "schemasPassed": 199,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10019856
+  },
+  "sha256": {
+    "src/core-ideals/parquet-carriers.ts": "406b365203a03aa0b7f6d3126dff3c0b436d5fafd73db64f8bebb486470a875a",
+    "src/core-ideals/field-parquet-projection.ts": "0f63e386f6fced5edce476badd85e40a4660497c0de3db75929ea27c90218b7f",
+    "spec/core/field-parquet-projection.schema.json": "c1a562b56d890947852ccaf042b77cd8e8c22ed3d512d520c7bfde1030521036",
+    "scripts/core-ideals/field-parquet-projection-schema.ts": "9df8fac513da29b930cdc6ac5c93d681d372b0ea499aedffbe7b3def13710f50",
+    "scripts/core-ideals/field-parquet-projection-cases.ts": "81cfa46d559ed529a15886f945de8799db776c00eaf3b82afef72c253c9448fb",
+    "scripts/core-ideals/field-parquet-projection-corpus.ts": "7750de00d3caa11ea97c6ef416beee8ecae3c70c8eda8f39c249525e6883394a",
+    "scripts/core-ideals/field-parquet-projection-oracle.py": "25351d6c9357fc57be6334179b579ee264da1cf64e331962fcd55a6077069464",
+    "scripts/core-ideals/field-parquet-projection-browser.ts": "8febf6a2c2ea7598f05f8e846c7a2e7f5b6f88efced2d71b217c0dd96cd73645",
+    "tests/core-ideals/field-parquet-projection.test.ts": "5ee31479ee9236d153e98081b63f514b84de0654c356922893e9fbfe871c252b",
+    "fixtures/validation/field-parquet-projection-corpus.json": "b4a7cbd70d8c942d720dcc0a6bb9c82bff7a7f798cab7aac6f8f19f9bdfa467d",
+    "fixtures/validation/field-parquet-projection-native.json": "91e4aecbb65aabc9c318eaed84d0473026534d6d39d3ffe8078c4ae6fa3c81ed",
+    "fixtures/validation/field-parquet-projection-browser.json": "9e9db84aa43c40bb8a6a1c1336839a572e14986af11790fba219ffd8cfb362c8"
+  }
+}

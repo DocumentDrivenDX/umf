@@ -246,3 +246,4 @@ export * from './core-ideals/field-avro-projection';
 export * from './core-ideals/record-avro-projection';
 export * from './core-ideals/parquet-field';
 export * from './core-ideals/parquet-record';
+export * from './core-ideals/field-parquet-projection';
