@@ -5,7 +5,7 @@ import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('scalar/JSON carriers retain nested/cyclic items, availability and unknown metadata through both formats',()=>{
  for(const c of sqlserverCardinalityProjectionCases()){
-  const r=projectCardinalityToSqlServer(c.author,c.request),exact=c.request.storage==='scalar'&&['one','unspecified'].includes(c.author.provenance.cardinality);
+  const r=projectCardinalityToSqlServer(c.author,c.request),exact=!c.request.requireExactValues&&c.request.storage==='scalar'&&['one','unspecified'].includes(c.author.provenance.cardinality);
   expect(r.status).toBe(c.request.mode==='strict'&&!exact?'blocked':'projected');expect(r.mapping.basis).toContain('Explicit author declaration');
   if(r.status==='blocked'){expect(r.nativeSql).toBeUndefined();expect(r.target).toBeUndefined();continue;}
   expect(r.nativeSql).toContain(' NULL');

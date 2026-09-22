@@ -38,3 +38,19 @@ test('unknown native numeric tokens survive separate logical representation',()=
  expect(r.status).toBe('classified');expect(recoverSqlServerCardinalitySource(r,r.target!)).toBe(text);
  expect(exportSqlServerCatalog(r.target!)).toContain('900719925474099312345678901234567890');
 });
+test('constraint association, replication exemptions and unrecognized expressions cannot prove JSON shape',()=>{
+ const capture=JSON.parse(nativeSource);
+ const missing=structuredClone(capture);delete missing.tables.find((t:any)=>t.name==='array_value').checks[0].is_not_trusted;expect(()=>source(JSON.stringify(missing))).toThrow();
+ for(const mutate of [
+  (c:any)=>{c.check.is_not_for_replication=true;},
+  (c:any)=>{c.check.parent_column_id=9;},
+  (c:any)=>{c.check.definition='(isjson([value],ARRAY)=(1) OR (1)=(1))';},
+  (c:any)=>{c.column.is_computed=true;},
+ ]){
+  const v=structuredClone(capture),table=v.tables.find((t:any)=>t.name==='array_value');mutate({check:table.checks[0],column:table.columns[0]});
+  const text=JSON.stringify(v),input=source(text),column=getSqlServerColumnMetadata(input).find(c=>c.table.name==='array_value')!;
+  const request={column:column.path,nativeSource:text,identity:{module:'logical',element:'array'},constraint:table.checks[0].name,profile:'json-array' as const,mode:'report' as const};
+  const r=classifySqlServerCardinality(input,request);expect(r.mapping.cardinality).toBe('unspecified');expect(r.residuals.length).toBeGreaterThan(0);
+  expect(classifySqlServerCardinality(input,{...request,mode:'strict'}).status).toBe('blocked');
+ }
+});

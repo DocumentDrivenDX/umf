@@ -2,15 +2,15 @@
   "scope": "Portable DDL/receipt parity and ideal recovery; native execution evidence recorded separately",
   "fingerprints": {
     "dist/umf.js": "b5360a645c523f6ed40d47219982bfe75136d57d9efbb9bc7aa34987a8879209",
-    "fixtures/validation/cardinality-sqlserver-projection-native.json": "b425d9adae5087a13e133866f88bc5ab6ffea86d69afc1f5b89eea841bf766ee",
+    "fixtures/validation/cardinality-sqlserver-projection-native.json": "8fb97863874b8af1627bf5452b757f65fa04a8101be7723965e740bca331c446",
     "scripts/core-ideals/cardinality-sqlserver-projection-browser.ts": "055478c83840a1de5e3af5b2b35ec8ef5ed64873a464ef0983ce18515f917e0e"
   },
   "browser": "148.0.7778.0",
   "checks": {
-    "cases": 48,
-    "blocked": 22,
-    "recoveries": 52,
-    "forgedRefusals": 26,
+    "cases": 104,
+    "blocked": 36,
+    "recoveries": 136,
+    "forgedRefusals": 68,
     "identifierRefusals": 6
   },
   "externalRequests": []
