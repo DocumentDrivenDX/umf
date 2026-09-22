@@ -1,0 +1,33 @@
+{
+  "scope": "PostgreSQL Cardinality native profile discovery and design checkpoint",
+  "bead": "umf-97221618-44b88700",
+  "bindingImplemented": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "nativeCases": 37,
+    "expectedRejections": 10,
+    "catalogColumns": 8,
+    "failures": 0,
+    "typecheck": "passed"
+  },
+  "commands": [
+    "bun scripts/core-ideals/cardinality-postgresql-profile-oracle.ts",
+    "bun run typecheck"
+  ],
+  "limits": [
+    "Native discovery only; versioned capture supplement, schemas, classification/projection APIs, round trips and Chromium remain unfinished.",
+    "No existing public library or schema changed. Core/TableSpec acceptance revalidation is confined to the appended design and dependent evidence fingerprints."
+  ],
+  "sha256": {
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "1b1a71d9cc2194a81bd3685efee6c2ad59dabdab453161cb58e77e6a8edf71a9",
+    "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "e953ec59c7c05a367f4d15cd51ac5cc5b4c1a2b2ea7b4ebf854f5dd5e22a60ca",
+    "fixtures/validation/cardinality-postgresql-profile-native.json": "1c6b68b2f4f90a264c34c0d689c89cadd8208a96ef2261119952bcda011cf6d0",
+    "fixtures/validation/cardinality-postgresql-profile-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/cardinality-postgresql-profile.log": "7796321b9b5f9d50ec1030e88d87d81958d5ce023cf2383a798f2922f1d4f479",
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "f52c78f6519ac3bb5ca3e39d8ff7dd02aa444adbb9cd87a31a6ab7357c541ebd",
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "scripts/core-ideals/cardinality-postgresql-profile-oracle.ts": "5e2ee57b19820cdd27bba448e4691d6988f788fb7d52cdc8592d9be676f0f473"
+  }
+}

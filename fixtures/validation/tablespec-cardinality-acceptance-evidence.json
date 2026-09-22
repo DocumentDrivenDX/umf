@@ -685,7 +685,7 @@
   "sha256": {
     "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
     "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "0a752098a0afbc1e9c277148f9c58c8fd18e26e9b1360267ba156ef533fac0e9",
-    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "fc279f838bfc2f04411098e374bfdadc89abf9cf02a46ce48d7e65ecc5d2610c",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "1b1a71d9cc2194a81bd3685efee6c2ad59dabdab453161cb58e77e6a8edf71a9",
     "docs/helix/03-test/test-plan.md": "4d0340d06975af1bfdfd2a343e0060b4ee1b2390a29bca230f715c5ba2dc1d43",
     "docs/helix/04-build/implementation-plan.md": "893b80e54101430a27f8b05cd3b20c7dd51853fe2c4d9213ab35e9d05bd79453",
     "docs/helix/README.md": "af4f11145076ae1ccbf4bafbc29aa7b85bbf07525f992fc3713cc4f60a40e03c",
@@ -792,7 +792,7 @@
     "fixtures/parquet/nullability/struct-1-1-present-1.parquet": "fe603c295def1f38ff3d945735d8946073f8c383954a586a4e3a1b5a26a33ffd",
     "fixtures/validation/avro-nullability-acceptance-evidence.json": "876f27cef3a0d6b447c0faf131cfe73bacf909d11b429f61e80516c3f5dee2ab",
     "fixtures/validation/avro-nullability-field-refresh-regression.log": "afa31f0c2b9df0a8c31536fd7e01ed5802a0f7d77cf185bd5c2a03afafbeeaa6",
-    "fixtures/validation/cardinality-core-acceptance-evidence.json": "757faa9e2024af0e94fcd261558afc811a4239da2f22741b8c496ac979a1eaa7",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "e953ec59c7c05a367f4d15cd51ac5cc5b4c1a2b2ea7b4ebf854f5dd5e22a60ca",
     "fixtures/validation/cardinality-core-refresh-regression.log": "4e4ebca3b561f9a824e742f93f90f76aa1038545402780824ba14f2385d3c284",
     "fixtures/validation/cardinality-field-operations-browser.json": "352212a9a1dbb66bfaaf1e968b621e24a7dd5bee70bb1efde0513f89c4ef3f7b",
     "fixtures/validation/cardinality-selection-browser.json": "139a8c4ce3f2a0a1a92d8c726b7e1692ba438071e384b18cc47a8d531d0511da",
@@ -1032,5 +1032,14 @@
     "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3",
     "tests/core/cardinality-ideals.test.ts": "542fc37156602067ca4c6beb5cebb4abfaf754f6969fb7977b0f68842dc1ea5b",
     "tests/core/cardinality-operations.test.ts": "e1be48e863f741d8dbd2fa8197e7f211bcf03a8c8b69a62f98c47d92ac357d15"
+  },
+  "revalidation": {
+    "reason": "TD-042 adds PostgreSQL native discovery requirements; existing core/TableSpec implementation and schemas are unchanged",
+    "previousFingerprints": {
+      "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "fc279f838bfc2f04411098e374bfdadc89abf9cf02a46ce48d7e65ecc5d2610c",
+      "fixtures/validation/cardinality-core-acceptance-evidence.json": "757faa9e2024af0e94fcd261558afc811a4239da2f22741b8c496ac979a1eaa7"
+    },
+    "unchangedProofsChecked": 347,
+    "note": "Documentation-only refresh. PostgreSQL Cardinality binding and ideal admission remain unfinished."
   }
 }

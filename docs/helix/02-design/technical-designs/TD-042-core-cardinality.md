@@ -450,3 +450,45 @@ strict refusal/report residuals for vector restrictions, item obligations, exact
 values and maps. A carrier-only report candidate is not a map encoding. No complete
 pipeline, native-equivalence or general data conversion claim follows. The other
 four Cardinality bindings and at-least-two-system admission remain unfinished.
+
+### PostgreSQL native discovery requirements
+
+The [PostgreSQL profile oracle](../../../../fixtures/validation/cardinality-postgresql-profile-native.json)
+executes the pinned PostgreSQL 17.4 image against synthetic schemas and values.
+It asserts 37 cases, including ten expected SQLSTATE-qualified rejections, and
+captures eight columns' declared dimensions and type relationships. This is native
+discovery only; PostgreSQL Cardinality classification/projection is not implemented.
+
+A declaration `integer[3]` accepts empty, shorter, longer and multidimensional arrays,
+non-default lower bounds, duplicate values and null members. `attndims` records the
+declaration and cannot establish rank or size enforcement. Empty arrays report null
+rank/bounds and cardinality zero. An explicit CHECK profile can preserve emptiness
+while requiring nonempty arrays to have rank one and lower bound one; SQL NULL still
+needs a separate availability assertion. Ragged multidimensional arrays are rejected,
+so rectangular native arrays do not establish arbitrary nested ideal arrays.
+
+Type category `A` is insufficient for classification. It includes standard arrays,
+`int2vector`, and domains over arrays. Check the element type's array-type link for
+standard arrays; preserve qualified element identity and resolve domain bases as
+separate native refinements. Arrays of domains retain item constraints: the tested
+positive domain rejects negative items but permits null items under CHECK semantics.
+A domain over an array has no direct element type and can hold multiple ranks.
+The existing general catalog capture lacks these explicit type relationships; add
+a versioned supplement rather than parsing formatted type names or rewriting the
+meaning of the existing capture profile. Retain original query/version/source data.
+
+JSON and JSONB require an explicit representation policy. JSON preserves duplicate
+key text; JSONB keeps the last value. Both admit scalar JSON values without an object
+constraint. An object CHECK rejects JSON null/scalars but permits SQL NULL. JSONB
+rejects an escaped NUL key and a number beyond its numeric domain that JSON text can
+retain. Neither default coercion nor a shared map label proves exact string-key/value
+coverage. Native-only classification must not invent author uniqueness or key intent.
+
+Implementation must expose source-qualified classification and strict/report loss
+for rank, lower bounds, domain refinements and JSON representation boundaries. A
+single-dimensional sequence projection may use the tested explicit constraint;
+member availability, scalar widths and arbitrary nested arrays remain independent
+obligations. Retain source text/bytes and unknown extension content in both recovery
+directions. The next work is the versioned capture supplement, complete operation
+schemas, browser-safe APIs and native/Chromium round-trip matrices. No PostgreSQL
+binding acceptance or second-system Cardinality admission follows from this probe.
