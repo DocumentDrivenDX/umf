@@ -81,3 +81,20 @@ US-040 must complete its five-system gate before this concept implementation.
 
 Automatic native replacement, DDD lifecycle, OWL, physical encodings and default
 execution. No completion claim is made by authoring this story.
+
+
+## Acceptance evidence
+
+The [Nullability conformance record](../../../../fixtures/validation/nullability-conformance.json)
+passes ideal admission and qualified five-system delivery under TD-041. The common
+matrix covers 60 authored and 40 native cases, strict/report refusals and residuals,
+unknown extension preservation, 90 ideal recoveries and 60 native recoveries through
+JSON/YAML. Core validation, collision migration/rollback and consumer inspection
+are covered by the current core acceptance and 340-test priority regression;
+all five binding acceptances retain pinned native and Chromium evidence.
+
+US-041-AC7 remains a distinction, not a conversion promise: native input omission,
+reader defaults, SQL NULL and scoped physical availability retain separate evidence
+and explicit refusals. See TD-041 for concrete counterexamples. Gate tests reject
+stale or missing proof and native-equivalence claims. Core 0.3.0 is experimental;
+this qualification does not replace native meanings or complete the broader UMF goal.

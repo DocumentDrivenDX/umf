@@ -2659,3 +2659,29 @@ and record-type operation schema dependencies are required fingerprints; deletin
 one must fail the gate. Earlier acceptance counts remain historical. The current
 core/core-ideals regression and separate Field gate are recorded independently
 from the unfinished native Nullability admission/delivery tests.
+
+
+### Nullability ideal conformance gate
+
+Run `bun test tests/core-ideals/nullability-conformance.test.ts` and
+`bun scripts/core-ideals/nullability-conformance.ts` after the five qualified
+binding acceptances. All three authored labels must survive retained-receipt
+recovery. Unknown author assertions cause strict refusal or report residuals.
+Resolved native scopes classify required/absent-allowed; unresolved scopes refuse
+in strict mode and retain unspecified/residual meaning in report mode. Both
+JSON/YAML directions retain unknown extension payloads and original native text
+or bytes. The common matrix covers 100 cases and 150 serialized recoveries.
+
+Evidence checks require current core/five-binding fingerprints, both native and
+browser proof, successful actual refresh commands and explicit denial of native
+equivalence. Negative tests remove required proof, alter source, report failures,
+assert equivalence or supply paths outside the repository; each must fail. Hash
+consistency is not authentication or a substitute for the native/browser runs.
+The current gate passes; this supersedes its unfinished status above. Existing
+versioned native subsets and counterexamples remain the limits of delivery.
+
+During later library changes, run broad regression before publishing refreshed
+acceptance records, then run the Field and Nullability conformance gates against
+those records. Exclude both conformance test files from the pre-publication sweep;
+stale evidence must not be bypassed by weakening the gate or updating hashes
+without the corresponding native/browser checks.

@@ -121,8 +121,13 @@ commands pass, including five-system Field and Nullability checks. The current
 broader regression passes 340 tests / 30,057 assertions across 113 files; the separate Field gate passes three tests /
 24 assertions. See the
 [Parquet acceptance record](../../../fixtures/validation/parquet-nullability-acceptance-evidence.json).
-The five-system Nullability admission/delivery gate is next;
-every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
+The separate Nullability admission/delivery gate now passes across all five
+qualified profiles: 90 ideal recoveries, 60 native recoveries, strict/report
+residual pairs and current native/browser fingerprints. It admits the ideal and
+completes this five-system slice without native-equivalence graduation. See the
+[conformance record](../../../fixtures/validation/nullability-conformance.json).
+Cardinality core implementation is next; facets and key retain their ordered
+dependencies. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not
 that those future implementation commands already pass.

@@ -498,3 +498,21 @@ The [acceptance record](../../../../fixtures/validation/parquet-nullability-acce
 includes fresh five-system Field and Nullability evidence. All five bindings are
 qualified, but the separate ideal admission/delivery gate remains open. A binding
 qualification neither removes native payloads nor graduates native equivalence.
+
+
+### Nullability ideal admission and delivery decision
+
+The [five-system gate](../../../../fixtures/validation/nullability-conformance.json)
+now admits experimental core 0.3.0 Nullability as a UMF-defined ideal and verifies
+qualified delivery across TableSpec, PostgreSQL, SQL Server, Avro and Parquet.
+The >=2-system admission threshold and all-five delivery requirement are recorded
+separately. TD-041 owns the tested profiles and retained counterexamples.
+
+The gate preserves all three author labels through receipts, explicit strict/report
+losses, native captures and unknown extension content. SQL NULL, Avro null unions,
+TableSpec contextual declarations and Parquet definition-level availability remain
+explicit bindings with their own scopes. Writer inputs, defaults, reader resolution,
+logical constraints and repetition do not silently acquire core equivalence.
+Ninety ideal and sixty native serialized recoveries pass. Native-equivalence
+graduation is not claimed; no extension payload may be discarded. This decision
+supersedes earlier pending Nullability gate notes and permits Cardinality work.

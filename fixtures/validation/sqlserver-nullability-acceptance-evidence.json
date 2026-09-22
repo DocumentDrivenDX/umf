@@ -121,11 +121,11 @@
     "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
     "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
     "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
-    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "0111f020efbfc44e25e28f7c8dc2041ca59f1208aa1418cf6e9b05190e8ae6dc",
+    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "dfd7f609459b84476efb714a01e98e8154708a75061a7a71b74df6d671d06eed",
     "fixtures/validation/postgresql-nullability-field-refresh-regression.log": "925333e4fa2b7572f1a183e547a4515e97a808034ea4708270dae0a68a1c0194",
     "fixtures/validation/sqlserver-nullability-field-gate-tests.log": "c649a97dd1239f0330c932e1ec00b4f063f6c7ec46d0217d2baa95e63994561b",
     "fixtures/validation/sqlserver-nullability-field-refresh-regression.log": "a8ebbd33c3c4d121765d401281029a7b78d4c0198a348cb56fab3cdc34e4100f",
-    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "26636ce67accd9f8f5f744e147ad76b9737cba95c76a87d359e5653ba19ac6b7",
+    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "db959003096dbed4c48e4498548a9a69fd4a3391470f1b82b50f121323645426",
     "fixtures/validation/tablespec-nullability-field-refresh-regression.log": "45608bc86a98842c15ad9ba130c889ae4511d382477f7edc9716c986b45fddc0",
     "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
     "native/sqlserver/nullability.sql": "a1e9588871c9ac0f31c837ad54aa3fa063c3e6c1cab6d1e793980bfe42894fd9",
@@ -229,6 +229,15 @@
         "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110"
       },
       "note": "Original result counts and remaining-binding status are historical; current refresh records current regression/build evidence. Avro acceptance is separate."
+    }
+  ],
+  "evidenceFormatHistory": [
+    {
+      "reason": "TableSpec acceptance now carries explicit nativeEquivalence:false, matching its existing qualified meaning; dependent record hashes updated without changing library/native evidence.",
+      "previousFingerprints": {
+        "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "0111f020efbfc44e25e28f7c8dc2041ca59f1208aa1418cf6e9b05190e8ae6dc",
+        "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "26636ce67accd9f8f5f744e147ad76b9737cba95c76a87d359e5653ba19ac6b7"
+      }
     }
   ]
 }

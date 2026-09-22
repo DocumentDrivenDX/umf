@@ -1,0 +1,86 @@
+{
+  "version": "1.0.0",
+  "bead": "umf-97221618-a5ef534b",
+  "scope": "Experimental core 0.3.0 Nullability ideal admission and qualified five-system delivery; native meanings remain attached",
+  "nativeEquivalence": false,
+  "idealAdmission": {
+    "outcome": "passed",
+    "requiredBindings": 2,
+    "usefulBindings": 5,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "meaning": "CONTRACT-040 / Element.nullability",
+    "nativeEquivalence": false
+  },
+  "delivery": {
+    "outcome": "passed",
+    "requiredBindings": 5,
+    "qualifiedBindings": 5,
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "scope": "Explicit binding profiles only, with retained native meanings and qualified refusals"
+  },
+  "results": {
+    "failures": 0,
+    "tests": 2,
+    "bunExpectCalls": 16,
+    "matrixCases": 100,
+    "idealRecoveries": 90,
+    "nativeRecoveries": 60,
+    "fingerprintsChecked": 984,
+    "typecheck": "passed",
+    "schemas": 230,
+    "packages": 37,
+    "libraryBaseline": "fixtures/validation/parquet-nullability-acceptance-evidence.json"
+  },
+  "criteria": {
+    "AC1": "All five bindings pass common strict/report cases, complete ideal recovery, native capture recovery and unknown extension preservation in JSON/YAML",
+    "AC2": "Conformance command checks current core and five binding acceptance records, required native/browser proofs, completed native refresh commands, useful ideal mappings and retained native meanings; negative tests reject missing/stale evidence and equivalence claims",
+    "AC3": "Typecheck and schema/package audits pass; CONTRACT-040, TD-041, US-041 and implementation/test plans distinguish admission, delivery and native equivalence"
+  },
+  "commands": [
+    "bun test tests/core-ideals/nullability-conformance.test.ts",
+    "bun scripts/core-ideals/nullability-conformance.ts",
+    "bun run typecheck",
+    "bun run test:schemas"
+  ],
+  "limits": [
+    "The 340-test, 30,057-assertion priority regression and native/Chromium checks are the unchanged-library baseline; new gate tests run separately. No browser library or schema changed in this gate.",
+    "This gate validates retained evidence consistency, not authenticity or a fresh native-engine run. Historical absolute native evidence paths must stay inside the current checkout.",
+    "Qualified native profiles remain as specified in TD-041 and the five binding acceptance records; no general input validator or native language conformance claim.",
+    "Unspecified author intent requires retained receipts; native declarations alone cannot reconstruct it. Default execution, reader resolution, query results, writer coercions and repeated contexts remain distinct.",
+    "Native-equivalence graduation, Cardinality, facets, key and the broader extension/product requirements remain unfinished."
+  ],
+  "sha256": {
+    "docs/helix/01-frame/user-stories/US-041-core-nullability.md": "f9e8134b4068a0cca1a1de2993bdd2feed1f0a49e97b878d33b0c40f5ea51505",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "6973d2324033523640b6a6a28424daf80a8b8ab5c8fece4c80424acd89abf303",
+    "docs/helix/02-design/technical-designs/TD-041-core-nullability.md": "93baa1fe3f9f159e7a725abc33e15934bdecbedea9c6922231bdda1638418093",
+    "docs/helix/03-test/test-plan.md": "e441e2b713b895bbe357e8d43ec8e7e54750189413710f09e7b3b08ec79b5a00",
+    "docs/helix/04-build/implementation-plan.md": "ce9ace54bbd8ae8ca86c4d72a9f698c445ee530451b355f425dc4cad5dc65e45",
+    "docs/helix/README.md": "05d6560d9c54fa68533032e6dde7cfeb057d551e87b4fcf49addc1fcf5a6cb15",
+    "fixtures/validation/avro-nullability-acceptance-evidence.json": "b2eb9f0cc52c2035d8f7cf5a6d6bf7cc7ccee8e589d02999cffd723108e165f6",
+    "fixtures/validation/field-gate-refresh-evidence.json": "6abe3e254615590232c395539fcf66750c528cfb842fc8c1ec79ee24182d7807",
+    "fixtures/validation/nullability-conformance-command.log": "0e211155e727c184fff28061aa1e01a8caa26fda24ad64ecdce6228d299e2ffe",
+    "fixtures/validation/nullability-conformance-schemas.log": "00e918e956be87fa45a8c55b14adbd464d445506cf0a8d4023337e886c2bfcd1",
+    "fixtures/validation/nullability-conformance-tests.log": "a04c82c1c02d00e4d92885216da017f436b756d1ce00c247443efc5c11d0cc64",
+    "fixtures/validation/nullability-conformance-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/nullability-conformance.json": "049dd8ed9d07a80067bc7adace3054a169fd8b4acc98f2e328f44323bb9995eb",
+    "fixtures/validation/nullability-core-acceptance-evidence.json": "8a5f64b7d4767311b1a33a1b7f2c20dca7909a8e23c99ea7d6c5aa82ea9383a0",
+    "fixtures/validation/parquet-nullability-acceptance-evidence.json": "a3172c7892ff4e25ace3cd58f84ae8b2c267b30ce655be74c958d2db79b2dfc2",
+    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "dfd7f609459b84476efb714a01e98e8154708a75061a7a71b74df6d671d06eed",
+    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "164c8753bd7dce82dff44c2daf0cf03b3b05ffad87d6a0a046f4c5b0efebb869",
+    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "db959003096dbed4c48e4498548a9a69fd4a3391470f1b82b50f121323645426",
+    "scripts/core-ideals/nullability-conformance.ts": "1fc7242d8c4403d4589bfc5ec7185ca66bf46af967212ac9bf148aab8c119233",
+    "tests/core-ideals/nullability-conformance.test.ts": "a7704a4fdd292d6abedae7c1cfb7cb903f923d042224f38b869455e7b0e14a39"
+  }
+}

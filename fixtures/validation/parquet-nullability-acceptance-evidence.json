@@ -183,7 +183,7 @@
     "fixtures/parquet/nullability/struct-1-1-parent-null-1.parquet": "f1d8cfa663221824bf049aee83f0dbcbcac833f34b3fad7f5d35564a7109757e",
     "fixtures/parquet/nullability/struct-1-1-present-0.parquet": "f93c3b434c9179a866480aa8ab56b54c2f3534db10593585a7b532c530ced75c",
     "fixtures/parquet/nullability/struct-1-1-present-1.parquet": "fe603c295def1f38ff3d945735d8946073f8c383954a586a4e3a1b5a26a33ffd",
-    "fixtures/validation/avro-nullability-acceptance-evidence.json": "720ff64d2bc5eed52460359d849f561467b78320c022918437738af41f4f6050",
+    "fixtures/validation/avro-nullability-acceptance-evidence.json": "b2eb9f0cc52c2035d8f7cf5a6d6bf7cc7ccee8e589d02999cffd723108e165f6",
     "fixtures/validation/avro-nullability-field-refresh-regression.log": "afa31f0c2b9df0a8c31536fd7e01ed5802a0f7d77cf185bd5c2a03afafbeeaa6",
     "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
     "fixtures/validation/field-conformance.json": "8b2cac2f3f8d7fa026906a66ec0170a5612f7dd1a1eba0d02cb1bd537b24dfd4",
@@ -238,11 +238,11 @@
     "fixtures/validation/parquet-nullability-refresh-interrupted-attempt.json": "27454e5a335f282c390f211861e95e1e530c92b265b5ec6fb9c6b186ef6e48df",
     "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
     "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
-    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "0111f020efbfc44e25e28f7c8dc2041ca59f1208aa1418cf6e9b05190e8ae6dc",
+    "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "dfd7f609459b84476efb714a01e98e8154708a75061a7a71b74df6d671d06eed",
     "fixtures/validation/postgresql-nullability-field-refresh-regression.log": "925333e4fa2b7572f1a183e547a4515e97a808034ea4708270dae0a68a1c0194",
-    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "8989e821b43de0c885189c2fe36a60f127db83876456af4d7b9b4cdaea0f5dec",
+    "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "164c8753bd7dce82dff44c2daf0cf03b3b05ffad87d6a0a046f4c5b0efebb869",
     "fixtures/validation/sqlserver-nullability-field-refresh-regression.log": "a8ebbd33c3c4d121765d401281029a7b78d4c0198a348cb56fab3cdc34e4100f",
-    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "26636ce67accd9f8f5f744e147ad76b9737cba95c76a87d359e5653ba19ac6b7",
+    "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "db959003096dbed4c48e4498548a9a69fd4a3391470f1b82b50f121323645426",
     "fixtures/validation/tablespec-nullability-field-refresh-regression.log": "45608bc86a98842c15ad9ba130c889ae4511d382477f7edc9716c986b45fddc0",
     "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
     "native/sqlserver/nullability.sql": "a1e9588871c9ac0f31c837ad54aa3fa063c3e6c1cab6d1e793980bfe42894fd9",
@@ -353,5 +353,16 @@
     "tests/core-ideals/nullability-postgresql.test.ts": "016c77d573ad603647a98097f2757dde5c4a25b4b18a737728cf3754435e4f29",
     "tests/core-ideals/nullability-sqlserver-projection.test.ts": "4f1ab7e46915085466e8270e618031c58d3e3f67c665a157f69a6462f99208bc",
     "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3"
-  }
+  },
+  "evidenceFormatHistory": [
+    {
+      "reason": "TableSpec acceptance now carries explicit nativeEquivalence:false, matching its existing qualified meaning; dependent record hashes updated without changing library/native evidence.",
+      "previousFingerprints": {
+        "fixtures/validation/avro-nullability-acceptance-evidence.json": "720ff64d2bc5eed52460359d849f561467b78320c022918437738af41f4f6050",
+        "fixtures/validation/postgresql-nullability-acceptance-evidence.json": "0111f020efbfc44e25e28f7c8dc2041ca59f1208aa1418cf6e9b05190e8ae6dc",
+        "fixtures/validation/sqlserver-nullability-acceptance-evidence.json": "8989e821b43de0c885189c2fe36a60f127db83876456af4d7b9b4cdaea0f5dec",
+        "fixtures/validation/tablespec-nullability-acceptance-evidence.json": "26636ce67accd9f8f5f744e147ad76b9737cba95c76a87d359e5653ba19ac6b7"
+      }
+    }
+  ]
 }

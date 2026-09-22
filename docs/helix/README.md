@@ -25,9 +25,11 @@ covers physical leaf classification and authored single-Field schema projection.
 All five Field bindings passed fresh native/browser checks and their conformance
 gate at the Parquet acceptance checkpoint. See the
 [Parquet acceptance record](../../fixtures/validation/parquet-nullability-acceptance-evidence.json).
-The experimental 0.3.0 concept still requires its separate five-system Nullability
-admission/delivery gate. No native equivalence is claimed.
-Cardinality, facets and key follow Nullability. See the
+Nullability ideal admission and qualified five-system delivery now pass their
+separate gate: 90 ideal recoveries, 60 native recoveries and current native/browser
+evidence. Core 0.3.0 remains experimental; no native equivalence is claimed. See the
+[Nullability conformance record](../../fixtures/validation/nullability-conformance.json).
+Cardinality is next, followed by facets and key. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038

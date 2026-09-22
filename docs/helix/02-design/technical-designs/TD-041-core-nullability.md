@@ -1216,3 +1216,40 @@ that claim. No equivalence graduation or native payload deletion is authorized.
 
 All five bindings now have qualified evidence. The separate Nullability ideal
 admission/five-system delivery gate remains open before Cardinality begins.
+
+
+### Nullability ideal admission and five-system delivery
+
+The [conformance record](../../../../fixtures/validation/nullability-conformance.json)
+passes the separate ideal-admission threshold (at least two useful priority
+bindings) and qualified delivery requirement (all five). Each binding exercises
+all three authored labels, strict/report handling of unknown assertions and
+complete retained ideal recovery through JSON/YAML. The common matrix has 60
+authored cases: 15 strict refusals, 15 report residuals and 90 ideal recoveries.
+Native classification contributes 40 cases under resolved/unresolved scopes,
+10 strict refusals and 60 exact native recoveries. Unknown extension payloads
+remain unchanged, including when the reported ideal is unspecified.
+
+The gate verifies current core and five binding acceptance fingerprints plus the
+actual native/browser refresh records. It requires explicit evidence for both
+binding directions and refuses missing native proof, stale source, failed results,
+native-equivalence claims and evidence paths outside the repository. Historical
+native records with absolute paths are accepted only within the current checkout;
+this is a local evidence consistency check, not authentication or an engine rerun.
+The earlier TableSpec acceptance now carries an explicit `nativeEquivalence:false`
+flag matching its existing prose; only dependent record hashes changed for that
+format clarification.
+
+Commands: `bun scripts/core-ideals/nullability-conformance.ts`,
+`bun test tests/core-ideals/nullability-conformance.test.ts`, `bun run typecheck`
+and `bun run test:schemas`. The two gate tests pass, including negative evidence
+checks; internal matrix assertions exercise all 100 cases and 150 serialized
+recoveries. Existing 340-test priority regression and real native/Chromium evidence
+remain the unchanged-library baseline. No browser library or schema changed in
+this gate implementation.
+
+This supersedes the pending Nullability admission/delivery status above. Core
+0.3.0 remains experimental. Binding scopes, row/entry conditions, writer-default
+and coercion distinctions, masked-container counterexamples, float narrowing and
+retained native archives remain mandatory limitations. No native representation
+is replaced. Cardinality may now begin; facets and key follow their own gates.
