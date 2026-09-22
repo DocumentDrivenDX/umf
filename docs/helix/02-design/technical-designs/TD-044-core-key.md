@@ -20,8 +20,12 @@ ddx:
 ## Scope
 
 Implement US-044 under CONTRACT-040. Architecture is the direct parent; no
-separate solution design exists for this core slice. The current envelope only
-implements scalar-family metadata. This design is planned, not executed evidence.
+separate solution design exists for this core slice. Experimental core 0.5.0
+includes Field, Nullability, Cardinality and author-stated facets alongside
+scalar-family metadata. Field, Nullability and Cardinality have passed their
+qualified five-system gates; the facet delivery gate remains pending. Key starts
+only after that gate passes, with an explicit representation/version decision
+before reserving new members. This Key design is planned, not executed evidence.
 
 ## Technical Approach
 
