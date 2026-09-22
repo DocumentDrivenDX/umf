@@ -1,0 +1,12 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/nullability-parquet-projection.test.ts:
+(pass) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [11668.00ms]
+(pass) scope, cardinality, defaults and precision obligations remain explicit losses [772.89ms]
+(pass) changed bytes, forged receipts, stale authors and invalid native names refuse [238.09ms]
+(pass) document/module metadata and relationships survive report-mode ideal recovery [142.22ms]
+
+ 4 pass
+ 0 fail
+ 654 expect() calls
+Ran 4 tests across 1 file. [13.02s]

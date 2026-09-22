@@ -1,0 +1,1360 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "scope": "Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.",
+  "files": 66,
+  "checks": [
+    {
+      "id": "availability_0",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": true,
+      "narrowed": false
+    },
+    {
+      "id": "availability_0",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_0",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_1",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": true,
+      "narrowed": false
+    },
+    {
+      "id": "availability_1",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_1",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_2",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": true,
+      "narrowed": false
+    },
+    {
+      "id": "availability_2",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_2",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_3",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 7,
+      "narrowed": false
+    },
+    {
+      "id": "availability_3",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_3",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_4",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 7,
+      "narrowed": false
+    },
+    {
+      "id": "availability_4",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_4",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_5",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 7,
+      "narrowed": false
+    },
+    {
+      "id": "availability_5",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_5",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_6",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 9007199254740993,
+      "narrowed": false
+    },
+    {
+      "id": "availability_6",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_6",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_7",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 9007199254740993,
+      "narrowed": false
+    },
+    {
+      "id": "availability_7",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_7",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_8",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 9007199254740993,
+      "narrowed": false
+    },
+    {
+      "id": "availability_8",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_8",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_9",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_9",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_9",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_10",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_10",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_10",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_11",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_11",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_11",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_12",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0000000000000002,
+      "narrowed": false
+    },
+    {
+      "id": "availability_12",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_12",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_13",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0000000000000002,
+      "narrowed": false
+    },
+    {
+      "id": "availability_13",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_13",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_14",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0000000000000002,
+      "narrowed": false
+    },
+    {
+      "id": "availability_14",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_14",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_15",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "00ff",
+      "narrowed": false
+    },
+    {
+      "id": "availability_15",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_15",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_16",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "00ff",
+      "narrowed": false
+    },
+    {
+      "id": "availability_16",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_16",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_17",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "00ff",
+      "narrowed": false
+    },
+    {
+      "id": "availability_17",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_17",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_18",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "snow \u96ea",
+      "narrowed": false
+    },
+    {
+      "id": "availability_18",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_18",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_19",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "snow \u96ea",
+      "narrowed": false
+    },
+    {
+      "id": "availability_19",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_19",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_20",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "snow \u96ea",
+      "narrowed": false
+    },
+    {
+      "id": "availability_20",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_20",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_21",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22",
+      "narrowed": false
+    },
+    {
+      "id": "availability_21",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_21",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_22",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22",
+      "narrowed": false
+    },
+    {
+      "id": "availability_22",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_22",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_23",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22",
+      "narrowed": false
+    },
+    {
+      "id": "availability_23",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_23",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_24",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "12:34:56.123000",
+      "narrowed": false
+    },
+    {
+      "id": "availability_24",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_24",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_25",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "12:34:56.123000",
+      "narrowed": false
+    },
+    {
+      "id": "availability_25",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_25",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_26",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "12:34:56.123000",
+      "narrowed": false
+    },
+    {
+      "id": "availability_26",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_26",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_27",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "12:34:56.123456",
+      "narrowed": false
+    },
+    {
+      "id": "availability_27",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_27",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_28",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "12:34:56.123456",
+      "narrowed": false
+    },
+    {
+      "id": "availability_28",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_28",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_29",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "12:34:56.123456",
+      "narrowed": false
+    },
+    {
+      "id": "availability_29",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_29",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_30",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22T12:34:56.123000+00:00",
+      "narrowed": false
+    },
+    {
+      "id": "availability_30",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_30",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_31",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22T12:34:56.123000+00:00",
+      "narrowed": false
+    },
+    {
+      "id": "availability_31",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_31",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_32",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22T12:34:56.123000+00:00",
+      "narrowed": false
+    },
+    {
+      "id": "availability_32",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_32",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_33",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22T12:34:56.123456+00:00",
+      "narrowed": false
+    },
+    {
+      "id": "availability_33",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_33",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_34",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22T12:34:56.123456+00:00",
+      "narrowed": false
+    },
+    {
+      "id": "availability_34",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_34",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_35",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": "2026-09-22T12:34:56.123456+00:00",
+      "narrowed": false
+    },
+    {
+      "id": "availability_35",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_35",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_37",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_37",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_37",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_39",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_39",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_39",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_41",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_41",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_41",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_43",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_43",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_43",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_45",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_45",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_45",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_47",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_47",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_47",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_49",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_49",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_49",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_51",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_51",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_51",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_53",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_53",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_53",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_55",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_55",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_55",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_57",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_57",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_57",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_58",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_58",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_58",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_59",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_59",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_59",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_61",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_61",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_61",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_63",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_63",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_63",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_64",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_64",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_64",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_65",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_65",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_65",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_67",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_67",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_67",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_69",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_69",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_69",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_71",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_71",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_71",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_73",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_73",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_73",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_75",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_75",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_75",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_77",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_77",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_77",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_79",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_79",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_79",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_81",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_81",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_81",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_83",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_83",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_83",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_85",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_85",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_85",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_87",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_87",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_87",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_89",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 1.0,
+      "narrowed": true
+    },
+    {
+      "id": "availability_89",
+      "case": "null",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_89",
+      "case": "omitted",
+      "outcome": "accepted",
+      "decoded": null,
+      "narrowed": false
+    },
+    {
+      "id": "availability_90",
+      "case": "present",
+      "outcome": "accepted",
+      "decoded": 7,
+      "narrowed": false
+    },
+    {
+      "id": "availability_90",
+      "case": "null",
+      "outcome": "rejected",
+      "error": "Column 'value.\u96ea\n[]' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "availability_90",
+      "case": "omitted",
+      "outcome": "rejected",
+      "error": "Column 'value.\u96ea\n[]' is declared non-nullable but contains nulls"
+    }
+  ],
+  "outcomes": 198,
+  "rejected": 40,
+  "floatNarrowings": 32,
+  "fingerprints": {
+    "scripts/core-ideals/nullability-parquet-projection-native.py": "892cd57633a1ba2874656ec3191f088439075e0061a90af56e3c4437673cf257",
+    "fixtures/validation/nullability-parquet-projection-corpus.json": "8b8e790e199318c692fffd2614b586879f2f8edcf854175c0f53599515b640de"
+  }
+}

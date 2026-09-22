@@ -1132,3 +1132,46 @@ records four tests across two runs / 3,678 assertions, typechecking, 229 schema
 audits / 37 packages and the browser build. Chromium passes 640 classification
 cases, 720 exact byte recoveries and 360 altered-receipt refusals, alongside
 the 100-file discovery corpus. This supersedes its discovery-only status above.
+
+
+### Authored Parquet Nullability projection
+
+`projectNullabilityToParquet` consumes a verified core 0.3.0 author declaration
+and explicit native carrier. This profile emits one physical leaf in an empty
+schema-bearing file. Under `row-leaf-value` / `definition-level`, required emits
+REQUIRED and absent-allowed emits OPTIONAL. Unspecified emits OPTIONAL with
+`no-authored-requirement` provenance; it does not assert that the author required
+absence support. Native-only classification sees optionality, while retained
+receipt recovery restores the original unspecified ideal.
+
+Known requirements with repeated-entry, writer-input or unresolved scope/carrier
+are not implemented by this flat projection. Strict mode refuses; report mode
+emits OPTIONAL with an explicit residual and `unprojected-requirement` provenance.
+The projection audits every source property outside its mapping: cardinality,
+exactness, defaults, descriptions, namespaces, relationships, other elements and
+unknown metadata remain reported residuals. A requested native scalar carrier
+must match the stated scalar family. Family agreement does not prove numeric
+exactness, width or native equivalence.
+
+`recoverNullabilityFromParquet` recomputes the receipt and requires the unchanged
+native bytes before recovering all author meaning, including residuals. Source
+and target modifications refuse; receipts establish consistency, not authenticity.
+The existing classifier supplies the opposite recovery direction with the native
+capture intact. Neither operation rewrites row pages or encodes application rows.
+
+The [projection checkpoint](../../../../fixtures/validation/nullability-parquet-projection-evidence.json)
+covers 91 cases across 12 native carriers, three availability labels, explicit
+loss variants and Unicode/native names: 25 strict refusals and 66 emitted files.
+JSON/YAML each recover all 66 ideals and native captures. PyArrow 21.0.0 independently
+reads each empty schema and executes present/null/omitted row writes against it:
+198 outcomes include 40 required-null rejections. All 32 binary32 present-value
+cases narrow binary64 1.0000000000000002 to 1.0; an exactness requirement remains
+an explicit loss. The int64 sample retains 9007199254740993 in native Python.
+Chromium checks receipt/byte parity, 132 ideal recoveries and altered-receipt
+refusal without host globals or external requests. Bun focused tests, typechecking,
+230 JSON Schemas and 37 extension packages pass.
+
+This supersedes the authored-projection-pending status above. Broader priority
+regression, fresh Field evidence and final Parquet binding acceptance remain open.
+The five-system Nullability delivery gate is still separate; no native equivalence
+has graduated.

@@ -1,0 +1,7 @@
+import base from '../../spec/core/field-parquet-projection.schema.json';
+const schema:any=structuredClone(base),p=schema.properties;
+schema.$id='urn:umf:core:nullability-parquet-projection:1.0.0';schema.title='Authored availability projection to Parquet leaf schema';p.operation.const='project-nullability-parquet';p.source.$ref='urn:umf:core:0.3.0';p.author.$ref='urn:umf:core:nullability-operation:1.0.0#/$defs/declaration';
+p.binding.const={id:'umf.core.nullability.parquet',version:'1.0.0',nativeVersion:'parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017',subset:'Single authored Field with explicit carrier and required/optional leaf in an empty file; no row conversion, writer-input or logical equivalence'};
+const req=p.request;delete req.properties.repetition;req.required=req.required.filter((v:string)=>v!=='repetition');Object.assign(req.properties,{scope:{enum:['row-leaf-value','repeated-element-value','write-input','unresolved']},carrier:{enum:['definition-level','unresolved']}});req.required.push('scope','carrier');
+const m=p.mapping;m.properties.nativePath.const='/schema/1/repetition_type';Object.assign(m.properties,{nullability:{enum:['required','absent-allowed','unspecified']},encoding:{enum:['required','optional']},basis:{enum:['authored-requirement','no-authored-requirement','unprojected-requirement']},scope:req.properties.scope,carrier:req.properties.carrier});m.required.push('nullability','encoding','basis','scope','carrier');
+await Bun.write('spec/core/nullability-parquet-projection.schema.json',JSON.stringify(schema,null,2)+'\n');

@@ -269,3 +269,4 @@ export * from './core-ideals/nullability-sqlserver-projection';
 export * from './core-ideals/nullability-avro';
 export * from './core-ideals/nullability-avro-projection';
 export * from './core-ideals/nullability-parquet';
+export * from './core-ideals/nullability-parquet-projection';

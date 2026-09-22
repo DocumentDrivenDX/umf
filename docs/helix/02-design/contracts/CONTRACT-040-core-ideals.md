@@ -477,5 +477,9 @@ The `umf.parquet.nullability` extension retains the physical definition-level
 carrier, context and repetition metadata. Full original file bytes remain attached.
 Writer input masks, embedded Arrow meanings, logical annotations and observed row
 values do not silently replace these declarations. Unresolved scopes/types require
-explicit residuals or refusals. TD-041 records the tested profiles; authored
-projection and final binding acceptance remain open, with no native equivalence.
+explicit residuals or refusals. TD-041 records the tested profiles. Authored flat
+row-leaf projection now emits REQUIRED or OPTIONAL, retaining unspecified and
+unprojected author intent in verified receipts. Native-only optionality cannot
+recover those intents. Exactness, cardinality, defaults and other unclaimed
+meanings remain explicit residuals. Broader revalidation and final binding
+acceptance remain open, with no native equivalence.

@@ -115,7 +115,11 @@ refresh counts and stale-fingerprint status above. See the
 Parquet Nullability now classifies physical leaves under explicit row or repeated-
 entry contexts, retaining ancestry and source bytes. Native checks distinguish
 optional parents/members and writer handling of masked containers. Authored
-projection, broader evidence refresh and final binding acceptance remain open;
+single-Field projection now passes 91 cases: 25 strict refusals, 66 native schemas,
+132 ideal recoveries and 132 native recoveries. PyArrow checks 198 row-write
+outcomes independently, retaining the float-narrowing counterexample. See the
+[projection checkpoint](../../../fixtures/validation/nullability-parquet-projection-evidence.json).
+Broader evidence refresh and final binding acceptance remain open;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

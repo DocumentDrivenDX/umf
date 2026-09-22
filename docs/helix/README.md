@@ -26,7 +26,9 @@ conformance gate at the Avro acceptance checkpoint. See the
 [Avro acceptance record](../../fixtures/validation/avro-nullability-acceptance-evidence.json).
 Parquet Nullability now has scoped physical classification and exact byte
 recovery, including optional ancestors and repeated-entry context. Authored
-projection and final acceptance remain. The Field gate needs its evidence
+single-Field projection now emits required/optional leaves with retained ideal
+receipts; native PyArrow and Chromium checks cover explicit losses and recovery.
+Broader revalidation and final binding acceptance remain. The Field gate needs its evidence
 refresh after this public API addition. The
 experimental 0.3.0 concept has not passed its
 five-system delivery gate. No native equivalence is claimed.

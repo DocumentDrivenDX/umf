@@ -1,0 +1,68 @@
+{
+  "scope": "Authored single-Field Parquet Nullability projection with explicit native carrier and retained author receipts; final binding acceptance pending",
+  "bead": "umf-97221618-03f328d3",
+  "bindingAccepted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "tests": 4,
+    "assertions": 654,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 230,
+    "packages": 37,
+    "browserBuildBytes": 10351348,
+    "cases": 91,
+    "blocked": 25,
+    "nativeSchemas": 66,
+    "idealRecoveries": 132,
+    "nativeRecoveries": 132,
+    "nativeOutcomes": 198,
+    "nativeRejected": 40,
+    "floatNarrowings": 32,
+    "browser": {
+      "cases": 91,
+      "blocked": 25,
+      "recoveries": 132,
+      "forgedRefusals": 66,
+      "identifierRefusals": 3
+    }
+  },
+  "commands": [
+    "bun test tests/core-ideals/nullability-parquet-projection.test.ts",
+    "bun scripts/core-ideals/nullability-parquet-projection-oracle.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-parquet-projection-browser.ts"
+  ],
+  "limits": [
+    "Empty schema-bearing files only; native row writes are oracle evidence, not a UMF row conversion feature.",
+    "Unspecified emits OPTIONAL but retains no-authored-requirement provenance; native-only import cannot infer original author intent.",
+    "Repeated-entry and writer-input claims require residuals/refusal; cardinality, facets, defaults, descriptions and unknown metadata are unprojected.",
+    "Receipts require consistent unchanged inputs and bytes; this is not authentication.",
+    "Broader priority regression, fresh Field evidence, final Parquet acceptance and the five-system Nullability delivery gate remain open."
+  ],
+  "sha256": {
+    "dist/umf.js": "ffe178f8b4a98511dbbce76d56730e8644957b52ca046f3a923646b7d601b340",
+    "fixtures/validation/nullability-parquet-projection-browser.json": "62bd162e04bc05a6ee9b3c3fb9416b161a253806b65ccf753a851a7ce575160b",
+    "fixtures/validation/nullability-parquet-projection-browser.log": "b8c2c2d5e55865a8635353fc1789aeafd6376bda0763b056f9f923eb154e0692",
+    "fixtures/validation/nullability-parquet-projection-build.log": "97ef560f1785bff22c00639b8e4c3e54349c9488c83de5c462729b3876460ba3",
+    "fixtures/validation/nullability-parquet-projection-corpus.json": "8b8e790e199318c692fffd2614b586879f2f8edcf854175c0f53599515b640de",
+    "fixtures/validation/nullability-parquet-projection-native.json": "15e5855366cce3dbe7ff4d470566c895d6e1a1af1a55edf3b36db2128fdcf0dd",
+    "fixtures/validation/nullability-parquet-projection-oracle.log": "644a2489bb8adf1441b8b2fb65d69dd0be6cc1fe9a64b7a1d90a8f2a389a5e70",
+    "fixtures/validation/nullability-parquet-projection-schemas.log": "00e918e956be87fa45a8c55b14adbd464d445506cf0a8d4023337e886c2bfcd1",
+    "fixtures/validation/nullability-parquet-projection-tests.log": "60ed0e9b40ba858b63af3e0cf47d9b05b677237f5c00eddc45ed4a06dde06680",
+    "fixtures/validation/nullability-parquet-projection-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-ideals/nullability-parquet-projection-browser.ts": "b92ee4f129298ed4137cefd879481de1b8c40164cc230c94463362280fdb3db6",
+    "scripts/core-ideals/nullability-parquet-projection-cases.ts": "02ff711037528113001056d95b7354701b3ffe1aef7233fc398647f332635940",
+    "scripts/core-ideals/nullability-parquet-projection-native.py": "892cd57633a1ba2874656ec3191f088439075e0061a90af56e3c4437673cf257",
+    "scripts/core-ideals/nullability-parquet-projection-oracle.ts": "08136b9f53c344bd851857151c3ce85c3021d18d3e5dbdd74b4ccdb7f0f3b6e7",
+    "scripts/core-ideals/nullability-parquet-projection-schema.ts": "e2cc65f40a1d0a2ff51e160da54527f70801867b64eb8e7f222ac188fb50f3d2",
+    "spec/core/nullability-parquet-projection.schema.json": "159edf7c2c597e3c844df198d97e0b2a28c5caf857e8f43a170b14d58a1c14b3",
+    "src/core-ideals/nullability-parquet-projection.ts": "d71994fd0f7ad55b24047917a95a4a2fdedf3dc771052208804284c4b57ecddd",
+    "src/core-ideals/nullability-parquet.ts": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc",
+    "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
+    "src/index.ts": "b2ff6e73830b8a2cea8e024d54c95575aebd42d98d441a7fa8e99da882115a16",
+    "tests/core-ideals/nullability-parquet-projection.test.ts": "9202c774aeac99d09a9f206a81243942935ba79bdb8cfbb28f1d342827cb5715"
+  }
+}
