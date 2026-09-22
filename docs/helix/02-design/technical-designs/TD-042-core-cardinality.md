@@ -656,3 +656,44 @@ Receipt consistency is not authentication: a self-consistent whitespace-only sou
 receipt can be recomputed, while changed native meaning and stale targets refuse.
 Authored down-projection and the full binding acceptance refresh remain required;
 these checks do not accept the Avro binding or run the Cardinality concept gate.
+
+### Avro authored projection decision
+
+Down-projection requires an explicit Avro field-type JSON text and ordered named
+schema dependencies, plus native record/namespace/field names. It does not guess
+integer widths or item types. Match the declared core Field and its item/value
+references recursively against registered native type locations. Record each
+ideal/native path pair. Mixed native container branches, missing ideal item meaning,
+shape/family conflicts and unknown metadata require residuals. Native names and
+structural type syntax must validate before any candidate can be emitted.
+
+Availability mapping requires an explicit `avro-null-value` carrier selection;
+otherwise independent ideal availability is retained with a residual. This carrier
+concerns underlying values only, not omitted writer fields or reader defaults.
+Exact-value requests require residuals because shape/family matching alone cannot
+prove domain/codec fidelity; binary32 narrowing and special map keys remain named
+counterexamples. Nested arrays/maps can be matched directly. Recursive record
+layouts, default execution and core record associations are not fabricated.
+Recovery must recompute the receipt and compare the complete generated native
+bundle, including dependency identities/text, before returning the retained ideal.
+
+### Avro authored projection implementation checkpoint
+
+`projectCardinalityToAvro` and retained ideal recovery now implement the explicit
+native-type decision above with a complete operation/result schema. Nested item
+and value Fields match registered native locations; independent availability uses
+the selected Avro-null carrier. Unknown source metadata, native interpretation
+warnings, shape/family mismatches, missing item meaning and exact-value obligations
+remain explicit residuals. Native bundle edits or forged receipts refuse recovery.
+
+Four projection tests pass (89 assertions), including dependency edits and exact
+large native tokens. The 66-case native/browser matrix emits 44 candidates and
+blocks 22, with 88 serialized ideal recoveries. Apache Avro 1.12.0 and fastavro
+1.12.2 pass 176 cross-codec reads; 12 float-narrowing observations remain explicit.
+Chromium agrees on all receipts and refuses 44 forged receipts, without host globals
+or external requests. Type checking, the browser build, 250 schemas and 41 packages
+pass. Proofs are `fixtures/validation/cardinality-avro-projection-{oracle,native,browser}.json`.
+
+This is an implementation checkpoint. Composed fresh-native classification/recovery,
+expanded edge coverage, review and the full acceptance refresh remain required;
+the Avro binding and separate Cardinality admission/delivery gate remain open.

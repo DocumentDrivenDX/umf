@@ -1,0 +1,1245 @@
+{
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "checks": [
+    {
+      "id": "avro-cardinality-0",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-0",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-0",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-0",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-1",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-1",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-1",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-1",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-3",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-3",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-3",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-3",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-5",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-5",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-5",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-5",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-7",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-7",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-7",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-7",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-9",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-9",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-9",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-9",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-11",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-11",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-11",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-11",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-13",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-13",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-13",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-13",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-15",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-15",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-15",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-15",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-17",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-17",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-17",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-17",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-19",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-19",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-19",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-19",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-21",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-21",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-21",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-21",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-23",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-23",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-23",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-23",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0202610400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-24",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-24",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-24",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-24",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-25",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-25",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-25",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-25",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-27",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-27",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-27",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-27",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-28",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-28",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-28",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-28",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-29",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-29",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-29",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-29",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-31",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-31",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-31",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-31",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "feffffff0f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-32",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-32",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-32",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-32",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-33",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-33",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-33",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-33",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-35",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-35",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-35",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-35",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "feffffffffffffffff01",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-36",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-36",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-36",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-36",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-37",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-37",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-37",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-37",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-39",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-39",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-39",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-39",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0000803f",
+      "exactInputRecovery": false
+    },
+    {
+      "id": "avro-cardinality-40",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-40",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-40",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-40",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-41",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-41",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-41",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-41",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-43",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-43",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-43",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-43",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "010000000000f03f",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-44",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-44",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-44",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-44",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-45",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-45",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-45",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-45",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-47",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-47",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-47",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-47",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0400ff",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-48",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-48",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-48",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-48",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-49",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-49",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-49",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-49",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-51",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-51",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-51",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-51",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "10736e6f772de99baa",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-52",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-52",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-52",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-52",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-53",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-53",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-53",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-53",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-55",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-55",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-55",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-55",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "04000202027806040204000000",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-57",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-57",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-57",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-57",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-58",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-58",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-58",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-58",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-59",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-59",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-59",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-59",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0204125f5f70726f746f5f5f066f776e16636f6e7374727563746f72086b65707400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-60",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-60",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-60",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-60",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-61",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-61",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-61",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-61",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "00",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-63",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-63",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-63",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-63",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0e",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-65",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-65",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-65",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    },
+    {
+      "id": "avro-cardinality-65",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "exactInputRecovery": true
+    }
+  ],
+  "floatNarrowings": 12,
+  "sha256": {
+    "fixtures/validation/cardinality-avro-projection-candidates.json": "f2c7bac8afe359d6b599d1e10f1a83e89429cadf11ec23f5fa8746d1c6f972ca",
+    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457"
+  }
+}

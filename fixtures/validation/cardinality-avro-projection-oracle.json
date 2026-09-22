@@ -1,0 +1,16 @@
+{
+  "scope": "Explicit Avro carrier projection and retained ideal recovery; binding acceptance remains pending",
+  "cases": 66,
+  "blocked": 22,
+  "recoveries": 88,
+  "sha256": {
+    "scripts/core-ideals/cardinality-avro-projection-oracle.ts": "904f131a2eed0ed9bcf87d3f7dea2c14cb6133239f58f3877a9a4a779935b127",
+    "scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457",
+    "scripts/core-ideals/cardinality-avro-projection-cases.ts": "7b0085bd6e03205dda2d3b321de8fe7384b42b8aa3fe5beb378288944597f6e7",
+    "src/core-ideals/cardinality-avro-projection.ts": "940e86a30c5bbabaf6fb2b70ff129c4cc6cd67a382dd18a199b46138d161c3ed",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
+    "spec/core/cardinality-avro-projection.schema.json": "7c98751948cf60dba920fb786fda3ed66d787e1405bf51b7383dba297592b194",
+    "fixtures/validation/cardinality-avro-projection-candidates.json": "f2c7bac8afe359d6b599d1e10f1a83e89429cadf11ec23f5fa8746d1c6f972ca",
+    "fixtures/validation/cardinality-avro-projection-native.json": "90ef2aa46c440b0bc2507535785bbd8e1a5a2e0fdf412fad8937ca49744e999e"
+  }
+}

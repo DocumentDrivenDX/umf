@@ -284,3 +284,4 @@ export * from './core-ideals/cardinality-sqlserver';
 export * from './core-ideals/cardinality-sqlserver-projection';
 
 export * from './core-ideals/cardinality-avro';
+export * from './core-ideals/cardinality-avro-projection';

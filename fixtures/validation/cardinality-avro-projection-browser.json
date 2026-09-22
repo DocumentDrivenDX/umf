@@ -1,0 +1,24 @@
+{
+  "scope": "Explicit native carrier projection and retained ideal recovery in Chromium; native value decoding is separately qualified",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 66,
+    "projected": 44,
+    "blocked": 22,
+    "recoveries": 88,
+    "forgedRefusals": 44
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/cardinality-avro-projection-browser.ts": "2386a1f00c5bd0d126f5c1adb3ed521fd81d42f6d55a2f704339d6919c35865a",
+    "scripts/core-ideals/cardinality-avro-projection-cases.ts": "7b0085bd6e03205dda2d3b321de8fe7384b42b8aa3fe5beb378288944597f6e7",
+    "scripts/core-ideals/cardinality-avro-projection-schema.ts": "e991f8b37436ddc78fb0d4b7bd0605ee39892faad803f1eebf6e07f4127c2449",
+    "src/core-ideals/cardinality-avro-projection.ts": "940e86a30c5bbabaf6fb2b70ff129c4cc6cd67a382dd18a199b46138d161c3ed",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
+    "src/adapters/avro/metadata.ts": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775",
+    "src/index.ts": "e949dcfd67881560ab1431d87ae4516e84efe60d8d399297c0d10ccd81953723",
+    "spec/core/cardinality-avro-projection.schema.json": "7c98751948cf60dba920fb786fda3ed66d787e1405bf51b7383dba297592b194",
+    "fixtures/validation/cardinality-avro-projection-oracle.json": "bed8f36f559555ed4b9182a1ffa13e7448efb47f24d82494cb7476c230174bfc",
+    "dist/umf.js": "f9367551ce15db6d1111b4406bc762fc6a43ec657c7e30c1944728007f0f190a"
+  }
+}

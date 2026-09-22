@@ -1,0 +1,872 @@
+{
+  "rows": [
+    {
+      "id": "avro-cardinality-0",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 7
+      },
+      "expectedValue": {
+        "value": 7
+      }
+    },
+    {
+      "id": "avro-cardinality-1",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 7
+      },
+      "expectedValue": {
+        "value": 7
+      }
+    },
+    {
+      "id": "avro-cardinality-2",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-3",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-4",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-5",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "a": 2
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "a": 2
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-6",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-7",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 7
+      },
+      "expectedValue": {
+        "value": 7
+      }
+    },
+    {
+      "id": "avro-cardinality-8",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-9",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-10",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-11",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "a": 2
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "a": 2
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-12",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-13",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 7
+      },
+      "expectedValue": {
+        "value": 7
+      }
+    },
+    {
+      "id": "avro-cardinality-14",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-15",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-16",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-17",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "a": 2
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "a": 2
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-18",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-19",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 7
+      },
+      "expectedValue": {
+        "value": 7
+      }
+    },
+    {
+      "id": "avro-cardinality-20",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-21",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-22",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-23",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "a": 2
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "a": 2
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-24",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": true
+      },
+      "expectedValue": {
+        "value": true
+      }
+    },
+    {
+      "id": "avro-cardinality-25",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": true
+      },
+      "expectedValue": {
+        "value": true
+      }
+    },
+    {
+      "id": "avro-cardinality-26",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-27",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": true
+      },
+      "expectedValue": {
+        "value": true
+      }
+    },
+    {
+      "id": "avro-cardinality-28",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 2147483647
+      },
+      "expectedValue": {
+        "value": 2147483647
+      }
+    },
+    {
+      "id": "avro-cardinality-29",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 2147483647
+      },
+      "expectedValue": {
+        "value": 2147483647
+      }
+    },
+    {
+      "id": "avro-cardinality-30",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-31",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 2147483647
+      },
+      "expectedValue": {
+        "value": 2147483647
+      }
+    },
+    {
+      "id": "avro-cardinality-32",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "$integer": "9223372036854775807"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$integer": "9223372036854775807"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-33",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "$integer": "9223372036854775807"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$integer": "9223372036854775807"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-34",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-35",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "$integer": "9223372036854775807"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$integer": "9223372036854775807"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-36",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"float\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 1.0000000000000002
+      },
+      "expectedValue": {
+        "value": 1
+      }
+    },
+    {
+      "id": "avro-cardinality-37",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"float\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 1.0000000000000002
+      },
+      "expectedValue": {
+        "value": 1
+      }
+    },
+    {
+      "id": "avro-cardinality-38",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-39",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"float\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 1.0000000000000002
+      },
+      "expectedValue": {
+        "value": 1
+      }
+    },
+    {
+      "id": "avro-cardinality-40",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 1.0000000000000002
+      },
+      "expectedValue": {
+        "value": 1.0000000000000002
+      }
+    },
+    {
+      "id": "avro-cardinality-41",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 1.0000000000000002
+      },
+      "expectedValue": {
+        "value": 1.0000000000000002
+      }
+    },
+    {
+      "id": "avro-cardinality-42",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-43",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 1.0000000000000002
+      },
+      "expectedValue": {
+        "value": 1.0000000000000002
+      }
+    },
+    {
+      "id": "avro-cardinality-44",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-45",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-46",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-47",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-48",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"string\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": "snow-雪"
+      },
+      "expectedValue": {
+        "value": "snow-雪"
+      }
+    },
+    {
+      "id": "avro-cardinality-49",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"string\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": "snow-雪"
+      },
+      "expectedValue": {
+        "value": "snow-雪"
+      }
+    },
+    {
+      "id": "avro-cardinality-50",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-51",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"string\"}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": "snow-雪"
+      },
+      "expectedValue": {
+        "value": "snow-雪"
+      }
+    },
+    {
+      "id": "avro-cardinality-52",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"long\"}}]}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          null,
+          {
+            "x": [
+              2,
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          null,
+          {
+            "x": [
+              2,
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-53",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"long\"}}]}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          null,
+          {
+            "x": [
+              2,
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          null,
+          {
+            "x": [
+              2,
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-54",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-55",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"long\"}}]}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          null,
+          {
+            "x": [
+              2,
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          null,
+          {
+            "x": [
+              2,
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-56",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-57",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "__proto__": "own",
+          "constructor": "kept"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "__proto__": "own",
+          "constructor": "kept"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-58",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "__proto__": "own",
+          "constructor": "kept"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "__proto__": "own",
+          "constructor": "kept"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-59",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": {
+          "__proto__": "own",
+          "constructor": "kept"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "__proto__": "own",
+          "constructor": "kept"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-60",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"dep.Choice\"}]}\n",
+        "dependencies": [
+          {
+            "id": "choice",
+            "schema": "{\"type\":\"enum\",\"name\":\"dep.Choice\",\"symbols\":[\"A\",\"B\"]}\n"
+          }
+        ]
+      },
+      "sample": {
+        "value": "A"
+      },
+      "expectedValue": {
+        "value": "A"
+      }
+    },
+    {
+      "id": "avro-cardinality-61",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"dep.Choice\"}]}\n",
+        "dependencies": [
+          {
+            "id": "choice",
+            "schema": "{\"type\":\"enum\",\"name\":\"dep.Choice\",\"symbols\":[\"A\",\"B\"]}\n"
+          }
+        ]
+      },
+      "sample": {
+        "value": "A"
+      },
+      "expectedValue": {
+        "value": "A"
+      }
+    },
+    {
+      "id": "avro-cardinality-62",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-63",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"future\":\"retained\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": 7
+      },
+      "expectedValue": {
+        "value": 7
+      }
+    },
+    {
+      "id": "avro-cardinality-64",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-65",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
+        "dependencies": []
+      },
+      "sample": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    }
+  ],
+  "blocked": 22,
+  "recoveries": 88
+}
