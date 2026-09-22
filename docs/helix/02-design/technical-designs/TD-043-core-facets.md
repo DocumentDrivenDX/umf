@@ -558,3 +558,36 @@ exact-input failure. Native payloads are never removed by core labels.
 This closes the PostgreSQL facet binding only. SQL Server, Avro and Parquet facet
 bindings, the separate facet ideal admission/five-system delivery gate, and Key
 remain required. No native-equivalence graduation is claimed.
+
+### SQL Server facet binding rules from native discovery
+
+The [SQL Server discovery evidence](../../04-build/evidence/sqlserver-facet-discovery.md)
+qualifies native counterexamples on SQL Server 2022 16.0.4295.3 before public facet
+schema/API work. Direct base-type decoding is internal; alias, CLR and unsupported
+types retain their native identity. Preserve the existing distinction between
+physical catalog columns and separately identified logical Fields. A type fact
+alone must not overwrite author intent or assert a scalar logical shape.
+
+Treat stored-value bounds and input conversion as separate obligations. Decimal
+conversion can round before CHECK evaluation; runtime arithmetic settings can
+change precision-loss results to errors or NULL. A catalog precision/scale pair
+does not encode those settings. Tinyint is unsigned; other supported integer
+carriers are signed. Keep additional ranges and unknown predicates attached.
+
+Native string capacity is not a portable Unicode-scalar bound. Byte counts,
+UTF-16 units, collation, padding, malformed surrogate values and conversion losses
+must remain explicit. LEN and a trailing-space sentinel are not Unicode validity
+checks. Fixed binary padding also differs from an author-stated maximum length.
+The float-narrowing counterexample remains an exact-input refusal or residual.
+
+Any CHECK classification needs whole-expression qualification, coherent column
+association, enabled/trust/replication state and relevant collation context.
+Do not recognize constraints from a substring or their names. Stored and ordinary
+new-write scopes differ for untrusted checks; replication behavior needs separate
+evidence. Filtered/disabled unique-index counterexamples remain permanent and do
+not become core keys. Unknown native semantics stay attached to the classification.
+
+The next public classifier/projector requires complete operation and extension
+schemas, strict/report handling and both retained round trips. Native discovery,
+the internal decoder and its Chromium parity do not admit that binding. Full
+compatibility refresh and prior concept gates remain part of binding acceptance.

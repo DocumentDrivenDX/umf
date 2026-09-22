@@ -1,0 +1,19 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [85.52ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [4.35ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.94ms]
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [265.35ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [399.55ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [116.48ms]
+
+tests/sqlserver/integer-tokens.test.ts:
+(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2767.95ms]
+
+ 7 pass
+ 0 fail
+ 397 expect() calls
+Ran 7 tests across 3 files. [6.46s]

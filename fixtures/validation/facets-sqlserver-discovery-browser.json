@@ -1,0 +1,20 @@
+{
+  "scope": "Internal pinned SQL Server native type observation and catalog-tree recovery in Chromium; no public core facet classifier/projector or binding acceptance",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 37,
+    "observed": 34,
+    "unsupported": 3,
+    "catalogRecoveries": 2,
+    "unsafeRefusals": 1,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/adapters/sqlserver/facet-type.ts": "8831415c9ca140be4a3d7eec773e164abd1858597f42805fa7ca67e3331706ff",
+    "scripts/core-ideals/facets-sqlserver-discovery-browser.ts": "5089d15455d90a422d59543b43e08bf8f86c3ef132bc10c971fdf828323036b0",
+    "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
+    "dist/sqlserver-facet-type.js": "3c1b54a847d9d9607d45eac08160a118983759b4076efd4637df3bd2d994dba5",
+    "dist/umf.js": "d722c03a785c629383ae00e246b8d4dfd4ef9a6b919fd2cdb93150aa01226143"
+  }
+}

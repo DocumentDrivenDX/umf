@@ -1,0 +1,1049 @@
+{
+  "scope": "SQL Server 2022 16.0.4295.3 native facet discovery and catalog-tree recovery; no public facet binding, ideal admission or original source-text recovery claim",
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "serverVersion": "16.0.4295.3",
+  "observational": false,
+  "cases": [
+    {
+      "id": "tinyint-min",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(tinyint,'0'));",
+      "expected": "0",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "tinyint-max",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(tinyint,'255'));",
+      "expected": "255",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "255",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "tinyint-below",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(tinyint,'-1'));",
+      "expected": null,
+      "error": 244,
+      "actual": {
+        "error": 244,
+        "value": null,
+        "message": "The conversion of the varchar value '-1' overflowed an INT1 column. Use a larger integer column."
+      },
+      "messages": ""
+    },
+    {
+      "id": "tinyint-above",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(tinyint,'256'));",
+      "expected": null,
+      "error": 244,
+      "actual": {
+        "error": 244,
+        "value": null,
+        "message": "The conversion of the varchar value '256' overflowed an INT1 column. Use a larger integer column."
+      },
+      "messages": ""
+    },
+    {
+      "id": "smallint-min",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(smallint,'-32768'));",
+      "expected": "-32768",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "-32768",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "smallint-max",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(smallint,'32767'));",
+      "expected": "32767",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "32767",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "smallint-below",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(smallint,'-32769'));",
+      "expected": null,
+      "error": 244,
+      "actual": {
+        "error": 244,
+        "value": null,
+        "message": "The conversion of the varchar value '-32769' overflowed an INT2 column. Use a larger integer column."
+      },
+      "messages": ""
+    },
+    {
+      "id": "smallint-above",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(smallint,'32768'));",
+      "expected": null,
+      "error": 244,
+      "actual": {
+        "error": 244,
+        "value": null,
+        "message": "The conversion of the varchar value '32768' overflowed an INT2 column. Use a larger integer column."
+      },
+      "messages": ""
+    },
+    {
+      "id": "int-min",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(int,'-2147483648'));",
+      "expected": "-2147483648",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "-2147483648",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "int-max",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(int,'2147483647'));",
+      "expected": "2147483647",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2147483647",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "int-below",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(int,'-2147483649'));",
+      "expected": null,
+      "error": 248,
+      "actual": {
+        "error": 248,
+        "value": null,
+        "message": "The conversion of the varchar value '-2147483649' overflowed an int column."
+      },
+      "messages": ""
+    },
+    {
+      "id": "int-above",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(int,'2147483648'));",
+      "expected": null,
+      "error": 248,
+      "actual": {
+        "error": 248,
+        "value": null,
+        "message": "The conversion of the varchar value '2147483648' overflowed an int column."
+      },
+      "messages": ""
+    },
+    {
+      "id": "bigint-min",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(bigint,'-9223372036854775808'));",
+      "expected": "-9223372036854775808",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "-9223372036854775808",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "bigint-max",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(bigint,'9223372036854775807'));",
+      "expected": "9223372036854775807",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "9223372036854775807",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "bigint-below",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(bigint,'-9223372036854775809'));",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting expression to data type bigint."
+      },
+      "messages": ""
+    },
+    {
+      "id": "bigint-above",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(bigint,'9223372036854775808'));",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting expression to data type bigint."
+      },
+      "messages": ""
+    },
+    {
+      "id": "signed8-min",
+      "statement": "DELETE FROM facet.signed8; INSERT INTO facet.signed8(value) VALUES(-128); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.signed8;",
+      "expected": "-128",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "-128",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "signed8-max",
+      "statement": "DELETE FROM facet.signed8; INSERT INTO facet.signed8(value) VALUES(127); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.signed8;",
+      "expected": "127",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "127",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "signed8-below",
+      "statement": "DELETE FROM facet.signed8; INSERT INTO facet.signed8(value) VALUES(-129); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.signed8;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__signed8__value__38996AB5\". The conflict occurred in database \"umf_facets\", table \"facet.signed8\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "signed8-above",
+      "statement": "DELETE FROM facet.signed8; INSERT INTO facet.signed8(value) VALUES(128); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.signed8;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__signed8__value__38996AB5\". The conflict occurred in database \"umf_facets\", table \"facet.signed8\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "unsigned16-min",
+      "statement": "DELETE FROM facet.unsigned16; INSERT INTO facet.unsigned16(value) VALUES(0); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.unsigned16;",
+      "expected": "0",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "unsigned16-max",
+      "statement": "DELETE FROM facet.unsigned16; INSERT INTO facet.unsigned16(value) VALUES(65535); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.unsigned16;",
+      "expected": "65535",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "65535",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "unsigned16-below",
+      "statement": "DELETE FROM facet.unsigned16; INSERT INTO facet.unsigned16(value) VALUES(-1); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.unsigned16;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__unsigned1__value__3A81B327\". The conflict occurred in database \"umf_facets\", table \"facet.unsigned16\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "unsigned16-above",
+      "statement": "DELETE FROM facet.unsigned16; INSERT INTO facet.unsigned16(value) VALUES(65536); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.unsigned16;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__unsigned1__value__3A81B327\". The conflict occurred in database \"umf_facets\", table \"facet.unsigned16\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-rounds",
+      "statement": "DELETE FROM facet.decimal52; INSERT INTO facet.decimal52(value) VALUES(1.235); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal52;",
+      "expected": "1.24",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1.24",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-checked-still-rounds",
+      "statement": "DELETE FROM facet.decimal_checked; INSERT INTO facet.decimal_checked(value) VALUES(1.235); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal_checked;",
+      "expected": "1.24",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1.24",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-max",
+      "statement": "DELETE FROM facet.decimal52; INSERT INTO facet.decimal52(value) VALUES(999.99); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal52;",
+      "expected": "999.99",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "999.99",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-overflow",
+      "statement": "DELETE FROM facet.decimal52; INSERT INTO facet.decimal52(value) VALUES(1000); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal52;",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting int to data type numeric."
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal33-max",
+      "statement": "DELETE FROM facet.decimal33; INSERT INTO facet.decimal33(value) VALUES(0.999); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal33;",
+      "expected": "0.999",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0.999",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal33-round-overflow",
+      "statement": "DELETE FROM facet.decimal33; INSERT INTO facet.decimal33(value) VALUES(0.9999); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal33;",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting numeric to data type numeric."
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal38-exact",
+      "statement": "DELETE FROM facet.decimal380; INSERT INTO facet.decimal380(value) VALUES('99999999999999999999999999999999999999'); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal380;",
+      "expected": "99999999999999999999999999999999999999",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "99999999999999999999999999999999999999",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal3838-exact",
+      "statement": "DELETE FROM facet.decimal3838; INSERT INTO facet.decimal3838(value) VALUES('0.99999999999999999999999999999999999999'); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.decimal3838;",
+      "expected": "0.99999999999999999999999999999999999999",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0.99999999999999999999999999999999999999",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "alias-rounds",
+      "statement": "DELETE FROM facet.alias_value; INSERT INTO facet.alias_value(value) VALUES(1.235); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.alias_value;",
+      "expected": "1.24",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1.24",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-OFF-OFF-OFF",
+      "statement": "SET ANSI_WARNINGS OFF; SET NUMERIC_ROUNDABORT OFF; SET ARITHABORT OFF; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": "2.25",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2.25",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-OFF-OFF-ON",
+      "statement": "SET ANSI_WARNINGS OFF; SET NUMERIC_ROUNDABORT OFF; SET ARITHABORT ON; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": "2.25",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2.25",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-OFF-ON-OFF",
+      "statement": "SET ANSI_WARNINGS OFF; SET NUMERIC_ROUNDABORT ON; SET ARITHABORT OFF; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": null,
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": null,
+        "message": null
+      },
+      "messages": "Arithmetic overflow occurred.\n"
+    },
+    {
+      "id": "roundabort-warnings-OFF-ON-ON",
+      "statement": "SET ANSI_WARNINGS OFF; SET NUMERIC_ROUNDABORT ON; SET ARITHABORT ON; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting numeric to data type numeric."
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-ON-OFF-OFF",
+      "statement": "SET ANSI_WARNINGS ON; SET NUMERIC_ROUNDABORT OFF; SET ARITHABORT OFF; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": "2.25",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2.25",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-ON-OFF-ON",
+      "statement": "SET ANSI_WARNINGS ON; SET NUMERIC_ROUNDABORT OFF; SET ARITHABORT ON; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": "2.25",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2.25",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-ON-ON-OFF",
+      "statement": "SET ANSI_WARNINGS ON; SET NUMERIC_ROUNDABORT ON; SET ARITHABORT OFF; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting numeric to data type numeric."
+      },
+      "messages": ""
+    },
+    {
+      "id": "roundabort-warnings-ON-ON-ON",
+      "statement": "SET ANSI_WARNINGS ON; SET NUMERIC_ROUNDABORT ON; SET ARITHABORT ON; DECLARE @a decimal(5,4)=1.1234,@b decimal(5,4)=1.1234,@v decimal(5,2); SET @v=@a+@b; SELECT @out=CONVERT(nvarchar(max),@v);",
+      "expected": null,
+      "error": 8115,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting numeric to data type numeric."
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-narrowing",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(float(53),CONVERT(real,CONVERT(float(53),'1.0000000000000002'))),3);",
+      "expected": "1.0000000000000000e+000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1.0000000000000000e+000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "float64-retains",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(float(53),'1.0000000000000002'),3);",
+      "expected": "1.0000000000000002e+000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1.0000000000000002e+000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-storage-1",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),DATALENGTH(CONVERT(float(1),1)));",
+      "expected": "4",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "4",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-storage-24",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),DATALENGTH(CONVERT(float(24),1)));",
+      "expected": "4",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "4",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-storage-25",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),DATALENGTH(CONVERT(float(25),1)));",
+      "expected": "8",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "8",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-storage-53",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),DATALENGTH(CONVERT(float(53),1)));",
+      "expected": "8",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "8",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "nvarchar1-astral-refusal",
+      "statement": "DELETE FROM facet.nvarchar1; INSERT INTO facet.nvarchar1(value) VALUES(N'😀'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nvarchar1;",
+      "expected": null,
+      "error": 2628,
+      "actual": {
+        "error": 2628,
+        "value": null,
+        "message": "String or binary data would be truncated in table 'umf_facets.facet.nvarchar1', column 'value'. Truncated value: ''."
+      },
+      "messages": ""
+    },
+    {
+      "id": "nvarchar2-astral",
+      "statement": "DELETE FROM facet.nvarchar2; INSERT INTO facet.nvarchar2(value) VALUES(N'😀'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nvarchar2;",
+      "expected": "3DD800DE",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "3DD800DE",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "nvarchar2-trailing-truncation",
+      "statement": "DELETE FROM facet.nvarchar2; INSERT INTO facet.nvarchar2(value) VALUES(N'a  '); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nvarchar2;",
+      "expected": "61002000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "61002000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "nvarchar-explicit-truncation",
+      "statement": "DELETE FROM facet.nvarchar2; INSERT INTO facet.nvarchar2(value) VALUES(CONVERT(nvarchar(2),N'abc')); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nvarchar2;",
+      "expected": "61006200",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "61006200",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "nvarchar-nul",
+      "statement": "DELETE FROM facet.nvarchar2; INSERT INTO facet.nvarchar2(value) VALUES(NCHAR(0)); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nvarchar2;",
+      "expected": "0000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "nvarchar-isolated-surrogate",
+      "statement": "DELETE FROM facet.nvarchar2; INSERT INTO facet.nvarchar2(value) VALUES(CONVERT(nvarchar(1),0x00D8)); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nvarchar2;",
+      "expected": "00D8",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "00D8",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "varchar-utf8-astral",
+      "statement": "DELETE FROM facet.varchar_utf8; INSERT INTO facet.varchar_utf8(value) VALUES(N'😀'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varchar_utf8;",
+      "expected": "F09F9880",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "F09F9880",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "varchar-legacy-substitution",
+      "statement": "DELETE FROM facet.varchar_legacy; INSERT INTO facet.varchar_legacy(value) VALUES(N'😀'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varchar_legacy;",
+      "expected": "3F3F",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "3F3F",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "nchar-padding",
+      "statement": "DELETE FROM facet.nchar2; INSERT INTO facet.nchar2(value) VALUES(N'a'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.nchar2;",
+      "expected": "61002000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "61002000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "char-padding",
+      "statement": "DELETE FROM facet.char2; INSERT INTO facet.char2(value) VALUES('a'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.char2;",
+      "expected": "6120",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "6120",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-padding",
+      "statement": "DELETE FROM facet.binary2; INSERT INTO facet.binary2(value) VALUES(0x01); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.binary2;",
+      "expected": "0100",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0100",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "varbinary-empty",
+      "statement": "DELETE FROM facet.varbinary2; INSERT INTO facet.varbinary2(value) VALUES(0x); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varbinary2;",
+      "expected": "",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "varbinary-overflow",
+      "statement": "DELETE FROM facet.varbinary2; INSERT INTO facet.varbinary2(value) VALUES(0x010203); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varbinary2;",
+      "expected": null,
+      "error": 2628,
+      "actual": {
+        "error": 2628,
+        "value": null,
+        "message": "String or binary data would be truncated in table 'umf_facets.facet.varbinary2', column 'value'. Truncated value: ''."
+      },
+      "messages": ""
+    },
+    {
+      "id": "len-misses-trailing-spaces",
+      "statement": "DELETE FROM facet.length_len; INSERT INTO facet.length_len(value) VALUES(N'a   '); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.length_len;",
+      "expected": "6100200020002000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "6100200020002000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "sentinel-counts-spaces",
+      "statement": "DELETE FROM facet.length_sentinel; INSERT INTO facet.length_sentinel(value) VALUES(N'a   '); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.length_sentinel;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__length_se__value__4E88ABD4\". The conflict occurred in database \"umf_facets\", table \"facet.length_sentinel\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "sentinel-two-astral",
+      "statement": "DELETE FROM facet.length_sentinel; INSERT INTO facet.length_sentinel(value) VALUES(N'😀😀'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.length_sentinel;",
+      "expected": "3DD800DE3DD800DE",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "3DD800DE3DD800DE",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "zero-empty",
+      "statement": "DELETE FROM facet.length_zero; INSERT INTO facet.length_zero(value) VALUES(N''); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.length_zero;",
+      "expected": "",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "zero-space-refusal",
+      "statement": "DELETE FROM facet.length_zero; INSERT INTO facet.length_zero(value) VALUES(N' '); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.length_zero;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__length_ze__value__5070F446\". The conflict occurred in database \"umf_facets\", table \"facet.length_zero\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "bytes-nul",
+      "statement": "DELETE FROM facet.bytes_bound; INSERT INTO facet.bytes_bound(value) VALUES(0x0000); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.bytes_bound;",
+      "expected": "0000",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0000",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "bytes-overflow",
+      "statement": "DELETE FROM facet.bytes_bound; INSERT INTO facet.bytes_bound(value) VALUES(0x000000); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.bytes_bound;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"CK__bytes_bou__value__52593CB8\". The conflict occurred in database \"umf_facets\", table \"facet.bytes_bound\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "len-sc",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),LEN(N'😀' COLLATE Latin1_General_100_CI_AS_SC));",
+      "expected": "1",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "len-legacy",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),LEN(N'😀' COLLATE Latin1_General_100_CI_AS));",
+      "expected": "2",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "len-combining",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),LEN(N'é' COLLATE Latin1_General_100_CI_AS_SC));",
+      "expected": "2",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "untrusted-existing",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),(SELECT value FROM facet.untrusted));",
+      "expected": "256",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "256",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "untrusted-new-rejects",
+      "statement": "INSERT INTO facet.untrusted VALUES(256);",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"unsigned8_untrusted\". The conflict occurred in database \"umf_facets\", table \"facet.untrusted\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "disabled-accepts",
+      "statement": "DELETE FROM facet.disabled; INSERT INTO facet.disabled(value) VALUES(256); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.disabled;",
+      "expected": "256",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "256",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "replication-ordinary-rejects",
+      "statement": "DELETE FROM facet.replica_value; INSERT INTO facet.replica_value(value) VALUES(256); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.replica_value;",
+      "expected": null,
+      "error": 547,
+      "actual": {
+        "error": 547,
+        "value": null,
+        "message": "The INSERT statement conflicted with the CHECK constraint \"unsigned8_replication\". The conflict occurred in database \"umf_facets\", table \"facet.replica_value\", column 'value'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "custom-accepts",
+      "statement": "DELETE FROM facet.custom; INSERT INTO facet.custom(value) VALUES(9999); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.custom;",
+      "expected": "9999",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "9999",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "check-null-unknown",
+      "statement": "DELETE FROM facet.signed8; INSERT INTO facet.signed8(value) VALUES(NULL); SELECT @out=CONVERT(nvarchar(max),value) FROM facet.signed8;",
+      "expected": null,
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": null,
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "sentinel-malformed-surrogate",
+      "statement": "DELETE FROM facet.length_sentinel; INSERT INTO facet.length_sentinel(value) VALUES(CONVERT(nvarchar(1),0x00D8)); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.length_sentinel;",
+      "expected": "00D8",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "00D8",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "utf8-byte-conversion-truncation",
+      "statement": "DELETE FROM facet.varchar_utf8; INSERT INTO facet.varchar_utf8(value) VALUES(CONVERT(varchar(1),0xFF) COLLATE Latin1_General_100_CI_AS_SC_UTF8); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varchar_utf8;",
+      "expected": "",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "utf8-byte-conversion-wide",
+      "statement": "DELETE FROM facet.varchar_utf8; INSERT INTO facet.varchar_utf8(value) VALUES(CONVERT(varchar(4),0xFF) COLLATE Latin1_General_100_CI_AS_SC_UTF8); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varchar_utf8;",
+      "expected": "C3BF",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "C3BF",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "utf8-two-astral-refusal",
+      "statement": "DELETE FROM facet.varchar_utf8; INSERT INTO facet.varchar_utf8(value) VALUES(N'😀😀'); SELECT @out=CONVERT(varchar(max),CONVERT(varbinary(max),value),2) FROM facet.varchar_utf8;",
+      "expected": null,
+      "error": 2628,
+      "actual": {
+        "error": 2628,
+        "value": null,
+        "message": "String or binary data would be truncated in table 'umf_facets.facet.varchar_utf8', column 'value'. Truncated value: '😀'."
+      },
+      "messages": ""
+    },
+    {
+      "id": "integer-conversion-truncates",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(bigint,1.9));",
+      "expected": "1",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-explicit-truncation",
+      "statement": "SELECT @out=CONVERT(varchar(max),CONVERT(binary(2),0x010203),2);",
+      "expected": "0102",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "0102",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-nan-refusal",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(float,'NaN'),3);",
+      "expected": null,
+      "error": 8114,
+      "actual": {
+        "error": 8114,
+        "value": null,
+        "message": "Error converting data type varchar to float."
+      },
+      "messages": ""
+    },
+    {
+      "id": "float-infinity-refusal",
+      "statement": "SELECT @out=CONVERT(nvarchar(max),CONVERT(float,'Infinity'),3);",
+      "expected": null,
+      "error": 8114,
+      "actual": {
+        "error": 8114,
+        "value": null,
+        "message": "Error converting data type varchar to float."
+      },
+      "messages": ""
+    },
+    {
+      "id": "filtered-index-accepts-duplicates",
+      "statement": "INSERT INTO facet.filtered_unique VALUES(1,0),(1,0); SELECT @out=CONVERT(nvarchar(max),COUNT(*)) FROM facet.filtered_unique;",
+      "expected": "2",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "disabled-index-accepts-duplicates",
+      "statement": "INSERT INTO facet.disabled_unique VALUES(1),(1); SELECT @out=CONVERT(nvarchar(max),COUNT(*)) FROM facet.disabled_unique;",
+      "expected": "2",
+      "error": 0,
+      "actual": {
+        "error": 0,
+        "value": "2",
+        "message": null
+      },
+      "messages": ""
+    }
+  ],
+  "sourceText": "{\n  \"profile\": \"sqlserver-catalog-v3\",\n  \"state\": \"captured\",\n  \"serverVersion\": \"16.0.4295.3\",\n  \"query\": \"SET NOCOUNT ON;\\nSELECT 'sqlserver-catalog-v3' AS profile, 'captured' AS state,\\n CONVERT(nvarchar(128),SERVERPROPERTY('ProductVersion')) AS serverVersion,\\n 'native/sqlserver/catalog-v3.sql' AS query,\\n JSON_QUERY(COALESCE((SELECT SCHEMA_NAME(t.schema_id) AS [schema],t.name,\\n  JSON_QUERY(COALESCE((SELECT c.name,c.column_id,c.system_type_id,c.user_type_id,\\n   SCHEMA_NAME(ty.schema_id) AS type_schema,ty.name AS type_name,bt.name AS base_type_name,\\n   ty.is_user_defined,ty.is_assembly_type,c.max_length,c.precision,c.scale,\\n   c.is_nullable,c.is_identity,c.is_computed,c.collation_name,\\n   OBJECT_DEFINITION(c.default_object_id) AS default_definition,cc.definition AS computed_definition,\\n   CONVERT(nvarchar(128),ic.seed_value) AS identity_seed,\\n   CONVERT(nvarchar(128),ic.increment_value) AS identity_increment,\\n   CONVERT(nvarchar(max),ep.value) AS description\\n   FROM sys.columns c JOIN sys.types ty ON ty.user_type_id=c.user_type_id\\n   LEFT JOIN sys.types bt ON bt.user_type_id=c.system_type_id AND bt.system_type_id=bt.user_type_id\\n   LEFT JOIN sys.computed_columns cc ON cc.object_id=c.object_id AND cc.column_id=c.column_id\\n   LEFT JOIN sys.identity_columns ic ON ic.object_id=c.object_id AND ic.column_id=c.column_id\\n   LEFT JOIN sys.extended_properties ep ON ep.class=1 AND ep.major_id=c.object_id AND ep.minor_id=c.column_id AND ep.name=N'MS_Description'\\n   WHERE c.object_id=t.object_id ORDER BY c.column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n-- Append these expressions to the table-level SELECT in catalog.sql.\\n  ,JSON_QUERY(COALESCE((SELECT k.name,RTRIM(k.type) AS kind,k.is_system_named,\\n    i.type_desc AS index_type,i.is_disabled,i.ignore_dup_key,\\n    JSON_QUERY(COALESCE((SELECT ic.key_ordinal,c.column_id,c.name,ic.is_descending_key\\n      FROM sys.index_columns ic JOIN sys.columns c ON c.object_id=ic.object_id AND c.column_id=ic.column_id\\n      WHERE ic.object_id=k.parent_object_id AND ic.index_id=k.unique_index_id AND ic.key_ordinal>0\\n      ORDER BY ic.key_ordinal FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n    FROM sys.key_constraints k JOIN sys.indexes i ON i.object_id=k.parent_object_id AND i.index_id=k.unique_index_id\\n    WHERE k.parent_object_id=t.object_id ORDER BY k.name FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS keys\\n  ,JSON_QUERY(COALESCE((SELECT f.name,f.is_system_named,f.is_disabled,f.is_not_trusted,f.is_not_for_replication,\\n    f.delete_referential_action_desc AS delete_action,f.update_referential_action_desc AS update_action,\\n    OBJECT_SCHEMA_NAME(f.referenced_object_id) AS referenced_schema,OBJECT_NAME(f.referenced_object_id) AS referenced_table,\\n    JSON_QUERY(COALESCE((SELECT fc.constraint_column_id AS ordinal,fc.parent_column_id AS column_id,\\n      COL_NAME(fc.parent_object_id,fc.parent_column_id) AS column_name,\\n      fc.referenced_column_id,COL_NAME(fc.referenced_object_id,fc.referenced_column_id) AS referenced_column_name\\n      FROM sys.foreign_key_columns fc WHERE fc.constraint_object_id=f.object_id\\n      ORDER BY fc.constraint_column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n    FROM sys.foreign_keys f WHERE f.parent_object_id=t.object_id ORDER BY f.name\\n    FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS foreign_keys\\n  ,JSON_QUERY(COALESCE((SELECT c.name,c.is_system_named,c.parent_column_id,c.definition,c.is_disabled,\\n    c.is_not_trusted,c.is_not_for_replication,c.uses_database_collation\\n    FROM sys.check_constraints c WHERE c.parent_object_id=t.object_id ORDER BY c.name\\n    FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS checks\\n\\n-- Append these expressions to the table-level SELECT in catalog-v2.sql.\\n  ,JSON_QUERY(COALESCE((SELECT i.index_id,i.name,i.type,i.type_desc,i.is_unique,\\n    i.is_primary_key,i.is_unique_constraint,i.is_disabled,i.is_hypothetical,\\n    i.ignore_dup_key,i.fill_factor,i.is_padded,i.allow_row_locks,i.allow_page_locks,\\n    i.has_filter,i.filter_definition,i.compression_delay,i.optimize_for_sequential_key,\\n    i.data_space_id,ds.name AS data_space_name,ds.type_desc AS data_space_type,\\n    JSON_QUERY(COALESCE((SELECT ic.index_column_id,ic.column_id,c.name,\\n      ic.key_ordinal,ic.partition_ordinal,ic.is_descending_key,ic.is_included_column,\\n      ic.column_store_order_ordinal\\n      FROM sys.index_columns ic LEFT JOIN sys.columns c\\n        ON c.object_id=ic.object_id AND c.column_id=ic.column_id\\n      WHERE ic.object_id=i.object_id AND ic.index_id=i.index_id\\n      ORDER BY ic.index_column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n    FROM sys.indexes i LEFT JOIN sys.data_spaces ds ON ds.data_space_id=i.data_space_id\\n    WHERE i.object_id=t.object_id ORDER BY i.index_id\\n    FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS indexes\\n\\n  FROM sys.tables t WHERE t.is_ms_shipped=0 ORDER BY SCHEMA_NAME(t.schema_id),t.name\\n  FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS tables\\nFOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;\\n\",\n  \"tables\": [\n    {\n      \"schema\": \"facet\",\n      \"name\": \"alias_value\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 257,\n          \"type_schema\": \"facet\",\n          \"type_name\": \"Amount\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": true,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 5,\n          \"scale\": 2,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"binary2\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 173,\n          \"user_type_id\": 173,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"binary\",\n          \"base_type_name\": \"binary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"bytes_bound\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 165,\n          \"user_type_id\": 165,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varbinary\",\n          \"base_type_name\": \"varbinary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__bytes_bou__value__52593CB8\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"(datalength([value])<=(2))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"char2\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 175,\n          \"user_type_id\": 175,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"char\",\n          \"base_type_name\": \"char\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"custom\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__custom__value__59FA5E80\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"([facet].[always_true]([value])=(1))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"decimal_checked\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 5,\n          \"scale\": 2,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__decimal_c__value__403A8C7D\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"([value]=round([value],(2),(1)))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"decimal33\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 3,\n          \"scale\": 3,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"decimal380\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 17,\n          \"precision\": 38,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"decimal3838\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 17,\n          \"precision\": 38,\n          \"scale\": 38,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"decimal52\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 5,\n          \"scale\": 2,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"disabled\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"unsigned8_disabled\",\n          \"is_system_named\": false,\n          \"parent_column_id\": 1,\n          \"definition\": \"([value]>=(0) AND [value]<=(255))\",\n          \"is_disabled\": true,\n          \"is_not_trusted\": true,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"disabled_unique\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"disabled_unique\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": true,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"filtered_unique\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"active\",\n          \"column_id\": 2,\n          \"system_type_id\": 104,\n          \"user_type_id\": 104,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bit\",\n          \"base_type_name\": \"bit\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 1,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"filtered_unique\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": true,\n          \"filter_definition\": \"([active]=(1))\",\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"floats\",\n      \"columns\": [\n        {\n          \"name\": \"single_value\",\n          \"column_id\": 1,\n          \"system_type_id\": 59,\n          \"user_type_id\": 59,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"real\",\n          \"base_type_name\": \"real\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 24,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"low_precision\",\n          \"column_id\": 2,\n          \"system_type_id\": 59,\n          \"user_type_id\": 59,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"real\",\n          \"base_type_name\": \"real\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 24,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"high_precision\",\n          \"column_id\": 3,\n          \"system_type_id\": 62,\n          \"user_type_id\": 62,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"float\",\n          \"base_type_name\": \"float\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 53,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"double_value\",\n          \"column_id\": 4,\n          \"system_type_id\": 62,\n          \"user_type_id\": 62,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"float\",\n          \"base_type_name\": \"float\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 53,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"integers\",\n      \"columns\": [\n        {\n          \"name\": \"tiny\",\n          \"column_id\": 1,\n          \"system_type_id\": 48,\n          \"user_type_id\": 48,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"tinyint\",\n          \"base_type_name\": \"tinyint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 3,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"small\",\n          \"column_id\": 2,\n          \"system_type_id\": 52,\n          \"user_type_id\": 52,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"smallint\",\n          \"base_type_name\": \"smallint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 5,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"ordinary\",\n          \"column_id\": 3,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"wide\",\n          \"column_id\": 4,\n          \"system_type_id\": 127,\n          \"user_type_id\": 127,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bigint\",\n          \"base_type_name\": \"bigint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 19,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"length_len\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__length_le__value__4CA06362\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"(len([value])<=(2))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"length_sentinel\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__length_se__value__4E88ABD4\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"((len([value]+N'x')-(1))<=(2))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"length_zero\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": -1,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__length_ze__value__5070F446\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"(datalength([value])=(0))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"nchar2\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 239,\n          \"user_type_id\": 239,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nchar\",\n          \"base_type_name\": \"nchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"nvarchar_legacy\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"nvarchar1\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"nvarchar2\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"replica_value\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"unsigned8_replication\",\n          \"is_system_named\": false,\n          \"parent_column_id\": 1,\n          \"definition\": \"([value]>=(0) AND [value]<=(255))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": true,\n          \"is_not_for_replication\": true,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"signed8\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 52,\n          \"user_type_id\": 52,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"smallint\",\n          \"base_type_name\": \"smallint\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 5,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__signed8__value__38996AB5\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"([value]>=(-128) AND [value]<=(127))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"temporal\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 42,\n          \"user_type_id\": 42,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"datetime2\",\n          \"base_type_name\": \"datetime2\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 8,\n          \"precision\": 27,\n          \"scale\": 7,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"unsigned16\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"CK__unsigned1__value__3A81B327\",\n          \"is_system_named\": true,\n          \"parent_column_id\": 1,\n          \"definition\": \"([value]>=(0) AND [value]<=(65535))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": false,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"untrusted\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [\n        {\n          \"name\": \"unsigned8_untrusted\",\n          \"is_system_named\": false,\n          \"parent_column_id\": 1,\n          \"definition\": \"([value]>=(0) AND [value]<=(255))\",\n          \"is_disabled\": false,\n          \"is_not_trusted\": true,\n          \"is_not_for_replication\": false,\n          \"uses_database_collation\": true\n        }\n      ],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"varbinary2\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 165,\n          \"user_type_id\": 165,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varbinary\",\n          \"base_type_name\": \"varbinary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"varchar_legacy\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 167,\n          \"user_type_id\": 167,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varchar\",\n          \"base_type_name\": \"varchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 2,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    },\n    {\n      \"schema\": \"facet\",\n      \"name\": \"varchar_utf8\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 167,\n          \"user_type_id\": 167,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varchar\",\n          \"base_type_name\": \"varchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AS_SC_UTF8\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        }\n      ]\n    }\n  ],\n  \"facetDiscovery\": {\n    \"sourceSql\": \"CREATE SCHEMA facet;\\nGO\\nCREATE TYPE facet.Amount FROM decimal(5,2) NULL;\\nGO\\nCREATE FUNCTION facet.always_true(@value int) RETURNS bit AS BEGIN RETURN 1; END;\\nGO\\nCREATE TABLE facet.integers(tiny tinyint, small smallint, ordinary int, wide bigint);\\nCREATE TABLE facet.signed8(value smallint CHECK(value >= -128 AND value <= 127));\\nCREATE TABLE facet.unsigned16(value int CHECK(value >= 0 AND value <= 65535));\\nCREATE TABLE facet.decimal52(value decimal(5,2));\\nCREATE TABLE facet.decimal33(value decimal(3,3));\\nCREATE TABLE facet.decimal380(value decimal(38,0));\\nCREATE TABLE facet.decimal3838(value decimal(38,38));\\nCREATE TABLE facet.decimal_checked(value decimal(5,2) CHECK(value = ROUND(value,2,1)));\\nCREATE TABLE facet.alias_value(value facet.Amount);\\nCREATE TABLE facet.floats(single_value real, low_precision float(1), high_precision float(25), double_value float(53));\\nCREATE TABLE facet.nvarchar1(value nvarchar(1) COLLATE Latin1_General_100_CI_AS_SC);\\nCREATE TABLE facet.nvarchar2(value nvarchar(2) COLLATE Latin1_General_100_CI_AS_SC);\\nCREATE TABLE facet.nvarchar_legacy(value nvarchar(2) COLLATE Latin1_General_100_CI_AS);\\nCREATE TABLE facet.varchar_utf8(value varchar(4) COLLATE Latin1_General_100_CI_AS_SC_UTF8);\\nCREATE TABLE facet.varchar_legacy(value varchar(2) COLLATE Latin1_General_100_CI_AS);\\nCREATE TABLE facet.nchar2(value nchar(2) COLLATE Latin1_General_100_CI_AS_SC);\\nCREATE TABLE facet.char2(value char(2) COLLATE Latin1_General_100_CI_AS);\\nCREATE TABLE facet.binary2(value binary(2));\\nCREATE TABLE facet.varbinary2(value varbinary(2));\\nCREATE TABLE facet.length_len(value nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC CHECK(LEN(value)<=2));\\nCREATE TABLE facet.length_sentinel(value nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC CHECK(LEN(value+N'x')-1<=2));\\nCREATE TABLE facet.length_zero(value nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC CHECK(DATALENGTH(value)=0));\\nCREATE TABLE facet.bytes_bound(value varbinary(max) CHECK(DATALENGTH(value)<=2));\\nCREATE TABLE facet.untrusted(value int);\\nINSERT INTO facet.untrusted VALUES(256);\\nALTER TABLE facet.untrusted WITH NOCHECK ADD CONSTRAINT unsigned8_untrusted CHECK(value >= 0 AND value <= 255);\\nCREATE TABLE facet.disabled(value int CONSTRAINT unsigned8_disabled CHECK(value >= 0 AND value <= 255));\\nALTER TABLE facet.disabled NOCHECK CONSTRAINT unsigned8_disabled;\\nCREATE TABLE facet.replica_value(value int CONSTRAINT unsigned8_replication CHECK NOT FOR REPLICATION(value >= 0 AND value <= 255));\\nCREATE TABLE facet.custom(value int CHECK(facet.always_true(value)=1));\\nCREATE TABLE facet.temporal(value datetime2(7));\\nGO\\nCREATE TABLE facet.filtered_unique(value int,active bit);\\nCREATE UNIQUE INDEX filtered_unique ON facet.filtered_unique(value) WHERE active=1;\\nCREATE TABLE facet.disabled_unique(value int);\\nCREATE UNIQUE INDEX disabled_unique ON facet.disabled_unique(value);\\nALTER INDEX disabled_unique ON facet.disabled_unique DISABLE;\\nGO\\n\",\n    \"context\": {\n      \"compatibility_level\": 160,\n      \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\"\n    }\n  }\n}\n",
+  "columns": 37,
+  "serializationRecoveries": 2,
+  "sha256": {
+    "scripts/core-ideals/facets-sqlserver-discovery.ts": "1a7859969e54023981eba0a5ebb867629de2c50ebf82dcd48f502f777db837ba",
+    "scripts/core-ideals/facets-sqlserver-discovery-cases.ts": "3a6755b7c376f1392547a6064f6831706a41fabe5c3236820794f7b345fe22b9",
+    "fixtures/sqlserver/facets.sql": "36486033414fff768e6eef0243cfdf1de2c486170624df7ede4ca7267ceb5b59",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33"
+  }
+}

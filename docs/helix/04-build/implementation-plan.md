@@ -4154,3 +4154,23 @@ exact-input failure. Native payloads are never removed by core labels.
 This closes the PostgreSQL facet binding only. SQL Server, Avro and Parquet facet
 bindings, the separate facet ideal admission/five-system delivery gate, and Key
 remain required. No native-equivalence graduation is claimed.
+
+### SQL Server facet native discovery
+
+The SQL Server facet task is in progress. A pinned 16.0.4295.3 native corpus now
+passes 86 probes, including 27 expected rejections, with 37 captured columns and
+two catalog-tree serialization recoveries. It preserves byte/UTF-16 distinctions,
+rounding and session settings, malformed string values, constraint enforcement
+states and the filtered/disabled-index counterexamples. TD-043 now states the
+binding rules these observations require before public schema/API authoring.
+
+An internal browser-compatible native type decoder has seven Bun tests / 397
+assertions and 37 Chromium cases, plus exact catalog recovery and unsafe-input
+guards. It neither labels core facets nor changes the public bundle. See the
+[discovery record](../../../fixtures/validation/facets-sqlserver-discovery-evidence.json)
+and [native findings](evidence/sqlserver-facet-discovery.md).
+
+Next: bounded CHECK interpretation, public classification/projection schemas and
+implementations, retained recovery and full binding qualification. SQL Server
+acceptance, Avro and Parquet facets, the five-system facet gate and Key remain open.
+No native-equivalence graduation is claimed.

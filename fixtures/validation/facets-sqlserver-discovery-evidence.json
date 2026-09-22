@@ -1,0 +1,56 @@
+{
+  "scope": "SQL Server 2022 16.0.4295.3 native facet discovery, internal native type decoding and catalog-tree recovery only",
+  "serverVersion": "16.0.4295.3",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "publicBundleUnchanged": true,
+  "native": {
+    "cases": 86,
+    "expectedRejections": 27,
+    "columns": 37,
+    "catalogRecoveries": 2
+  },
+  "tests": {
+    "passed": 7,
+    "failed": 0,
+    "assertions": 397,
+    "files": 3
+  },
+  "typecheck": "passed",
+  "browser": {
+    "cases": 37,
+    "observed": 34,
+    "unsupported": 3,
+    "catalogRecoveries": 2,
+    "unsafeRefusals": 1,
+    "getterCalls": 0
+  },
+  "pending": [
+    "Qualified CHECK interpretation and explicit value scopes",
+    "Public classification and authored projection with operation/extension schemas",
+    "Both retained native/ideal recovery directions",
+    "Full compatibility refresh and binding acceptance"
+  ],
+  "sha256": {
+    "dist/sqlserver-facet-type.js": "3c1b54a847d9d9607d45eac08160a118983759b4076efd4637df3bd2d994dba5",
+    "dist/umf.js": "d722c03a785c629383ae00e246b8d4dfd4ef9a6b919fd2cdb93150aa01226143",
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": "16522ab574965eb1580f697f45869b39d81f9b96950d90a8026984ca78f08e17",
+    "docs/helix/04-build/evidence/sqlserver-facet-discovery.md": "73472c95eadec83b8f3e3f769b9aa16f125f0d09ad39268f48540c534adf506e",
+    "docs/helix/04-build/implementation-plan.md": "a03c1869a24519728f5ba60e9ecee65d2af6b43a8a7357fce1561457bf0dfd9e",
+    "docs/helix/README.md": "64f27c6f09ccf5e76c76720834d1ac759e612a4760b7fedf47fa0f82814fe2ad",
+    "fixtures/sqlserver/facets.sql": "36486033414fff768e6eef0243cfdf1de2c486170624df7ede4ca7267ceb5b59",
+    "fixtures/validation/facets-sqlserver-discovery-browser.json": "4f54fd00a2eebcf58f41b99b5d41b9a20111870066bad3a334ab81b4b09caa6e",
+    "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
+    "fixtures/validation/facets-sqlserver-discovery-tests.log": "6bd22cc2486255c3f2baebdf3778ceeb0a8918302cc4ddd9af4788f261251590",
+    "fixtures/validation/facets-sqlserver-discovery-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
+    "scripts/core-ideals/facets-sqlserver-discovery-browser.ts": "5089d15455d90a422d59543b43e08bf8f86c3ef132bc10c971fdf828323036b0",
+    "scripts/core-ideals/facets-sqlserver-discovery-cases.ts": "3a6755b7c376f1392547a6064f6831706a41fabe5c3236820794f7b345fe22b9",
+    "scripts/core-ideals/facets-sqlserver-discovery.ts": "1a7859969e54023981eba0a5ebb867629de2c50ebf82dcd48f502f777db837ba",
+    "src/adapters/sqlserver/facet-type.ts": "8831415c9ca140be4a3d7eec773e164abd1858597f42805fa7ca67e3331706ff",
+    "tests/core-ideals/facets-sqlserver-discovery.test.ts": "9713da9b64822df8e86a7b0a3982630e3840d87080c9beb1182541491aba54f0",
+    "tests/sqlserver/catalog.test.ts": "b22349ad8c3003bd7d2cbeb75efc9a79f6d172ed628bda38938530f013e860f7",
+    "tests/sqlserver/integer-tokens.test.ts": "80fce75485e6f726aba1617498bdb6412abd62e5d7d66921344f7d8f7846f142"
+  }
+}
