@@ -4091,3 +4091,18 @@ Next: aggregate the PostgreSQL facet workflows and run the complete compatibilit
 refresh and prior Field/Nullability/Cardinality gates. Do not close the binding
 bead or claim facet admission from this projection checkpoint. SQL Server, Avro,
 Parquet and Key remain in their existing dependency order.
+
+### PostgreSQL facet composition checkpoint
+
+All 145 emitted native schemas now pass composed classification and retained
+recovery: 145 ideal recoveries and 145 exact native recoveries. The authored facets
+return in 66 cases; 79 retain explicit residuals. Native inferred refinements remain
+separate from author intent. All six aggregate Chromium workflows pass, including
+refreshed public classification/projection and new bigint signature controls.
+See [the composition record](../../../fixtures/validation/facets-postgresql-composition-evidence.json).
+
+Next: execute the aggregate native runner during the full compatibility refresh,
+then rerun the prior Field, Nullability and Cardinality gates. PostgreSQL facet
+acceptance remains open; SQL Server, Avro, Parquet, the facet gate and Key retain
+their ordered dependencies. No native equivalence or five-system facet admission
+is claimed.

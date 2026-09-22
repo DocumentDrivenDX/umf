@@ -271,3 +271,26 @@ The classifier and authored projector are implemented, but full PostgreSQL facet
 binding acceptance is still open. Aggregate workflows and a fresh compatibility
 run for existing Field, Nullability and Cardinality bindings/gates remain required.
 Earlier proofs continue to qualify their recorded snapshots.
+
+## Composed PostgreSQL facet checkpoint
+
+The emitted PostgreSQL oracle now retains the native CHECK supplement. Reimport
+and classification cover all 145 emitted schemas: 145 verified authored-ideal
+recoveries and 145 exact native catalog/supplement recoveries. Up-classification
+recovers the authored facets in 66 cases; 79 cases carry explicit residuals.
+Additional native-inferred facets are recorded separately from author intent.
+These counts do not claim replacement of the retained native representation.
+
+The composed corpus qualifies bigint/int4 and bigint/bigint comparison signatures
+used by narrower signed/unsigned integer ideals. Tampered signatures are refused.
+The isolated engine captures the general catalog and CHECK supplement after the
+value probes, in separate read transactions with no concurrent writers. Library
+correspondence checks establish consistency, not source authentication.
+
+All six aggregate browser workflows pass against the current bundle. They include
+231 classification cases with 157 native recoveries, 232 projection cases with
+290 ideal recoveries, and 20 resolved-expression controls plus 13 native datums.
+The aggregate native runner is prepared but has not yet run as a whole. Full
+compatibility refresh and prior Field/Nullability/Cardinality gates remain required
+before PostgreSQL facet binding acceptance. See
+[composition evidence](../../../../fixtures/validation/facets-postgresql-composition-evidence.json).

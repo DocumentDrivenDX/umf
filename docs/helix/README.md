@@ -81,6 +81,10 @@ the separate five-system facet admission/delivery gate. No native equivalence is
 Experimental PostgreSQL facet classification and authored projection now have
 scoped native, recovery and Chromium/WASM evidence. Full compatibility acceptance
 remains open. See the [projection checkpoint](../../fixtures/validation/facets-postgresql-projection-evidence.json).
+Composed PostgreSQL qualification now covers all 145 emitted schemas with both
+retained recovery directions; all six aggregate browser workflows pass. Full
+compatibility acceptance remains open. See the
+[composition checkpoint](../../fixtures/validation/facets-postgresql-composition-evidence.json).
 Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

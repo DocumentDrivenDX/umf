@@ -19,6 +19,8 @@ const opKeys=['opno','opfuncid','opresulttype','opretset','opcollid','inputcolli
 // OIDs and signatures observed in the pinned PostgreSQL 17.4 native corpus.
 const operators:Record<string,readonly string[]>={
  '523':['<=','149','int4le','23','23'],
+ '420':['<=','478','int84le','20','23'],'430':['>=','479','int84ge','20','23'],
+ '414':['<=','471','int8le','20','20'],
  '540':['<=','166','int24le','21','23'],'542':['>=','168','int24ge','21','23'],
  '1752':['=','1718','numeric_eq','1700','1700'],'1755':['<=','1723','numeric_le','1700','1700'],'1757':['>=','1721','numeric_ge','1700','1700'],
 };

@@ -495,3 +495,18 @@ A facetless Field-kind receipt does not authorize existing facet members.
 Native and Chromium evidence is in the [projection checkpoint](../../04-build/evidence/postgresql-facet-discovery.md).
 The classifier/projector pair still requires aggregate acceptance and refreshed
 prior binding/concept gates before PostgreSQL facet qualification is complete.
+
+### PostgreSQL composed qualification
+
+The emitted-DDL oracle also captures analyzed CHECK expressions and resolved
+operator identities. Composition reimports that native catalog, classifies each
+emitted Field, and verifies retained native and authored recovery separately.
+An inferred native facet absent from the authored ideal remains a native
+refinement; it does not become author intent. Every authored facet must return
+with its declared meaning or have an explicit projection/classification residual.
+
+PostgreSQL bigint comparisons require qualified int8/int4 and int8/int8 operator
+signatures. The bounded verifier checks these against the captured native
+identities, with altered-signature refusal controls in Bun and Chromium.
+Aggregate browser checks and native composition do not substitute for the full
+compatibility refresh and prior concept gates.

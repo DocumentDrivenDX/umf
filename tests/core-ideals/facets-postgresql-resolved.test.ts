@@ -58,3 +58,18 @@ test('independent native Datum corpus replays exactly and fingerprints are curre
  for(const row of datums.rows){const tree=readFacetNodeTree(row.nodeTree)!;expect(decodeFacetConstant((tree.fields.args as PgFacetNode[])[1]!)??null).toBe(row.actual);expect(row.actual).toBe(row.expected);}
  expect(inspect(row('decimal_exact'),profile).nonNullValuesOnly).toBe(true);
 });
+
+test('emitted bigint bounds resolve mixed-width and full-width native operators',async()=>{
+ const proof=await Bun.file('fixtures/validation/facets-postgresql-projection-native.json').json();
+ for(const [name,terms] of [
+  ['bigint-32-true',[{kind:'bound',operator:'>=',literal:'-2147483648'},{kind:'bound',operator:'<=',literal:'2147483647'}]],
+  ['bigint-32-false',[{kind:'bound',operator:'>=',literal:'0'},{kind:'bound',operator:'<=',literal:'4294967295'}]],
+ ] as const){
+  const projected=proof.projections.find((p:any)=>p.name===name&&p.request.encoding==='checked'&&p.status==='projected');
+  const constraint=proof.supplement.constraints.find((c:any)=>c.relation===projected.request.tableName);
+  expect(constraint).toBeDefined();expect(inspect(constraint,profile).state).toBe('verified-expression');expect(inspect(constraint,profile).terms).toEqual([...terms]);
+  for(const mutate of [(c:any)=>c.operatorLookups[0].schema='custom',(c:any)=>c.operatorLookups[0].functionOid='149',(c:any)=>c.operatorLookups[0].functionName='int4le']){
+   const altered=structuredClone(constraint);mutate(altered);expect(inspect(altered,profile).state).toBe('unsupported');
+  }
+ }
+});
