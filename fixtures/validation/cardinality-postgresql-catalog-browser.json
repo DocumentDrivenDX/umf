@@ -1,0 +1,18 @@
+{
+  "scope": "Browser supplement validation and native type relationship resolution; no core classification, projection or capture correspondence claim",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "resolved": 8,
+    "refused": 4,
+    "exactUnknownToken": true
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/adapters/postgresql/cardinality-catalog.ts": "16a71f94d367b21089a2a32f7f84284ce150dbd0fd6236d77f42eedfb3543163",
+    "src/index.ts": "df92e55a477c6a8de4df696dbe21b3c6d97d3a4d6332be6ee4dc6d7f932f24fc",
+    "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6",
+    "scripts/core-ideals/cardinality-postgresql-catalog-browser.ts": "cb11d8460d60732a8244220da1539fa85ca7d7617b08124618e90639b2abe1cf",
+    "fixtures/validation/cardinality-postgresql-catalog-native.json": "c010566de7a335cf329c93fd6eae3f3751cef74e67bebce356331be28b1f2171",
+    "dist/umf.js": "3248b796c0eecea5d923e34f981cb152b326da59bf81dea291669f505864831d"
+  }
+}

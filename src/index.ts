@@ -277,3 +277,4 @@ export * from './model/cardinality';
 
 export * from './core-ideals/cardinality-tablespec';
 export * from './core-ideals/cardinality-tablespec-projection';
+export * from './adapters/postgresql/cardinality-catalog';
