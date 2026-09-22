@@ -1,0 +1,231 @@
+{
+  "version": "1.0.0",
+  "scope": "Native discovery; not UMF binding acceptance",
+  "sources": [
+    "https://avro.apache.org/docs/1.12.0/specification/"
+  ],
+  "cases": [
+    {
+      "id": "empty-array",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": []
+      }
+    },
+    {
+      "id": "ordered-duplicates",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "nullable-array-items",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"long\"\n        ]\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          null,
+          2,
+          null
+        ]
+      }
+    },
+    {
+      "id": "nested-arrays",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        }\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          [],
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "id": "array-of-maps",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"map\",\n          \"values\": \"long\"\n        }\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          {},
+          {
+            "a": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "map-of-arrays",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        }\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {
+          "a": [
+            2,
+            1,
+            2
+          ],
+          "b": []
+        }
+      }
+    },
+    {
+      "id": "empty-map",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {}
+      }
+    },
+    {
+      "id": "exact-string-keys",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {
+          "é": 1,
+          "é": 2,
+          "": 3
+        }
+      }
+    },
+    {
+      "id": "special-property-keys",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {
+          "__proto__": 1,
+          "constructor": 2,
+          "toString": 3
+        }
+      }
+    },
+    {
+      "id": "nullable-map-values",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": [\n          \"null\",\n          \"long\"\n        ]\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 2
+        }
+      }
+    },
+    {
+      "id": "nested-maps",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": {\n          \"type\": \"map\",\n          \"values\": \"long\"\n        }\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {
+          "a": {},
+          "b": {
+            "c": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "nullable-array-present",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        }\n      ]\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "nullable-array-null",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        }\n      ]\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": null
+      }
+    },
+    {
+      "id": "array-null-last",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        },\n        \"null\"\n      ]\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "array-map-union-array",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        },\n        {\n          \"type\": \"map\",\n          \"values\": \"long\"\n        }\n      ]\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "array-map-union-map",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        {\n          \"type\": \"array\",\n          \"items\": \"long\"\n        },\n        {\n          \"type\": \"map\",\n          \"values\": \"long\"\n        }\n      ]\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": {
+          "a": 2
+        }
+      }
+    },
+    {
+      "id": "recursive-record-items",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"record\",\n          \"name\": \"Item\",\n          \"fields\": [\n            {\n              \"name\": \"id\",\n              \"type\": \"long\"\n            },\n            {\n              \"name\": \"children\",\n              \"type\": {\n                \"type\": \"array\",\n                \"items\": \"Item\"\n              }\n            }\n          ]\n        }\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          {
+            "id": 1,
+            "children": [
+              {
+                "id": 2,
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "enum-items",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"enum\",\n          \"name\": \"Choice\",\n          \"symbols\": [\n            \"A\",\n            \"B\"\n          ]\n        }\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          "B",
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "id": "unknown-logical-array",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"long\",\n        \"logicalType\": \"future-sequence\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "float-items",
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"float\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n",
+      "value": {
+        "value": [
+          1.0000000000000002
+        ]
+      },
+      "expected": {
+        "value": [
+          1.0
+        ]
+      }
+    }
+  ]
+}

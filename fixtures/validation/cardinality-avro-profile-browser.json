@@ -1,0 +1,358 @@
+{
+  "scope": "Native browser codec discovery only; no UMF classification/projection acceptance",
+  "browser": "148.0.7778.0",
+  "avsc": "5.7.9",
+  "checks": {
+    "rows": [
+      {
+        "id": "empty-array",
+        "hex": "00",
+        "decoded": {
+          "value": []
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "ordered-duplicates",
+        "hex": "0604020400",
+        "decoded": {
+          "value": [
+            2,
+            1,
+            2
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "nullable-array-items",
+        "hex": "060002040000",
+        "decoded": {
+          "value": [
+            null,
+            2,
+            null
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "nested-arrays",
+        "hex": "0400060402040000",
+        "decoded": {
+          "value": [
+            [],
+            [
+              2,
+              1,
+              2
+            ]
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "array-of-maps",
+        "hex": "0400020261020000",
+        "decoded": {
+          "value": [
+            {},
+            {
+              "a": 1
+            }
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "map-of-arrays",
+        "hex": "040261060402040002620000",
+        "decoded": {
+          "value": {
+            "a": [
+              2,
+              1,
+              2
+            ],
+            "b": []
+          }
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "empty-map",
+        "hex": "00",
+        "decoded": {
+          "value": {}
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "exact-string-keys",
+        "hex": "0604c3a9020665cc8104000600",
+        "decoded": {
+          "value": {
+            "é": 1,
+            "é": 2,
+            "": 3
+          }
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "special-property-keys",
+        "hex": "06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600",
+        "decoded": {
+          "value": {
+            "constructor": 2,
+            "toString": 3
+          }
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": false,
+        "nativeValueAgreement": false
+      },
+      {
+        "id": "nullable-map-values",
+        "hex": "040261000262020400",
+        "decoded": {
+          "value": {
+            "a": null,
+            "b": 2
+          }
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "nested-maps",
+        "hex": "040261000262020263040000",
+        "decoded": {
+          "value": {
+            "a": {},
+            "b": {
+              "c": 2
+            }
+          }
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "nullable-array-present",
+        "hex": "020604020400",
+        "decoded": {
+          "value": [
+            2,
+            1,
+            2
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "nullable-array-null",
+        "hex": "00",
+        "decoded": {
+          "value": null
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "array-null-last",
+        "hex": "000604020400",
+        "decoded": {
+          "value": [
+            2,
+            1,
+            2
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "array-map-union-array",
+        "hex": "000604020400",
+        "decoded": {
+          "value": [
+            2,
+            1,
+            2
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "array-map-union-map",
+        "hex": "020202610400",
+        "decoded": {
+          "value": {
+            "a": 2
+          }
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "recursive-record-items",
+        "hex": "02020204000000",
+        "decoded": {
+          "value": [
+            {
+              "id": 1,
+              "children": [
+                {
+                  "id": 2,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "enum-items",
+        "hex": "0602000200",
+        "decoded": {
+          "value": [
+            "B",
+            "A",
+            "B"
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "unknown-logical-array",
+        "hex": "0604020400",
+        "decoded": {
+          "value": [
+            2,
+            1,
+            2
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": true,
+        "nativeValueAgreement": true
+      },
+      {
+        "id": "float-items",
+        "hex": "020000803f00",
+        "decoded": {
+          "value": [
+            1
+          ]
+        },
+        "keys": [
+          "value"
+        ],
+        "exactInputRecovery": false,
+        "nativeValueAgreement": true
+      }
+    ],
+    "streams": [
+      {
+        "id": "positive-block",
+        "sourceHex": "0402610202610400",
+        "rewrittenHex": "0202610400",
+        "decoded": {
+          "a": 2
+        },
+        "exactByteRecovery": false
+      },
+      {
+        "id": "negative-block",
+        "sourceHex": "030c02610202610400",
+        "rewrittenHex": "0202610400",
+        "decoded": {
+          "a": 2
+        },
+        "exactByteRecovery": false
+      }
+    ]
+  },
+  "externalRequests": [],
+  "bundleSha256": "5751225cb80b96aa5dc1828ecfea0d28b4b48b0c47b8bf9e71a3ec8bab1e0499",
+  "sha256": {
+    "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
+    "fixtures/validation/cardinality-avro-profile-native.json": "fb66080187cc8e83b34662e5441e21e91d7c70e6ddd44dff1974a43e016bb39e",
+    "scripts/core-ideals/cardinality-avro-profile-browser.ts": "066189dacf9284c3ce7f68014080ab526cf4915d50d2f4d3dda42543ca0a7552",
+    "node_modules/avsc/package.json": "3a61ffb74d9077b6f300d186d25f4c5460deff8b1272fc2a4e6c5a1388b06f04"
+  },
+  "limitations": [
+    "avsc loses the own __proto__ map member while both Python codecs preserve it. This discrepancy is not counted as value agreement.",
+    "Float items narrow the binary64 counterexample in all three codecs.",
+    "Duplicate-key streams normalize during decoding; source bytes and decoded maps are distinct recovery obligations."
+  ]
+}

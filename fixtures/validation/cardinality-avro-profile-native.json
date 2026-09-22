@@ -1,0 +1,1516 @@
+{
+  "scope": "Native schema/value discovery for Cardinality, not binding acceptance or native equivalence",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "checks": [
+    {
+      "id": "empty-array",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "00",
+      "value": {
+        "value": []
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "empty-array",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": {
+        "value": []
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "empty-array",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "00",
+      "value": {
+        "value": []
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "empty-array",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": {
+        "value": []
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "ordered-duplicates",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "ordered-duplicates",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "ordered-duplicates",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "ordered-duplicates",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-array-items",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "060002040000",
+      "value": {
+        "value": [
+          null,
+          2,
+          null
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-array-items",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "060002040000",
+      "value": {
+        "value": [
+          null,
+          2,
+          null
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-array-items",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "060002040000",
+      "value": {
+        "value": [
+          null,
+          2,
+          null
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-array-items",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "060002040000",
+      "value": {
+        "value": [
+          null,
+          2,
+          null
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nested-arrays",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0400060402040000",
+      "value": {
+        "value": [
+          [],
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nested-arrays",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0400060402040000",
+      "value": {
+        "value": [
+          [],
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nested-arrays",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0400060402040000",
+      "value": {
+        "value": [
+          [],
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nested-arrays",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0400060402040000",
+      "value": {
+        "value": [
+          [],
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-of-maps",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0400020261020000",
+      "value": {
+        "value": [
+          {},
+          {
+            "a": 1
+          }
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-of-maps",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0400020261020000",
+      "value": {
+        "value": [
+          {},
+          {
+            "a": 1
+          }
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-of-maps",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0400020261020000",
+      "value": {
+        "value": [
+          {},
+          {
+            "a": 1
+          }
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-of-maps",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0400020261020000",
+      "value": {
+        "value": [
+          {},
+          {
+            "a": 1
+          }
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "map-of-arrays",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "040261060402040002620000",
+      "value": {
+        "value": {
+          "a": [
+            2,
+            1,
+            2
+          ],
+          "b": []
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "map-of-arrays",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "040261060402040002620000",
+      "value": {
+        "value": {
+          "a": [
+            2,
+            1,
+            2
+          ],
+          "b": []
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "map-of-arrays",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "040261060402040002620000",
+      "value": {
+        "value": {
+          "a": [
+            2,
+            1,
+            2
+          ],
+          "b": []
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "map-of-arrays",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "040261060402040002620000",
+      "value": {
+        "value": {
+          "a": [
+            2,
+            1,
+            2
+          ],
+          "b": []
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "empty-map",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "00",
+      "value": {
+        "value": {}
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "empty-map",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": {
+        "value": {}
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "empty-map",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "00",
+      "value": {
+        "value": {}
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "empty-map",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": {
+        "value": {}
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "exact-string-keys",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604c3a9020665cc8104000600",
+      "value": {
+        "value": {
+          "é": 1,
+          "é": 2,
+          "": 3
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "exact-string-keys",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604c3a9020665cc8104000600",
+      "value": {
+        "value": {
+          "é": 1,
+          "é": 2,
+          "": 3
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "exact-string-keys",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604c3a9020665cc8104000600",
+      "value": {
+        "value": {
+          "é": 1,
+          "é": 2,
+          "": 3
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "exact-string-keys",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604c3a9020665cc8104000600",
+      "value": {
+        "value": {
+          "é": 1,
+          "é": 2,
+          "": 3
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "special-property-keys",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600",
+      "value": {
+        "value": {
+          "__proto__": 1,
+          "constructor": 2,
+          "toString": 3
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "special-property-keys",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600",
+      "value": {
+        "value": {
+          "__proto__": 1,
+          "constructor": 2,
+          "toString": 3
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "special-property-keys",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600",
+      "value": {
+        "value": {
+          "__proto__": 1,
+          "constructor": 2,
+          "toString": 3
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "special-property-keys",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600",
+      "value": {
+        "value": {
+          "__proto__": 1,
+          "constructor": 2,
+          "toString": 3
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-map-values",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "040261000262020400",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 2
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-map-values",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "040261000262020400",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 2
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-map-values",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "040261000262020400",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 2
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-map-values",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "040261000262020400",
+      "value": {
+        "value": {
+          "a": null,
+          "b": 2
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nested-maps",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "040261000262020263040000",
+      "value": {
+        "value": {
+          "a": {},
+          "b": {
+            "c": 2
+          }
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nested-maps",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "040261000262020263040000",
+      "value": {
+        "value": {
+          "a": {},
+          "b": {
+            "c": 2
+          }
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nested-maps",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "040261000262020263040000",
+      "value": {
+        "value": {
+          "a": {},
+          "b": {
+            "c": 2
+          }
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nested-maps",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "040261000262020263040000",
+      "value": {
+        "value": {
+          "a": {},
+          "b": {
+            "c": 2
+          }
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-array-present",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "020604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-array-present",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "020604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-array-present",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "020604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-array-present",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "020604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-array-null",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "00",
+      "value": {
+        "value": null
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-array-null",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": {
+        "value": null
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "nullable-array-null",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "00",
+      "value": {
+        "value": null
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "nullable-array-null",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": {
+        "value": null
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-null-last",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-null-last",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-null-last",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-null-last",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-map-union-array",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-map-union-array",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-map-union-array",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-map-union-array",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "000604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-map-union-map",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "020202610400",
+      "value": {
+        "value": {
+          "a": 2
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-map-union-map",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "020202610400",
+      "value": {
+        "value": {
+          "a": 2
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "array-map-union-map",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "020202610400",
+      "value": {
+        "value": {
+          "a": 2
+        }
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "array-map-union-map",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "020202610400",
+      "value": {
+        "value": {
+          "a": 2
+        }
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "recursive-record-items",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "02020204000000",
+      "value": {
+        "value": [
+          {
+            "id": 1,
+            "children": [
+              {
+                "id": 2,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "recursive-record-items",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "02020204000000",
+      "value": {
+        "value": [
+          {
+            "id": 1,
+            "children": [
+              {
+                "id": 2,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "recursive-record-items",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "02020204000000",
+      "value": {
+        "value": [
+          {
+            "id": 1,
+            "children": [
+              {
+                "id": 2,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "recursive-record-items",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "02020204000000",
+      "value": {
+        "value": [
+          {
+            "id": 1,
+            "children": [
+              {
+                "id": 2,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "enum-items",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0602000200",
+      "value": {
+        "value": [
+          "B",
+          "A",
+          "B"
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "enum-items",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0602000200",
+      "value": {
+        "value": [
+          "B",
+          "A",
+          "B"
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "enum-items",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0602000200",
+      "value": {
+        "value": [
+          "B",
+          "A",
+          "B"
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "enum-items",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0602000200",
+      "value": {
+        "value": [
+          "B",
+          "A",
+          "B"
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": []
+    },
+    {
+      "id": "unknown-logical-array",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "unknown-logical-array",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": [
+        "Unknown future-sequence, using array.",
+        "Unknown future-sequence, using array."
+      ]
+    },
+    {
+      "id": "unknown-logical-array",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true
+    },
+    {
+      "id": "unknown-logical-array",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0604020400",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "exactInputRecovery": true,
+      "warnings": [
+        "Unknown future-sequence, using array."
+      ]
+    },
+    {
+      "id": "float-items",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "020000803f00",
+      "value": {
+        "value": [
+          1.0
+        ]
+      },
+      "exactInputRecovery": false
+    },
+    {
+      "id": "float-items",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "020000803f00",
+      "value": {
+        "value": [
+          1.0
+        ]
+      },
+      "exactInputRecovery": false,
+      "warnings": []
+    },
+    {
+      "id": "float-items",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "020000803f00",
+      "value": {
+        "value": [
+          1.0
+        ]
+      },
+      "exactInputRecovery": false
+    },
+    {
+      "id": "float-items",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "020000803f00",
+      "value": {
+        "value": [
+          1.0
+        ]
+      },
+      "exactInputRecovery": false,
+      "warnings": []
+    }
+  ],
+  "duplicateKeyStreams": [
+    {
+      "id": "positive-block",
+      "codec": "apache",
+      "hex": "0402610202610400",
+      "decoded": {
+        "a": 2
+      },
+      "rewrittenHex": "0202610400",
+      "exactByteRecovery": false
+    },
+    {
+      "id": "positive-block",
+      "codec": "fastavro",
+      "hex": "0402610202610400",
+      "decoded": {
+        "a": 2
+      },
+      "rewrittenHex": "0202610400",
+      "exactByteRecovery": false
+    },
+    {
+      "id": "negative-block",
+      "codec": "apache",
+      "hex": "030c02610202610400",
+      "decoded": {
+        "a": 2
+      },
+      "rewrittenHex": "0202610400",
+      "exactByteRecovery": false
+    },
+    {
+      "id": "negative-block",
+      "codec": "fastavro",
+      "hex": "030c02610202610400",
+      "decoded": {
+        "a": 2
+      },
+      "rewrittenHex": "0202610400",
+      "exactByteRecovery": false
+    }
+  ],
+  "refusals": [
+    {
+      "id": "array-rejects-map",
+      "codec": "apache",
+      "error": "AvroTypeException"
+    },
+    {
+      "id": "array-rejects-map",
+      "codec": "fastavro",
+      "error": "TypeError"
+    },
+    {
+      "id": "map-rejects-array",
+      "codec": "apache",
+      "error": "AvroTypeException"
+    },
+    {
+      "id": "map-rejects-array",
+      "codec": "fastavro",
+      "error": "AttributeError"
+    },
+    {
+      "id": "map-rejects-nonstring-key",
+      "codec": "apache",
+      "error": "AvroTypeException"
+    },
+    {
+      "id": "map-rejects-nonstring-key",
+      "codec": "fastavro",
+      "error": "TypeError"
+    },
+    {
+      "id": "array-rejects-null-item",
+      "codec": "apache",
+      "error": "AvroTypeException"
+    },
+    {
+      "id": "array-rejects-null-item",
+      "codec": "fastavro",
+      "error": "TypeError"
+    },
+    {
+      "id": "map-rejects-null-value",
+      "codec": "apache",
+      "error": "AvroTypeException"
+    },
+    {
+      "id": "map-rejects-null-value",
+      "codec": "fastavro",
+      "error": "TypeError"
+    }
+  ],
+  "unionResolution": [
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": null
+      },
+      "hex": "00"
+    },
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": []
+      },
+      "hex": "0200"
+    },
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "020604020400"
+    },
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": null
+      },
+      "hex": "02"
+    },
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": []
+      },
+      "hex": "0000"
+    },
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "000604020400"
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": null
+      },
+      "hex": "00"
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": []
+      },
+      "hex": "0200"
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "020604020400"
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": null
+      },
+      "hex": "02"
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": []
+      },
+      "hex": "0000"
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "000604020400"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": null
+      },
+      "hex": "00"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": []
+      },
+      "hex": "0200"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "020604020400"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": null
+      },
+      "hex": "02"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": []
+      },
+      "hex": "0000"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "000604020400"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": null
+      },
+      "hex": "00"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": []
+      },
+      "hex": "0200"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "direction": "null-first-to-last",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "020604020400"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": null
+      },
+      "hex": "02"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": []
+      },
+      "hex": "0000"
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "direction": "null-last-to-first",
+      "value": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "hex": "000604020400"
+    }
+  ],
+  "limitations": [
+    "Decoded unique-key maps do not preserve arbitrary binary duplicate entries or block layout.",
+    "Float item schemas narrow binary64 input; ordered shape does not prove item exactness.",
+    "Unknown schema metadata remains outside native validation and does not acquire semantics.",
+    "UMF classification, ideal projection, retained-source recovery and Chromium evidence are separate unfinished work."
+  ],
+  "sha256": {
+    "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
+    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-avro-native.py": "916f61d0484272c786f337418a6f21c190853468f7e9ec8ad489a19a3f1bb001"
+  }
+}
