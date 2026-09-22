@@ -1,0 +1,92 @@
+{
+  "scope": "Core 0.4.0 Cardinality metadata selection, typed item boundaries and cycle-safe mixed reference traversal; prior selection profiles retained",
+  "bead": "umf-97221618-231a08d7",
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "tests": 79,
+    "assertions": 2723,
+    "files": 16,
+    "failures": 0,
+    "focusedTests": 7,
+    "focusedAssertions": 227,
+    "focusedIncludedInRegression": true,
+    "browser": {
+      "cases": 12,
+      "recoveries": 24,
+      "refusals": 16,
+      "legacyVerified": true
+    },
+    "typecheck": "passed",
+    "schemas": 237,
+    "packages": 37,
+    "browserBuildBytes": 10417607
+  },
+  "commands": [
+    [
+      "bun",
+      "test",
+      "./tests/core/cardinality-ideals.test.ts",
+      "./tests/core/cardinality-operations.test.ts",
+      "./tests/core/core.test.ts",
+      "./tests/core/field-ideals.test.ts",
+      "./tests/core/field-kind.test.ts",
+      "./tests/core/field-transition.test.ts",
+      "./tests/core/native-json.test.ts",
+      "./tests/core/nullability-authoring.test.ts",
+      "./tests/core/nullability-ideals.test.ts",
+      "./tests/core/nullability-transition.test.ts",
+      "./tests/core/scalar.test.ts",
+      "./tests/core/selection.test.ts",
+      "./tests/core-ideals/cardinality-selection.test.ts",
+      "./tests/core-ideals/nullability-selection.test.ts",
+      "./tests/core-ideals/cardinality-field-operations.test.ts",
+      "./tests/core-ideals/nullability-field-operations.test.ts"
+    ],
+    [
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    [
+      "bun",
+      "run",
+      "test:schemas"
+    ],
+    [
+      "bun",
+      "run",
+      "build"
+    ],
+    [
+      "bun",
+      "scripts/core-ideals/cardinality-selection-browser.ts"
+    ]
+  ],
+  "limits": [
+    "Selection reads explicit metadata labels and references; it does not validate row values, infer native shape or establish provenance.",
+    "Core 0.4.0 follows both ordinary and itemType edges; typed omitted edges have separate boundary records. Full source context and unknown payloads remain retained.",
+    "Earlier envelopes preserve opaque cardinality/itemType content, never follow those item links and reject cardinalities filtering.",
+    "Evidence records report consistency, not authenticity.",
+    "Broader regression and fresh Field/Nullability gate evidence remain necessary for core-task acceptance. Native Cardinality bindings and ideal admission remain unfinished."
+  ],
+  "sha256": {
+    "dist/umf.js": "8dbb8c14ac59dfa7e5d5626cb6781f0db50e0c2421dc46a28bbc915e9fb1b1da",
+    "fixtures/validation/cardinality-selection-browser.json": "11cc0be0259024a6f8f96e56159afcdcb08bcb3943ad4e54d163be8ccb118af2",
+    "fixtures/validation/cardinality-selection-browser.log": "ff9bb5ce38771a376ede32323afc0b2ebf8b0d5e7e2b69bf9b0a65e7bc6a04cd",
+    "fixtures/validation/cardinality-selection-build.log": "a4ea8822f17f643596a61e83ebe99350538adee176bab084168a1aa0ee04f606",
+    "fixtures/validation/cardinality-selection-core-regression.log": "d3c2613d9a9ef096ab8d52d5763f666ae3b7ef32c336bc1edddf13c402fa73bb",
+    "fixtures/validation/cardinality-selection-schemas.log": "720ec3701096c69c2c862d97658f5b75595d123ddc6e75e52eddf6621f05f559",
+    "fixtures/validation/cardinality-selection-tests.log": "4be40a5ab80deaf945a34105a2c0e2c2c1c6f0fb114bc98447548ac78112c015",
+    "fixtures/validation/cardinality-selection-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-ideals/cardinality-selection-browser.ts": "4a1d4f761add3f98f04d1f1b782442e52c90e70f238980c67f9d505359509fd8",
+    "scripts/core-ideals/cardinality-selection-cases.ts": "e3c69a7bfff001b6a3c28d8fe933a2ea20cfcd854d1c2c95f44781e157a0cef2",
+    "scripts/core-ideals/cardinality-selection-schema.ts": "c918aa96e8ea507d65b023e0f90853e1793a9800be42002567e4ae920ca5a499",
+    "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
+    "src/model/selection-verification.ts": "632a3a61f94b912b03c471095cf93583dff685459718823a6675421e474f5e82",
+    "src/model/selection.ts": "3634aca7299d77e2c47bb763385293c155db6d3c87d322a5b8a1ce949287ffff",
+    "tests/core-ideals/cardinality-selection.test.ts": "33b27b7a03d3a33496d4937eb84e75f3ac8d6d48684e5f4f4df57dbb25ff616a",
+    "tests/core-ideals/nullability-selection.test.ts": "e81cdf4b607ef6356d45f67d6785a8e6aec650746e022754e18c5879742aea3b"
+  }
+}

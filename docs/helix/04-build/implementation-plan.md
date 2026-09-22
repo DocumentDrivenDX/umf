@@ -130,8 +130,9 @@ Cardinality core implementation has started with a 0.4.0 schema/transition
 foundation: container/scalar separation, item/value Field references, legacy
 collision archives and rollback. The focused suite and real Chromium pass.
 Authoring/inspection and verified receipts now pass. Versioned Field, Nullability
-and record-type API integration supports 0.4.0 and prior receipt versions; consumer
-selection remains. Refresh
+and record-type API integration supports 0.4.0 and prior receipt versions. Consumer
+selection now covers shape filters, typed item boundaries and cycle-safe traversal.
+Full core acceptance remains: refresh
 both prior gates before core acceptance. Native Cardinality bindings, facets
 and key retain their ordered dependencies. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this

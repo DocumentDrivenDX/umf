@@ -1,0 +1,19 @@
+{
+  "scope": "0.4.0 cardinality filtering, item/generic reference traversal and verified copied reports; older item/cardinality fields remain opaque",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 12,
+    "recoveries": 24,
+    "refusals": 16,
+    "legacyVerified": true
+  },
+  "externalRequests": [],
+  "fingerprints": {
+    "scripts/core-ideals/cardinality-selection-browser.ts": "4a1d4f761add3f98f04d1f1b782442e52c90e70f238980c67f9d505359509fd8",
+    "scripts/core-ideals/cardinality-selection-cases.ts": "e3c69a7bfff001b6a3c28d8fe933a2ea20cfcd854d1c2c95f44781e157a0cef2",
+    "src/model/selection.ts": "3634aca7299d77e2c47bb763385293c155db6d3c87d322a5b8a1ce949287ffff",
+    "src/model/selection-verification.ts": "632a3a61f94b912b03c471095cf93583dff685459718823a6675421e474f5e82",
+    "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
+    "dist/umf.js": "8dbb8c14ac59dfa7e5d5626cb6781f0db50e0c2421dc46a28bbc915e9fb1b1da"
+  }
+}

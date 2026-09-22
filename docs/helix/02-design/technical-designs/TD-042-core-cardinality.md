@@ -245,3 +245,35 @@ item Fields and independent container availability. Existing operation schemas
 were extended by new versions, not rewritten. Cardinality consumer selection and
 full core-task acceptance remain unfinished; both prior gates still require their
 post-library-change evidence refresh, followed by the five native bindings.
+
+
+### Cardinality metadata selection checkpoint
+
+`selectCoreElements` now supports a versioned 0.4.0 selection report and optional
+`cardinalities` filter. Filters match explicitly present labels, including unknown
+labels without interpreting them. Missing and unspecified remain distinct. Older
+envelopes reject this filter rather than treating their opaque members as ideals.
+Existing filters keep their meaning; a scalar-family query does not make an array
+or map scalar.
+
+For 0.4.0, transitive selection follows both ordinary `references` and typed
+`itemType` edges, using exact module/element identities and a shared visited set.
+It handles nested and mixed cycles without expanding values or merging display
+names. Non-traversing selection keeps ordinary boundary references and separately
+reports `boundaryItemTypes`, including original item-reference metadata, source
+path and target path. The report declares its scope as
+`explicit-core-references-and-item-types`. Prior report versions retain the old
+scope and do not follow old lookalike itemType members.
+
+The [selection checkpoint](../../../../fixtures/validation/cardinality-selection-evidence.json)
+records 12 independently expected selection cases, copied metadata, JSON/YAML
+verification, typed boundaries and tamper refusals. Chromium repeats the matrix
+and verifies all three older envelope profiles remain opaque. Source validation
+and unknown/native payloads remain in the report; recomputation verifies report
+consistency, not provenance or native shape equivalence.
+
+This supersedes the selection-pending status above. Core schema, transition,
+authoring, inspection, versioned APIs and selection now have focused evidence.
+Full core acceptance still requires the broader regression and fresh Field and
+Nullability gate evidence after all library additions. Native Cardinality bindings
+and ideal admission remain unfinished.

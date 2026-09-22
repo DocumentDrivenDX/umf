@@ -1,0 +1,17 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/cardinality-selection.test.ts:
+(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [109.19ms]
+(pass) forged item paths, missing boundaries, metadata, filters and traversal scope cannot verify [4.48ms]
+(pass) older item/cardinality members remain opaque and do not add traversal edges [10.64ms]
+(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.56ms]
+
+tests/core-ideals/nullability-selection.test.ts:
+(pass) 0.3 reports retain availability distinctions, namespaces, recursive boundaries and native refinements [29.05ms]
+(pass) forged availability, erased native refinements, changed query, diagnostics and boundaries cannot verify [3.61ms]
+(pass) 0.2 availability remains opaque through the old selection schema [1.55ms]
+
+ 7 pass
+ 0 fail
+ 227 expect() calls
+Ran 7 tests across 2 files. [402.00ms]

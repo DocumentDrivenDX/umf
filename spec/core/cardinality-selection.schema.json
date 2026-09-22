@@ -1,0 +1,564 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:element-selection:0.4.0",
+  "type": "object",
+  "required": [
+    "scope",
+    "referenceScope",
+    "source",
+    "query",
+    "sourceValidation",
+    "selection",
+    "boundaryReferences",
+    "boundaryItemTypes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "scope": {
+      "const": "core-elements"
+    },
+    "referenceScope": {
+      "const": "explicit-core-references-and-item-types"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "query": {
+      "type": "object",
+      "required": [
+        "references"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "references": {
+          "enum": [
+            "none",
+            "transitive"
+          ]
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scalarTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "identities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "cardinalities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "sourceValidation": {
+      "type": "object",
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "module",
+          "namespace",
+          "path",
+          "element",
+          "includedBy"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "element": {
+            "$ref": "#/$defs/element"
+          },
+          "includedBy": {
+            "enum": [
+              "match",
+              "reference"
+            ]
+          }
+        }
+      }
+    },
+    "boundaryReferences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "reference",
+          "targetPath"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "reference": {
+            "type": "object",
+            "required": [
+              "role",
+              "module",
+              "element"
+            ],
+            "properties": {
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "targetPath": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "boundaryItemTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "reference",
+          "path",
+          "targetPath"
+        ],
+        "properties": {
+          "from": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "reference": {
+            "$ref": "#/$defs/itemType"
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/modules/[0-9]+/elements/[0-9]+/itemType$"
+          },
+          "targetPath": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "knownScalarType": {
+      "enum": [
+        "boolean",
+        "integer",
+        "decimal",
+        "float",
+        "string",
+        "binary",
+        "date",
+        "time",
+        "timestamp"
+      ],
+      "description": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+    },
+    "scalarType": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/knownScalarType"
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "$ref": "#/$defs/knownScalarType"
+          },
+          "description": "Unknown family retained with incomplete semantic validation."
+        }
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/id"
+      },
+      "additionalProperties": true
+    },
+    "reference": {
+      "type": "object",
+      "required": [
+        "role",
+        "module",
+        "element"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/id"
+        },
+        "module": {
+          "$ref": "#/$defs/id"
+        },
+        "element": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "required": [
+        "id",
+        "extensions"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "scalarType": {
+          "$ref": "#/$defs/scalarType"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+        },
+        "nullability": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings."
+        },
+        "cardinality": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted."
+        },
+        "itemType": {
+          "$ref": "#/$defs/itemType"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "record",
+                  "group"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scalarType": false
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "nullability"
+            ],
+            "properties": {
+              "nullability": {}
+            }
+          },
+          "then": {
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "field"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "cardinality"
+            ],
+            "properties": {
+              "cardinality": {}
+            }
+          },
+          "then": {
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "field"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "cardinality"
+            ],
+            "properties": {
+              "cardinality": {
+                "enum": [
+                  "array",
+                  "map"
+                ]
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "scalarType"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "itemType"
+            ],
+            "properties": {
+              "itemType": {}
+            }
+          },
+          "then": {
+            "required": [
+              "kind",
+              "cardinality"
+            ],
+            "properties": {
+              "kind": {
+                "const": "field"
+              },
+              "cardinality": {
+                "enum": [
+                  "array",
+                  "map"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "module": {
+      "type": "object",
+      "required": [
+        "id",
+        "namespace",
+        "elements"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      }
+    },
+    "knownElementKind": {
+      "enum": [
+        "field",
+        "record",
+        "group"
+      ]
+    },
+    "knownNullability": {
+      "enum": [
+        "required",
+        "absent-allowed",
+        "unspecified"
+      ]
+    },
+    "knownCardinality": {
+      "enum": [
+        "one",
+        "array",
+        "map",
+        "unspecified"
+      ]
+    },
+    "itemType": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "$ref": "#/$defs/id"
+        },
+        "element": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    }
+  },
+  "title": "Experimental Cardinality metadata and explicit item/value reference selection"
+}

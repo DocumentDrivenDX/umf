@@ -572,3 +572,14 @@ identities with independently stated availability. Existing raw native reference
 roles are retained without automatically acquiring record-type author provenance.
 Versioned kind and Nullability operations preserve item references and reject
 incompatible edits; their older receipt versions retain their original envelopes.
+
+
+### Cardinality selection scope
+
+Core 0.4.0 metadata selection treats itemType as an explicit identity edge separate
+from ordinary reference roles. Transitive traversal follows both edge sets; omitted
+item targets appear in a distinct boundary list with source and target paths.
+A cardinalities filter tests explicit labels only and never infers one from a
+scalar family, empty container from absence, or shape from native metadata. Older
+envelopes neither follow opaque itemType members nor permit this ideal filter.
+Unknown reference metadata and full native source context remain recoverable.
