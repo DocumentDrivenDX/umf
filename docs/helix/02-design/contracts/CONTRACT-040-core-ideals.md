@@ -25,7 +25,8 @@ five-system admission/delivery gates. Experimental Cardinality core 0.4.0 has pa
 core-task acceptance. All five priority Cardinality bindings have qualified acceptance; the separate
 ideal admission and five-system delivery gate passes. See the Cardinality gate
 checkpoint below. Native equivalence remains unclaimed.
-Facets, key and native-equivalence graduation remain pending.
+Experimental facet core 0.5.0 has passed core-task acceptance. Native facet bindings,
+facet admission/delivery, key and native-equivalence graduation remain pending.
 
 ## Purpose
 
@@ -618,7 +619,7 @@ counterexamples remain binding constraints. Core 0.4.0 stays experimental.
 
 ### Facet representation and version decision
 
-The next experimental envelope is 0.5.0. It reserves `Element.facets` only after
+The experimental facet envelope is 0.5.0. It reserves `Element.facets` only after
 explicit migration from 0.4.0, preserving the original document and archiving every
 preexisting facet-shaped member without interpreting it. Rollback restores that
 original and retains subsequent 0.5.0 assertions separately. This decision does not
@@ -641,3 +642,64 @@ Unknown members and nested qualifiers are retained and diagnosed. Unknown nonemp
 length units are retained without interpretation on string/binary Fields; they
 cannot satisfy an exactness request. Neither missing bounds nor native defaults
 supply new author assertions. See TD-043 for versioned APIs and acceptance order.
+
+
+### Facet authoring and receipt semantics
+
+Experimental 0.5.0 document validation now combines the facet JSON Schema with
+semantic scale/precision checking and existing identity/reference checks. Explicit
+`upgradeFacetEnvelope` and `rollbackFacetEnvelope` preserve old facet collisions
+and later assertions in separate retained documents; no native payload is removed.
+
+`declareCoreFacets` patches one or more known groups. Precision and scale must be
+supplied together. Omitted groups and unknown nested qualifiers remain attached;
+unknown length units cannot be overwritten by this operation. It does not remove
+groups or assert a native representation. `inspectCoreFacets` distinguishes known,
+partial, missing, legacy and inapplicable meaning. A partial result includes copied
+facet metadata, separately interpreted members and paths of uninterpreted content.
+An unknown length unit supplies no interpreted length bound. Lookup provenance is
+unverified; declarations carry explicit authored provenance and retained source.
+`verifyCoreFacetDeclaration` recomputes the operation and compares the complete
+current document, refusing forged or stale receipts rather than reconciling silently.
+
+Kind/record-type operation v4, Nullability operation v3 and Cardinality operation
+v2 govern 0.5.0 while prior receipt versions remain supported on their own profiles.
+Facet selection follows explicit item/value links, retains their metadata and emits
+boundaries when traversal is disabled. Direct record-type assignment to a faceted
+Field conflicts. Existing Cardinality native bindings explicitly require 0.4.0;
+0.5.0 native facet projection requires its separately qualified binding.
+
+These public-runtime capabilities do not themselves admit the facet ideal or claim
+native enforcement/equivalence. Core-task acceptance additionally requires the
+priority regression, native/browser compatibility refresh and three existing
+concept gates. The acceptance checkpoint in TD-043 records that evidence when ready.
+
+
+### Facet core-task acceptance
+
+The [core acceptance record](../../../../fixtures/validation/facet-core-acceptance-evidence.json) supersedes the candidate-only checkpoint's
+public-runtime limitations. Core 0.5.0 now validates declared facets, explicitly
+migrates/rolls back 0.4.0 collisions, authors/inspects known and partial bounds,
+verifies source-bound receipts and follows faceted item/value metadata in selection.
+Kind/record-type v4, Nullability v3 and Cardinality v2 operations retain prior
+receipt versions. Existing Cardinality native bindings explicitly refuse 0.5.0
+rather than apply their 0.4.0 representation rules to facet declarations.
+
+All 78 refresh steps pass: 420 priority tests / 39,482
+assertions across 135 files, typechecking, 261 schemas, 42 extension
+packages, browser build and qualified native/browser checks for existing Field,
+Nullability and Cardinality bindings. Their three separate gates subsequently pass.
+The scope is core plus the five priority systems, not a new full-repository baseline.
+
+Chromium 148 checks 99 public validation cases, 62 valid-document recoveries,
+18 migration/rollback recoveries, eight facet-author receipts, eight versioned
+prior-operation receipts, four selection receipts and 15 refusals, with no host
+globals or external requests. The separate facet-local matrix retains 198 metadata
+recoveries and 18 exact-token checks. Reproduce with `bun scripts/core-facet-operations-browser.ts`
+and `bun scripts/core-facet-browser.ts` using the configured Chromium executable.
+
+This closes only the facet core task. All five native facet bindings, useful ideal
+admission, the facet delivery gate and key remain required. No native facet
+enforcement, general row conversion or native equivalence is claimed. The next
+binding is TableSpec under the declared schema/runtime profiles; native refinements
+and unknown numeric tokens must stay attached to any classification/projection.

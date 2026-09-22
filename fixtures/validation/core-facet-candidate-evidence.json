@@ -100,5 +100,8 @@
     "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
     "src/validation/schema.ts": "1d849a74dae576b8c70307981595778289fd41ae1d4ffc74caa64024260dc69a",
     "tests/core/facet-ideals.test.ts": "d4646466a88fe81b4d11ee928d2780b86d40fbe1ab3c1d5d732d27f953007a5f"
-  }
+  },
+  "status": "superseded-historical-checkpoint",
+  "supersededBy": "fixtures/validation/facet-core-acceptance-evidence.json",
+  "note": "Original candidate counts, source fingerprints and unchanged-public-bundle observation describe the earlier isolated implementation. Current public runtime acceptance is recorded separately."
 }

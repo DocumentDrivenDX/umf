@@ -64,9 +64,13 @@ conformance gate: 684 ideal recoveries and 932 native recoveries, with current
 five-system native/Chromium evidence. See the
 [Cardinality conformance record](../../fixtures/validation/cardinality-conformance.json).
 No native equivalence is claimed.
-Core 0.4.0 is experimental. A candidate 0.5.0 facet schema/internal validator now
-has Bun and Chromium evidence; public integration, migration and facet bindings
-remain pending. Key follows the facet gate. See the
+Experimental core 0.5.0 facets now pass core-task acceptance: public validation,
+explicit migration/rollback, typed authoring/inspection, versioned existing
+operations and item/value selection have Bun and Chromium evidence. All three
+existing concept gates pass after the five-system native/browser refresh.
+[Facet core acceptance](../../fixtures/validation/facet-core-acceptance-evidence.json)
+does not admit native facet bindings or equivalence. TableSpec facet integration
+is next; key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038

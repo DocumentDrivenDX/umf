@@ -1,0 +1,1542 @@
+{
+  "version": "1.0.0",
+  "bead": "umf-97221618-c0b3f203",
+  "scope": "Experimental core 0.5.0 facet validation, typed authoring/inspection, explicit migration/rollback, versioned prior operations and item/value selection",
+  "coreTaskAccepted": true,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "regression": {
+      "tests": 420,
+      "assertions": 39482,
+      "files": 135,
+      "failures": 0,
+      "scope": "All core/core-ideals and five priority-system tests except Field, Nullability and Cardinality conformance gates, which run separately after evidence revalidation.",
+      "log": "fixtures/validation/facet-core-refresh-regression.log"
+    },
+    "gates": {
+      "field": {
+        "tests": 3,
+        "assertions": 25,
+        "failures": 0,
+        "log": "fixtures/validation/facet-core-field-gate-tests.log",
+        "conformance": "fixtures/validation/field-conformance.json"
+      },
+      "nullability": {
+        "tests": 2,
+        "assertions": 17,
+        "failures": 0,
+        "log": "fixtures/validation/facet-core-nullability-gate-tests.log",
+        "conformance": "fixtures/validation/nullability-conformance.json"
+      },
+      "cardinality": {
+        "tests": 2,
+        "assertions": 57,
+        "failures": 0,
+        "log": "fixtures/validation/facet-core-cardinality-gate-tests.log",
+        "conformance": "fixtures/validation/cardinality-conformance.json"
+      }
+    },
+    "typecheck": "passed",
+    "schemas": 261,
+    "packages": 42,
+    "browserBuildBytes": 10730483,
+    "refreshCommands": 78,
+    "failures": 0
+  },
+  "criteria": {
+    "AC1": "Facet validation, authoring, migration and operation tests pass with exact tokens, known/unknown members and both serializations",
+    "AC2": "Typecheck and complete document/operation/transition/selection schema audits pass",
+    "AC3": "Browser ESM/declarations build and real Chromium operations pass without host globals or external requests",
+    "AC4": "Public 0.5.0 runtime, typed operations and source-retaining migration/selection have direct browser evidence",
+    "AC5": "Legacy facet collisions are archived without interpretation; rollback separately retains later assertions; old receipt versions remain supported",
+    "AC6": "Five-system native/browser compatibility rerun and all three prior gates pass with current dependency fingerprints"
+  },
+  "commands": [
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build:postgresql"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-field-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/field-tablespec-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/field-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-projection-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/avro-record-type-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-projection-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-fastavro-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-nullability-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-selection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-field-operations-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-operations-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-field-operations-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-selection-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-facet-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-facet-operations-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/avro/bundle.test.ts",
+        "./tests/avro/candidate-edit.test.ts",
+        "./tests/avro/corpus.test.ts",
+        "./tests/avro/integer-metadata.test.ts",
+        "./tests/avro/metadata.test.ts",
+        "./tests/avro/native-schema.test.ts",
+        "./tests/avro/native.test.ts",
+        "./tests/avro/projection.test.ts",
+        "./tests/avro/tablespec-projection.test.ts",
+        "./tests/avro/temporal-metadata.test.ts",
+        "./tests/core-ideals/avro-cardinality-type.test.ts",
+        "./tests/core-ideals/avro-namespace.test.ts",
+        "./tests/core-ideals/avro-record-type.test.ts",
+        "./tests/core-ideals/cardinality-avro-projection.test.ts",
+        "./tests/core-ideals/cardinality-avro.test.ts",
+        "./tests/core-ideals/cardinality-field-operations.test.ts",
+        "./tests/core-ideals/cardinality-parquet-projection.test.ts",
+        "./tests/core-ideals/cardinality-parquet.test.ts",
+        "./tests/core-ideals/cardinality-postgresql-catalog.test.ts",
+        "./tests/core-ideals/cardinality-postgresql-projection.test.ts",
+        "./tests/core-ideals/cardinality-postgresql.test.ts",
+        "./tests/core-ideals/cardinality-selection.test.ts",
+        "./tests/core-ideals/cardinality-sqlserver-projection.test.ts",
+        "./tests/core-ideals/cardinality-sqlserver.test.ts",
+        "./tests/core-ideals/cardinality-tablespec-projection.test.ts",
+        "./tests/core-ideals/cardinality-tablespec.test.ts",
+        "./tests/core-ideals/classification-policy.test.ts",
+        "./tests/core-ideals/classification-report.test.ts",
+        "./tests/core-ideals/facet-operations.test.ts",
+        "./tests/core-ideals/field-avro-projection.test.ts",
+        "./tests/core-ideals/field-avro.test.ts",
+        "./tests/core-ideals/field-parquet-projection.test.ts",
+        "./tests/core-ideals/field-parquet.test.ts",
+        "./tests/core-ideals/field-postgresql-projection.test.ts",
+        "./tests/core-ideals/field-postgresql.test.ts",
+        "./tests/core-ideals/field-report.test.ts",
+        "./tests/core-ideals/field-selection.test.ts",
+        "./tests/core-ideals/field-sqlserver-projection.test.ts",
+        "./tests/core-ideals/field-sqlserver.test.ts",
+        "./tests/core-ideals/field-tablespec-projection.test.ts",
+        "./tests/core-ideals/field-tablespec.test.ts",
+        "./tests/core-ideals/nullability-avro-projection.test.ts",
+        "./tests/core-ideals/nullability-avro.test.ts",
+        "./tests/core-ideals/nullability-field-operations.test.ts",
+        "./tests/core-ideals/nullability-parquet-projection.test.ts",
+        "./tests/core-ideals/nullability-parquet.test.ts",
+        "./tests/core-ideals/nullability-postgresql-projection.test.ts",
+        "./tests/core-ideals/nullability-postgresql.test.ts",
+        "./tests/core-ideals/nullability-selection.test.ts",
+        "./tests/core-ideals/nullability-sqlserver-projection.test.ts",
+        "./tests/core-ideals/nullability-sqlserver.test.ts",
+        "./tests/core-ideals/nullability-tablespec-projection.test.ts",
+        "./tests/core-ideals/nullability-tablespec.test.ts",
+        "./tests/core-ideals/parquet-cardinality-carrier.test.ts",
+        "./tests/core-ideals/parquet-cardinality-shape.test.ts",
+        "./tests/core-ideals/parquet-record-type.test.ts",
+        "./tests/core-ideals/postgresql-composite.test.ts",
+        "./tests/core-ideals/postgresql-ddl-kinds.test.ts",
+        "./tests/core-ideals/projection-policy.test.ts",
+        "./tests/core-ideals/record-avro-projection.test.ts",
+        "./tests/core-ideals/record-avro.test.ts",
+        "./tests/core-ideals/record-parquet-projection.test.ts",
+        "./tests/core-ideals/record-parquet.test.ts",
+        "./tests/core-ideals/record-postgresql-projection.test.ts",
+        "./tests/core-ideals/record-postgresql.test.ts",
+        "./tests/core-ideals/record-report.test.ts",
+        "./tests/core-ideals/record-sqlserver-projection.test.ts",
+        "./tests/core-ideals/record-sqlserver.test.ts",
+        "./tests/core-ideals/record-tablespec-projection.test.ts",
+        "./tests/core-ideals/record-tablespec.test.ts",
+        "./tests/core-ideals/record-type.test.ts",
+        "./tests/core-ideals/sql-namespace.test.ts",
+        "./tests/core-ideals/structured-report.test.ts",
+        "./tests/core/cardinality-ideals.test.ts",
+        "./tests/core/cardinality-operations.test.ts",
+        "./tests/core/core.test.ts",
+        "./tests/core/facet-authoring.test.ts",
+        "./tests/core/facet-ideals.test.ts",
+        "./tests/core/facet-transition.test.ts",
+        "./tests/core/field-ideals.test.ts",
+        "./tests/core/field-kind.test.ts",
+        "./tests/core/field-transition.test.ts",
+        "./tests/core/native-json.test.ts",
+        "./tests/core/nullability-authoring.test.ts",
+        "./tests/core/nullability-ideals.test.ts",
+        "./tests/core/nullability-transition.test.ts",
+        "./tests/core/scalar.test.ts",
+        "./tests/core/selection.test.ts",
+        "./tests/parquet/arrow-nested.test.ts",
+        "./tests/parquet/arrow-rename.test.ts",
+        "./tests/parquet/arrow-schema.test.ts",
+        "./tests/parquet/avro-arrow-loss.test.ts",
+        "./tests/parquet/avro-projection.test.ts",
+        "./tests/parquet/bodies.test.ts",
+        "./tests/parquet/capture.test.ts",
+        "./tests/parquet/containers.test.ts",
+        "./tests/parquet/field-metadata.test.ts",
+        "./tests/parquet/footer.test.ts",
+        "./tests/parquet/hybrid.test.ts",
+        "./tests/parquet/levels.test.ts",
+        "./tests/parquet/logical.test.ts",
+        "./tests/parquet/metadata.test.ts",
+        "./tests/parquet/offset-repair.test.ts",
+        "./tests/parquet/pages.test.ts",
+        "./tests/parquet/physical.test.ts",
+        "./tests/parquet/rename.test.ts",
+        "./tests/parquet/rows.test.ts",
+        "./tests/parquet/schema.test.ts",
+        "./tests/parquet/transform.test.ts",
+        "./tests/parquet/values-trial.test.ts",
+        "./tests/parquet/values.test.ts",
+        "./tests/postgresql/avro-projection.test.ts",
+        "./tests/postgresql/catalog.test.ts",
+        "./tests/postgresql/ddl-edits.test.ts",
+        "./tests/postgresql/declarations.test.ts",
+        "./tests/postgresql/edit-preservation.test.ts",
+        "./tests/postgresql/integer-tokens.test.ts",
+        "./tests/postgresql/metadata.test.ts",
+        "./tests/postgresql/native.test.ts",
+        "./tests/postgresql/projection.test.ts",
+        "./tests/sqlserver/avro-projection.test.ts",
+        "./tests/sqlserver/catalog.test.ts",
+        "./tests/sqlserver/constraint-projection.test.ts",
+        "./tests/sqlserver/constraints.test.ts",
+        "./tests/sqlserver/ddl.test.ts",
+        "./tests/sqlserver/indexes.test.ts",
+        "./tests/sqlserver/integer-tokens.test.ts",
+        "./tests/tablespec/avro-integers.test.ts",
+        "./tests/tablespec/avro-projection.test.ts",
+        "./tests/tablespec/avro-table-loss.test.ts",
+        "./tests/tablespec/boundaries.test.ts",
+        "./tests/tablespec/roundtrip.test.ts",
+        "./tests/tablespec/split.test.ts",
+        "./tests/tablespec/table-edits.test.ts",
+        "./tests/tablespec/table-metadata.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-conformance.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-conformance.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-conformance.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/field-conformance.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/nullability-conformance.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/cardinality-conformance.test.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "limits": [
+    "Core 0.5.0 remains experimental. Native facet classification/projection and the separate facet admission/delivery gate remain unimplemented.",
+    "Unknown facet qualifiers/units remain visible and cannot establish exact native enforcement. Counts use the existing exact safe-integer metadata profile; mathematical value domains are not JavaScript-number domains.",
+    "Receipt verification establishes consistency with retained input, not authenticity.",
+    "Existing native bindings retain their published versions/subsets; compatibility refresh does not widen them to native facet support.",
+    "OWL, DDD lifecycle, physical encoding and default execution remain outside this core slice."
+  ],
+  "sha256": {
+    "docs/helix/01-frame/user-stories/US-043-core-facets.md": "f6693d9a3efe3de40410693f1316db21e528c2645bd21a30c38bd43b7e3b1bfb",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "3a5d6b6d981f89dc34f3eeb76cd602f1edc3a5366e6913a94e0fc6847d31316b",
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": "ca039cae1e3e5d556e89f6679134f08bc4673db86feea867a8cbe84bb200c04f",
+    "docs/helix/03-test/test-plan.md": "3bec3c7295bc125542adb1ec745edc88acac830ca249ef274152b4b916ba06f0",
+    "docs/helix/04-build/implementation-plan.md": "64574012516d5817112d7be7a245b0b8006cf808bfece8f0df660ce6b655afb7",
+    "docs/helix/README.md": "1b83ef6e711bc00534db9563b665c32cfbcd5ff1f5463e19c86d3039f53f13cd",
+    "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
+    "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
+    "fixtures/parquet/cardinality-carriers/array-binary-0.parquet": "e3ca1e5d92e37a5f6d44d8c88dc8b9e072905603d9b579cf6c48451f869aa7fe",
+    "fixtures/parquet/cardinality-carriers/array-binary-1.parquet": "457aa2f7b2d061de096160e17683cf8d644a52bcac8e206727eb2483d5ac43c4",
+    "fixtures/parquet/cardinality-carriers/array-boolean-0.parquet": "7097e0f1bf38358b39a24076a682508fb8b5fe6b085c78dabcc099ec6cf87b5d",
+    "fixtures/parquet/cardinality-carriers/array-boolean-1.parquet": "605c23d483d402ab3bd92b729452b8ce5e3ffb8035c8aea829e77c0cf79ac67f",
+    "fixtures/parquet/cardinality-carriers/array-date-0.parquet": "358b605d5d978c7351811622c9d11f3e8304b933e1d09a107fe23e10b9c50c44",
+    "fixtures/parquet/cardinality-carriers/array-date-1.parquet": "2838045ee42c84bc90ad93e1789bc3a4cbfa77a9c2a52c85b065355ee68b7e42",
+    "fixtures/parquet/cardinality-carriers/array-float32-0.parquet": "48e1adf666853e5acca6f5238c8896d03ffaa25a7e2a5bbf909290373033a811",
+    "fixtures/parquet/cardinality-carriers/array-float32-1.parquet": "4d7c5df4d01200030c9a9e8ada92373639e2b2bd0cdeb9c08939556f2ff8a496",
+    "fixtures/parquet/cardinality-carriers/array-float64-0.parquet": "12a573c188ab0f7611a0b56f7615b195575df1add85c1f6c0477c1b29b6552ff",
+    "fixtures/parquet/cardinality-carriers/array-float64-1.parquet": "4107f931b2b73c381d355c003592d480a2e21a1b6142ee03f67a1758424fed2f",
+    "fixtures/parquet/cardinality-carriers/array-int32-0.parquet": "8540e42a6af70f794b5194229307114667b858364142a24c0690eb342ff9a602",
+    "fixtures/parquet/cardinality-carriers/array-int32-1.parquet": "997489821f8b207da5017e6f9506024cb1de8455774113ea4add85d1516f87c0",
+    "fixtures/parquet/cardinality-carriers/array-int64-0.parquet": "720ab04bab7d6dcd2823a6004c345aa38dd210d52df236ab3d32d3d8168c00c2",
+    "fixtures/parquet/cardinality-carriers/array-int64-1.parquet": "d9af11786995aff51dacfeba6fa4c829bfaab481ecaf0435a7516d0085387d3f",
+    "fixtures/parquet/cardinality-carriers/array-map-0.parquet": "f350a7a07c15c223aa13cd39a50304c65662951214d65c86590b8f55401b53ec",
+    "fixtures/parquet/cardinality-carriers/array-map-1.parquet": "a625dbb1fba6f75306d69821bbeb3cedec2096ef2b44369416865f03bc32c05e",
+    "fixtures/parquet/cardinality-carriers/array-record-0.parquet": "2a1278413f65e057b69c015aed4ecdec3270b8123eb9db9b83a8cfcee25b9576",
+    "fixtures/parquet/cardinality-carriers/array-record-1.parquet": "96496cd50ea4098ca8f59063dedb01d16e91daebf679731f9bc31c5777e597eb",
+    "fixtures/parquet/cardinality-carriers/array-string-0.parquet": "d2a57a643e4f74abab72e0d56b9356a6f1776f4417c5ecccc1287eee9022db2e",
+    "fixtures/parquet/cardinality-carriers/array-string-1.parquet": "abba0ef8dfd2f20f05bd5c24b2c89c9919bd13f8273f5bae2d1ae4066712816c",
+    "fixtures/parquet/cardinality-carriers/array-time-micros-0.parquet": "6cfee59bfd42750d33dfe3decad531e79552092b7b0acc9a6a89423eeacfef43",
+    "fixtures/parquet/cardinality-carriers/array-time-micros-1.parquet": "8f3dac3ee3b53c333e26ad16aa7c18f9362abda2c7535f5b62223c3a8d351a03",
+    "fixtures/parquet/cardinality-carriers/array-time-millis-0.parquet": "15b8ae5edac70c25b07bb5fcc4f351e754a1062c30d5f7f013a708a351abdae3",
+    "fixtures/parquet/cardinality-carriers/array-time-millis-1.parquet": "3367d6442131e316576dd2859868b4ab0ee018f17ca714144977e992e245641c",
+    "fixtures/parquet/cardinality-carriers/array-timestamp-micros-utc-0.parquet": "bb14cc5834226c4aa6174e3920e31c5db669ecfb3b25b8076468041dd9571713",
+    "fixtures/parquet/cardinality-carriers/array-timestamp-micros-utc-1.parquet": "c39f64730f9fb51036a4a062dc2422295b7413a4f4869822cc83f4289e73e250",
+    "fixtures/parquet/cardinality-carriers/array-timestamp-millis-utc-0.parquet": "c2df7f3cb0bd881f90cbec8623a366ac272c500096d2473e727d0a7c0279a4dd",
+    "fixtures/parquet/cardinality-carriers/array-timestamp-millis-utc-1.parquet": "5aaaf477856e70d0d25a6d74e6a16d5872b22adca1f9e225fafc168510743707",
+    "fixtures/parquet/cardinality-carriers/map-array-0.parquet": "762a53d05c8acb03ff0d207d769d908267ec01a328418e013b638979885f503d",
+    "fixtures/parquet/cardinality-carriers/map-array-1.parquet": "4496aa99f52de7448e0633e133e90d8eda5f2f2b4fc71f2637c6c5acd6d8420a",
+    "fixtures/parquet/cardinality-carriers/map-binary-0.parquet": "e55b5f44066a80a37c214ffce8efc53667b6492b36f5e0d4a59ae2b68756f594",
+    "fixtures/parquet/cardinality-carriers/map-binary-1.parquet": "ef714cbb42af1ad15edceb64766358d9caae47deee38bfa3cf47447c5d3e2678",
+    "fixtures/parquet/cardinality-carriers/map-boolean-0.parquet": "6b31ded492ce7c4cf35111f06294e14c284e4f9e4b2dfdb508ff9b78cc43871d",
+    "fixtures/parquet/cardinality-carriers/map-boolean-1.parquet": "8e72f96db79b77ab67dda0f93c34fd94f27a7ca01519c6c3414fa1cf001f1535",
+    "fixtures/parquet/cardinality-carriers/map-date-0.parquet": "a48e1079bf92c1f6daec3f27a70dc4eaef675b189003d833214b6610a332364f",
+    "fixtures/parquet/cardinality-carriers/map-date-1.parquet": "756ea7acd6b55235d48d1e80fd7b134a42374c7950a24a3940c2ed6fec2cf0c9",
+    "fixtures/parquet/cardinality-carriers/map-float32-0.parquet": "4306156652925b7518838ceb57a4fadd21b01c9dc355953f70781c7754044563",
+    "fixtures/parquet/cardinality-carriers/map-float32-1.parquet": "2a162bb968f52e376c7720d74aa10fb7a89b5331367433f23d1990b142a27329",
+    "fixtures/parquet/cardinality-carriers/map-float64-0.parquet": "79d160544330dde0e4724ed5ed14a14dc9e73d22cbe986b4128f5f1550a00cf7",
+    "fixtures/parquet/cardinality-carriers/map-float64-1.parquet": "0d56716a9694972831ee6162dd6aa6a0593a229e59601e7873c4c4f9e4ab4522",
+    "fixtures/parquet/cardinality-carriers/map-int32-0.parquet": "ba68d423ababfe559ba3e7d8e4120f2546572e751a6f71c05cc27ba0fb70767a",
+    "fixtures/parquet/cardinality-carriers/map-int32-1.parquet": "8337a72d228a87c89e6892db6294b896d1d84224e205d6b1cf136b0b2a9b92c9",
+    "fixtures/parquet/cardinality-carriers/map-int64-0.parquet": "a2ff9b570211a4ee430242204d87230e2b632078f0e2c5d985a1cf6875569057",
+    "fixtures/parquet/cardinality-carriers/map-int64-1.parquet": "6b89344cf8c599238f6a6a4121489dc42f62dd3ad2b7dd42bb4a8cc06face42d",
+    "fixtures/parquet/cardinality-carriers/map-string-0.parquet": "2219097f65669ce3981ccc75414ba7ab32d755aef0e88b929155aadb6e49214f",
+    "fixtures/parquet/cardinality-carriers/map-string-1.parquet": "9ff4517d207a977a5f17f5324de4e3cfd4a2317120213a5b16e734588e87dc63",
+    "fixtures/parquet/cardinality-carriers/map-time-micros-0.parquet": "d1c6f4580c5921039ac5f2255ca1cb9541b1c87d27c66980d12adbf250580b69",
+    "fixtures/parquet/cardinality-carriers/map-time-micros-1.parquet": "19a27cab5a69c054811d004c16095eccd9c14c2159aef2b1a3d0513332fc8f2d",
+    "fixtures/parquet/cardinality-carriers/map-time-millis-0.parquet": "20a056207b86c80019b1811b0c17b787282399246522a0f200355d7c714d2124",
+    "fixtures/parquet/cardinality-carriers/map-time-millis-1.parquet": "38471d0bd5d033cf333b12af2b3616598de3c2459998a2f1ecd936225c6d691f",
+    "fixtures/parquet/cardinality-carriers/map-timestamp-micros-utc-0.parquet": "3d196183cc0f698fbb3483f11f941d18d6fd96c13487c8f66eade1d7d5448c01",
+    "fixtures/parquet/cardinality-carriers/map-timestamp-micros-utc-1.parquet": "5656757d2e8750e4fa2955a7fa757a504e885af5da5b9df64d6f1043045533d2",
+    "fixtures/parquet/cardinality-carriers/map-timestamp-millis-utc-0.parquet": "77b22090896938e134ef72c75934aed5267d14d508ae3bfcb444ea7f373406fd",
+    "fixtures/parquet/cardinality-carriers/map-timestamp-millis-utc-1.parquet": "87a2fc8c2147eec6faee14c96adab2981fdf63a6570cbcb0381879778e4125d7",
+    "fixtures/parquet/cardinality-carriers/nested-array-0.parquet": "f18eb9d06a2baf5c733b092ec8fa71c095bc122cd0862d096a045ffbfc43d174",
+    "fixtures/parquet/cardinality-carriers/nested-array-1.parquet": "29193a8cf3cdbb3ecd76ac85fc3a7672415a5bef475502d406a2d43f723c9292",
+    "fixtures/parquet/cardinality-carriers/scalar-binary-0.parquet": "ae5c4e5f0e41541bfe681c77851df6a5e3c86cd43b21b4508b8e36db1d722cb7",
+    "fixtures/parquet/cardinality-carriers/scalar-binary-1.parquet": "4323bb256a89526f3dde73b7a757c22499c8f7851025bf2b04af85979e1c9e28",
+    "fixtures/parquet/cardinality-carriers/scalar-boolean-0.parquet": "39c94af986674ce4d9ae2ad6504616cb23d61293c44beafb6209cbe35bedb4bf",
+    "fixtures/parquet/cardinality-carriers/scalar-boolean-1.parquet": "f055032fe621b8e986b62750953fbf2af86f689a6c9716255a091ed6ecc12140",
+    "fixtures/parquet/cardinality-carriers/scalar-date-0.parquet": "ebb97ba33a234fc15aa94ce4d0c3a58a9ad8acb0afd4c1dc2a4293a470a8e151",
+    "fixtures/parquet/cardinality-carriers/scalar-date-1.parquet": "6bd7e6c87bd4b9fdae16cca8e5990196ca2fc7165653585eabd7e79c396f0f47",
+    "fixtures/parquet/cardinality-carriers/scalar-float32-0.parquet": "cf8eb8a6ed62e79f6bfb65aa2de5efd3857bd312c03d3dafaf35389a78fbca88",
+    "fixtures/parquet/cardinality-carriers/scalar-float32-1.parquet": "527cf2697eaf08ad9d7abf6c766721f7c168ccb64b34124effca124e064a61dd",
+    "fixtures/parquet/cardinality-carriers/scalar-float64-0.parquet": "0aa4d98a07a8a6c0b95f2b88099ce5ec81296d711474c307bd2a3edc6fe6395e",
+    "fixtures/parquet/cardinality-carriers/scalar-float64-1.parquet": "60f8a3d8be3b086f3fcd36c2d628d02bbb5e9069adc56a9bbf5e30c2b224b47c",
+    "fixtures/parquet/cardinality-carriers/scalar-int32-0.parquet": "a4d1dc41afc4e5a10004122ebd68920239f8f788c02a334b001d421c71a5abb2",
+    "fixtures/parquet/cardinality-carriers/scalar-int32-1.parquet": "e8aca37d6c63eb1a2e6263d56305d70dd284792d6bb0ee7ca898528120326def",
+    "fixtures/parquet/cardinality-carriers/scalar-int64-0.parquet": "69c4019f1036db9fa319f41665ff6e3624224c8c73673b17ff21dac7a1cde7e4",
+    "fixtures/parquet/cardinality-carriers/scalar-int64-1.parquet": "8027e2fbd3926651ef51e03497560360f00e06b1f793b05eaf248ac4bc457d55",
+    "fixtures/parquet/cardinality-carriers/scalar-string-0.parquet": "08a5c284ec48ccd81882ca525491e5c0b410e08f6e1d0c2ef58cee16be273000",
+    "fixtures/parquet/cardinality-carriers/scalar-string-1.parquet": "807d945365e17b30b0c0a94fd24f4bc719157626deacec00bb431ef9367335b7",
+    "fixtures/parquet/cardinality-carriers/scalar-time-micros-0.parquet": "ae1d999c09843ec0ade008a0769a23c7c03b31389597f3a7c5d13e9ce59de293",
+    "fixtures/parquet/cardinality-carriers/scalar-time-micros-1.parquet": "1541969e903866a64ff93beb1b3c88e4ac688f306c965a4002943ee35ebf68c1",
+    "fixtures/parquet/cardinality-carriers/scalar-time-millis-0.parquet": "5e367a9763e1d8b379d5e65d1eda058148487a584373d513a206b786ad5c86ce",
+    "fixtures/parquet/cardinality-carriers/scalar-time-millis-1.parquet": "b2899e5a2bae4ca65262b3233131100c96ed0a6684262a779c728c5bfce4410c",
+    "fixtures/parquet/cardinality-carriers/scalar-timestamp-micros-utc-0.parquet": "90880f3dba7cfdd7a45769e7a1ee1dbfe6c461fdc25f8331f458dad9919228ba",
+    "fixtures/parquet/cardinality-carriers/scalar-timestamp-micros-utc-1.parquet": "03ae693703cdd851404afd5b1307865019bfa20050003bcb537ba25069f35e28",
+    "fixtures/parquet/cardinality-carriers/scalar-timestamp-millis-utc-0.parquet": "ccadd897fbfa068ce85bd4dd78871c9044414aeb21ce92e2bec9744b3a1dfd5e",
+    "fixtures/parquet/cardinality-carriers/scalar-timestamp-millis-utc-1.parquet": "66b35345b7a47ea113ad6d60f9ce146126e427012ebba6600235c0bc86725af9",
+    "fixtures/parquet/cardinality-projections/array-binary-0-report.parquet": "e3ca1e5d92e37a5f6d44d8c88dc8b9e072905603d9b579cf6c48451f869aa7fe",
+    "fixtures/parquet/cardinality-projections/array-binary-0-strict.parquet": "e3ca1e5d92e37a5f6d44d8c88dc8b9e072905603d9b579cf6c48451f869aa7fe",
+    "fixtures/parquet/cardinality-projections/array-binary-1-report.parquet": "457aa2f7b2d061de096160e17683cf8d644a52bcac8e206727eb2483d5ac43c4",
+    "fixtures/parquet/cardinality-projections/array-binary-1-strict.parquet": "457aa2f7b2d061de096160e17683cf8d644a52bcac8e206727eb2483d5ac43c4",
+    "fixtures/parquet/cardinality-projections/array-boolean-0-report.parquet": "7097e0f1bf38358b39a24076a682508fb8b5fe6b085c78dabcc099ec6cf87b5d",
+    "fixtures/parquet/cardinality-projections/array-boolean-0-strict.parquet": "7097e0f1bf38358b39a24076a682508fb8b5fe6b085c78dabcc099ec6cf87b5d",
+    "fixtures/parquet/cardinality-projections/array-boolean-1-report.parquet": "605c23d483d402ab3bd92b729452b8ce5e3ffb8035c8aea829e77c0cf79ac67f",
+    "fixtures/parquet/cardinality-projections/array-boolean-1-strict.parquet": "605c23d483d402ab3bd92b729452b8ce5e3ffb8035c8aea829e77c0cf79ac67f",
+    "fixtures/parquet/cardinality-projections/array-date-0-report.parquet": "358b605d5d978c7351811622c9d11f3e8304b933e1d09a107fe23e10b9c50c44",
+    "fixtures/parquet/cardinality-projections/array-date-0-strict.parquet": "358b605d5d978c7351811622c9d11f3e8304b933e1d09a107fe23e10b9c50c44",
+    "fixtures/parquet/cardinality-projections/array-date-1-report.parquet": "2838045ee42c84bc90ad93e1789bc3a4cbfa77a9c2a52c85b065355ee68b7e42",
+    "fixtures/parquet/cardinality-projections/array-date-1-strict.parquet": "2838045ee42c84bc90ad93e1789bc3a4cbfa77a9c2a52c85b065355ee68b7e42",
+    "fixtures/parquet/cardinality-projections/array-float32-0-report.parquet": "48e1adf666853e5acca6f5238c8896d03ffaa25a7e2a5bbf909290373033a811",
+    "fixtures/parquet/cardinality-projections/array-float32-0-strict.parquet": "48e1adf666853e5acca6f5238c8896d03ffaa25a7e2a5bbf909290373033a811",
+    "fixtures/parquet/cardinality-projections/array-float32-1-report.parquet": "4d7c5df4d01200030c9a9e8ada92373639e2b2bd0cdeb9c08939556f2ff8a496",
+    "fixtures/parquet/cardinality-projections/array-float32-1-strict.parquet": "4d7c5df4d01200030c9a9e8ada92373639e2b2bd0cdeb9c08939556f2ff8a496",
+    "fixtures/parquet/cardinality-projections/array-float64-0-report.parquet": "12a573c188ab0f7611a0b56f7615b195575df1add85c1f6c0477c1b29b6552ff",
+    "fixtures/parquet/cardinality-projections/array-float64-0-strict.parquet": "12a573c188ab0f7611a0b56f7615b195575df1add85c1f6c0477c1b29b6552ff",
+    "fixtures/parquet/cardinality-projections/array-float64-1-report.parquet": "4107f931b2b73c381d355c003592d480a2e21a1b6142ee03f67a1758424fed2f",
+    "fixtures/parquet/cardinality-projections/array-float64-1-strict.parquet": "4107f931b2b73c381d355c003592d480a2e21a1b6142ee03f67a1758424fed2f",
+    "fixtures/parquet/cardinality-projections/array-int32-0-report.parquet": "8540e42a6af70f794b5194229307114667b858364142a24c0690eb342ff9a602",
+    "fixtures/parquet/cardinality-projections/array-int32-0-strict.parquet": "8540e42a6af70f794b5194229307114667b858364142a24c0690eb342ff9a602",
+    "fixtures/parquet/cardinality-projections/array-int32-1-report.parquet": "997489821f8b207da5017e6f9506024cb1de8455774113ea4add85d1516f87c0",
+    "fixtures/parquet/cardinality-projections/array-int32-1-strict.parquet": "997489821f8b207da5017e6f9506024cb1de8455774113ea4add85d1516f87c0",
+    "fixtures/parquet/cardinality-projections/array-int64-0-report.parquet": "720ab04bab7d6dcd2823a6004c345aa38dd210d52df236ab3d32d3d8168c00c2",
+    "fixtures/parquet/cardinality-projections/array-int64-0-strict.parquet": "720ab04bab7d6dcd2823a6004c345aa38dd210d52df236ab3d32d3d8168c00c2",
+    "fixtures/parquet/cardinality-projections/array-int64-1-report.parquet": "d9af11786995aff51dacfeba6fa4c829bfaab481ecaf0435a7516d0085387d3f",
+    "fixtures/parquet/cardinality-projections/array-int64-1-strict.parquet": "d9af11786995aff51dacfeba6fa4c829bfaab481ecaf0435a7516d0085387d3f",
+    "fixtures/parquet/cardinality-projections/array-map-0-report.parquet": "f350a7a07c15c223aa13cd39a50304c65662951214d65c86590b8f55401b53ec",
+    "fixtures/parquet/cardinality-projections/array-map-1-report.parquet": "a625dbb1fba6f75306d69821bbeb3cedec2096ef2b44369416865f03bc32c05e",
+    "fixtures/parquet/cardinality-projections/array-record-0-report.parquet": "2a1278413f65e057b69c015aed4ecdec3270b8123eb9db9b83a8cfcee25b9576",
+    "fixtures/parquet/cardinality-projections/array-record-0-strict.parquet": "2a1278413f65e057b69c015aed4ecdec3270b8123eb9db9b83a8cfcee25b9576",
+    "fixtures/parquet/cardinality-projections/array-record-1-report.parquet": "96496cd50ea4098ca8f59063dedb01d16e91daebf679731f9bc31c5777e597eb",
+    "fixtures/parquet/cardinality-projections/array-record-1-strict.parquet": "96496cd50ea4098ca8f59063dedb01d16e91daebf679731f9bc31c5777e597eb",
+    "fixtures/parquet/cardinality-projections/array-string-0-report.parquet": "d2a57a643e4f74abab72e0d56b9356a6f1776f4417c5ecccc1287eee9022db2e",
+    "fixtures/parquet/cardinality-projections/array-string-0-strict.parquet": "d2a57a643e4f74abab72e0d56b9356a6f1776f4417c5ecccc1287eee9022db2e",
+    "fixtures/parquet/cardinality-projections/array-string-1-report.parquet": "abba0ef8dfd2f20f05bd5c24b2c89c9919bd13f8273f5bae2d1ae4066712816c",
+    "fixtures/parquet/cardinality-projections/array-string-1-strict.parquet": "abba0ef8dfd2f20f05bd5c24b2c89c9919bd13f8273f5bae2d1ae4066712816c",
+    "fixtures/parquet/cardinality-projections/array-time-micros-0-report.parquet": "6cfee59bfd42750d33dfe3decad531e79552092b7b0acc9a6a89423eeacfef43",
+    "fixtures/parquet/cardinality-projections/array-time-micros-0-strict.parquet": "6cfee59bfd42750d33dfe3decad531e79552092b7b0acc9a6a89423eeacfef43",
+    "fixtures/parquet/cardinality-projections/array-time-micros-1-report.parquet": "8f3dac3ee3b53c333e26ad16aa7c18f9362abda2c7535f5b62223c3a8d351a03",
+    "fixtures/parquet/cardinality-projections/array-time-micros-1-strict.parquet": "8f3dac3ee3b53c333e26ad16aa7c18f9362abda2c7535f5b62223c3a8d351a03",
+    "fixtures/parquet/cardinality-projections/array-time-millis-0-report.parquet": "15b8ae5edac70c25b07bb5fcc4f351e754a1062c30d5f7f013a708a351abdae3",
+    "fixtures/parquet/cardinality-projections/array-time-millis-0-strict.parquet": "15b8ae5edac70c25b07bb5fcc4f351e754a1062c30d5f7f013a708a351abdae3",
+    "fixtures/parquet/cardinality-projections/array-time-millis-1-report.parquet": "3367d6442131e316576dd2859868b4ab0ee018f17ca714144977e992e245641c",
+    "fixtures/parquet/cardinality-projections/array-time-millis-1-strict.parquet": "3367d6442131e316576dd2859868b4ab0ee018f17ca714144977e992e245641c",
+    "fixtures/parquet/cardinality-projections/array-timestamp-micros-utc-0-report.parquet": "bb14cc5834226c4aa6174e3920e31c5db669ecfb3b25b8076468041dd9571713",
+    "fixtures/parquet/cardinality-projections/array-timestamp-micros-utc-0-strict.parquet": "bb14cc5834226c4aa6174e3920e31c5db669ecfb3b25b8076468041dd9571713",
+    "fixtures/parquet/cardinality-projections/array-timestamp-micros-utc-1-report.parquet": "c39f64730f9fb51036a4a062dc2422295b7413a4f4869822cc83f4289e73e250",
+    "fixtures/parquet/cardinality-projections/array-timestamp-micros-utc-1-strict.parquet": "c39f64730f9fb51036a4a062dc2422295b7413a4f4869822cc83f4289e73e250",
+    "fixtures/parquet/cardinality-projections/array-timestamp-millis-utc-0-report.parquet": "c2df7f3cb0bd881f90cbec8623a366ac272c500096d2473e727d0a7c0279a4dd",
+    "fixtures/parquet/cardinality-projections/array-timestamp-millis-utc-0-strict.parquet": "c2df7f3cb0bd881f90cbec8623a366ac272c500096d2473e727d0a7c0279a4dd",
+    "fixtures/parquet/cardinality-projections/array-timestamp-millis-utc-1-report.parquet": "5aaaf477856e70d0d25a6d74e6a16d5872b22adca1f9e225fafc168510743707",
+    "fixtures/parquet/cardinality-projections/array-timestamp-millis-utc-1-strict.parquet": "5aaaf477856e70d0d25a6d74e6a16d5872b22adca1f9e225fafc168510743707",
+    "fixtures/parquet/cardinality-projections/map-array-0-report.parquet": "762a53d05c8acb03ff0d207d769d908267ec01a328418e013b638979885f503d",
+    "fixtures/parquet/cardinality-projections/map-array-1-report.parquet": "4496aa99f52de7448e0633e133e90d8eda5f2f2b4fc71f2637c6c5acd6d8420a",
+    "fixtures/parquet/cardinality-projections/map-binary-0-report.parquet": "e55b5f44066a80a37c214ffce8efc53667b6492b36f5e0d4a59ae2b68756f594",
+    "fixtures/parquet/cardinality-projections/map-binary-1-report.parquet": "ef714cbb42af1ad15edceb64766358d9caae47deee38bfa3cf47447c5d3e2678",
+    "fixtures/parquet/cardinality-projections/map-boolean-0-report.parquet": "6b31ded492ce7c4cf35111f06294e14c284e4f9e4b2dfdb508ff9b78cc43871d",
+    "fixtures/parquet/cardinality-projections/map-boolean-1-report.parquet": "8e72f96db79b77ab67dda0f93c34fd94f27a7ca01519c6c3414fa1cf001f1535",
+    "fixtures/parquet/cardinality-projections/map-date-0-report.parquet": "a48e1079bf92c1f6daec3f27a70dc4eaef675b189003d833214b6610a332364f",
+    "fixtures/parquet/cardinality-projections/map-date-1-report.parquet": "756ea7acd6b55235d48d1e80fd7b134a42374c7950a24a3940c2ed6fec2cf0c9",
+    "fixtures/parquet/cardinality-projections/map-float32-0-report.parquet": "4306156652925b7518838ceb57a4fadd21b01c9dc355953f70781c7754044563",
+    "fixtures/parquet/cardinality-projections/map-float32-1-report.parquet": "2a162bb968f52e376c7720d74aa10fb7a89b5331367433f23d1990b142a27329",
+    "fixtures/parquet/cardinality-projections/map-float64-0-report.parquet": "79d160544330dde0e4724ed5ed14a14dc9e73d22cbe986b4128f5f1550a00cf7",
+    "fixtures/parquet/cardinality-projections/map-float64-1-report.parquet": "0d56716a9694972831ee6162dd6aa6a0593a229e59601e7873c4c4f9e4ab4522",
+    "fixtures/parquet/cardinality-projections/map-int32-0-report.parquet": "ba68d423ababfe559ba3e7d8e4120f2546572e751a6f71c05cc27ba0fb70767a",
+    "fixtures/parquet/cardinality-projections/map-int32-1-report.parquet": "8337a72d228a87c89e6892db6294b896d1d84224e205d6b1cf136b0b2a9b92c9",
+    "fixtures/parquet/cardinality-projections/map-int64-0-report.parquet": "a2ff9b570211a4ee430242204d87230e2b632078f0e2c5d985a1cf6875569057",
+    "fixtures/parquet/cardinality-projections/map-int64-1-report.parquet": "6b89344cf8c599238f6a6a4121489dc42f62dd3ad2b7dd42bb4a8cc06face42d",
+    "fixtures/parquet/cardinality-projections/map-string-0-report.parquet": "2219097f65669ce3981ccc75414ba7ab32d755aef0e88b929155aadb6e49214f",
+    "fixtures/parquet/cardinality-projections/map-string-1-report.parquet": "9ff4517d207a977a5f17f5324de4e3cfd4a2317120213a5b16e734588e87dc63",
+    "fixtures/parquet/cardinality-projections/map-time-micros-0-report.parquet": "d1c6f4580c5921039ac5f2255ca1cb9541b1c87d27c66980d12adbf250580b69",
+    "fixtures/parquet/cardinality-projections/map-time-micros-1-report.parquet": "19a27cab5a69c054811d004c16095eccd9c14c2159aef2b1a3d0513332fc8f2d",
+    "fixtures/parquet/cardinality-projections/map-time-millis-0-report.parquet": "20a056207b86c80019b1811b0c17b787282399246522a0f200355d7c714d2124",
+    "fixtures/parquet/cardinality-projections/map-time-millis-1-report.parquet": "38471d0bd5d033cf333b12af2b3616598de3c2459998a2f1ecd936225c6d691f",
+    "fixtures/parquet/cardinality-projections/map-timestamp-micros-utc-0-report.parquet": "3d196183cc0f698fbb3483f11f941d18d6fd96c13487c8f66eade1d7d5448c01",
+    "fixtures/parquet/cardinality-projections/map-timestamp-micros-utc-1-report.parquet": "5656757d2e8750e4fa2955a7fa757a504e885af5da5b9df64d6f1043045533d2",
+    "fixtures/parquet/cardinality-projections/map-timestamp-millis-utc-0-report.parquet": "77b22090896938e134ef72c75934aed5267d14d508ae3bfcb444ea7f373406fd",
+    "fixtures/parquet/cardinality-projections/map-timestamp-millis-utc-1-report.parquet": "87a2fc8c2147eec6faee14c96adab2981fdf63a6570cbcb0381879778e4125d7",
+    "fixtures/parquet/cardinality-projections/nested-array-0-report.parquet": "f18eb9d06a2baf5c733b092ec8fa71c095bc122cd0862d096a045ffbfc43d174",
+    "fixtures/parquet/cardinality-projections/nested-array-0-strict.parquet": "f18eb9d06a2baf5c733b092ec8fa71c095bc122cd0862d096a045ffbfc43d174",
+    "fixtures/parquet/cardinality-projections/nested-array-1-report.parquet": "29193a8cf3cdbb3ecd76ac85fc3a7672415a5bef475502d406a2d43f723c9292",
+    "fixtures/parquet/cardinality-projections/nested-array-1-strict.parquet": "29193a8cf3cdbb3ecd76ac85fc3a7672415a5bef475502d406a2d43f723c9292",
+    "fixtures/parquet/cardinality-projections/scalar-binary-0-report.parquet": "ae5c4e5f0e41541bfe681c77851df6a5e3c86cd43b21b4508b8e36db1d722cb7",
+    "fixtures/parquet/cardinality-projections/scalar-binary-0-strict.parquet": "ae5c4e5f0e41541bfe681c77851df6a5e3c86cd43b21b4508b8e36db1d722cb7",
+    "fixtures/parquet/cardinality-projections/scalar-binary-1-report.parquet": "4323bb256a89526f3dde73b7a757c22499c8f7851025bf2b04af85979e1c9e28",
+    "fixtures/parquet/cardinality-projections/scalar-binary-1-strict.parquet": "4323bb256a89526f3dde73b7a757c22499c8f7851025bf2b04af85979e1c9e28",
+    "fixtures/parquet/cardinality-projections/scalar-boolean-0-report.parquet": "39c94af986674ce4d9ae2ad6504616cb23d61293c44beafb6209cbe35bedb4bf",
+    "fixtures/parquet/cardinality-projections/scalar-boolean-0-strict.parquet": "39c94af986674ce4d9ae2ad6504616cb23d61293c44beafb6209cbe35bedb4bf",
+    "fixtures/parquet/cardinality-projections/scalar-boolean-1-report.parquet": "f055032fe621b8e986b62750953fbf2af86f689a6c9716255a091ed6ecc12140",
+    "fixtures/parquet/cardinality-projections/scalar-boolean-1-strict.parquet": "f055032fe621b8e986b62750953fbf2af86f689a6c9716255a091ed6ecc12140",
+    "fixtures/parquet/cardinality-projections/scalar-date-0-report.parquet": "ebb97ba33a234fc15aa94ce4d0c3a58a9ad8acb0afd4c1dc2a4293a470a8e151",
+    "fixtures/parquet/cardinality-projections/scalar-date-0-strict.parquet": "ebb97ba33a234fc15aa94ce4d0c3a58a9ad8acb0afd4c1dc2a4293a470a8e151",
+    "fixtures/parquet/cardinality-projections/scalar-date-1-report.parquet": "6bd7e6c87bd4b9fdae16cca8e5990196ca2fc7165653585eabd7e79c396f0f47",
+    "fixtures/parquet/cardinality-projections/scalar-date-1-strict.parquet": "6bd7e6c87bd4b9fdae16cca8e5990196ca2fc7165653585eabd7e79c396f0f47",
+    "fixtures/parquet/cardinality-projections/scalar-float32-0-report.parquet": "cf8eb8a6ed62e79f6bfb65aa2de5efd3857bd312c03d3dafaf35389a78fbca88",
+    "fixtures/parquet/cardinality-projections/scalar-float32-0-strict.parquet": "cf8eb8a6ed62e79f6bfb65aa2de5efd3857bd312c03d3dafaf35389a78fbca88",
+    "fixtures/parquet/cardinality-projections/scalar-float32-1-report.parquet": "527cf2697eaf08ad9d7abf6c766721f7c168ccb64b34124effca124e064a61dd",
+    "fixtures/parquet/cardinality-projections/scalar-float32-1-strict.parquet": "527cf2697eaf08ad9d7abf6c766721f7c168ccb64b34124effca124e064a61dd",
+    "fixtures/parquet/cardinality-projections/scalar-float64-0-report.parquet": "0aa4d98a07a8a6c0b95f2b88099ce5ec81296d711474c307bd2a3edc6fe6395e",
+    "fixtures/parquet/cardinality-projections/scalar-float64-0-strict.parquet": "0aa4d98a07a8a6c0b95f2b88099ce5ec81296d711474c307bd2a3edc6fe6395e",
+    "fixtures/parquet/cardinality-projections/scalar-float64-1-report.parquet": "60f8a3d8be3b086f3fcd36c2d628d02bbb5e9069adc56a9bbf5e30c2b224b47c",
+    "fixtures/parquet/cardinality-projections/scalar-float64-1-strict.parquet": "60f8a3d8be3b086f3fcd36c2d628d02bbb5e9069adc56a9bbf5e30c2b224b47c",
+    "fixtures/parquet/cardinality-projections/scalar-int32-0-report.parquet": "a4d1dc41afc4e5a10004122ebd68920239f8f788c02a334b001d421c71a5abb2",
+    "fixtures/parquet/cardinality-projections/scalar-int32-0-strict.parquet": "a4d1dc41afc4e5a10004122ebd68920239f8f788c02a334b001d421c71a5abb2",
+    "fixtures/parquet/cardinality-projections/scalar-int32-1-report.parquet": "e8aca37d6c63eb1a2e6263d56305d70dd284792d6bb0ee7ca898528120326def",
+    "fixtures/parquet/cardinality-projections/scalar-int32-1-strict.parquet": "e8aca37d6c63eb1a2e6263d56305d70dd284792d6bb0ee7ca898528120326def",
+    "fixtures/parquet/cardinality-projections/scalar-int64-0-report.parquet": "69c4019f1036db9fa319f41665ff6e3624224c8c73673b17ff21dac7a1cde7e4",
+    "fixtures/parquet/cardinality-projections/scalar-int64-0-strict.parquet": "69c4019f1036db9fa319f41665ff6e3624224c8c73673b17ff21dac7a1cde7e4",
+    "fixtures/parquet/cardinality-projections/scalar-int64-1-report.parquet": "8027e2fbd3926651ef51e03497560360f00e06b1f793b05eaf248ac4bc457d55",
+    "fixtures/parquet/cardinality-projections/scalar-int64-1-strict.parquet": "8027e2fbd3926651ef51e03497560360f00e06b1f793b05eaf248ac4bc457d55",
+    "fixtures/parquet/cardinality-projections/scalar-string-0-report.parquet": "08a5c284ec48ccd81882ca525491e5c0b410e08f6e1d0c2ef58cee16be273000",
+    "fixtures/parquet/cardinality-projections/scalar-string-0-strict.parquet": "08a5c284ec48ccd81882ca525491e5c0b410e08f6e1d0c2ef58cee16be273000",
+    "fixtures/parquet/cardinality-projections/scalar-string-1-report.parquet": "807d945365e17b30b0c0a94fd24f4bc719157626deacec00bb431ef9367335b7",
+    "fixtures/parquet/cardinality-projections/scalar-string-1-strict.parquet": "807d945365e17b30b0c0a94fd24f4bc719157626deacec00bb431ef9367335b7",
+    "fixtures/parquet/cardinality-projections/scalar-time-micros-0-report.parquet": "ae1d999c09843ec0ade008a0769a23c7c03b31389597f3a7c5d13e9ce59de293",
+    "fixtures/parquet/cardinality-projections/scalar-time-micros-0-strict.parquet": "ae1d999c09843ec0ade008a0769a23c7c03b31389597f3a7c5d13e9ce59de293",
+    "fixtures/parquet/cardinality-projections/scalar-time-micros-1-report.parquet": "1541969e903866a64ff93beb1b3c88e4ac688f306c965a4002943ee35ebf68c1",
+    "fixtures/parquet/cardinality-projections/scalar-time-micros-1-strict.parquet": "1541969e903866a64ff93beb1b3c88e4ac688f306c965a4002943ee35ebf68c1",
+    "fixtures/parquet/cardinality-projections/scalar-time-millis-0-report.parquet": "5e367a9763e1d8b379d5e65d1eda058148487a584373d513a206b786ad5c86ce",
+    "fixtures/parquet/cardinality-projections/scalar-time-millis-0-strict.parquet": "5e367a9763e1d8b379d5e65d1eda058148487a584373d513a206b786ad5c86ce",
+    "fixtures/parquet/cardinality-projections/scalar-time-millis-1-report.parquet": "b2899e5a2bae4ca65262b3233131100c96ed0a6684262a779c728c5bfce4410c",
+    "fixtures/parquet/cardinality-projections/scalar-time-millis-1-strict.parquet": "b2899e5a2bae4ca65262b3233131100c96ed0a6684262a779c728c5bfce4410c",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-micros-utc-0-report.parquet": "90880f3dba7cfdd7a45769e7a1ee1dbfe6c461fdc25f8331f458dad9919228ba",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-micros-utc-0-strict.parquet": "90880f3dba7cfdd7a45769e7a1ee1dbfe6c461fdc25f8331f458dad9919228ba",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-micros-utc-1-report.parquet": "03ae693703cdd851404afd5b1307865019bfa20050003bcb537ba25069f35e28",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-micros-utc-1-strict.parquet": "03ae693703cdd851404afd5b1307865019bfa20050003bcb537ba25069f35e28",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-millis-utc-0-report.parquet": "ccadd897fbfa068ce85bd4dd78871c9044414aeb21ce92e2bec9744b3a1dfd5e",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-millis-utc-0-strict.parquet": "ccadd897fbfa068ce85bd4dd78871c9044414aeb21ce92e2bec9744b3a1dfd5e",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-millis-utc-1-report.parquet": "66b35345b7a47ea113ad6d60f9ce146126e427012ebba6600235c0bc86725af9",
+    "fixtures/parquet/cardinality-projections/scalar-timestamp-millis-utc-1-strict.parquet": "66b35345b7a47ea113ad6d60f9ce146126e427012ebba6600235c0bc86725af9",
+    "fixtures/parquet/cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
+    "fixtures/parquet/cardinality/array-duplicates-1.parquet": "80142268947432b60df794ede66e25cd6fba9ecc2a7e72b44525b7654c253bf3",
+    "fixtures/parquet/cardinality/array-fixed-length-0.parquet": "96ea5ed248f839694c8617a481cd9f5a67c88394680d03cad45a8af92dfe29f8",
+    "fixtures/parquet/cardinality/array-fixed-length-1.parquet": "638c1fbd1d81efd1a88d890d0a9da17e3be849a901931ee4c4365cf16b5ad063",
+    "fixtures/parquet/cardinality/array-float-narrowing-0.parquet": "d1b2ebdaa4df3afd586a22980646b408d47d54357c64c3d525ecb394c1d0a2b6",
+    "fixtures/parquet/cardinality/array-float-narrowing-1.parquet": "2f11966f611c8558cd6bd3b1de745b942e8b02163404d93b29f410a34902e3b1",
+    "fixtures/parquet/cardinality/array-large-offsets-0.parquet": "12e08aa3c73587def368ae0739df1f7cb8f748c3e45967220c4f1457107b10cb",
+    "fixtures/parquet/cardinality/array-large-offsets-1.parquet": "03c3a53fc2c718454e72ece1f369f93f5e0f446852f9cc36d3c352fd57f9e5c2",
+    "fixtures/parquet/cardinality/array-map-members-0.parquet": "616ed2aad005048b5f9181bf31a9ab90e297477495d9a80967793d5cb354626f",
+    "fixtures/parquet/cardinality/array-map-members-1.parquet": "d4556040bcbb6f998a90551d6657edf4a8594115e3c0887a2ffb7f4d5c773ee9",
+    "fixtures/parquet/cardinality/array-nested-0.parquet": "180f6d9d68713031496ee7b73907c156592517ee234afa0cab4e4f4af4ce2f12",
+    "fixtures/parquet/cardinality/array-nested-1.parquet": "240858add26760cc92aab6b2fb4c299b068b94a49116c8715aca1363d110f84b",
+    "fixtures/parquet/cardinality/array-null-members-0.parquet": "4a98d6297952c2f7f4b2560733c521eea97f2ac7f8c7df9af642f12afb369c38",
+    "fixtures/parquet/cardinality/array-null-members-1.parquet": "b5c9dbd69afdc435b3d40b23d2708aed2f93100610d41ff027a5828269dbedb0",
+    "fixtures/parquet/cardinality/array-record-members-0.parquet": "77db8c1d2f7bb46f41d7d900c4ca3e7fa9008609b4cdf066f61236645fbd5209",
+    "fixtures/parquet/cardinality/array-record-members-1.parquet": "6bc99ff1d0e340bc0102153d51d9a4b61a80b94a2d2b18f17c7caecaeca9d1e5",
+    "fixtures/parquet/cardinality/map-array-values-0.parquet": "0f65e8e4430ec1392a636e7080ac6f3fcfeea7988888cf751726c642fe240af0",
+    "fixtures/parquet/cardinality/map-array-values-1.parquet": "6d5b168d95019060cb7279a57b1cc16b283caac457e094174bedf6dbd2288e1f",
+    "fixtures/parquet/cardinality/map-duplicate-strings-0.parquet": "27447203326fabea83eacdcd4fec26d2dc5da3c50423379e7f664cd677f6d2ad",
+    "fixtures/parquet/cardinality/map-duplicate-strings-1.parquet": "6368159f4b2a75f302660e4e68341ef5a6832d9e9e2b61ba06416e4699ed303f",
+    "fixtures/parquet/cardinality/map-integer-keys-0.parquet": "9ac71ad61e2b9dc685b6856d53794c1c06d446f44a86b38eab76d80be4071a19",
+    "fixtures/parquet/cardinality/map-integer-keys-1.parquet": "bf4697108bb8a0f08648da0d1fe9de3c2cd871fb51e5aa60737c797bf78188a1",
+    "fixtures/parquet/cardinality/map-null-values-0.parquet": "014506973c172d0230b953d8a7965578c19767acd3a96bb17d93338343cc3ff7",
+    "fixtures/parquet/cardinality/map-null-values-1.parquet": "b1a696d931c236cc15da23c6cdf5d1fed5b388b23fc76a4ccdfd15b4449e70bc",
+    "fixtures/parquet/cardinality/map-sorted-flag-0.parquet": "4baf05f97ff026eadbb16b135acb79b30928102678dfee52d70c3f605a180754",
+    "fixtures/parquet/cardinality/map-sorted-flag-1.parquet": "7b5c9408ebb8d02dc0182a749b831b73196e9af017d19948c0c9f87d2b9336af",
+    "fixtures/parquet/cardinality/map-unique-strings-0.parquet": "302752e98a150b03647ba553c47b796eb24abe0c2b9baf5074b97f20ae02fec7",
+    "fixtures/parquet/cardinality/map-unique-strings-1.parquet": "36bc903f3875f82f60ca2074e76a30d43eb57a6e69341ed9217ad0e0abbde8d9",
+    "fixtures/parquet/cardinality/scalar-0.parquet": "2e87a420a6cbb818e2e736a4949280fa3d64e1a302112b58780cc4f57cc69589",
+    "fixtures/parquet/cardinality/scalar-1.parquet": "9f24ac313b18efca4eb1c6d257260d1a89511148bca3c311097be137d6d75490",
+    "fixtures/parquet/nullability/list-0-0-empty-0.parquet": "41c70e0c4c54cfe06d92aae02b9b68b5ce77f4caf215026d47f9b27434fd163e",
+    "fixtures/parquet/nullability/list-0-0-empty-1.parquet": "68933f93347ada22ecee6363c82d897c969816120dbf4a14ea7b74260c098f0a",
+    "fixtures/parquet/nullability/list-0-0-masked-buffers-0.parquet": "38dd27af4424f537c2d0ee7044eac3557f9eb53e976e831b01899d98d9f65e69",
+    "fixtures/parquet/nullability/list-0-0-masked-buffers-1.parquet": "40c1845d1d881545197a442e2178dd5168ac9fc21302a2f9af3fbbf2925ea0f1",
+    "fixtures/parquet/nullability/list-0-0-null-0.parquet": "41c70e0c4c54cfe06d92aae02b9b68b5ce77f4caf215026d47f9b27434fd163e",
+    "fixtures/parquet/nullability/list-0-0-null-1.parquet": "68933f93347ada22ecee6363c82d897c969816120dbf4a14ea7b74260c098f0a",
+    "fixtures/parquet/nullability/list-0-0-present-0.parquet": "89027c59941d6b2d739a51a9fda3ae27af0282a7810189c43b6da882b44afd91",
+    "fixtures/parquet/nullability/list-0-0-present-1.parquet": "c429570b23ca50a22d988938fc73585611d036e689eef9a3e7c4f1c33965970c",
+    "fixtures/parquet/nullability/list-0-1-empty-0.parquet": "d4375dcbc2089ee83588429ba5d29012d50ca67a449c3ba757fb1dfc0c14dcac",
+    "fixtures/parquet/nullability/list-0-1-empty-1.parquet": "7343d8c4c3d6abd9f6219f9473f6fbd34e337e8f2d44e10b9124878456bda9c4",
+    "fixtures/parquet/nullability/list-0-1-null-0.parquet": "d4375dcbc2089ee83588429ba5d29012d50ca67a449c3ba757fb1dfc0c14dcac",
+    "fixtures/parquet/nullability/list-0-1-null-1.parquet": "7343d8c4c3d6abd9f6219f9473f6fbd34e337e8f2d44e10b9124878456bda9c4",
+    "fixtures/parquet/nullability/list-0-1-null-member-0.parquet": "5ef8082ab9a77e89648e75d134ea92e3bd0455a370d5931c14086de738be98d9",
+    "fixtures/parquet/nullability/list-0-1-null-member-1.parquet": "5024f013e7d6b42e874144088f5a807355e40da7755fe956756674235fc879aa",
+    "fixtures/parquet/nullability/list-0-1-present-0.parquet": "163511c657222aa38c3fe05d2e0fbec98f5e2ff07a5d55678231f8878f197234",
+    "fixtures/parquet/nullability/list-0-1-present-1.parquet": "58837dd12579feb72154908215b7cbab3e8a3f6836a16ef25ae15eb51b7db212",
+    "fixtures/parquet/nullability/list-1-0-empty-0.parquet": "aa8fd97970534ce0c031b96134aa3c2a5a0c3aaac3687d53121892cf3e7a3dea",
+    "fixtures/parquet/nullability/list-1-0-empty-1.parquet": "3981990cdce00b4a899649fd104d718d03d0dbf48b0cc70827814fef2f0dbf18",
+    "fixtures/parquet/nullability/list-1-0-masked-buffers-0.parquet": "ffafe5ecade5a121f86362eb00d64bc0df8019613c19c825d442638e4bb3e7f3",
+    "fixtures/parquet/nullability/list-1-0-masked-buffers-1.parquet": "e3dfb232e854d5654f52aff7322992564da5010f8f68577bd6d47ff37fadb0f0",
+    "fixtures/parquet/nullability/list-1-0-null-0.parquet": "d1cd92dcf3beac346cbf14d4f483973a17724b03d3b6eebded741ff5311b3b26",
+    "fixtures/parquet/nullability/list-1-0-null-1.parquet": "169eb798bbf5fb16b0dc946d6e7cc5af38f7146cf79f3b9fbb042cb9aac42e31",
+    "fixtures/parquet/nullability/list-1-0-present-0.parquet": "b32146afab21ab64168b27d2d2ee77aa6c97085fbfb87d4d61c7f2ab7a04162f",
+    "fixtures/parquet/nullability/list-1-0-present-1.parquet": "b28c71f83b9b3becad5817f421a9bb74c15e86277881baf69049508fe76ebe71",
+    "fixtures/parquet/nullability/list-1-1-empty-0.parquet": "e6b061972433fa30f406af54686288d5d91f99ec81c568a350ad99f6803d9743",
+    "fixtures/parquet/nullability/list-1-1-empty-1.parquet": "8d2f354b303d4a507d8e132b2a08ebbdcabf14c1181913d921aacc4b7d9fa9ae",
+    "fixtures/parquet/nullability/list-1-1-null-0.parquet": "ffafe5ecade5a121f86362eb00d64bc0df8019613c19c825d442638e4bb3e7f3",
+    "fixtures/parquet/nullability/list-1-1-null-1.parquet": "d10754ce878e0b6b88f342f59e058c8a1d53ea07a7dc9ca61fd51fb7f2b16a35",
+    "fixtures/parquet/nullability/list-1-1-null-member-0.parquet": "8f7c8a1d35ce56b3c6498514933d8243e4e064437272845d2c27e1bc3681b860",
+    "fixtures/parquet/nullability/list-1-1-null-member-1.parquet": "5d04a9f727e99ebd7ef8fc1bf8c9b0130ca182afc5213aea7647eb0732e36145",
+    "fixtures/parquet/nullability/list-1-1-present-0.parquet": "04aefd7457f694716d6ecc67e2a99d3ea92932e7982d7a21b1e2758746dc5afe",
+    "fixtures/parquet/nullability/list-1-1-present-1.parquet": "2c48901cc487e35932386a8a175a23387333d3aaec3f1fd92bafd4db4de5192b",
+    "fixtures/parquet/nullability/map-0-0-empty-0.parquet": "b77d242e77e11be4ac7011caa33b20c53d8e3fba6d70b7bbdac9287905897c59",
+    "fixtures/parquet/nullability/map-0-0-empty-1.parquet": "24cbe9650216a258072a8a4284d694ded58384bb2f783dda5ee874dc7e37efbc",
+    "fixtures/parquet/nullability/map-0-0-masked-buffers-0.parquet": "5b84f88f83117ad56d6776dfc0763c33cbb2e03cc8784116c6eb00dc789b76f6",
+    "fixtures/parquet/nullability/map-0-0-masked-buffers-1.parquet": "d0c0f51df6b826ca4da401dbfba2b88400f7a4d65a9f31b470346a776c56d221",
+    "fixtures/parquet/nullability/map-0-0-null-0.parquet": "b77d242e77e11be4ac7011caa33b20c53d8e3fba6d70b7bbdac9287905897c59",
+    "fixtures/parquet/nullability/map-0-0-null-1.parquet": "24cbe9650216a258072a8a4284d694ded58384bb2f783dda5ee874dc7e37efbc",
+    "fixtures/parquet/nullability/map-0-0-present-0.parquet": "01d28852238af6da487f466b0b8f057404b3d3a02ed21aed73a26b14171e670e",
+    "fixtures/parquet/nullability/map-0-0-present-1.parquet": "3548b1edb411f3276941fce6d695b6ae36ff5413fbc4ab2e02b81af583a93560",
+    "fixtures/parquet/nullability/map-0-1-empty-0.parquet": "f25dfdf8b2e4301f86055d18f6abac48db44e1291659dd5454914974debb9d75",
+    "fixtures/parquet/nullability/map-0-1-empty-1.parquet": "65cc393ac806c0c6064ca74a41b9cfaa338b96c27498525a069a55b6ebeabadd",
+    "fixtures/parquet/nullability/map-0-1-null-0.parquet": "f25dfdf8b2e4301f86055d18f6abac48db44e1291659dd5454914974debb9d75",
+    "fixtures/parquet/nullability/map-0-1-null-1.parquet": "65cc393ac806c0c6064ca74a41b9cfaa338b96c27498525a069a55b6ebeabadd",
+    "fixtures/parquet/nullability/map-0-1-null-member-0.parquet": "70dcaf75f6697b0ae14e1adaa6928b16b35cd30de57a4134222f59f013f7d0a1",
+    "fixtures/parquet/nullability/map-0-1-null-member-1.parquet": "b52ea188a66fb45ffac41d12c21f01ccf0a6d2ede2cd0fab5ed74ba4c76f807a",
+    "fixtures/parquet/nullability/map-0-1-present-0.parquet": "1deb89af4d01f55df47b62ab9d74a66a1d8f6cf754416c182fec887e19b56235",
+    "fixtures/parquet/nullability/map-0-1-present-1.parquet": "293ca438a6ef179796ea80708ea6149deb0350a4878ffa743762ee14e6f84b81",
+    "fixtures/parquet/nullability/map-1-0-empty-0.parquet": "a35c0e4d6e96b46fb328001a59958c4ddaab3178cb68b3aeccc0d123ba9427a1",
+    "fixtures/parquet/nullability/map-1-0-empty-1.parquet": "78220baabc4e125c3dcd50813f696c34ee733fcecdc1c9566c5e34022b117017",
+    "fixtures/parquet/nullability/map-1-0-masked-buffers-0.parquet": "788f79ca80110a8a5069c81bb1607282c38c80a76dc63c62e8c49fee36ffc894",
+    "fixtures/parquet/nullability/map-1-0-masked-buffers-1.parquet": "f9b5fa7540bf39eaaa92e7b0e19ad5757a337cd6d0d15127bb21ccee72deb524",
+    "fixtures/parquet/nullability/map-1-0-null-0.parquet": "105c5346f7717ff7cc9574198d7c18e16c4e3d5702288adbdcba7fb5d6e706b7",
+    "fixtures/parquet/nullability/map-1-0-null-1.parquet": "9ce8e332daba2f57b5019e821786a6e9a7e76208d135639115abaa17ed4990ad",
+    "fixtures/parquet/nullability/map-1-0-present-0.parquet": "71d95026a81fcca6bb8ab7c0ff833b02e1c4bcf1ba0eb96c607f6e4bb2ba1fe8",
+    "fixtures/parquet/nullability/map-1-0-present-1.parquet": "a9c1eff411d8020f5c7e49c69e6efbc7e5d174d67aea64b116e5a6442f9952b0",
+    "fixtures/parquet/nullability/map-1-1-empty-0.parquet": "cfadfc9534805d25441164cdd30ef1ab119cc93455c90026e2eac941d2e20aed",
+    "fixtures/parquet/nullability/map-1-1-empty-1.parquet": "f1a708ae8a3a782654353132b661a9bb70d8637b9b1fad419a8e02a8828e5173",
+    "fixtures/parquet/nullability/map-1-1-null-0.parquet": "788f79ca80110a8a5069c81bb1607282c38c80a76dc63c62e8c49fee36ffc894",
+    "fixtures/parquet/nullability/map-1-1-null-1.parquet": "f9b5fa7540bf39eaaa92e7b0e19ad5757a337cd6d0d15127bb21ccee72deb524",
+    "fixtures/parquet/nullability/map-1-1-null-member-0.parquet": "296f87e20b1100600fd8f287123dd01437193b7e275d6855fe1864a1fc164fb8",
+    "fixtures/parquet/nullability/map-1-1-null-member-1.parquet": "1ac48f025dc33209715382fa56d8eed3acb8ff1bc715e0ef94b37e68fec51750",
+    "fixtures/parquet/nullability/map-1-1-present-0.parquet": "180768030314e727f32e375bd26bfc8b0f3cc056e8a186318b3aa5395650720b",
+    "fixtures/parquet/nullability/map-1-1-present-1.parquet": "0173c72976cacd1310d5b390bb4ac5c4a7b8b296c5899bb1235d08a223f19f9b",
+    "fixtures/parquet/nullability/scalar-0-0-present-0.parquet": "655e52fb5c0f8b101803f9270c06a2c0a9acbeb28c44403dafb063eaaff5ef7a",
+    "fixtures/parquet/nullability/scalar-0-0-present-1.parquet": "aa885843309228f4abfc5d3a0f9447174c93d0031970b2a647cf172ee815bbda",
+    "fixtures/parquet/nullability/scalar-1-0-null-0.parquet": "7f3796b5c334e38cb8adf45396ad8c957df6f148710c3aabe153b9f1e4936c8a",
+    "fixtures/parquet/nullability/scalar-1-0-null-1.parquet": "cbd9b4d78672ea80f3874c4c2e474165d5b82a7b673e035bb4c30129ac27cde5",
+    "fixtures/parquet/nullability/scalar-1-0-omitted-0.parquet": "7f3796b5c334e38cb8adf45396ad8c957df6f148710c3aabe153b9f1e4936c8a",
+    "fixtures/parquet/nullability/scalar-1-0-omitted-1.parquet": "cbd9b4d78672ea80f3874c4c2e474165d5b82a7b673e035bb4c30129ac27cde5",
+    "fixtures/parquet/nullability/scalar-1-0-present-0.parquet": "e04fb6ed8b07287e0da568c44715cc4838ed8786fd7bef9d629474f245cfb7b5",
+    "fixtures/parquet/nullability/scalar-1-0-present-1.parquet": "390543a80a4ef637fe912837c3d70c07b4e5c1757712d4c80bfe3d0d89796d6d",
+    "fixtures/parquet/nullability/struct-0-0-masked-buffers-0.parquet": "fd298e1efcdcbc1ef45f34eb8fe82e90a9ff4159478cb2038110f1b30672a0d4",
+    "fixtures/parquet/nullability/struct-0-0-masked-buffers-1.parquet": "d528fda19a5abed450023c23fd467ccdceee69e4e3229e00fc99fc0e2c7dd794",
+    "fixtures/parquet/nullability/struct-0-0-parent-null-0.parquet": "17535e7ddadcfd451fdad2f87df414ab33711eb5ceb27b3a68973e50cf6d7d0a",
+    "fixtures/parquet/nullability/struct-0-0-parent-null-1.parquet": "f5145b02bdf8396b01da825bb8b17429b890de7da09cb530b3f2a6c43a69a1d4",
+    "fixtures/parquet/nullability/struct-0-0-present-0.parquet": "65fca909eacf029e7061b9d21741ebe13806a1fb6b61a1504c86b6955d08a380",
+    "fixtures/parquet/nullability/struct-0-0-present-1.parquet": "68d039b154900f1bf009d4d094d7381a8e4a9f8557d2473fc6aa841aac87abf1",
+    "fixtures/parquet/nullability/struct-0-1-child-null-0.parquet": "987b0303ee7d615ca30953659f69429c83c84cce36ab75187fcbb3b9b299a06c",
+    "fixtures/parquet/nullability/struct-0-1-child-null-1.parquet": "56265076bc819cf34f0886f399e3e7627801f83c37a6a90560b943872e4b4b69",
+    "fixtures/parquet/nullability/struct-0-1-child-omitted-0.parquet": "987b0303ee7d615ca30953659f69429c83c84cce36ab75187fcbb3b9b299a06c",
+    "fixtures/parquet/nullability/struct-0-1-child-omitted-1.parquet": "56265076bc819cf34f0886f399e3e7627801f83c37a6a90560b943872e4b4b69",
+    "fixtures/parquet/nullability/struct-0-1-parent-null-0.parquet": "f7ee99af450c4913af507f356b3bee170e4fd5a4cda75d5c03272f13b58d2f18",
+    "fixtures/parquet/nullability/struct-0-1-parent-null-1.parquet": "43dcc29721fceff8d9fac456b975c434693dbf3c015d0b5087e4bfaa6d50f978",
+    "fixtures/parquet/nullability/struct-0-1-present-0.parquet": "cb94cb6b2389f8f9cf02d407adcf58bbd1a00e19b23298dbefee53e6b4dd2730",
+    "fixtures/parquet/nullability/struct-0-1-present-1.parquet": "9630a4c10f483dbabb864edf57c475aa1cc55f56dc343b58a943e483269b883b",
+    "fixtures/parquet/nullability/struct-1-0-masked-buffers-0.parquet": "33f5a5f72000548fe130f6708106e2c02dd9e330c23039099c0ec4329c0a2383",
+    "fixtures/parquet/nullability/struct-1-0-masked-buffers-1.parquet": "552a1d220d9312e88915c1ce6598c81b92d5b16ab954e6c3004928c71cf7cfd6",
+    "fixtures/parquet/nullability/struct-1-0-parent-null-0.parquet": "53532bea074a169afb3ad2c393783a88d51f40286838cf2a52e66114f2246609",
+    "fixtures/parquet/nullability/struct-1-0-parent-null-1.parquet": "91477b7c33382f34a0f9e83f5037f7f5d2adf11f2f82067136f1614e7f76b067",
+    "fixtures/parquet/nullability/struct-1-0-present-0.parquet": "4b4320c921e7364fbbb09fc8073b8124d7ed617a96fa3fe19d3033b3061bda9d",
+    "fixtures/parquet/nullability/struct-1-0-present-1.parquet": "32de7202ad8d4a388699d1feb816f93103807eddb0f68b68a860c54d631752df",
+    "fixtures/parquet/nullability/struct-1-1-child-null-0.parquet": "40733d48d135a91aee18cac33a23462d21e22c5697ddb2dbacd57378da682dc0",
+    "fixtures/parquet/nullability/struct-1-1-child-null-1.parquet": "6ed077338b8f1e449b8c1a355f1eef0c7b6dab63cdd07952b0f56e4171388a86",
+    "fixtures/parquet/nullability/struct-1-1-child-omitted-0.parquet": "40733d48d135a91aee18cac33a23462d21e22c5697ddb2dbacd57378da682dc0",
+    "fixtures/parquet/nullability/struct-1-1-child-omitted-1.parquet": "6ed077338b8f1e449b8c1a355f1eef0c7b6dab63cdd07952b0f56e4171388a86",
+    "fixtures/parquet/nullability/struct-1-1-parent-null-0.parquet": "9765da29e88529f905a3718f2f10209fc619ae9edbc22ce27badc5153a9a7090",
+    "fixtures/parquet/nullability/struct-1-1-parent-null-1.parquet": "f1d8cfa663221824bf049aee83f0dbcbcac833f34b3fad7f5d35564a7109757e",
+    "fixtures/parquet/nullability/struct-1-1-present-0.parquet": "f93c3b434c9179a866480aa8ab56b54c2f3534db10593585a7b532c530ced75c",
+    "fixtures/parquet/nullability/struct-1-1-present-1.parquet": "fe603c295def1f38ff3d945735d8946073f8c383954a586a4e3a1b5a26a33ffd",
+    "fixtures/postgresql/cardinality-scalars.sql": "c0d311d5fdf922491b1edd52869d51fc608aaf1efd119af178c0f33afd139957",
+    "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
+    "fixtures/sqlserver/cardinality.sql": "c348d6a4f4fc774919db246e1078c11724357e0e4185a4ab89fc9d5566cf4edb",
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": "374a781d2866a1e7214341bc6565e8ea1afb50dc7eb59307d976ca0a5c164a74",
+    "fixtures/validation/avro-nullability-field-refresh-regression.log": "afa31f0c2b9df0a8c31536fd7e01ed5802a0f7d77cf185bd5c2a03afafbeeaa6",
+    "fixtures/validation/cardinality-avro-browser.json": "406d5260097ed15ef26cdf30acf612199bc4aef7a9e92b07f7ae7aff1d775e62",
+    "fixtures/validation/cardinality-avro-classification-browser.json": "f2fe9c67663b42de24e91afd61a20ea69aac4c59ecb63d29141b94c38cc52955",
+    "fixtures/validation/cardinality-avro-native.json": "71a4a02ca7cb5bd62f6aa7126527c9e70a32657cfc31b2ef811d8b3eb4954fae",
+    "fixtures/validation/cardinality-avro-profile-browser.json": "4f8965eb3570190f414f15f72cc0db104fb974003b554f9c97610d404e8694ba",
+    "fixtures/validation/cardinality-avro-profile-native.json": "fb66080187cc8e83b34662e5441e21e91d7c70e6ddd44dff1974a43e016bb39e",
+    "fixtures/validation/cardinality-avro-projection-browser.json": "51829520ba3b0817de57e1d6c743b5e204d1c2ff18877c9f9170ec364d368907",
+    "fixtures/validation/cardinality-avro-projection-candidates.json": "eaf85242ca74228390ae87969810bec0d3e672a144cb3ac767e017129b0bb4bc",
+    "fixtures/validation/cardinality-avro-projection-native.json": "4671521ca86c13d4c7afad1ad9d810f7aabc19a18ca3352bfd153c051e16e124",
+    "fixtures/validation/cardinality-avro-projection-oracle.json": "523622bf8455c404de881efb502c7ba38136ca44b4e4fcfabbdc78e07dbf01dc",
+    "fixtures/validation/cardinality-avro-refresh-regression.log": "795ce59bc67ebf95e92bbe66141cb47b2bed964190b7ed39559fcd12e6918c25",
+    "fixtures/validation/cardinality-conformance.json": "e159967af34bd7f275db847555ba76a63b6c76822ac8368a975af57819c19ef5",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "63bb92c6b8d91fdce971ce0073a4bede252584d34653e837d32e4eae0a5498c8",
+    "fixtures/validation/cardinality-core-refresh-regression.log": "4e4ebca3b561f9a824e742f93f90f76aa1038545402780824ba14f2385d3c284",
+    "fixtures/validation/cardinality-field-operations-browser.json": "11e7f67586d04a9a0d65199295fe0317299c32b228b0a91ab03e66340965e0d1",
+    "fixtures/validation/cardinality-gate-acceptance-evidence.json": "1f389fbd8575504d0ebf8e5b37d91b38fc7b8d2761be1fa98be0b8f2a5e5fa24",
+    "fixtures/validation/cardinality-parquet-browser.json": "d17a6747ea9dbf9906f4dd81657eb7f51438fd7153983cad769f8a52c27ac92c",
+    "fixtures/validation/cardinality-parquet-carrier-browser.json": "766d22abd576390f4fedaf29c24478293c6d75a83559916cd053497ea3619f4f",
+    "fixtures/validation/cardinality-parquet-carrier-corpus.json": "90c4e50745d86560822d1b219e4843bb931dbef36e1788270ef83d0f46a722e7",
+    "fixtures/validation/cardinality-parquet-carrier-native.json": "322b43d38d68191fdd07a13b49d572e550628f5bb5f7cc29f951d933ecc74b27",
+    "fixtures/validation/cardinality-parquet-classification-browser.json": "93493c1873e3355d27c345d60a552601a3030ef32afe0fb10e5501739345bfd9",
+    "fixtures/validation/cardinality-parquet-native.json": "ada3353f4c9c581e3c730b8b1bf2092d3a399f7896f4a85a298f8818cee40543",
+    "fixtures/validation/cardinality-parquet-profile-browser.json": "7c02f7bd0c09b1a837fa07b8878610ceeb5cfaa28231dc3c857ef724da1f8bcc",
+    "fixtures/validation/cardinality-parquet-profile-native.json": "99d2631a03970579c9a562017152305eefb7190e68d86241cde209546afa08ec",
+    "fixtures/validation/cardinality-parquet-projection-browser.json": "46f9bb432f84a33e7fcc3be808739d62d962aef779a8736e75b7cd974e67b48c",
+    "fixtures/validation/cardinality-parquet-projection-corpus.json": "49fb56593eca9bd9681ed8c2819f3a9e223139c2a9c7d4e097e83ad49307e4cc",
+    "fixtures/validation/cardinality-parquet-projection-native.json": "f4bf961b8fd90b7f45de0c645e94dddb65f2aeb0482d42561694b7504b13d571",
+    "fixtures/validation/cardinality-parquet-refresh-regression.log": "e131cc55d8069e59d33be32486d16c7e67c89adeec66c1cf2e58bc6b2349f821",
+    "fixtures/validation/cardinality-postgresql-browser.json": "db8bdcdfe32e4c042897feff75ef7005a44bdd64feab96c2f11a8d7f6ef0b681",
+    "fixtures/validation/cardinality-postgresql-catalog-browser.json": "d1952e062640ccc3604ba485949f7f5d9be4ac48aa7e0c17131e5044e792b70c",
+    "fixtures/validation/cardinality-postgresql-catalog-native.json": "93cf4ed6f0ca4ce8b5e6088f57a59056eead20131b9b7b56340f702a5f7db579",
+    "fixtures/validation/cardinality-postgresql-native.json": "3f499e2759da375cd6a30712a50077b847bdf1b1f7fc7a2a7b84ae10e01c059b",
+    "fixtures/validation/cardinality-postgresql-profile-native.json": "1c6b68b2f4f90a264c34c0d689c89cadd8208a96ef2261119952bcda011cf6d0",
+    "fixtures/validation/cardinality-postgresql-projection-browser.json": "5c663c8f89286c898303cfc1972d581efd64c8d92bfe7b007d53d71344c72b72",
+    "fixtures/validation/cardinality-postgresql-projection-native.json": "eb21962dd26f7bd6e030e50f2d7efe1e748ddc5551b8c63208e326c3427896d4",
+    "fixtures/validation/cardinality-postgresql-refresh-regression.log": "cfbf551d34d90a97bfeb36e23e8fdbfb3128fa3a044f67bf8c13e5e397651137",
+    "fixtures/validation/cardinality-selection-browser.json": "0db06532dbb081d42eedeb7ee5b39a7804c1da6037291fc48434b012f036aa04",
+    "fixtures/validation/cardinality-sqlserver-browser.json": "70bfa754b401ac137a40525bceff983b1ae8e7aa3e0417bf6448ca80ef4fe50c",
+    "fixtures/validation/cardinality-sqlserver-classification-browser.json": "6c2eec9450a103006845a16fc1394e857ca524641a497c95db2a80ce08f46f79",
+    "fixtures/validation/cardinality-sqlserver-native.json": "1e4e26fe262b1be3a7d216fd03ec90349f445973c68e6c8e3d8466ead3d369c4",
+    "fixtures/validation/cardinality-sqlserver-profile-native.json": "74dfd14a22d1fcb995f761550c3f71771f4ae6cc8c3f34bdc203e6d31aa4c758",
+    "fixtures/validation/cardinality-sqlserver-projection-browser.json": "7f597ed990333ea90c796c9c93901ba99d3f898046dc6b76687102d9a517160b",
+    "fixtures/validation/cardinality-sqlserver-projection-native.json": "34d18c3385f6c8d4ac6deb05a2e30b66e3361de2f507c14bcd52a21c50a773f3",
+    "fixtures/validation/cardinality-sqlserver-refresh-regression.log": "e36ff5062a88fae2203c4f3a7caface2c156f8628ed80e76bd57e523419bde55",
+    "fixtures/validation/cardinality-tablespec-browser.json": "f7302d5a6769eb18a8646203b7cdf94d40b6ac03bd8285f787cc5b3d5a06e7c5",
+    "fixtures/validation/cardinality-tablespec-classification-browser.json": "4f7307248d15939688cdd12645a4f98db47a427b64aacf6620242fe4c80ed4f1",
+    "fixtures/validation/cardinality-tablespec-classification-native.json": "12133a64a1da65cc4d9ab32f5a230db6f40e12b15f4e84d2f8cf72cbe3a87135",
+    "fixtures/validation/cardinality-tablespec-classification.json": "552e692b95a3313024c02e1e243ec178716f9e4863d695fa5a284d71d12492a8",
+    "fixtures/validation/cardinality-tablespec-native.json": "b0b1866098850d2f1d493be709f54f1d9756ac8316f57db8b92b4a8cae5fb66f",
+    "fixtures/validation/cardinality-tablespec-profile-native.json": "eb7ba215dfbed905d254ce85e1b35254ee4553f930c1de4f1256038153adcf67",
+    "fixtures/validation/cardinality-tablespec-projection-browser.json": "800ffb3ef449e843b8132120d5af18cf632c7e2beae45ecee761d068f2527f7f",
+    "fixtures/validation/cardinality-tablespec-projection-native.json": "7605ee8e747b45717ac35caa75da3fed420ea5c3cf6ba37ae0073bf88c06a101",
+    "fixtures/validation/cardinality-tablespec-projection.json": "b7ab2ca735ad656e7460ba114bc09bd3a360e444e4f5cae297ae5072cf138098",
+    "fixtures/validation/cardinality-tablespec-refresh-regression.log": "879c56a90425ebcb158f29b9eedc26e519cea8637e7be3f26c53d10fd41b3196",
+    "fixtures/validation/core-cardinality-browser.json": "cd01b62408abb037dd4c5427a0643ee5fcb7b7cf57ff0ac3c54b1927625f25f0",
+    "fixtures/validation/core-cardinality-operations-browser.json": "d925dd527526753813a9267d1111c91e35a94cff9232813e0e33dcfd55a9231d",
+    "fixtures/validation/core-facet-candidate-browser.json": "e1f52f0a40e5ca83725d67015b3ff7c1e65dc91da1101caad9d1923d808b4177",
+    "fixtures/validation/core-facet-operations-browser.json": "5c79366f19389154ad294860c9a485ee2ec7b1bd7f364822c0986cc821d4a898",
+    "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
+    "fixtures/validation/facet-core-cardinality-gate-command.log": "da40f896e84fbe04eab3bd8dae975f4b6330a0319a878f4c57fa03c4d6cf08f6",
+    "fixtures/validation/facet-core-cardinality-gate-tests.log": "55cc119bdb1f115d5135d417a71a0112c5f0ca4f174401eaec52635b15cfb6ba",
+    "fixtures/validation/facet-core-field-gate-command.log": "eee565f46743ac09e35f5d4f7a240ae2312b98e3a261ca44312c2b686bf7613e",
+    "fixtures/validation/facet-core-field-gate-tests.log": "f2ecd7994464cbb30d48c6099279274854682e9650a3ba0499eea75bf69ab440",
+    "fixtures/validation/facet-core-nullability-gate-command.log": "0eda1ac8901c873c64decc9eb414a2225d806297352d599262a8f5926f1ce239",
+    "fixtures/validation/facet-core-nullability-gate-tests.log": "b8d92e83c119ecf5fbe53193bd14caeaac9784b6311f82309c8a3d1b268f34bd",
+    "fixtures/validation/facet-core-refresh-regression.log": "dbf5c942f652f927a2487bcc4bd2850bbdfa7be8e82ff3e01b25cfd35e0ccf7b",
+    "fixtures/validation/field-conformance.json": "b818fd3d848a40e7fdefac8c41ab26dbcee370e7b95464b3d280248993e0b2e3",
+    "fixtures/validation/field-gate-refresh-evidence.json": "c0091d84ca7fba90f651743a9e520b095337c31c8f45128279df9b827ffae175",
+    "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
+    "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
+    "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
+    "fixtures/validation/field-postgresql-projection-browser.json": "e369a0ed2da32f30ec9ae8f3c523c0ed25e54c3d418d15b51ef2f04f97bd7863",
+    "fixtures/validation/field-postgresql-projection-native.json": "8a665b0b72ea9b9a320aed4ce10d84fc49289b3809f6822dae79a2b3c6953cdd",
+    "fixtures/validation/field-sqlserver-browser.json": "902d5e6dc609e9d203ab725072d01712bc504e7b9a495feb22350392fb96822d",
+    "fixtures/validation/field-sqlserver-native.json": "8527d58fb7e180e8a19dd1fbd8b3ec8db684d51030fc3f639c44aea89b7fcbc3",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "97934076eb522d181412d51f529f870e5481f78c6de2843a828a807c80295756",
+    "fixtures/validation/field-sqlserver-projection-native.json": "767e9a5bd9b32f534e669c84f9facd9ce8e3803a172292b32abf1b00fb6c8b8b",
+    "fixtures/validation/nullability-avro-browser.json": "1f17568ff7fd08b15a302d6e753752906c26d2d9525ebd92aaa58a864b6ae07d",
+    "fixtures/validation/nullability-avro-native.json": "22149d3bea8eae49d9f683aa21cb56350636689495f221b9692706c53932ffa6",
+    "fixtures/validation/nullability-avro-projection-browser.json": "f81d825055b907f78b6f9f4ab4ef7ba69e0eca942ceff34e1197d35d3a81dad6",
+    "fixtures/validation/nullability-avro-projection-corpus.json": "330efb6e9ba6358ccf70a2b6d8fab4f5f9ba507479481584c41dbd94ecc26021",
+    "fixtures/validation/nullability-avro-projection-native.json": "5c83d2b8e53de3fed372f5062b2b88455c57d037a90a5ca8d032c8252236983d",
+    "fixtures/validation/nullability-avro-recovered.json": "7e575f902c90b1c8330c31ad3ac4646f0e27a012f89cb37019da7dbf4dd9a86b",
+    "fixtures/validation/nullability-conformance.json": "51649d9e8648bb4d4fdfddb00b667739bd68d0b41fb569466ac49f0c6ba2e089",
+    "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
+    "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": "c76adb5b275600c01cbed2fd14bfd4c06317360e986b5a878b9ae9bfef91b6c8",
+    "fixtures/validation/nullability-parquet-browser.json": "37674a27c0aa3c931bab2f6140af1c1c93d731216defebaa9a7e829acc7c8f08",
+    "fixtures/validation/nullability-parquet-native.json": "e59c49b0777358e53ede72436479d3ed2be779b33f9c1fce6940ba37945e467c",
+    "fixtures/validation/nullability-parquet-projection-browser.json": "c2cf7e25421d3fcc78f593faae2cf3810a84ee6f0c34268a1418db1350970e01",
+    "fixtures/validation/nullability-parquet-projection-corpus.json": "8b8e790e199318c692fffd2614b586879f2f8edcf854175c0f53599515b640de",
+    "fixtures/validation/nullability-parquet-projection-native-exit-check.json": "d10b24ab11a0b2967b0871f851537698b61719e1fed7afc1054ae9352a579593",
+    "fixtures/validation/nullability-parquet-projection-native.json": "702445a207e2e6817d60c4c2a0c759aa2c5a85f0c5333d91e3ec4b45851728bb",
+    "fixtures/validation/nullability-parquet-recovered.json": "fb9e2f13719ec05b4284d0dfc86cc305b434692e323846f5cecd998b1ca4ade1",
+    "fixtures/validation/nullability-parquet-recovery-native.json": "3e29366e111742449f842a8d6020c3de63245acb4b22d9523d8e401122be2bb2",
+    "fixtures/validation/nullability-postgresql-browser.json": "7d2b92c46f0fc316ff68c35da4f705e065b5814893b12251382946708f48c0e6",
+    "fixtures/validation/nullability-postgresql-native.json": "8746926af99388d5c961eab9e8a737e497152a56ae0795de6813ad887dbf18c6",
+    "fixtures/validation/nullability-postgresql-projection-browser.json": "258eccb47dd3bc1d7ba8a2d655a43e79515c6e7b1a5aefbd190f23a28222f159",
+    "fixtures/validation/nullability-postgresql-projection-native.json": "25c6ecc8ea0aabeed8fb1da15d187e0476a8d78a29a0e89d932ac2546c3e2525",
+    "fixtures/validation/nullability-selection-browser.json": "66519fb54b027dc7b91e46b6947ee154ae05863407a1f16c3c2fd35c475f6a10",
+    "fixtures/validation/nullability-sqlserver-browser.json": "1611ed75c6b56297070fe7356ccc2c9767fe169c3cf40a0bae919fa03ac619e9",
+    "fixtures/validation/nullability-sqlserver-native.json": "3971abda00d3b0a6bf4a7c1f5a0dd1a3ced76d01e6c30f90d945cf14989f1a85",
+    "fixtures/validation/nullability-sqlserver-projection-browser.json": "4cc974c675ec5491e511c48b23e5ebfee87fc496e1f6d50e49909db7396bc3ff",
+    "fixtures/validation/nullability-sqlserver-projection-native.json": "33878da5ed5d3a1df502884e4982894ed8e41d4c06dcbba2a8a2dc950269d0d2",
+    "fixtures/validation/nullability-tablespec-classification-browser.json": "ba55f6f340186fd8227abb57c3284d0731b9027deaec50c87bb9944d3924cab6",
+    "fixtures/validation/nullability-tablespec-classification-native.json": "4311389c103b2938c50260936b9d2b8bee8815cd8e7a330c427c6d3e4c1c28f9",
+    "fixtures/validation/nullability-tablespec-classification.json": "0ea253630dc06294eba8339a6a4bf6a5e003092fc9628bce0e6cf9d59c2a631e",
+    "fixtures/validation/nullability-tablespec-execution-native.json": "34c7f746796249f316b37225168714c5e6e886e61625c5961a826337e8031274",
+    "fixtures/validation/nullability-tablespec-profile-browser.json": "c640cc5da2b9ebce45fcbbe29c2feb9366672a174aba5c8b25eedaa282f64375",
+    "fixtures/validation/nullability-tablespec-profile-native.json": "85b10f5808262587c8847bcf6551a41de08c91f0590410b4119b5dffc3522fc4",
+    "fixtures/validation/nullability-tablespec-profile.json": "a84e6b6408aee4c6c84e7f902f94014153684a9fddfdfb06a0b243c353e21a25",
+    "fixtures/validation/nullability-tablespec-projection-browser.json": "260c6cdc54eea23e946b5be35cc0484c0532e26296cf464f400cccb3444f7224",
+    "fixtures/validation/nullability-tablespec-projection-native.json": "946bb05a637b855f032daa1d388bb927819c7283fa0b9ef6d2d4d5aad2b0e483",
+    "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json": "8c5075e5f4d013c9e1b6088adfd8e1cfbcad383e82dcf77f7ee01ffd45d41b14",
+    "fixtures/validation/parquet-nullability-field-refresh-regression.log": "9e0a4d2628a8215ddea709b6ab72a47c01501258337cecdb9d68147f68a9d949",
+    "fixtures/validation/parquet-nullability-refresh-interrupted-attempt.json": "27454e5a335f282c390f211861e95e1e530c92b265b5ec6fb9c6b186ef6e48df",
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": "10048ccbffa73b4d144cefef7eba16a28f403dce4414f25e9fbe1502373e6512",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
+    "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
+    "fixtures/validation/postgresql-nullability-field-refresh-regression.log": "925333e4fa2b7572f1a183e547a4515e97a808034ea4708270dae0a68a1c0194",
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": "775844315475cafeb314d7b06d8d5b44503f69ada1bf67174fb3fbe635f5b52f",
+    "fixtures/validation/sqlserver-nullability-field-refresh-regression.log": "a8ebbd33c3c4d121765d401281029a7b78d4c0198a348cb56fab3cdc34e4100f",
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "a9145de40d5676745b3907a0f26699219bccc6b3a101aa842d2bd5da4b874b88",
+    "fixtures/validation/tablespec-nullability-field-refresh-regression.log": "45608bc86a98842c15ad9ba130c889ae4511d382477f7edc9716c986b45fddc0",
+    "native/postgresql/catalog/cardinality-v1.sql": "534e8996085e600c697a5d1e799e4ab4816ee0663290a44283b46a1195952344",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
+    "native/sqlserver/nullability.sql": "a1e9588871c9ac0f31c837ad54aa3fa063c3e6c1cab6d1e793980bfe42894fd9",
+    "native/tablespec/cardinality-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "native/tablespec/nullability-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/nullability-runtime/format_utils.py": "a50f9ed9f7292434b04cec57863b02b67f47ab8bd3bd781c3900ef60dc584fa2",
+    "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c",
+    "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
+    "scripts/core-cardinality-browser.ts": "4a66e535d220a9b19652ee60398d0994d353343e48833048489033d243a58087",
+    "scripts/core-cardinality-operation-schema.ts": "6ac51df089a7142575d0f5135d63b22426720e4a3ad1d377e66ec1d259bcf675",
+    "scripts/core-cardinality-operations-browser.ts": "444e6403f0975952bed791e39e544079fdd11da989fa004a22f563b8b46aad6e",
+    "scripts/core-cardinality-schema.ts": "8527888a70f77b28c29b78570ab25b6f72ec02b09eafb21112703ad8b8e6ac96",
+    "scripts/core-cardinality-transition-schema.ts": "a6271154fb2a7098cc01cfbb14435700d8c7dfebe4f8d3a1bc09f60200624940",
+    "scripts/core-facet-browser.ts": "9eeeb39196a47efa81ebb2cf5aa79e0d6b9ea680750b0661556b8aa33ed5d8c1",
+    "scripts/core-facet-cases.ts": "bfe5272b0af27e34b8b10cf7071b1cbc02f7308f0b8c0f8f0d7802631f84c329",
+    "scripts/core-facet-operation-schema.ts": "a517ec455e1c3fddf960a52002eb93a6d1e027835d14c05f70bb398e80a3fd7a",
+    "scripts/core-facet-operations-browser.ts": "e39dcc00e102f21639b95af9b885edeb7634800fa7177e26ec576eb34e154eba",
+    "scripts/core-facet-schema.ts": "32d822c4a27b96a5e2b69b6e9e52c118a0045dc07f66155d30f9b054cb5465e8",
+    "scripts/core-facet-transition-schema.ts": "92e98bdc2bdb11e7af6d1adf279bb8b1c2d6485b97d0db3bcf8c233bb231e6b1",
+    "scripts/core-ideals/cardinality-avro-browser.ts": "e01f04af060dc426972732d3db229652ae75c213336d3c983508f03824639567",
+    "scripts/core-ideals/cardinality-avro-classification-browser.ts": "c5ebc065972db510843618bb43a2002126a570d4b9c32d8a88a1df135b6356a6",
+    "scripts/core-ideals/cardinality-avro-composition.ts": "736c487f415c0127b0be4efc07dba9b46c81247330ecffe603f98bfff0d791ac",
+    "scripts/core-ideals/cardinality-avro-native.py": "916f61d0484272c786f337418a6f21c190853468f7e9ec8ad489a19a3f1bb001",
+    "scripts/core-ideals/cardinality-avro-oracle.ts": "b94c130f71256ddc05082e02c49a94ff60345dd1fd9f23349a758202ddfd2ab4",
+    "scripts/core-ideals/cardinality-avro-profile-browser.ts": "13ebd66bdcabce259aaed7b1b3bb2ce0e01377d7b2789c6c7a54e669dfa4501c",
+    "scripts/core-ideals/cardinality-avro-projection-browser.ts": "b0353243e4b23b48d053688c73c755dae44362504f7cb65644b1581b17ac8f7a",
+    "scripts/core-ideals/cardinality-avro-projection-cases.ts": "014a5deddd435b8605693003c26163f9f959291fce960fedd0ad9e8be6350f70",
+    "scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457",
+    "scripts/core-ideals/cardinality-avro-projection-oracle.ts": "e58653aa840d451a082a5980c608305823d217f4ccfa37a620b90c92e0c5efce",
+    "scripts/core-ideals/cardinality-avro-projection-schema.ts": "e991f8b37436ddc78fb0d4b7bd0605ee39892faad803f1eebf6e07f4127c2449",
+    "scripts/core-ideals/cardinality-avro-schema.ts": "0954a4e754e1cf10e8797090b58dfee790ebbc12a83ab42492f360b3dc0b75c8",
+    "scripts/core-ideals/cardinality-field-operations-browser.ts": "bafca7508d77efcbf86d8e2b7c4352c97ec21da58c1cbdde6c6f446352fa8ddb",
+    "scripts/core-ideals/cardinality-field-operations-cases.ts": "cc5917e23e76835f84e069a319e4c5e35242a49c4b4547d03c334e524bf2a347",
+    "scripts/core-ideals/cardinality-field-operations-schema.ts": "8c5f4748b24cd796e24d10d3647df28b85a16173767edfbca5cdcbac5b78f477",
+    "scripts/core-ideals/cardinality-parquet-browser.ts": "426a71dc168d2f8c858c6d71ce0a6da58c02ff1190180fab14d865c1e48f9ea7",
+    "scripts/core-ideals/cardinality-parquet-carrier-browser.ts": "fdaec194301e97dc84ddfec8d571b905c74dba68d7d1db00df00a370d0d4de0b",
+    "scripts/core-ideals/cardinality-parquet-carrier-cases.ts": "90a1b830710f64477e3f84309c6f1a52f96dfa240219e8e591231dee34af73cc",
+    "scripts/core-ideals/cardinality-parquet-carrier-native.py": "d3c725eacc47d1e6467d41aea1d992dec8410b09bba06283a3bc54b587b51cc2",
+    "scripts/core-ideals/cardinality-parquet-carrier-oracle.ts": "7000e291b51be988b4976c85ca6ceb1687e8e291c299358aafe788b8db03eee8",
+    "scripts/core-ideals/cardinality-parquet-classification-browser.ts": "0fd9f87a4444489ce51d85ecdcd1268e79dae37d412d5ade5faf8aeb4f5d4d7f",
+    "scripts/core-ideals/cardinality-parquet-composition.ts": "3c581ee25df0bc4063d02f73bcfdf249c14d82ada79fe948d2b2bebd9ef53a01",
+    "scripts/core-ideals/cardinality-parquet-native.py": "620186388cd69b608162ba183c4276b8e20485fb5561181785b27698743f05d6",
+    "scripts/core-ideals/cardinality-parquet-oracle.ts": "211ac33c587b6d89b9b4fc2821726095b99fa9ca86faed71b60fca5a2459bafa",
+    "scripts/core-ideals/cardinality-parquet-profile-browser.ts": "8612f8ae20400d50314a8ec72f242d26ae0eeb8eb5d69d7d48d31d2e1ad2578d",
+    "scripts/core-ideals/cardinality-parquet-projection-browser.ts": "e0e0ccacb5c1d32ee8ab3a7fbbd54c5f03ad77da3171aa713b5b0dac352f22cb",
+    "scripts/core-ideals/cardinality-parquet-projection-cases.ts": "8f969a65130d51e3f01d0537759c0e05217c9378111302800dfb6d32e3f8bc33",
+    "scripts/core-ideals/cardinality-parquet-projection-native.py": "f7794b19cc9ff3566d743405fa18cc337f920c1d0f41a79c77cfadc8e651bc80",
+    "scripts/core-ideals/cardinality-parquet-projection-oracle.ts": "688c4c2da4df647c90c676a7f9c5f1dab70e470b60c8f217830b8c44304ed2e3",
+    "scripts/core-ideals/cardinality-parquet-projection-schema.ts": "202b1687225ffddc68c7599070780aa1bea19082a62349f0b13f54f1ae0be2cb",
+    "scripts/core-ideals/cardinality-parquet-schema.ts": "99ad7af4566ca19595f0338e71920c6506d29c1974a80bb71e6286ec9838b28a",
+    "scripts/core-ideals/cardinality-postgresql-browser.ts": "21bfffcf1b42a4eb4c1c0432f0ef3e58d09fa7674f17b6e3ea0f1bbe5a67bff3",
+    "scripts/core-ideals/cardinality-postgresql-catalog-browser.ts": "5ae01a3537658dbe6cdea4d9b4ccb640e7fa7cb89187f1a0237829062020be69",
+    "scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts": "d40f1d22f514638907b8f5865b4ee1d1498893a080af18357c0c6e044e6df212",
+    "scripts/core-ideals/cardinality-postgresql-oracle.ts": "7c67d69fc1af8da5b468312be9294e35a14685b9c2945aad40292ec86263d613",
+    "scripts/core-ideals/cardinality-postgresql-profile-oracle.ts": "5e2ee57b19820cdd27bba448e4691d6988f788fb7d52cdc8592d9be676f0f473",
+    "scripts/core-ideals/cardinality-postgresql-projection-browser.ts": "9d8ed680338b44c1f9f5751f79612dcdb5acdae449022f1a8ee21a6bb823845d",
+    "scripts/core-ideals/cardinality-postgresql-projection-cases.ts": "787ace9570b0f78c0b11016ba54f012b8b963fc4493203a29a63fca40f209d4e",
+    "scripts/core-ideals/cardinality-postgresql-projection-oracle.ts": "8e4937ed000191bd9999c8f8e98665bea446f8e99d8e78d0c58416b1c98f8a62",
+    "scripts/core-ideals/cardinality-postgresql-projection-schema.ts": "b783356bc4c5f03e43486186cdfd7eb17fa0a8f757d0d7782bb3be639895fda4",
+    "scripts/core-ideals/cardinality-postgresql-schema.ts": "45306f464be1b6f49cdd1effcdc3e106224d189e3bce9d997f87eaf1655d47d3",
+    "scripts/core-ideals/cardinality-selection-browser.ts": "4a1d4f761add3f98f04d1f1b782442e52c90e70f238980c67f9d505359509fd8",
+    "scripts/core-ideals/cardinality-selection-cases.ts": "e3c69a7bfff001b6a3c28d8fe933a2ea20cfcd854d1c2c95f44781e157a0cef2",
+    "scripts/core-ideals/cardinality-selection-schema.ts": "c918aa96e8ea507d65b023e0f90853e1793a9800be42002567e4ae920ca5a499",
+    "scripts/core-ideals/cardinality-sqlserver-browser.ts": "360c78cbfa4a207c010129b5f34d96643c344b4aa84d2ca843794748c9241861",
+    "scripts/core-ideals/cardinality-sqlserver-classification-browser.ts": "d85687cba0adb691dee5718fcaa532ada81f206ead648269b18c5520141e9c49",
+    "scripts/core-ideals/cardinality-sqlserver-oracle.ts": "f2e1e0906a97b9edb018562c06cae0f6f72eb78e874d13bf5579d5fc87a37555",
+    "scripts/core-ideals/cardinality-sqlserver-profile-oracle.ts": "d45afd3a6179cbfda4ca0ed543246e0ac914b01043ce6468553f89d2deec0fe8",
+    "scripts/core-ideals/cardinality-sqlserver-projection-browser.ts": "055478c83840a1de5e3af5b2b35ec8ef5ed64873a464ef0983ce18515f917e0e",
+    "scripts/core-ideals/cardinality-sqlserver-projection-cases.ts": "637f0fe6f702c8f9767be48cc34ced890f7e29a8cae5357fa1998746ed1926ae",
+    "scripts/core-ideals/cardinality-sqlserver-projection-oracle.ts": "d774c78b40458b49c3b9893c267565d9d2a6643a9bd40f752ca6a4d28138dfc1",
+    "scripts/core-ideals/cardinality-sqlserver-projection-schema.ts": "0344a801df88441ce5ca46bb1dc13ae4e3ef239ae540666d54174617a34dedcb",
+    "scripts/core-ideals/cardinality-sqlserver-schema.ts": "b145291e09a2a2d86561ab33e2e6314271569f424009c4217e7fe4b75127c58f",
+    "scripts/core-ideals/cardinality-tablespec-browser.ts": "245f8e604b76ed8f74f00542a39711863d893b4962a6de11020be06e7803dcd3",
+    "scripts/core-ideals/cardinality-tablespec-cases.ts": "5c0fcdb5b17495c7112a33b734d95608dce3ebd75c3d76711059861a23970bef",
+    "scripts/core-ideals/cardinality-tablespec-classification-browser.ts": "7f2eea1bbfe443eeb220aa7550f1c0e5bf9676780abb5cfa1bd1ff09614d5e64",
+    "scripts/core-ideals/cardinality-tablespec-classification-corpus.ts": "165e43873e6a3c6c1bd4dcc7764e902cbdebe361f17a9cb1897d62a7877db127",
+    "scripts/core-ideals/cardinality-tablespec-classification-oracle.py": "299dc5cf30e5cb2d96d6e75a54f4e3eac9189e7e6633fc9d00481271900d571d",
+    "scripts/core-ideals/cardinality-tablespec-oracle.ts": "520af991ff7d65ac6beff2a37e4b5d48dbeba77707523b163206a1f96e52f1dd",
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.ts": "1942efa36ae4674be8ab38b5be0d62e0a9e857db27012a0f9e331c0025a93604",
+    "scripts/core-ideals/cardinality-tablespec-projection-browser.ts": "e40d6b26945a256553e1f00a685f397781450b31e65738974017974d7c256cb9",
+    "scripts/core-ideals/cardinality-tablespec-projection-cases.ts": "7abbee48eca8f3a63113c32a35f4e8bebcf2d7d93f95e93b9d40039ec3b4ffab",
+    "scripts/core-ideals/cardinality-tablespec-projection-corpus.ts": "a72db723ebe1f04c4347c7c73c0fbdbdecbccc9cba93426325f44efc0ddfc5cb",
+    "scripts/core-ideals/cardinality-tablespec-projection-oracle.py": "faedbb760a14e911c8ef331127c05c39913f6e8bd92a581d4ef39d1f0900f559",
+    "scripts/core-ideals/cardinality-tablespec-projection-schema.ts": "ec067b9962761cdb8f5f103ddde1367a82d854b3ac06745e5119174cd1d198bc",
+    "scripts/core-ideals/cardinality-tablespec-schema.ts": "9c5a9201685874cc301387f875d612f87bdf54a72ca01f06ccc56a1d9eb2cf48",
+    "scripts/core-ideals/facet-operations-schema.ts": "fbd0598e51e1d759f2a03b768e47dcfcfe8b231b35adc89b21fbe07b4cfeea65",
+    "scripts/core-ideals/facet-selection-schema.ts": "08e24aed86546fdce0a5f3a993cba9980bba42ebf0f4514b732d34284f280b3b",
+    "scripts/core-ideals/field-conformance.ts": "d287eaf0eaa5a00cbde3808c45cc3cea26097aa5cb70c2aaaab222344cc19c94",
+    "scripts/core-ideals/nullability-avro-browser.ts": "356f374d28c503e120cb08821cf19d4e218dbcba7fa9666355c3003575f992cd",
+    "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
+    "scripts/core-ideals/nullability-avro-native.py": "71be3dd319b6bd4bdbef146b02d2a5a55d836f959b19b1d97717c7fe204cd53e",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "b44d498bb04abbea018db09a4031712ccfe3038c39c5a11ae723af68a6862866",
+    "scripts/core-ideals/nullability-avro-projection-browser.ts": "58eaf83a6b53e41e03f3620a57da3d58e5822e16b191955e5a39c9ff9415dc34",
+    "scripts/core-ideals/nullability-avro-projection-cases.ts": "0348866e612d3bb80c7931270337b13a62217497bf94d7d1e39305f1dc243aa3",
+    "scripts/core-ideals/nullability-avro-projection-native.py": "10604b68ffb6df62784354fe06f6db3e4e9f26f9d2b2cbfb1b18c15fa4a90e96",
+    "scripts/core-ideals/nullability-avro-projection-oracle.ts": "c3f50781e82610676de594aff3de4b7868c0dd7445e5f395de7c1db94b9b728c",
+    "scripts/core-ideals/nullability-avro-projection-schema.ts": "41ff692ec38a17d9d68e0c25aa5d236878710a5d8ef2a9442f87bd7c5d6b777c",
+    "scripts/core-ideals/nullability-avro-schema.ts": "f01e468ad9af694e78cb96dc0f7f3f953bc873c2da7e26e8b7b24cf743d620ed",
+    "scripts/core-ideals/nullability-conformance.ts": "d192c2c7b9e73652467a974047166fd7f04d5a043762f504fa506f8eff5e5be3",
+    "scripts/core-ideals/nullability-parquet-browser.ts": "aa2244e4915a685e6af505d8e9ee6b9a6acba9bc15718a008def8097a2f04134",
+    "scripts/core-ideals/nullability-parquet-cases.ts": "a8db9f0cf20560febe0eacac993a1617b043cb49f2b13a570c364bc0e561162c",
+    "scripts/core-ideals/nullability-parquet-native.py": "5eea413a0cc23373a94620689b704449ccec28e37099e792c35dea264cdc2a75",
+    "scripts/core-ideals/nullability-parquet-oracle.ts": "85e64c50a6234941df13b93b296eb543d0924d271a368d57d066099c28201001",
+    "scripts/core-ideals/nullability-parquet-projection-browser.ts": "b92ee4f129298ed4137cefd879481de1b8c40164cc230c94463362280fdb3db6",
+    "scripts/core-ideals/nullability-parquet-projection-cases.ts": "02ff711037528113001056d95b7354701b3ffe1aef7233fc398647f332635940",
+    "scripts/core-ideals/nullability-parquet-projection-native.py": "20046dfbcf744487b003cb028b3263e39434c7941d7c8ba73af4d5e710f9734d",
+    "scripts/core-ideals/nullability-parquet-projection-oracle.ts": "08136b9f53c344bd851857151c3ce85c3021d18d3e5dbdd74b4ccdb7f0f3b6e7",
+    "scripts/core-ideals/nullability-parquet-projection-schema.ts": "e2cc65f40a1d0a2ff51e160da54527f70801867b64eb8e7f222ac188fb50f3d2",
+    "scripts/core-ideals/nullability-parquet-recovery-native.py": "cbfc2041dae2df29ce42bce6d6255ead2f43a98adad23b9332148dddc0ce268c",
+    "scripts/core-ideals/nullability-parquet-schema.ts": "20332760db34c140e7f16acfdcdc961f19d921420e63f9ebce9a1ba0df94ad4b",
+    "scripts/core-ideals/nullability-postgresql-browser.ts": "3d1d7d90365fa5026d6e15528d29319e79dd9cc2488da54320e5909c00294bae",
+    "scripts/core-ideals/nullability-postgresql-cases.ts": "59861630c559b69d14afb03c39dd610059fb1f5fd224e6d85dc499dc1b4e4434",
+    "scripts/core-ideals/nullability-postgresql-oracle.ts": "f38365d8ae70f8f072c4dc5e20145df926e1972d29f406bde9a4eb191c2c7555",
+    "scripts/core-ideals/nullability-postgresql-package.ts": "49f4bafe2933d487704aaf2fe024f8f306e1756ad8717c9f368ae5028c6eec38",
+    "scripts/core-ideals/nullability-postgresql-projection-browser.ts": "de25312cbcee465ba26d0541b3ad943fcb8b2203d34bb6fe85818d4ad6bd2f45",
+    "scripts/core-ideals/nullability-postgresql-projection-cases.ts": "7df2a9b288347165aa9e72d4af292d1b1d823fdfb04bd671a77d9c32edefca35",
+    "scripts/core-ideals/nullability-postgresql-projection-oracle.ts": "53c051764634b40d59a4132953c23d3e1d1233642f14bc786390af83999a3ae2",
+    "scripts/core-ideals/nullability-postgresql-projection-schema.ts": "92b1b9daf4aefa094724269ce510da9e04a7aee3c5477102797afc3373e64941",
+    "scripts/core-ideals/nullability-postgresql-schema.ts": "a8813163f15c5ab34bcb08dc21fd5fa1f7edfa3f560288ca4ac0bf27b9c22c42",
+    "scripts/core-ideals/nullability-sqlserver-browser.ts": "0bd6f08756b8e06bb601d8b5e695b3e93dd2171ce2bd35ee4c0c7cb8c68c007d",
+    "scripts/core-ideals/nullability-sqlserver-cases.ts": "2ae939311ac05eb064c84a2b6107677ca9f415c00a6e2d3db3d36d7b8c92c37a",
+    "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts": "70bd67294d855397aedf3101c0bd7280d3e17910f9d51e3e5d7d4053ab5e62a6",
+    "scripts/core-ideals/nullability-sqlserver-oracle.ts": "a7f93267615ebfb240b151b2e9e21e247c617c9004f085782c9638cb37b5a202",
+    "scripts/core-ideals/nullability-sqlserver-package.ts": "418ffa9f434119c320b61207c31ccaefd86b0ef3ae4ef048d2d6a276f4ce0cf2",
+    "scripts/core-ideals/nullability-sqlserver-projection-browser.ts": "7b142a675e591baea6ef394f117b9a3cfcdae75e0150f513804b563a923d5d1c",
+    "scripts/core-ideals/nullability-sqlserver-projection-cases.ts": "5a2bc88144bd734538c5338e334973730ed4adbc0acfb591decc305b2713c14a",
+    "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts": "6e04f803b521b7cd2415aacb1fcee9d7f963e8e32085740100fcebebd3ef9af5",
+    "scripts/core-ideals/nullability-sqlserver-projection-schema.ts": "33abbcecf2994caeda0a76d376d825e2894ce84e731212b153f01eb85e90cf0f",
+    "scripts/core-ideals/nullability-sqlserver-schema.ts": "f1227f226debdd911a2e29af6078b10b5655c982d6d63c120d3139ffb1a2f6d3",
+    "spec/core/avro-cardinality-classification.schema.json": "da852a89ce4a640463260e538c2578ddde8faa7df6f7ac0215ac906b6b84f5b2",
+    "spec/core/avro-nullability-classification.schema.json": "d8a7d23eb55464227eabad5c2c94d2fa6cb51c5056675c81949a77b51318d616",
+    "spec/core/cardinality-avro-projection.schema.json": "7c98751948cf60dba920fb786fda3ed66d787e1405bf51b7383dba297592b194",
+    "spec/core/cardinality-document.schema.json": "04ce91d7af9a4d144a6b51fb8ae35ddd0ed3d9158f68208a06b3a717799a7018",
+    "spec/core/cardinality-operation-v2.schema.json": "0578812f648b6fafbdc39a482f58c60461171d4465ab6ea43bb30906db68dd4b",
+    "spec/core/cardinality-operation.schema.json": "d4110cace2e97c968d6b906515036c7a46a2007d6a45a79cbbd8d72967aa7560",
+    "spec/core/cardinality-parquet-projection.schema.json": "633f86720229f41409fec137d85c92833f204483cc0487ec8a53cafe0299abc0",
+    "spec/core/cardinality-postgresql-projection.schema.json": "ab8754f6fa3cc08ff0c5ca8cf3c720d2306673970b6615e06549bf28e7a8eb6d",
+    "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
+    "spec/core/cardinality-sqlserver-projection.schema.json": "2078f923149696c5c8917e25de2287398a38fdc968a200d9b972e1446ab66024",
+    "spec/core/cardinality-tablespec-projection.schema.json": "90295503a98d3e86d69a882cccc99bf961524d4ec6364d336863e49fd45e30a1",
+    "spec/core/cardinality-transition.schema.json": "5ebf87ec95c193716add27bc17c5324050b60519b74fcc50c807ef7fca80e8db",
+    "spec/core/facet-document.schema.json": "7ef36fb7461411dad2f7354b7eb50a760d397d3b67cc500eddf2a806a80820cb",
+    "spec/core/facet-operation.schema.json": "1acebd2a95fadd8a569c2958c3784ab640d71cccb18e8cd6891880d4d7a7dd59",
+    "spec/core/facet-selection.schema.json": "d086a87f453c39f760c63663f29f871a2911de9b0035f6ba766a81bdb4111e3d",
+    "spec/core/facet-transition.schema.json": "faf9c539b754757060fd7b6ab6c6271c40fd77a0a53cba5a8bf69fc2135c6c0f",
+    "spec/core/kind-operation-v2.schema.json": "6178c17dcfff69d517ce7e2cb3eaa75e62910fce82c10b7413532a276f87501b",
+    "spec/core/kind-operation-v3.schema.json": "ef1385c869cabdae8c7886bc35e26427562cadf99b2bf5b49fa2f7c02dd2dc15",
+    "spec/core/kind-operation-v4.schema.json": "4d5b65050bf863b906c7e2c596c9d8911aca67074025f4059bdcf78b8625de9c",
+    "spec/core/nullability-avro-projection.schema.json": "2b5ba7a9dd226d9a5c9aa063cf77a85183971f5152db0d1e1c4e06aa1a4887a1",
+    "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
+    "spec/core/nullability-operation-v2.schema.json": "088b084df6c938f4244d39f72ecdf338c1fb0c800928098a69c9978784a197ad",
+    "spec/core/nullability-operation-v3.schema.json": "e276d1140ecfa47a2a0d2fa8167779c21657df6cd3e6da9344f8943e3c15b55d",
+    "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
+    "spec/core/nullability-parquet-projection.schema.json": "159edf7c2c597e3c844df198d97e0b2a28c5caf857e8f43a170b14d58a1c14b3",
+    "spec/core/nullability-postgresql-projection.schema.json": "073104796361bc965b6b51655d0d27dad59b90094d1c6d8f8279286f2f684570",
+    "spec/core/nullability-selection.schema.json": "0d00b993d9f205326bf8879d9d659aac7d9bb4c34d886c5c966a86a1f7e3d47f",
+    "spec/core/nullability-sqlserver-projection.schema.json": "129aee0fd3580dc3ca41a43b59f7899a33a33c5fcdd347cfd2ab8a7f664ee043",
+    "spec/core/nullability-tablespec-projection.schema.json": "990b20a054b0ef643ad1b4c0deeb0760bf64c4ca9a093747a31c346c227135a2",
+    "spec/core/nullability-transition.schema.json": "7c2cd58a09f38503e14d69977c68fc9748b595aed7ec1761867b337ed3aaa68b",
+    "spec/core/parquet-cardinality-classification.schema.json": "130e415489075a40603f721b08ab9e1da716e858751ccd1bde4e333ea844b5c8",
+    "spec/core/parquet-nullability-classification.schema.json": "809dfbb4d0a51cb3347e23cedcd70e18519f345df3b2376ce2ca292f096131cf",
+    "spec/core/postgresql-cardinality-classification.schema.json": "ea0f34a7ebd8a525a57ab8579987c379a617e8d17296bf36cfa5378fb2c03041",
+    "spec/core/postgresql-nullability-classification.schema.json": "d665d8c558d77682a649caaf9765ef1230e89075fa97dbaf5232736e1e9d2872",
+    "spec/core/record-type-operation-v2.schema.json": "972607c0cb34bf5d8db5cf11575f07a9a28f3537489ea2df0c79c3c3979beff9",
+    "spec/core/record-type-operation-v3.schema.json": "20b19a83b6e61c3c8ed0a220f9295f13db27fa4f68dd3b83a11f4c6c13c84586",
+    "spec/core/record-type-operation-v4.schema.json": "85ba1deb17d8ae753a8d6bd10bd60e04d440d25f79834806800288002d1ee38d",
+    "spec/core/sqlserver-cardinality-classification.schema.json": "669c52050ee28c8754923ea4ddd3487c5a568bc745a63dd7e4fa4015c7964a46",
+    "spec/core/sqlserver-nullability-classification.schema.json": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
+    "spec/core/tablespec-cardinality-classification.schema.json": "43e08e8352b173239d35ec7dc709deb5aa35ff2c0742fa5dc956c281bf7183ae",
+    "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
+    "spec/extensions/avro-cardinality/package.json": "72c43a1ddf59d4304cf577126d600f41a6e949561131e22b10b82778b0919253",
+    "spec/extensions/avro-cardinality/schema.json": "4e722177a26758b4204d660283db22d423e82012f880b14ac6bca9b8c70ec18a",
+    "spec/extensions/avro-nullability/package.json": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7",
+    "spec/extensions/avro-nullability/schema.json": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26",
+    "spec/extensions/parquet-cardinality/package.json": "f45dc53137a550f17c93a2afa0f9b92f978cb17d8de9d05b73e2e1919dc33c1c",
+    "spec/extensions/parquet-cardinality/schema.json": "ea3c031d744c511da6efd56c5962684c8b411c961b95c4f43d6d010ad70093e7",
+    "spec/extensions/parquet-nullability/package.json": "25162b0220094da8e5199e502dfb70158aff5c434391005cef9024c7f0d7fd81",
+    "spec/extensions/parquet-nullability/schema.json": "62224ce5cd5dc29b9f4b38120ec47ba1b8b36d5dd7e78be53dad77e9642224ff",
+    "spec/extensions/postgresql-cardinality/package.json": "9e1b128f3354a56b321043fc1d0bef3894732d4d8216699f2c6b2f3ede1772b7",
+    "spec/extensions/postgresql-cardinality/schema.json": "66da62750b4aa342b7086990bb3b42c695e741923f3815ff72b0adfeb4ffa904",
+    "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6",
+    "spec/extensions/postgresql-nullability/package.json": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b",
+    "spec/extensions/postgresql-nullability/schema.json": "2bc17a61ba27967d199bd3dc2dd175170841bd897b62f88dfb604e6b4426eea1",
+    "spec/extensions/sqlserver-cardinality/package.json": "eee8ae16bdece81fc3534a3ae78dfac683c9eedc48ab3cf31b7548458eb34591",
+    "spec/extensions/sqlserver-cardinality/schema.json": "27e0a63019e60cdda2bb2f5f34c5d4a7d43d0e744da4d659909d3759773abede",
+    "spec/extensions/sqlserver-nullability/native.schema.json": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0",
+    "spec/extensions/sqlserver-nullability/package.json": "302cbd60ba8cb4704cd1c35d433720e391e6e5cb97d31939e58f245bf0a8b3fa",
+    "spec/extensions/sqlserver-nullability/schema.json": "e05d7cad7550802d9014958dd0664c75571de8f71554779ed3ca6a65a1bf65a7",
+    "spec/extensions/tablespec-cardinality/package.json": "65e8c9c48183ae232327cd59176796abbaf80363297af7b8b7f8d839c4429423",
+    "spec/extensions/tablespec-cardinality/schema.json": "357014ebffaebab780de96aa743a9c35adc55fd36451562ed24ca5ff52752cd7",
+    "spec/extensions/tablespec-nullability/package.json": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
+    "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
+    "src/adapters/postgresql/cardinality-catalog.ts": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9",
+    "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
+    "src/core-ideals/cardinality-avro-projection.ts": "b092be71ebe9c0330e0ec2ef02caa08f6d1eac10b8d1d179b14215f57deedbb7",
+    "src/core-ideals/cardinality-avro.ts": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f",
+    "src/core-ideals/cardinality-parquet-projection.ts": "b9ef913c65c4a71c50a6cbcfc1581fb3054f1d9c5b8ee2101e7dcda7d39b12df",
+    "src/core-ideals/cardinality-parquet.ts": "23cda37ec621cc6f67e456ceff1b57a7f7b0201f5a1dd74a9be7638a74b09b8f",
+    "src/core-ideals/cardinality-postgresql-projection.ts": "c43489c035df2532a85544d7f2e174165108d33b72e9770dc24d91b9af70a526",
+    "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608",
+    "src/core-ideals/cardinality-sqlserver-projection.ts": "e1028f9fc9f7219709c369e0005b095d9f7d8b6dd97055cdc88b77393364a71d",
+    "src/core-ideals/cardinality-sqlserver.ts": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756",
+    "src/core-ideals/cardinality-tablespec-projection.ts": "8b68f5f5b5469043cfaceb7ad073194fac19d0270671202527792393f938e89f",
+    "src/core-ideals/cardinality-tablespec.ts": "e63b7438c04f01d52996d9970cf242881fc3f00773fc5e78b24e4cc448de94c1",
+    "src/core-ideals/nullability-avro-projection.ts": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff",
+    "src/core-ideals/nullability-avro.ts": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606",
+    "src/core-ideals/nullability-parquet-projection.ts": "d71994fd0f7ad55b24047917a95a4a2fdedf3dc771052208804284c4b57ecddd",
+    "src/core-ideals/nullability-parquet.ts": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc",
+    "src/core-ideals/nullability-postgresql-projection.ts": "76baf46987fed262226d3a023584da6a581fe45cb4c4c0bc9510088f7480e954",
+    "src/core-ideals/nullability-postgresql.ts": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259",
+    "src/core-ideals/nullability-sqlserver-projection.ts": "28bf3e24af429b80539ec5039a333d69248682465beb9d3615bbdff5c4d8d042",
+    "src/core-ideals/nullability-sqlserver.ts": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1",
+    "src/core-ideals/nullability-tablespec-projection.ts": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97",
+    "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
+    "src/core-ideals/parquet-cardinality-carrier.ts": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270",
+    "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
+    "src/index.ts": "6257ab40613b7bc6032abc679df0905f596642efe1156e741801d9cdd9628f21",
+    "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
+    "src/model/cardinality.ts": "0f18c59d0d422c92293f977a9878ee1f2478c224b08f65f23c0e07af9097a9ac",
+    "src/model/facet-transition.ts": "ece8b2c276c93177cdc45ee4cfd5a50517acf2e0af7f41847c0a488f78f1a3dc",
+    "src/model/facets.ts": "173c51307b3117919a765f724ca3901db2bd3f6f884864e081819469acd5ed84",
+    "src/model/field-kind.ts": "866467dcbcb93ec589b128e3164a62338b7effe51f30b8b5dc6ccf1832e6f453",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/model/nullability.ts": "02872981ac76c7cf7e6ec93c05c143f26eb43f3ae08378c333c360b2aa4e2e01",
+    "src/model/record-type.ts": "9a4786a283a3a5ec70d596484cfde72a586c954ce0262d0c25a4d0fa7e05f1f0",
+    "src/model/selection-verification.ts": "b02fb528d1a27451dca1ba4d14c074db3bd249c016b110374a0f0f23df00b863",
+    "src/model/selection.ts": "dfe710cd1bc4a6d2fe72ac6415126593f4fa4ae4ae277b039af1ab80e017b211",
+    "src/model/types.ts": "2a3b01a878bd247a6fb8618487164241dda88eb4de03204dbf02b55a833ba64a",
+    "src/validation/document.ts": "d8b7867b1ef321b9324f8d61f2f3f2f901e40d14eef01f54384d658d6701aed4",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/validation/schema.ts": "89a3a613cf5ba6ed2ced1dc242fc9d947ac8c373b7bef7dfcba72336570ffc08",
+    "tests/core-ideals/avro-cardinality-type.test.ts": "3b889213ad8f65ffe3cd39bbbb839f2c8aa5829b84fe2320b1b79a897b30b42a",
+    "tests/core-ideals/cardinality-avro-projection.test.ts": "bcef8b46f5b666337c62062343ad4600474f268ad7684070e08748a30b6ce260",
+    "tests/core-ideals/cardinality-avro.test.ts": "4c0d77d0e291d145b06bcbae9b7f372f8ffa093d7bdad2c85fe52d7980ef1c6f",
+    "tests/core-ideals/cardinality-field-operations.test.ts": "9cf6b81c7e52941b947321dca439a1c815235643ded11c0fece79ade60ce68a0",
+    "tests/core-ideals/cardinality-parquet-projection.test.ts": "ffc3084565620e497a13d1f2fe409fd4e5c22003f0f29ae56416308b22e1f8a0",
+    "tests/core-ideals/cardinality-parquet.test.ts": "e847deb1c435cda781efc6ec6fa920a4f8844e0d04d55e9e6955f532710a4ab1",
+    "tests/core-ideals/cardinality-postgresql-catalog.test.ts": "f9204bff38ba52bc2d054a860a1c577c1a8bbe5348870b72505036158e2e8b9a",
+    "tests/core-ideals/cardinality-postgresql-projection.test.ts": "ceecf39247cb12cae75cc37da5e6bfb651f2c890e772f46f59fefed675886d7c",
+    "tests/core-ideals/cardinality-postgresql.test.ts": "7b0fb3d8b92324472206c272780ed98c008410e69ffa63b5c6c75e048e713d9b",
+    "tests/core-ideals/cardinality-selection.test.ts": "33b27b7a03d3a33496d4937eb84e75f3ac8d6d48684e5f4f4df57dbb25ff616a",
+    "tests/core-ideals/cardinality-sqlserver-projection.test.ts": "4c552f1c0e214d0ee46393339bc90b8d3dc4369ae17b78de56fd32f4bf3d4de6",
+    "tests/core-ideals/cardinality-sqlserver.test.ts": "0269226e76ef9af890bf90e86eb9bafc7b1b40aaf36d1226549e8d8c75a89fdc",
+    "tests/core-ideals/cardinality-tablespec-projection.test.ts": "24107e498aa6e751f8f20484a535c525758191dae6ef0661fc05b5b646eb7c62",
+    "tests/core-ideals/cardinality-tablespec.test.ts": "a660ea07fd851bc85a72b47d18258cc3888424289ce170f6aed781d86f6fb951",
+    "tests/core-ideals/facet-operations.test.ts": "b61476163115d9ba018c61ffe9db08a64c0788b1179df68634c560ad673e25da",
+    "tests/core-ideals/field-conformance.test.ts": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e",
+    "tests/core-ideals/nullability-avro-projection.test.ts": "2d92640d70d213f97b329fa4934405fd50a5919bbcc2254e1f37d9a34103e2f7",
+    "tests/core-ideals/nullability-avro.test.ts": "746a21952dba8f65e27b1a7a82a0e616e33f8eee3e9c63f74a3f1f7c235d6bdf",
+    "tests/core-ideals/nullability-conformance.test.ts": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2",
+    "tests/core-ideals/nullability-parquet-projection.test.ts": "9202c774aeac99d09a9f206a81243942935ba79bdb8cfbb28f1d342827cb5715",
+    "tests/core-ideals/nullability-parquet.test.ts": "28f31c5da85d589d28eba9ed790e1342fd0c1ec7d5a69321142eb64db4c82ee5",
+    "tests/core-ideals/nullability-postgresql-projection.test.ts": "4be5e69407bad5ba9adf89a3dfdd3c4114df1ad933687a13bc24fe9adbd4803e",
+    "tests/core-ideals/nullability-postgresql.test.ts": "016c77d573ad603647a98097f2757dde5c4a25b4b18a737728cf3754435e4f29",
+    "tests/core-ideals/nullability-sqlserver-projection.test.ts": "4f1ab7e46915085466e8270e618031c58d3e3f67c665a157f69a6462f99208bc",
+    "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3",
+    "tests/core-ideals/parquet-cardinality-carrier.test.ts": "a7a29557ce918eb0b34054ff46714298324c7e31d2ea2e41fc9d304e216376a6",
+    "tests/core-ideals/parquet-cardinality-shape.test.ts": "9bc4b8c4f28e44c9301dc8ed667203679feb3204861ddf655cd66cb9516dbd88",
+    "tests/core/cardinality-ideals.test.ts": "5c227b1fb396de075804bb3ee32dff41a34e68cf743259998376730194c34e81",
+    "tests/core/cardinality-operations.test.ts": "e1be48e863f741d8dbd2fa8197e7f211bcf03a8c8b69a62f98c47d92ac357d15",
+    "tests/core/facet-authoring.test.ts": "cb679df072a24374049de0140eeb9c8521eb666f8593f54a431c1156bbba2501",
+    "tests/core/facet-ideals.test.ts": "456c67f425c6cfb681d3d3e9c03a5a072f0fcac481daaa631500b2174b82279d",
+    "tests/core/facet-transition.test.ts": "95abfd17daeeabc0f4b223a9cc5c4b8fe8ae6ea2771c6a5bd8f37fe46d165277"
+  }
+}

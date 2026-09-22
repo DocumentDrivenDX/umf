@@ -22,6 +22,7 @@ const checkRequest=validator.compile({...schema.properties.request});
 export function projectCardinalityToTableSpec(input:CoreCardinalityDeclaration,options:CardinalityTableSpecRequest):CardinalityTableSpecProjection & {diagnostics:Diagnostic[]} {
  const copied=copyJson(input) as unknown as CoreCardinalityDeclaration;
  const author=verifyCoreCardinalityDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as CardinalityTableSpecRequest;
+ if(source.umf!=='0.4.0')throw new UmfError('CARDINALITY_TABLESPEC_VERSION','This binding requires a core 0.4.0 declaration; facet-envelope projection requires a separately qualified binding');
  if(!checkRequest(request))throw new UmfError('CARDINALITY_TABLESPEC_REQUEST',JSON.stringify(checkRequest.errors));
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),module=source.modules[mi]!,ei=module.elements.findIndex(e=>e.id===author.identity.element),element=module.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;
  const result:CardinalityTableSpecProjection={operation:'project-cardinality-tablespec',version:'1.0.0',status:'projected',source,author,request,binding,mapping:{origin:'authored',idealPath:path+'/cardinality',nativePath:'/columns/0',cardinality:author.provenance.cardinality,encoding:request.nativeType==='EMBEDDING'?'embedding':'scalar',profile:request.profile,itemPath:null,outcome:'exact'},residuals:[],diagnostics:[]};

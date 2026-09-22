@@ -22,8 +22,8 @@ test('candidate JSON Schema documents structural limits; semantic comparison rem
  const document={umf:'0.5.0',id:'candidate',vocabularies:{},modules:[{id:'m',namespace:'',elements:[element]}]};
  expect(check(document)).toBe(true);expect(validateFacetElement(element).diagnostics.some(d=>d.code==='FACET_SCALE')).toBe(true);
  expect(check({...document,umf:'0.4.0'})).toBe(false);
- // The candidate is not accidentally enabled in the current public document API.
- expect(validateDocument(document).valid).toBe(false);
+ // Public validation includes the semantic cross-member comparison.
+ expect(validateDocument(document).diagnostics.some(d=>d.code==='FACET_SCALE')).toBe(true);
  const legacy={...document,umf:'0.4.0',modules:[{id:'m',namespace:'',elements:[{id:'v',kind:'field',facets:{anything:[null,false]},extensions:{}}]}]};
  expect(validateDocument(legacy).valid).toBe(true);
  expect(validateDocument(legacy).diagnostics.some(d=>d.code==='UNKNOWN_CORE_FIELD'&&d.path.endsWith('/facets'))).toBe(true);

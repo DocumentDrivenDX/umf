@@ -28,7 +28,7 @@ export interface Module {
   [key: string]: unknown;
 }
 export interface Document {
-  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0'; id: string;
+  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0' | '0.5.0'; id: string;
   vocabularies: Record<string, { version: string; [key: string]: unknown }>;
   modules: Module[];
   extensions?: Record<string, Json>;

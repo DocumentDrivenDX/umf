@@ -38,31 +38,31 @@
     "records": [
       {
         "path": "fixtures/validation/cardinality-core-acceptance-evidence.json",
-        "sha256": "2a8370ee24e38b4c59086b6b27358e590fe5f1c3b0a30829e5afc3c924dc7ed3"
+        "sha256": "63bb92c6b8d91fdce971ce0073a4bede252584d34653e837d32e4eae0a5498c8"
       },
       {
         "path": "fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
-        "sha256": "1af4fffe244f047949232ccd107259f27adc3a30c29595b64f69d090e55ccb58"
+        "sha256": "a9145de40d5676745b3907a0f26699219bccc6b3a101aa842d2bd5da4b874b88"
       },
       {
         "path": "fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
-        "sha256": "90adc39496a1ca030e9bf6c4f6bae911b9847f1ba34fdc06226ff7a9447c4f3f"
+        "sha256": "10048ccbffa73b4d144cefef7eba16a28f403dce4414f25e9fbe1502373e6512"
       },
       {
         "path": "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
-        "sha256": "41408ee6906d79291fd31202cacfd600428c2c6fa6573bf107ad418eef4e7016"
+        "sha256": "775844315475cafeb314d7b06d8d5b44503f69ada1bf67174fb3fbe635f5b52f"
       },
       {
         "path": "fixtures/validation/avro-cardinality-acceptance-evidence.json",
-        "sha256": "e41fa2df0d8f51be2f8f0dd2359be91b9d7e1bc5286c16ed34e06dc3c69ea4ac"
+        "sha256": "374a781d2866a1e7214341bc6565e8ea1afb50dc7eb59307d976ca0a5c164a74"
       },
       {
         "path": "fixtures/validation/parquet-cardinality-acceptance-evidence.json",
-        "sha256": "f2b5c9c63e7ab1febb9f68206458ac0d01097a7401783db816e4eb2f14f5566c"
+        "sha256": "8c5075e5f4d013c9e1b6088adfd8e1cfbcad383e82dcf77f7ee01ffd45d41b14"
       }
     ],
-    "fingerprints": 3998,
-    "refreshSha256": "c71b765f45f8ba2e80d2bc2ab670ac1f175af98e04c8780ea3377864b1b8c08a"
+    "fingerprints": 4180,
+    "refreshSha256": "c0091d84ca7fba90f651743a9e520b095337c31c8f45128279df9b827ffae175"
   },
   "roundTrips": {
     "tablespec": {
@@ -152,8 +152,8 @@
   },
   "documentationRevalidations": [
     {
-      "reason": "Facet candidate design checkpoint; existing public runtime/source and retained round-trip checks unchanged. Recheck evidence consistency only, not native execution or facet admission.",
-      "previousRecordSha256": "bc747962803d518299e90223ac05b1ee7b0d2e41435d0e6c55006de5cae20d84",
+      "reason": "Publish verified facet core-task acceptance; conformance runtime/source and freshly executed round-trip matrices unchanged, only documentation/evidence references updated.",
+      "previousRecordSha256": "c79476df435c6f4e0e92b521b900a88ce23a9cd482777d70c7df3ab2c2e0a83e",
       "previousEvidence": {
         "systems": [
           "tablespec",
@@ -165,31 +165,31 @@
         "records": [
           {
             "path": "fixtures/validation/cardinality-core-acceptance-evidence.json",
-            "sha256": "340e1f24e012b1f82de629975f1ba0f0166ddd652db31b192ffbf06e16595478"
+            "sha256": "fb6e89bf0f0abaf4c628ad842f06a9b9e0f7fce86c40dbb22b998f373ebf060e"
           },
           {
             "path": "fixtures/validation/tablespec-cardinality-acceptance-evidence.json",
-            "sha256": "11bf6a3f44382cf4db942324daff0577669ea0af67f6bee817dc708b23d2e483"
+            "sha256": "5c5aa0dbe6e01a1bcfac60e61343bcc7c70d1bada1206015c4405835550670b8"
           },
           {
             "path": "fixtures/validation/postgresql-cardinality-acceptance-evidence.json",
-            "sha256": "741cbe17982602747ff19bdc4b55edf232472e536cba01085145ea86cc6a05b4"
+            "sha256": "93d2d6a13a2838758aa1b726f3ca63fb3f273c68ff8314c04c4349d3c5dba1c0"
           },
           {
             "path": "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json",
-            "sha256": "163d89dd0b4cb401a8a9753498a3b71d5fbd6eb7cdebc40bf365941e0eb243e5"
+            "sha256": "e842748e509a3ab685d597ea5dec3dc2e6b42355f665da02e50138bf7170c546"
           },
           {
             "path": "fixtures/validation/avro-cardinality-acceptance-evidence.json",
-            "sha256": "b8db0aa3df1bd8ceb808bfdfcac7b9d8055cb3b445949c03e66662a01747ac13"
+            "sha256": "7bb01e80b4c531fadfe9fe44211350bc5827bb033590e9785c80b85ce6d80e2c"
           },
           {
             "path": "fixtures/validation/parquet-cardinality-acceptance-evidence.json",
-            "sha256": "a50b3b6de368ffc5a1e60f0f74a769ffaaf35211d98b57f75001f4f65b438ef0"
+            "sha256": "aa0f5e3893d6f09486b194084c58792d7f27d3047c5e74cb3ecc9511b4ca0adb"
           }
         ],
-        "fingerprints": 3998,
-        "refreshSha256": "c71b765f45f8ba2e80d2bc2ab670ac1f175af98e04c8780ea3377864b1b8c08a"
+        "fingerprints": 4180,
+        "refreshSha256": "c0091d84ca7fba90f651743a9e520b095337c31c8f45128279df9b827ffae175"
       }
     }
   ]

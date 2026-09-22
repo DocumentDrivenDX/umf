@@ -81,3 +81,33 @@ US-042 must complete its five-system gate before this concept implementation.
 
 Automatic native replacement, DDD lifecycle, OWL, physical encodings and default
 execution. No completion claim is made by authoring this story.
+
+
+### Facet core-task acceptance
+
+The [core acceptance record](../../../../fixtures/validation/facet-core-acceptance-evidence.json) supersedes the candidate-only checkpoint's
+public-runtime limitations. Core 0.5.0 now validates declared facets, explicitly
+migrates/rolls back 0.4.0 collisions, authors/inspects known and partial bounds,
+verifies source-bound receipts and follows faceted item/value metadata in selection.
+Kind/record-type v4, Nullability v3 and Cardinality v2 operations retain prior
+receipt versions. Existing Cardinality native bindings explicitly refuse 0.5.0
+rather than apply their 0.4.0 representation rules to facet declarations.
+
+All 78 refresh steps pass: 420 priority tests / 39,482
+assertions across 135 files, typechecking, 261 schemas, 42 extension
+packages, browser build and qualified native/browser checks for existing Field,
+Nullability and Cardinality bindings. Their three separate gates subsequently pass.
+The scope is core plus the five priority systems, not a new full-repository baseline.
+
+Chromium 148 checks 99 public validation cases, 62 valid-document recoveries,
+18 migration/rollback recoveries, eight facet-author receipts, eight versioned
+prior-operation receipts, four selection receipts and 15 refusals, with no host
+globals or external requests. The separate facet-local matrix retains 198 metadata
+recoveries and 18 exact-token checks. Reproduce with `bun scripts/core-facet-operations-browser.ts`
+and `bun scripts/core-facet-browser.ts` using the configured Chromium executable.
+
+This closes only the facet core task. All five native facet bindings, useful ideal
+admission, the facet delivery gate and key remain required. No native facet
+enforcement, general row conversion or native equivalence is claimed. The next
+binding is TableSpec under the declared schema/runtime profiles; native refinements
+and unknown numeric tokens must stay attached to any classification/projection.

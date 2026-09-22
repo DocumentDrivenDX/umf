@@ -27,6 +27,7 @@ const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')
 export function projectCardinalityToParquet(input:CoreCardinalityDeclaration,options:CardinalityParquetRequest):CardinalityParquetProjection {
  const copied=copyJson(input) as unknown as CoreCardinalityDeclaration,author=verifyCoreCardinalityDeclaration(copied,copied.target);
  const source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as CardinalityParquetRequest;
+ if(source.umf!=='0.4.0')throw new UmfError('CARDINALITY_PARQUET_VERSION','This binding requires a core 0.4.0 declaration; facet-envelope projection requires a separately qualified binding');
  if(!checkRequest(request))throw new UmfError('CARDINALITY_PARQUET_REQUEST',JSON.stringify(checkRequest.errors));
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),ei=source.modules[mi]!.elements.findIndex(e=>e.id===author.identity.element),element=source.modules[mi]!.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;
  const target=importParquetSchema(parquetCardinalityFile(request.recordName,request.fieldName,request.nativeType),{id:request.id});

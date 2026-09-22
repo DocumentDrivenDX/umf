@@ -7,14 +7,16 @@ import core from '../../spec/core/schema.json';import fields from '../../spec/co
 import legacy from '../../spec/core/element-selection.schema.json';import schema from '../../spec/core/field-selection.schema.json';
 import availability from '../../spec/core/nullability-document.schema.json';import availabilitySelection from '../../spec/core/nullability-selection.schema.json';
 import containers from '../../spec/core/cardinality-document.schema.json';import containerSelection from '../../spec/core/cardinality-selection.schema.json';
+import facets from '../../spec/core/facet-document.schema.json';import facetSelection from '../../spec/core/facet-selection.schema.json';
+export {default as coreFacetSelectionSchema} from '../../spec/core/facet-selection.schema.json';
 export {default as coreCardinalitySelectionSchema} from '../../spec/core/cardinality-selection.schema.json';
 export {default as coreElementSelectionSchema} from '../../spec/core/element-selection.schema.json';
 export {default as coreFieldSelectionSchema} from '../../spec/core/field-selection.schema.json';
 export {default as coreNullabilitySelectionSchema} from '../../spec/core/nullability-selection.schema.json';
-const validator=createValidator();validator.addSchema(core);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);const checkLegacy=validator.compile(legacy),checkFields=validator.compile(schema),checkAvailability=validator.compile(availabilitySelection),checkContainers=validator.compile(containerSelection);
+const validator=createValidator();validator.addSchema(core);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);const checkLegacy=validator.compile(legacy),checkFields=validator.compile(schema),checkAvailability=validator.compile(availabilitySelection),checkContainers=validator.compile(containerSelection),checkFacets=validator.compile(facetSelection);
 /** Verify report consistency with its retained source/query and the caller's registry, not source authenticity. */
 export function verifyCoreElementSelection(input:CoreElementSelection,registry=new Registry()):CoreElementSelection {
- const receipt=copyJson(input) as unknown as CoreElementSelection,check=receipt?.source?.umf==='0.4.0'?checkContainers:receipt?.source?.umf==='0.3.0'?checkAvailability:receipt?.source?.umf==='0.2.0'?checkFields:checkLegacy;
+ const receipt=copyJson(input) as unknown as CoreElementSelection,check=receipt?.source?.umf==='0.5.0'?checkFacets:receipt?.source?.umf==='0.4.0'?checkContainers:receipt?.source?.umf==='0.3.0'?checkAvailability:receipt?.source?.umf==='0.2.0'?checkFields:checkLegacy;
  if(!check(receipt))throw new UmfError('CORE_SELECTION_REPORT',JSON.stringify(check.errors));
  const expected=selectCoreElements(receipt.source,receipt.query,registry);
  const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+canonical(value[key]!)).join(',')+'}':JSON.stringify(value);
