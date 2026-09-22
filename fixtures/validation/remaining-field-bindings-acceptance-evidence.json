@@ -223,7 +223,7 @@
     "fixtures/validation/field-avro-projection-browser.json": "0d27a157279949dcfd3c84f0060d00eda6391a2577e5b816e4ff77a676f220f2",
     "fixtures/validation/field-avro-projection-corpus.json": "948380b3e112dc66f0bf333de4639e74c1bec4d8bf991b55d9b600a412037b41",
     "fixtures/validation/field-avro-projection-native.json": "d64d11443ae86cae1ca11be7909689beee67b90cbe0b3cf831d8dafac5d594f4",
-    "fixtures/validation/field-gate-refresh-evidence.json": "1a1abd17c8ecb28e2efe322fa365b15129a8451d95905c0c95f125fa34f5e45d",
+    "fixtures/validation/field-gate-refresh-evidence.json": "b246666d1a5a29e61229af585c906ae79ed1fa3e31296c0461e4b5101813c195",
     "fixtures/validation/field-parquet-browser.json": "27c1a3594cfece2a753ccc3a5284eddb5858d36446cf8b790cc72a57cf72bb89",
     "fixtures/validation/field-parquet-corpus.json": "c8aca4b31faca39d2a08189e00f3778da47e0fb626255843c4c49a3437a243b9",
     "fixtures/validation/field-parquet-native.json": "3b44461502826b3e19e642d9a86ff635e512eb8a1c2002a66206d86b29c3dab7",
@@ -332,10 +332,12 @@
     "scripts/core-ideals/structured-report-schema.ts": "15cfc8897753f45bc46b2dfbc997301452b29162048d351ef2bb74ad46beb5db",
     "scripts/core-ideals/tablespec-record-schema.ts": "b3172da424c6cfe4052b8a0bd3651d09ad50d2e61ec8e18bf3ca0bc8427037ac",
     "scripts/oracle-requirements.txt": "628a69f8b70f84c9d1a9a67082976e4b36a7272430a9f69130461c6894c4f094",
+    "spec/core/avro-cardinality-classification.schema.json": "da852a89ce4a640463260e538c2578ddde8faa7df6f7ac0215ac906b6b84f5b2",
     "spec/core/avro-field-classification.schema.json": "bad6326b58edf9595180ff27aeb78a93147c1f9cce1de45c60ba7959bd8a6811",
     "spec/core/avro-nullability-classification.schema.json": "d8a7d23eb55464227eabad5c2c94d2fa6cb51c5056675c81949a77b51318d616",
     "spec/core/avro-record-classification.schema.json": "f5c2d7f8053563ee8700e4e99826be5a6b7a622ac54c74fe923c76665276de34",
     "spec/core/avro-record-type-classification.schema.json": "b857f191fd90490c99b145e8dbac5ec8f7dc514947485181824ea2b6c84f0018",
+    "spec/core/cardinality-avro-projection.schema.json": "7c98751948cf60dba920fb786fda3ed66d787e1405bf51b7383dba297592b194",
     "spec/core/cardinality-document.schema.json": "04ce91d7af9a4d144a6b51fb8ae35ddd0ed3d9158f68208a06b3a717799a7018",
     "spec/core/cardinality-operation.schema.json": "d4110cace2e97c968d6b906515036c7a46a2007d6a45a79cbbd8d72967aa7560",
     "spec/core/cardinality-postgresql-projection.schema.json": "ab8754f6fa3cc08ff0c5ca8cf3c720d2306673970b6615e06549bf28e7a8eb6d",
@@ -419,6 +421,8 @@
     "spec/extensions/arrow/integration-schema.json": "cc72700f960ab7d064860cae3d08198771aabc620326341a182e461b3a2f3af5",
     "spec/extensions/arrow/package.json": "13fc048868b027a4c6fe931808e62ca2ef78a0425426666d4256747287354865",
     "spec/extensions/arrow/schema.json": "e0d111ebbb39277667ef3e7dace7f1dead9833e2f1e621db5b1354a603889677",
+    "spec/extensions/avro-cardinality/package.json": "72c43a1ddf59d4304cf577126d600f41a6e949561131e22b10b82778b0919253",
+    "spec/extensions/avro-cardinality/schema.json": "4e722177a26758b4204d660283db22d423e82012f880b14ac6bca9b8c70ec18a",
     "spec/extensions/avro-nullability/package.json": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7",
     "spec/extensions/avro-nullability/schema.json": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26",
     "spec/extensions/avro/field-metadata.schema.json": "870c3a27d6b6f94d51f8bca6fd002e95c8a05149c0e1f2c5091f44c35b252fbe",
@@ -775,11 +779,14 @@
     "src/adapters/typespec/libraries.ts": "c956bca4dbb186f28f3552172d9ac57ee7ddfe8907aba3bfa65d916adc96a038",
     "src/adapters/typespec/semantic.ts": "e1f3f73386c4766d4575f1ddc4cb4945cdb33a1c35953b0c29788f4525c303ae",
     "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
     "src/core-ideals/avro-carriers.ts": "5017391cf7ed3292d3a1f274d1b77033ad7409b1ecf9f600f8230e35aa9be7e7",
     "src/core-ideals/avro-field.ts": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f",
     "src/core-ideals/avro-record-type.ts": "33b6e4845af04f14c91eb21294510ff8e39ac82d4f9b8e6a6e6902fbcb19bdfc",
     "src/core-ideals/avro-record.ts": "0226358f1082c16637b052a33bef2db4ee39479e6da78ce892cfc5f5a3e2a8c1",
     "src/core-ideals/avro-records.ts": "35d8e5d3a864f35c71f8dfccc40cbc2db1503fc7a394fb8f7ada4f189927c3ca",
+    "src/core-ideals/cardinality-avro-projection.ts": "940e86a30c5bbabaf6fb2b70ff129c4cc6cd67a382dd18a199b46138d161c3ed",
+    "src/core-ideals/cardinality-avro.ts": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f",
     "src/core-ideals/cardinality-postgresql-projection.ts": "2a97aa3bec0dba48782119771c9b2e299d83971c713c3ff86250711e0e4355f5",
     "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608",
     "src/core-ideals/cardinality-sqlserver-projection.ts": "474b1bcbbc8c7d8f5e6c0268d6ad360dfd342b88fe801c2d53218e2b668c9c8e",
@@ -825,7 +832,7 @@
     "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/index.ts": "ed17cd45d843a70b89f66b5b7c5582192b8173c67b2a870b09563c25001a3747",
+    "src/index.ts": "e949dcfd67881560ab1431d87ae4516e84efe60d8d399297c0d10ccd81953723",
     "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
     "src/model/cardinality.ts": "8020f13f7422e05678334bc93394ad8bf89f8b838db63469e081919043878fa2",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
@@ -899,11 +906,11 @@
     "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9"
   },
   "revalidation": {
-    "reason": "Revalidate existing five-system Field/Nullability and Cardinality core after SQL Server Cardinality classification/projection additions; new binding acceptance is recorded separately.",
+    "reason": "Revalidate existing five-system Field/Nullability and Cardinality core after Avro Cardinality classification/projection additions; new binding acceptance is recorded separately.",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "fixtures/validation/field-gate-refresh-evidence.json": "dd0e0db666fedeb6a4ef1d7b3da6b311d35b778eec1cf5779d270cbdee675f10",
-      "src/index.ts": "e67d8cfe265f27edb9d9a31e0c746061fdce40cea82fa83c2c700c871508615d"
+      "fixtures/validation/field-gate-refresh-evidence.json": "1a1abd17c8ecb28e2efe322fa365b15129a8451d95905c0c95f125fa34f5e45d",
+      "src/index.ts": "ed17cd45d843a70b89f66b5b7c5582192b8173c67b2a870b09563c25001a3747"
     },
     "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Cardinality dependencies are fingerprinted without widening native Field support."
   },
@@ -1008,6 +1015,15 @@
       "previousFingerprints": {
         "fixtures/validation/field-gate-refresh-evidence.json": "525bf5a12d894f818459c2492f9de866d54a24c99049825a9cedc160c3cc99c0",
         "src/index.ts": "313c72a2509e0256a56558ac0f1bd7534f4771557ce138fe94ee7cd629d40465"
+      },
+      "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Cardinality dependencies are fingerprinted without widening native Field support."
+    },
+    {
+      "reason": "Revalidate existing five-system Field/Nullability and Cardinality core after SQL Server Cardinality classification/projection additions; new binding acceptance is recorded separately.",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "fixtures/validation/field-gate-refresh-evidence.json": "dd0e0db666fedeb6a4ef1d7b3da6b311d35b778eec1cf5779d270cbdee675f10",
+        "src/index.ts": "e67d8cfe265f27edb9d9a31e0c746061fdce40cea82fa83c2c700c871508615d"
       },
       "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Cardinality dependencies are fingerprinted without widening native Field support."
     }

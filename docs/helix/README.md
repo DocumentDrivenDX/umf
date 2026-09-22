@@ -51,8 +51,12 @@ SQL Server Cardinality also passes qualified binding acceptance: separate logica
 Fields retain physical storage metadata, explicit scalar/JSON carrier projection
 reports losses, and receipts recover both native and authored meaning. See the
 [SQL Server acceptance record](../../fixtures/validation/sqlserver-cardinality-acceptance-evidence.json).
-Avro and Parquet Cardinality remain pending. Cardinality ideal admission and
-all-five delivery still require their separate conformance gate.
+Avro Cardinality also passes qualified binding acceptance: nested logical Fields,
+explicit native type projection, independent availability observations and both
+retained recovery directions. See the
+[Avro acceptance record](../../fixtures/validation/avro-cardinality-acceptance-evidence.json).
+Parquet Cardinality remains pending. Cardinality ideal admission and all-five
+delivery still require their separate conformance gate.
 Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

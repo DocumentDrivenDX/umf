@@ -715,3 +715,16 @@ The combined `cardinality-avro-oracle.ts` and `cardinality-avro-browser.ts` entr
 validate their child-proof fingerprints. The full shared-library acceptance refresh
 and separate conformance gates remain pending; this checkpoint does not close the
 Avro binding or admit Cardinality.
+
+
+### Avro qualified binding acceptance
+
+The [acceptance record](../../../../fixtures/validation/avro-cardinality-acceptance-evidence.json)
+supersedes Avro acceptance-pending notes above. All 74 refresh steps and
+395 priority regression tests (36,524 assertions, 127 files)
+pass, followed by the separate Field and Nullability conformance gates.
+Classification is schema-level present non-null shape. Projection uses an explicit
+native type and selected availability carrier; schema/family agreement does not
+prove arbitrary value conversion or native equivalence. Recursive record lowering,
+default execution and unknown refinements are not silently inferred. Parquet and
+the separate Cardinality admission/delivery gate remain unfinished.

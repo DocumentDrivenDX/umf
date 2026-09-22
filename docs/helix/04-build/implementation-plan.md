@@ -3897,3 +3897,17 @@ Logical Fields retain the physical column family. Projection reports JSON item/v
 key-uniqueness and availability limits, with strict refusal and retained native/ideal
 recovery. Avro, Parquet and the separate Cardinality gate remain unfinished.
 No native equivalence is claimed.
+
+
+### Avro Cardinality qualified binding acceptance
+
+Avro 1.12.0 classification and explicit native-type projection pass qualified
+acceptance after 74 refresh steps, 395 priority tests / 36,524
+assertions across 127 files, and both existing conformance gates. See the
+[acceptance record](../../../fixtures/validation/avro-cardinality-acceptance-evidence.json).
+Nested item/value Fields, qualified native locations, strict/report losses and
+fresh-native plus authored recovery have pinned Apache Avro/fastavro and Chromium
+evidence. Codec data behavior remains separate: float narrowing, duplicate native
+map entries and avsc's own `__proto__` loss are explicit counterexamples.
+Parquet and the Cardinality admission/delivery gate remain unfinished.
+No native equivalence is claimed.

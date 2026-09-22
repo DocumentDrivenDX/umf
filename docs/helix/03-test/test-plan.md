@@ -2734,3 +2734,18 @@ receipt refusals. Classification checks cover 56 representation/policy cases wit
 [acceptance record](../../../fixtures/validation/sqlserver-cardinality-acceptance-evidence.json)
 records the five-system refresh and 383 priority regression tests.
 Avro, Parquet and the concept admission/delivery gate remain required.
+
+
+## Avro Cardinality acceptance
+
+Run `bun scripts/core-ideals/cardinality-avro-oracle.ts` and
+`bun scripts/core-ideals/cardinality-avro-browser.ts`. Classification covers
+80 profile/policy cases, 116 native-text recoveries and 58 forged refusals.
+Projection covers 78 cases, 52 candidates, 26 strict blocks, 104 retained ideal
+recoveries and 104 fresh-native recoveries. Native codecs pass 208 cross-codec
+reads with 12 explicit float narrowings. Chromium refuses 52 forged projections.
+The separate codec profile preserves duplicate-key and own-`__proto__` discrepancies;
+these are not counted as data equivalence. The
+[acceptance record](../../../fixtures/validation/avro-cardinality-acceptance-evidence.json)
+records the full refresh and 395 priority regression tests.
+Parquet and the concept admission/delivery gate remain required.
