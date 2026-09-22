@@ -1,0 +1,141 @@
+{
+  "id": "umf.postgresql.facets",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Experimental PostgreSQL facet classification with retained source meaning",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:postgresql:facet-binding:1.0.0",
+    "title": "Retained PostgreSQL facet interpretation profile",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "nativeSupplement",
+      "binding",
+      "profile",
+      "datumFormat",
+      "obligation",
+      "outcome",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "nativeSupplement": {
+        "type": "string",
+        "minLength": 1
+      },
+      "binding": {
+        "const": {
+          "id": "umf.postgresql.facets",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "stored-value",
+          "new-value",
+          "unresolved"
+        ]
+      },
+      "datumFormat": {
+        "enum": [
+          "little-endian-datum64",
+          "unresolved"
+        ]
+      },
+      "obligation": {
+        "enum": [
+          "value-domain",
+          "exact-input"
+        ]
+      },
+      "outcome": {
+        "enum": [
+          "exact",
+          "approximated",
+          "not-expressible",
+          "unknown"
+        ]
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "concept",
+            "idealPath",
+            "nativePath",
+            "interpretation",
+            "outcome",
+            "basis"
+          ],
+          "properties": {
+            "concept": {
+              "enum": [
+                "length",
+                "decimal",
+                "integerWidth",
+                "conversion",
+                "native"
+              ]
+            },
+            "idealPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "interpretation": {
+              "enum": [
+                "declared",
+                "inferred",
+                "unknown",
+                "unsupported"
+              ]
+            },
+            "outcome": {
+              "enum": [
+                "exact",
+                "approximated",
+                "not-expressible",
+                "unknown"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "PostgreSQL",
+      "version": "17.4",
+      "subset": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/facets-postgresql.test.ts",
+      "fixtures/validation/facets-postgresql-catalog-evidence.json",
+      "fixtures/validation/facets-postgresql-resolved-native.json",
+      "fixtures/validation/facets-postgresql-classification-browser.json"
+    ]
+  }
+}

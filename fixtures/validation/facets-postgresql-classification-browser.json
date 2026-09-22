@@ -1,0 +1,28 @@
+{
+  "scope": "Experimental PostgreSQL 17.4 public facet classification and exact retained source recovery; no authored projection or full binding acceptance",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 231,
+    "classified": 157,
+    "blocked": 74,
+    "recoveries": 157
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/core-ideals/facets-postgresql.ts": "4f3176f7e17a311ddeb5637132e7dce266a17f588c0a1300153bb9b5878ec6d0",
+    "src/adapters/postgresql/facet-catalog.ts": "94aaf4263cb2e2306bbdd84073929601fc503ca4291faaa5c4bc1a652db46940",
+    "src/adapters/postgresql/facet-resolved-predicate.ts": "fa74430f538e1cc51d46e84eb832ea3008a0afe28fed50f8dda68029d0e12fdb",
+    "src/adapters/postgresql/facet-node-tree.ts": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c",
+    "src/adapters/postgresql/facet-typmod.ts": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
+    "src/index.ts": "93a58dcf9c8c2a4649707a64c5e0c724259cfa178f7a21cae252993df548e02a",
+    "spec/core/postgresql-facet-classification.schema.json": "27c9b0a7db4fd96f48cbdc4f8d0c8c409c8e6dcc9617df6901cc2432b8c04f90",
+    "spec/extensions/postgresql-facets/package.json": "fab341a4eba38f20cfe0bf9a12dc3cf7928d78e2b0bab97ab2df9991504b2b78",
+    "spec/extensions/postgresql-facets/schema.json": "23bf499e72827654fee175502a1c9eeb87cfca9a3b74cd5f55390cf755eb4122",
+    "scripts/core-ideals/facets-postgresql-cases.ts": "3e3e17211aec81a26e23561c583b95785e8055a130187d7d72f388968f84e4d3",
+    "scripts/core-ideals/facets-postgresql-classification-browser.ts": "07fae5cc91826ae1cd5c4aaa2161a2c76a017170eee83d57045b16a29a0dcc77",
+    "fixtures/validation/facets-postgresql-constraints-native.json": "32fd5b5cf6f3bfed6d9530f274c48b014879fb584bb0db0ea7461f88f761556c",
+    "dist/umf.js": "097a649ee60cddc55368d49c04a4c2bc9e51a0a09d7b97a1ab0b7c2cab91971d",
+    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+    "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
+  }
+}

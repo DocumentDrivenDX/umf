@@ -181,3 +181,48 @@ capture. See [catalog correspondence evidence](../../../../fixtures/validation/f
 The next binding work is scoped core facet classification, source-bound recovery,
 authored projection and its operation/package schemas, followed by the full
 native/browser compatibility acceptance. The facet admission gate remains open.
+
+## Experimental public facet classification
+
+`classifyPostgresqlFacets` now classifies explicitly selected PostgreSQL 17.4,
+UTF8 catalog columns in core 0.5.0. The caller selects stored/new-value scope,
+value-domain or exact-input obligation, strict/report mode, and the native Datum
+profile. The API uses the injected pinned parser backend; browser callers use the
+optional WASM runtime. It does not migrate the envelope or author Field kind.
+
+The new `umf.postgresql.facets` package describes retained classification metadata,
+and the operation has a complete JSON Schema. Known facets are derived from the
+qualified carrier and applicable verified CHECKs. Integer domains must match a
+canonical signed/unsigned width. Decimal classification requires finite symmetric
+coefficient bounds and matching native scale or truncation equality; numeric
+precision metadata alone does not exclude NaN. Length bounds retain their unit.
+Derived facets carry inferred native provenance, not author declarations.
+
+Stored-value classification does not use NOT VALID checks to establish a bound;
+new-value classification may use their qualified enforcement. NUL restrictions,
+character padding, noncanonical bounds, unsupported constraints and unknown
+metadata produce residuals. Exact-input requests report native rounding and the
+binary64-to-binary32 counterexample; general SQL expression conversion remains
+unqualified even when the stored domain is exact. Strict mode blocks on every
+residual, while report mode preserves losses and emits the interpreted subset.
+
+Existing facets require a verified author receipt. Conflicting authorship, shapes
+or binding metadata block rather than overwrite. `verifyPostgresqlFacetClassification`
+recomputes a retained receipt and checks the current target;
+`recoverPostgresqlFacetSource` recovers exact original catalog and supplement text.
+The classified Field also retains the complete supplement in its extension payload.
+Receipt consistency is not source authentication. Native payloads and unknown
+content remain attached, including meaning not represented by the core facets.
+
+Authored PostgreSQL facet projection and full binding acceptance remain unfinished.
+The public bundle has changed; previous concept gates still qualify their recorded
+snapshots and require a fresh compatibility run before binding acceptance.
+
+Classification validation: 21 Bun tests, 520 assertions, zero failures; typechecking
+and audits of 267 schemas/44 packages pass. Chromium 148 checks 231 cases across
+33 captured columns: 157 classified results, 74 blocked requests and 157 exact
+native recoveries through alternating JSON/YAML receipts. Browser execution uses
+the public bundle and optional WASM parser, with no host globals or external
+requests. See [the classification checkpoint](../../../../fixtures/validation/facets-postgresql-classification-evidence.json).
+These counts cover the PostgreSQL facet checkpoint, not the full repository or
+five-system facet admission gate.

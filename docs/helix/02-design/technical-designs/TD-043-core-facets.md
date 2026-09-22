@@ -460,3 +460,18 @@ are not decoded as direct scalar base types. Keep their definitions, type
 modifiers, constraints, collation and unknown metadata attached. Predicate-based
 core classification and authored projection remain the next implementation work;
 strict/report behavior and both retained round trips still gate acceptance.
+
+### PostgreSQL classification implementation
+
+The experimental public classifier, operation schema and `umf.postgresql.facets`
+package now implement the preceding discovery rules. Scope is explicit:
+non-null stored or new values, value-domain or exact-input obligation, and
+strict/report handling. Native catalog/SQL/analyzed-tree consistency precedes
+facet interpretation; unknown metadata and execution refinements remain native.
+Verified author receipts prevent inferred facets from overwriting author intent.
+Exact native catalog/supplement text can be recovered through verified receipts.
+See [the classification evidence](../../04-build/evidence/postgresql-facet-discovery.md).
+
+This is an up-classification checkpoint. Authored down-projection, its operation
+schema, independent emitted-native/value evidence, and the full compatibility
+refresh still gate PostgreSQL binding acceptance. No equivalence is claimed.

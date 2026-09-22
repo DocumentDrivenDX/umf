@@ -78,6 +78,9 @@ distinct; both native and ideal recovery retain unclaimed meaning. See the
 [TableSpec facet acceptance record](../../fixtures/validation/tablespec-facets-acceptance-evidence.json).
 PostgreSQL, SQL Server, Avro and Parquet facet bindings remain required before
 the separate five-system facet admission/delivery gate. No native equivalence is claimed.
+Experimental PostgreSQL facet classification now has scoped catalog/predicate,
+source-recovery and Chromium/WASM evidence; authored projection and full binding
+acceptance remain open. See the [classification checkpoint](../../fixtures/validation/facets-postgresql-classification-evidence.json).
 Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

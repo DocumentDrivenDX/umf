@@ -294,3 +294,5 @@ export * from './model/facets';
 
 export * from './core-ideals/facets-tablespec';
 export * from './core-ideals/facets-tablespec-projection';
+
+export * from './core-ideals/facets-postgresql';

@@ -4051,3 +4051,24 @@ remain explicit. This does not qualify whole-pipeline execution or write policy.
 This closes the TableSpec facet binding only. PostgreSQL, SQL Server, Avro and
 Parquet facet bindings, the distinct facet ideal admission/five-system delivery
 gate, and Key remain required. Native-equivalence graduation is not claimed.
+
+### Experimental PostgreSQL facet classification
+
+The public PostgreSQL facet classifier and source-recovery API now have operation
+and extension-package schemas. Qualified non-null stored/new-value profiles keep
+native checks, type modifiers and exact-input obligations distinct. Strict mode
+blocks on loss; report mode retains explicit residuals. The classified Field
+retains its complete native supplement, and verified receipts recover both exact
+original catalog and supplement text. Author conflicts cannot be overwritten.
+
+The [classification checkpoint](../../../fixtures/validation/facets-postgresql-classification-evidence.json)
+records 21 Bun tests/520 assertions, typechecking, 267 schemas/44 packages and a
+231-case Chromium/WASM matrix over 33 columns. Its 157 classified results recover
+native sources; 74 requests block. Native facts derive from the pinned PostgreSQL
+17.4 discovery, constraint and Datum oracles. Details and limitations are in
+[the PostgreSQL evidence](evidence/postgresql-facet-discovery.md).
+
+Authored facet projection, emitted-native/value qualification and a full prior
+binding/concept-gate refresh remain required before PostgreSQL facet acceptance.
+The public bundle changed, so earlier gates qualify their recorded snapshots.
+SQL Server, Avro, Parquet, the five-system facet gate and Key remain required.
