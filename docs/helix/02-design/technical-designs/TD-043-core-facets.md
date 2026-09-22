@@ -784,3 +784,12 @@ parity. The [native discovery checkpoint](../../04-build/evidence/avro-facet-dis
 is groundwork only; it does not qualify the binding or widen earlier receipts to
 core 0.5.0. Java exploratory results use a different version and are not part of
 this binding's evidence.
+
+The internal fragment interpreter now follows these rules without assigning core
+facets. Its result declares an isolated native domain, lists unclaimed metadata
+paths, retains the complete fragment and sets enforcement to unverified. Fixed
+decimal capacity arithmetic is bounded to 4096 bytes. Exact integer metadata uses
+integer lexical tokens; unsafe, fractional and exponent spellings are retained
+but uninterpreted. This avoids parser-specific normalization. Whole-schema name
+resolution, field selection and public receipts remain separate pending work.
+See the [interpreter checkpoint](../../04-build/evidence/avro-facet-discovery.md#internal-declaration-interpreter).

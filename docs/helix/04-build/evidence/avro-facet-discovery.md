@@ -55,3 +55,32 @@ native-text recovery and ideal recovery. Named dependencies, unions/defaults,
 logical refinements and unknown metadata need composed fixtures. Native target
 execution, Chromium parity and full binding acceptance remain required. Earlier
 accepted bindings retain their historical evidence snapshots as new work begins.
+
+## Internal declaration interpreter
+
+`src/adapters/avro/facet-type.ts` now decodes isolated scalar declarations and
+retains the complete tagged native fragment. It reports signed int/long domains,
+float carrier widths, unbounded string/bytes, exact fixed-byte size including zero,
+and valid decimal pairs with checked signed fixed-byte capacity. None of these
+facts asserts codec enforcement, exact input conversion or whole-schema validity.
+Names/unions/containers require a separate selection and resolution step.
+
+Unknown schema metadata is listed by escaped JSON Pointer and copied. Unknown
+logical meaning, invalid pairs, unsafe or non-integer lexical metadata and future
+tagged representation content refuse interpretation. Integer-valued decimal or
+exponent spellings are not silently normalized across native parser differences.
+Fixed decimal capacity calculations are bounded to 4096 bytes; this is an explicit
+interpreter resource limit, not an Avro type limit. Larger ordinary fixed sizes
+remain exact declaration metadata without allocating their contents.
+
+Seven Bun tests pass with 332 assertions. Chromium 148 agrees on 84 native fixture
+inputs (78 declarations, six explicit refusals), fixed-zero interpretation, three
+exact-token refusals, unknown-content copy isolation and zero getter invocations.
+There are no external browser requests or Bun/Node globals. Typechecking passes.
+The [browser record](../../../../fixtures/validation/facets-avro-type-browser.json)
+fingerprints the isolated internal bundle. The public package is unchanged.
+
+The Avro bead remains in progress. Next resolve selected named/union/Field syntax,
+then author complete public operation and extension schemas before exporting
+classification/projection. Retained ideal/native recovery, composed native target
+tests, final browser parity and binding acceptance remain required.

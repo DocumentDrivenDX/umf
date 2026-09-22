@@ -4327,3 +4327,12 @@ Next: internal schema-domain interpretation with retained native refinements,
 then complete public schemas and classification/projection, named/union/default
 composition, both retained recovery directions, native/browser evidence and full
 binding acceptance. Parquet, facet admission/delivery and Key remain required.
+
+The internal Avro facet declaration interpreter now passes seven Bun tests / 332
+assertions, typechecking and Chromium parity for all 84 discovery inputs. It
+retains unknown native content, distinguishes exact fixed sizes from length
+maxima and refuses unsafe metadata or unsupported logical meaning. The internal
+browser bundle has no host globals or external requests. Public exports and
+packages are unchanged; selected name/union resolution and public binding schemas,
+classification/projection, both recovery directions and full acceptance remain
+unfinished. See the [interpreter evidence](evidence/avro-facet-discovery.md#internal-declaration-interpreter).
