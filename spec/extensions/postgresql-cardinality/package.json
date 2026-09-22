@@ -1,0 +1,76 @@
+{
+  "id": "umf.postgresql.cardinality",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Qualified PostgreSQL column shape observations with native refinements retained",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:postgresql:cardinality-binding:1.0.0",
+    "title": "Retained PostgreSQL Cardinality scope",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "nativeSupplement",
+      "binding",
+      "profile",
+      "interpretation",
+      "nativePath",
+      "basis"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "nativeSupplement": {
+        "type": "string",
+        "minLength": 1
+      },
+      "binding": {
+        "const": {
+          "id": "umf.postgresql.cardinality",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "stored-value",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      },
+      "basis": {
+        "const": "Explicit captured native type relationships; bounds, rank, item and execution semantics remain native"
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-042; experimental core 0.4.0 shape classification, not native replacement",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "PostgreSQL",
+      "version": "17.4",
+      "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/cardinality-postgresql.test.ts",
+      "fixtures/validation/cardinality-postgresql-catalog-native.json"
+    ]
+  }
+}

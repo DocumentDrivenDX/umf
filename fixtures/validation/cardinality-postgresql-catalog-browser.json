@@ -1,18 +1,23 @@
 {
-  "scope": "Browser supplement validation and native type relationship resolution; no core classification, projection or capture correspondence claim",
+  "scope": "Browser supplement validation and native type relationship resolution; qualified report classification and native recovery; no down-projection or authenticated capture correspondence claim",
   "browser": "148.0.7778.0",
   "checks": {
     "resolved": 8,
     "refused": 5,
+    "classified": 8,
+    "recovered": 8,
     "exactUnknownToken": true
   },
   "externalRequests": [],
   "sha256": {
     "src/adapters/postgresql/cardinality-catalog.ts": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9",
-    "src/index.ts": "df92e55a477c6a8de4df696dbe21b3c6d97d3a4d6332be6ee4dc6d7f932f24fc",
+    "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608",
+    "spec/core/postgresql-cardinality-classification.schema.json": "ea0f34a7ebd8a525a57ab8579987c379a617e8d17296bf36cfa5378fb2c03041",
+    "spec/extensions/postgresql-cardinality/package.json": "9e1b128f3354a56b321043fc1d0bef3894732d4d8216699f2c6b2f3ede1772b7",
+    "src/index.ts": "e1f47881b992233115fce783f1ff8708b734cb00a1beb0ddcf44371a415ff4ce",
     "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6",
-    "scripts/core-ideals/cardinality-postgresql-catalog-browser.ts": "b64d8c2e17d4fb0cf4a208544e946e499481234dc5236133f10b9973d0f1edc8",
+    "scripts/core-ideals/cardinality-postgresql-catalog-browser.ts": "1b0b2fadadb45231b225ca8b0dcd9101561d2c6a4dfe67a86e4f4524212a8c6a",
     "fixtures/validation/cardinality-postgresql-catalog-native.json": "beef91d3dfaa18b4973af6f9ce43d883dad1547b7fc55b6ea1c1145b249eb1e1",
-    "dist/umf.js": "7ca156fed4928a0da911f3359008fc0d0f0859757aa02eb3699e3e87c85d9b52"
+    "dist/umf.js": "e12209074330c15441c22607dbc28521822c1e58f36447327e74016f5de1b48e"
   }
 }

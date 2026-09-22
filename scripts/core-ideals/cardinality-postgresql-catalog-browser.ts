@@ -29,10 +29,18 @@ try{
   const pair=u.correlatePostgresqlCardinalityCatalog(capture,text);require(pair.matches.length===8);require(pair.sameSnapshotVerified===false);
   const changed=structuredClone(supplement);changed.columns[0].declaredDimensions=8;
   let mismatch=false;try{u.correlatePostgresqlCardinalityCatalog(capture,JSON.stringify(changed));}catch{mismatch=true;}require(mismatch);refused++;
-  require(!('Bun'in globalThis));require(!('process'in globalThis));return {resolved,refused,exactUnknownToken:true};
+  const model=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(capture).target).target).target;
+  for(const e of model.modules.find((m:any)=>m.id==='postgresql.columns').elements)e.kind='field';
+  let classified=0,recovered=0;
+  for(const c of u.getPostgresqlColumnMetadata(model)){
+   const receipt=u.classifyPostgresqlCardinality(model,{column:c.path,nativeSource:captureSource,supplement:text,mode:'report',profile:'stored-value'});
+   require(receipt.status==='classified');require(receipt.residuals.length>0);classified++;
+   const archive=u.recoverPostgresqlCardinalitySource(receipt,receipt.target);require(archive.nativeSource===captureSource);require(archive.supplement===text);recovered++;
+  }
+  require(!('Bun'in globalThis));require(!('process'in globalThis));return {resolved,refused,classified,recovered,exactUnknownToken:true};
  },{supplement:fixture.supplement,captureSource:fixture.captureSource});
  assert.equal(external.length,0);
- const paths=['src/adapters/postgresql/cardinality-catalog.ts','src/index.ts','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','scripts/core-ideals/cardinality-postgresql-catalog-browser.ts','fixtures/validation/cardinality-postgresql-catalog-native.json','dist/umf.js'];
+ const paths=['src/adapters/postgresql/cardinality-catalog.ts','src/core-ideals/cardinality-postgresql.ts','spec/core/postgresql-cardinality-classification.schema.json','spec/extensions/postgresql-cardinality/package.json','src/index.ts','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','scripts/core-ideals/cardinality-postgresql-catalog-browser.ts','fixtures/validation/cardinality-postgresql-catalog-native.json','dist/umf.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
- await Bun.write('fixtures/validation/cardinality-postgresql-catalog-browser.json',JSON.stringify({scope:'Browser supplement validation and native type relationship resolution; no core classification, projection or capture correspondence claim',browser:browser.version(),checks,externalRequests:external,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
+ await Bun.write('fixtures/validation/cardinality-postgresql-catalog-browser.json',JSON.stringify({scope:'Browser supplement validation and native type relationship resolution; qualified report classification and native recovery; no down-projection or authenticated capture correspondence claim',browser:browser.version(),checks,externalRequests:external,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}
