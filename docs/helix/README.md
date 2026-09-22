@@ -21,7 +21,8 @@ Field native/browser evidence has now been rerun after TableSpec binding work,
 and current fingerprints pass. TableSpec Nullability classification, authored
 projection, both recovery directions and qualified native row checks have passed
 binding acceptance. The other four native bindings and Nullability admission
-remain unfinished.
+remain unfinished. PostgreSQL discovery now has 18 passing native probes and
+Bun/Chromium catalog-tree recovery; its ideal binding remains in progress.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

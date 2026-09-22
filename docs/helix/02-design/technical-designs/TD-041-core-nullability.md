@@ -507,3 +507,49 @@ Nullability from one native binding. PostgreSQL, SQL Server, Avro and Parquet re
 commands, versions, matrix/native/browser evidence, regression and current Field
 gate fingerprints. The TableSpec execution checks assess availability only; other
 generated expectations and whole pipelines remain outside this support claim.
+
+
+### PostgreSQL native discovery before classification
+
+The PostgreSQL binding is in progress. Its discovery corpus now exercises 18
+statements on the pinned PostgreSQL 17.4 image: 12 succeed and six produce the
+expected native SQLSTATE. Evidence is in
+[`nullability-postgresql-native.json`](../../../../fixtures/validation/nullability-postgresql-native.json)
+and [`nullability-postgresql-browser.json`](../../../../fixtures/validation/nullability-postgresql-browser.json).
+This is discovery evidence, not binding acceptance.
+
+- Column `NOT NULL` rejects explicit NULL, while a default can supply an omitted
+  input. Identity generation likewise accepts omission and rejects explicit NULL.
+- A domain `NOT NULL` rejects direct NULL but accepts a domain-typed NULL produced
+  by an empty subquery. The column catalog flag is false even though the domain
+  flag is true. Domain and column guarantees cannot be conflated.
+- `CHECK(value > 0)` accepts NULL through UNKNOWN. `CHECK(value IS NOT NULL)`
+  rejects NULL despite a false column `notNull` flag. A `NOT VALID` constraint
+  rejects new NULLs while an existing NULL remains readable.
+- Column defaults override domain defaults; neither replaces explicit NULL.
+  A generated expression can return a non-null result with a false column flag.
+  An outer join produces NULL from a column declared `NOT NULL`.
+
+The official PostgreSQL 17 documentation explains the
+[domain conversion boundary](https://www.postgresql.org/docs/17/sql-createdomain.html)
+and [CHECK/NOT NULL semantics](https://www.postgresql.org/docs/17/ddl-constraints.html).
+The executable fixture verifies the specific cases above rather than assuming
+catalog flags describe all native behavior.
+
+Implementation must require an explicit SQL-NULL carrier and distinguish stored
+relation values from input omission and query results. A true column flag is
+candidate evidence for required stored values, not a claim about every query.
+A false column flag alone cannot prove absent-allowed: domains, checks and other
+native rules may reject NULL. Domain constraints must remain native refinements;
+no arbitrary expression evaluation or unconditional domain-to-required rule is
+admitted. Unresolved cases need unspecified plus residuals, blocking strict mode
+when an authored obligation cannot be honored.
+
+Commands: `bun scripts/core-ideals/nullability-postgresql-oracle.ts`,
+`UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-postgresql-browser.ts`,
+and `bun run typecheck` pass. JSON and YAML each preserve the captured native tree
+in Bun and Chromium 148, without browser host globals or external requests.
+Exact input formatting, ideal classification/projection, author recovery and
+native-equivalence graduation are not established by these checks. The binding
+bead remains open and these two harnesses must grow to cover both ideal round
+trips before acceptance.

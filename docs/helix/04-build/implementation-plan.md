@@ -86,7 +86,11 @@ The TableSpec Nullability binding has passed its expanded acceptance, with
 selected-context classification, authored strict/report projection, retained
 scope metadata, both recovery directions and qualified native row checks.
 Prior five-system Field evidence has been rerun and its current gate passes.
-PostgreSQL, SQL Server, Avro and Parquet are the four remaining ready bindings;
+PostgreSQL is in progress: 18 pinned native availability probes pass, including
+domain NULL bypass, defaults and unvalidated constraints. Bun and Chromium
+preserve the native capture tree through JSON/YAML. This is discovery evidence;
+classification, authored projection and both ideal recovery directions remain.
+SQL Server, Avro and Parquet are the three remaining ready bindings;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

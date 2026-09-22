@@ -1,0 +1,14 @@
+{
+  "scope": "Browser import and JSON/YAML recovery of the native availability catalog tree; PostgreSQL runs only in the native oracle, no ideal binding claim",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "nativeCasesRetained": 18,
+    "catalogTreeRecoveries": 2
+  },
+  "externalRequests": [],
+  "fingerprints": {
+    "fixtures/validation/nullability-postgresql-native.json": "8746926af99388d5c961eab9e8a737e497152a56ae0795de6813ad887dbf18c6",
+    "dist/umf.js": "5ab31f95f59fc20a136b35c3c5b2be84d97dcc887ffec83b3ba921b8d6c40ab7",
+    "scripts/core-ideals/nullability-postgresql-browser.ts": "edcc22573c3f829405c6885913b85239bdd9ac913f85a8381c00e9d944c52316"
+  }
+}
