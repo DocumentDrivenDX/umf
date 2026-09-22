@@ -824,3 +824,35 @@ Authored projection, composed ideal/native recovery, expanded classification
 coverage for legacy/native refinements and the full shared-library acceptance
 refresh remain unfinished. Existing acceptance records are historical until that
 refresh; no Parquet Cardinality acceptance or native equivalence is claimed.
+
+
+### Parquet authored projection carrier foundation
+
+Authored Cardinality projection will take an explicit bounded native type tree,
+not infer item widths or physical layout from scalar-family labels. Each value
+node selects required/optional availability independently. The internal writer
+now supports the existing 12 primitive carriers, canonical three-level LIST,
+MAP with a required explicitly typed key, and nonempty records. Optional int32
+field IDs are retained. LIST/MAP carry both logical and legacy annotations;
+primitive carriers keep the existing converted-type profile. Native wrapper names
+are structural details, not extra ideal dimensions. Empty records, duplicate
+record member names, unknown carrier content, malformed names, cycles and
+resource-limit violations refuse instead of being silently rewritten.
+
+`parquetCardinalityFile` emits an empty native schema file. It does not write
+rows, infer a default, import embedded Arrow refinements or claim ideal semantics.
+The projection layer still needs its complete request/result schema, verified
+author receipt, recursive item/value matching, explicit availability carrier,
+strict/report residuals and retained ideal recovery. Native map uniqueness and
+scalar exactness must remain separate obligations in that layer.
+
+Run `bun scripts/core-ideals/cardinality-parquet-carrier-oracle.ts` for independent
+PyArrow 21.0.0 evidence. It validates 80 emitted schemas and 176 native-written
+rows, including nested records/containers, duplicate map keys, absent members,
+empty containers and six float narrowings. Two focused Bun tests pass 589
+assertions. `UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/cardinality-parquet-carrier-browser.ts`
+reproduces all 80 byte streams and 160 JSON/YAML native recoveries without host
+globals or external requests. See the
+[native carrier evidence](../../../../fixtures/validation/cardinality-parquet-carrier-native.json)
+and [browser carrier evidence](../../../../fixtures/validation/cardinality-parquet-carrier-browser.json).
+This foundation is internal and does not close projection or binding acceptance.

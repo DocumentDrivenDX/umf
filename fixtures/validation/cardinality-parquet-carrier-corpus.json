@@ -1,0 +1,1203 @@
+{
+  "scope": "Explicit native carrier schemas, not authored ideal projection",
+  "rows": [
+    {
+      "id": "scalar-boolean-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "boolean",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-boolean-0.parquet",
+      "sha256": "39c94af986674ce4d9ae2ad6504616cb23d61293c44beafb6209cbe35bedb4bf"
+    },
+    {
+      "id": "array-boolean-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "boolean",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-boolean-0.parquet",
+      "sha256": "7097e0f1bf38358b39a24076a682508fb8b5fe6b085c78dabcc099ec6cf87b5d"
+    },
+    {
+      "id": "map-boolean-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "boolean",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-boolean-0.parquet",
+      "sha256": "6b31ded492ce7c4cf35111f06294e14c284e4f9e4b2dfdb508ff9b78cc43871d"
+    },
+    {
+      "id": "scalar-boolean-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "boolean",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-boolean-1.parquet",
+      "sha256": "f055032fe621b8e986b62750953fbf2af86f689a6c9716255a091ed6ecc12140"
+    },
+    {
+      "id": "array-boolean-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "boolean",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-boolean-1.parquet",
+      "sha256": "605c23d483d402ab3bd92b729452b8ce5e3ffb8035c8aea829e77c0cf79ac67f"
+    },
+    {
+      "id": "map-boolean-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "boolean",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-boolean-1.parquet",
+      "sha256": "8e72f96db79b77ab67dda0f93c34fd94f27a7ca01519c6c3414fa1cf001f1535"
+    },
+    {
+      "id": "scalar-int32-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "int32",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-int32-0.parquet",
+      "sha256": "a4d1dc41afc4e5a10004122ebd68920239f8f788c02a334b001d421c71a5abb2"
+    },
+    {
+      "id": "array-int32-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "int32",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-int32-0.parquet",
+      "sha256": "8540e42a6af70f794b5194229307114667b858364142a24c0690eb342ff9a602"
+    },
+    {
+      "id": "map-int32-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "int32",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-int32-0.parquet",
+      "sha256": "ba68d423ababfe559ba3e7d8e4120f2546572e751a6f71c05cc27ba0fb70767a"
+    },
+    {
+      "id": "scalar-int32-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "int32",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-int32-1.parquet",
+      "sha256": "e8aca37d6c63eb1a2e6263d56305d70dd284792d6bb0ee7ca898528120326def"
+    },
+    {
+      "id": "array-int32-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "int32",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-int32-1.parquet",
+      "sha256": "997489821f8b207da5017e6f9506024cb1de8455774113ea4add85d1516f87c0"
+    },
+    {
+      "id": "map-int32-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "int32",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-int32-1.parquet",
+      "sha256": "8337a72d228a87c89e6892db6294b896d1d84224e205d6b1cf136b0b2a9b92c9"
+    },
+    {
+      "id": "scalar-int64-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "int64",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-int64-0.parquet",
+      "sha256": "69c4019f1036db9fa319f41665ff6e3624224c8c73673b17ff21dac7a1cde7e4"
+    },
+    {
+      "id": "array-int64-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "int64",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-int64-0.parquet",
+      "sha256": "720ab04bab7d6dcd2823a6004c345aa38dd210d52df236ab3d32d3d8168c00c2"
+    },
+    {
+      "id": "map-int64-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "int64",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-int64-0.parquet",
+      "sha256": "a2ff9b570211a4ee430242204d87230e2b632078f0e2c5d985a1cf6875569057"
+    },
+    {
+      "id": "scalar-int64-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "int64",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-int64-1.parquet",
+      "sha256": "8027e2fbd3926651ef51e03497560360f00e06b1f793b05eaf248ac4bc457d55"
+    },
+    {
+      "id": "array-int64-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "int64",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-int64-1.parquet",
+      "sha256": "d9af11786995aff51dacfeba6fa4c829bfaab481ecaf0435a7516d0085387d3f"
+    },
+    {
+      "id": "map-int64-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "int64",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-int64-1.parquet",
+      "sha256": "6b89344cf8c599238f6a6a4121489dc42f62dd3ad2b7dd42bb4a8cc06face42d"
+    },
+    {
+      "id": "scalar-float32-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "float32",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-float32-0.parquet",
+      "sha256": "cf8eb8a6ed62e79f6bfb65aa2de5efd3857bd312c03d3dafaf35389a78fbca88"
+    },
+    {
+      "id": "array-float32-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "float32",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-float32-0.parquet",
+      "sha256": "48e1adf666853e5acca6f5238c8896d03ffaa25a7e2a5bbf909290373033a811"
+    },
+    {
+      "id": "map-float32-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "float32",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-float32-0.parquet",
+      "sha256": "4306156652925b7518838ceb57a4fadd21b01c9dc355953f70781c7754044563"
+    },
+    {
+      "id": "scalar-float32-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "float32",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-float32-1.parquet",
+      "sha256": "527cf2697eaf08ad9d7abf6c766721f7c168ccb64b34124effca124e064a61dd"
+    },
+    {
+      "id": "array-float32-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "float32",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-float32-1.parquet",
+      "sha256": "4d7c5df4d01200030c9a9e8ada92373639e2b2bd0cdeb9c08939556f2ff8a496"
+    },
+    {
+      "id": "map-float32-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "float32",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-float32-1.parquet",
+      "sha256": "2a162bb968f52e376c7720d74aa10fb7a89b5331367433f23d1990b142a27329"
+    },
+    {
+      "id": "scalar-float64-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "float64",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-float64-0.parquet",
+      "sha256": "0aa4d98a07a8a6c0b95f2b88099ce5ec81296d711474c307bd2a3edc6fe6395e"
+    },
+    {
+      "id": "array-float64-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "float64",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-float64-0.parquet",
+      "sha256": "12a573c188ab0f7611a0b56f7615b195575df1add85c1f6c0477c1b29b6552ff"
+    },
+    {
+      "id": "map-float64-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "float64",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-float64-0.parquet",
+      "sha256": "79d160544330dde0e4724ed5ed14a14dc9e73d22cbe986b4128f5f1550a00cf7"
+    },
+    {
+      "id": "scalar-float64-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "float64",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-float64-1.parquet",
+      "sha256": "60f8a3d8be3b086f3fcd36c2d628d02bbb5e9069adc56a9bbf5e30c2b224b47c"
+    },
+    {
+      "id": "array-float64-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "float64",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-float64-1.parquet",
+      "sha256": "4107f931b2b73c381d355c003592d480a2e21a1b6142ee03f67a1758424fed2f"
+    },
+    {
+      "id": "map-float64-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "float64",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-float64-1.parquet",
+      "sha256": "0d56716a9694972831ee6162dd6aa6a0593a229e59601e7873c4c4f9e4ab4522"
+    },
+    {
+      "id": "scalar-binary-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "binary",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-binary-0.parquet",
+      "sha256": "ae5c4e5f0e41541bfe681c77851df6a5e3c86cd43b21b4508b8e36db1d722cb7"
+    },
+    {
+      "id": "array-binary-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "binary",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-binary-0.parquet",
+      "sha256": "e3ca1e5d92e37a5f6d44d8c88dc8b9e072905603d9b579cf6c48451f869aa7fe"
+    },
+    {
+      "id": "map-binary-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "binary",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-binary-0.parquet",
+      "sha256": "e55b5f44066a80a37c214ffce8efc53667b6492b36f5e0d4a59ae2b68756f594"
+    },
+    {
+      "id": "scalar-binary-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "binary",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-binary-1.parquet",
+      "sha256": "4323bb256a89526f3dde73b7a757c22499c8f7851025bf2b04af85979e1c9e28"
+    },
+    {
+      "id": "array-binary-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "binary",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-binary-1.parquet",
+      "sha256": "457aa2f7b2d061de096160e17683cf8d644a52bcac8e206727eb2483d5ac43c4"
+    },
+    {
+      "id": "map-binary-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "binary",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-binary-1.parquet",
+      "sha256": "ef714cbb42af1ad15edceb64766358d9caae47deee38bfa3cf47447c5d3e2678"
+    },
+    {
+      "id": "scalar-string-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "string",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-string-0.parquet",
+      "sha256": "08a5c284ec48ccd81882ca525491e5c0b410e08f6e1d0c2ef58cee16be273000"
+    },
+    {
+      "id": "array-string-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "string",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-string-0.parquet",
+      "sha256": "d2a57a643e4f74abab72e0d56b9356a6f1776f4417c5ecccc1287eee9022db2e"
+    },
+    {
+      "id": "map-string-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "string",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-string-0.parquet",
+      "sha256": "2219097f65669ce3981ccc75414ba7ab32d755aef0e88b929155aadb6e49214f"
+    },
+    {
+      "id": "scalar-string-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "string",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-string-1.parquet",
+      "sha256": "807d945365e17b30b0c0a94fd24f4bc719157626deacec00bb431ef9367335b7"
+    },
+    {
+      "id": "array-string-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "string",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-string-1.parquet",
+      "sha256": "abba0ef8dfd2f20f05bd5c24b2c89c9919bd13f8273f5bae2d1ae4066712816c"
+    },
+    {
+      "id": "map-string-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "string",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-string-1.parquet",
+      "sha256": "9ff4517d207a977a5f17f5324de4e3cfd4a2317120213a5b16e734588e87dc63"
+    },
+    {
+      "id": "scalar-date-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "date",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-date-0.parquet",
+      "sha256": "ebb97ba33a234fc15aa94ce4d0c3a58a9ad8acb0afd4c1dc2a4293a470a8e151"
+    },
+    {
+      "id": "array-date-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "date",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-date-0.parquet",
+      "sha256": "358b605d5d978c7351811622c9d11f3e8304b933e1d09a107fe23e10b9c50c44"
+    },
+    {
+      "id": "map-date-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "date",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-date-0.parquet",
+      "sha256": "a48e1079bf92c1f6daec3f27a70dc4eaef675b189003d833214b6610a332364f"
+    },
+    {
+      "id": "scalar-date-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "date",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-date-1.parquet",
+      "sha256": "6bd7e6c87bd4b9fdae16cca8e5990196ca2fc7165653585eabd7e79c396f0f47"
+    },
+    {
+      "id": "array-date-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "date",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-date-1.parquet",
+      "sha256": "2838045ee42c84bc90ad93e1789bc3a4cbfa77a9c2a52c85b065355ee68b7e42"
+    },
+    {
+      "id": "map-date-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "date",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-date-1.parquet",
+      "sha256": "756ea7acd6b55235d48d1e80fd7b134a42374c7950a24a3940c2ed6fec2cf0c9"
+    },
+    {
+      "id": "scalar-time-millis-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "time-millis",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-time-millis-0.parquet",
+      "sha256": "5e367a9763e1d8b379d5e65d1eda058148487a584373d513a206b786ad5c86ce"
+    },
+    {
+      "id": "array-time-millis-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "time-millis",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-time-millis-0.parquet",
+      "sha256": "15b8ae5edac70c25b07bb5fcc4f351e754a1062c30d5f7f013a708a351abdae3"
+    },
+    {
+      "id": "map-time-millis-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "time-millis",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-time-millis-0.parquet",
+      "sha256": "20a056207b86c80019b1811b0c17b787282399246522a0f200355d7c714d2124"
+    },
+    {
+      "id": "scalar-time-millis-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "time-millis",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-time-millis-1.parquet",
+      "sha256": "b2899e5a2bae4ca65262b3233131100c96ed0a6684262a779c728c5bfce4410c"
+    },
+    {
+      "id": "array-time-millis-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "time-millis",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-time-millis-1.parquet",
+      "sha256": "3367d6442131e316576dd2859868b4ab0ee018f17ca714144977e992e245641c"
+    },
+    {
+      "id": "map-time-millis-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "time-millis",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-time-millis-1.parquet",
+      "sha256": "38471d0bd5d033cf333b12af2b3616598de3c2459998a2f1ecd936225c6d691f"
+    },
+    {
+      "id": "scalar-time-micros-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "time-micros",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-time-micros-0.parquet",
+      "sha256": "ae1d999c09843ec0ade008a0769a23c7c03b31389597f3a7c5d13e9ce59de293"
+    },
+    {
+      "id": "array-time-micros-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "time-micros",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-time-micros-0.parquet",
+      "sha256": "6cfee59bfd42750d33dfe3decad531e79552092b7b0acc9a6a89423eeacfef43"
+    },
+    {
+      "id": "map-time-micros-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "time-micros",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-time-micros-0.parquet",
+      "sha256": "d1c6f4580c5921039ac5f2255ca1cb9541b1c87d27c66980d12adbf250580b69"
+    },
+    {
+      "id": "scalar-time-micros-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "time-micros",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-time-micros-1.parquet",
+      "sha256": "1541969e903866a64ff93beb1b3c88e4ac688f306c965a4002943ee35ebf68c1"
+    },
+    {
+      "id": "array-time-micros-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "time-micros",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-time-micros-1.parquet",
+      "sha256": "8f3dac3ee3b53c333e26ad16aa7c18f9362abda2c7535f5b62223c3a8d351a03"
+    },
+    {
+      "id": "map-time-micros-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "time-micros",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-time-micros-1.parquet",
+      "sha256": "19a27cab5a69c054811d004c16095eccd9c14c2159aef2b1a3d0513332fc8f2d"
+    },
+    {
+      "id": "scalar-timestamp-millis-utc-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "timestamp-millis-utc",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-timestamp-millis-utc-0.parquet",
+      "sha256": "ccadd897fbfa068ce85bd4dd78871c9044414aeb21ce92e2bec9744b3a1dfd5e"
+    },
+    {
+      "id": "array-timestamp-millis-utc-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "timestamp-millis-utc",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-timestamp-millis-utc-0.parquet",
+      "sha256": "c2df7f3cb0bd881f90cbec8623a366ac272c500096d2473e727d0a7c0279a4dd"
+    },
+    {
+      "id": "map-timestamp-millis-utc-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "timestamp-millis-utc",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-timestamp-millis-utc-0.parquet",
+      "sha256": "77b22090896938e134ef72c75934aed5267d14d508ae3bfcb444ea7f373406fd"
+    },
+    {
+      "id": "scalar-timestamp-millis-utc-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "timestamp-millis-utc",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-timestamp-millis-utc-1.parquet",
+      "sha256": "66b35345b7a47ea113ad6d60f9ce146126e427012ebba6600235c0bc86725af9"
+    },
+    {
+      "id": "array-timestamp-millis-utc-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "timestamp-millis-utc",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-timestamp-millis-utc-1.parquet",
+      "sha256": "5aaaf477856e70d0d25a6d74e6a16d5872b22adca1f9e225fafc168510743707"
+    },
+    {
+      "id": "map-timestamp-millis-utc-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "timestamp-millis-utc",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-timestamp-millis-utc-1.parquet",
+      "sha256": "87a2fc8c2147eec6faee14c96adab2981fdf63a6570cbcb0381879778e4125d7"
+    },
+    {
+      "id": "scalar-timestamp-micros-utc-0",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "timestamp-micros-utc",
+        "nullable": false,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-timestamp-micros-utc-0.parquet",
+      "sha256": "90880f3dba7cfdd7a45769e7a1ee1dbfe6c461fdc25f8331f458dad9919228ba"
+    },
+    {
+      "id": "array-timestamp-micros-utc-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "timestamp-micros-utc",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-timestamp-micros-utc-0.parquet",
+      "sha256": "bb14cc5834226c4aa6174e3920e31c5db669ecfb3b25b8076468041dd9571713"
+    },
+    {
+      "id": "map-timestamp-micros-utc-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "timestamp-micros-utc",
+          "nullable": false
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-timestamp-micros-utc-0.parquet",
+      "sha256": "3d196183cc0f698fbb3483f11f941d18d6fd96c13487c8f66eade1d7d5448c01"
+    },
+    {
+      "id": "scalar-timestamp-micros-utc-1",
+      "carrier": {
+        "kind": "scalar",
+        "nativeType": "timestamp-micros-utc",
+        "nullable": true,
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/scalar-timestamp-micros-utc-1.parquet",
+      "sha256": "03ae693703cdd851404afd5b1307865019bfa20050003bcb537ba25069f35e28"
+    },
+    {
+      "id": "array-timestamp-micros-utc-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "scalar",
+          "nativeType": "timestamp-micros-utc",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-timestamp-micros-utc-1.parquet",
+      "sha256": "c39f64730f9fb51036a4a062dc2422295b7413a4f4869822cc83f4289e73e250"
+    },
+    {
+      "id": "map-timestamp-micros-utc-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "scalar",
+          "nativeType": "timestamp-micros-utc",
+          "nullable": true
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-timestamp-micros-utc-1.parquet",
+      "sha256": "5656757d2e8750e4fa2955a7fa757a504e885af5da5b9df64d6f1043045533d2"
+    },
+    {
+      "id": "nested-array-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "array",
+          "nullable": false,
+          "item": {
+            "kind": "scalar",
+            "nativeType": "int32",
+            "nullable": false
+          }
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/nested-array-0.parquet",
+      "sha256": "f18eb9d06a2baf5c733b092ec8fa71c095bc122cd0862d096a045ffbfc43d174"
+    },
+    {
+      "id": "array-map-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "map",
+          "nullable": false,
+          "keyType": "int64",
+          "value": {
+            "kind": "scalar",
+            "nativeType": "int32",
+            "nullable": false
+          }
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-map-0.parquet",
+      "sha256": "f350a7a07c15c223aa13cd39a50304c65662951214d65c86590b8f55401b53ec"
+    },
+    {
+      "id": "map-array-0",
+      "carrier": {
+        "kind": "map",
+        "nullable": false,
+        "keyType": "string",
+        "value": {
+          "kind": "array",
+          "nullable": false,
+          "item": {
+            "kind": "scalar",
+            "nativeType": "int32",
+            "nullable": false
+          }
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-array-0.parquet",
+      "sha256": "762a53d05c8acb03ff0d207d769d908267ec01a328418e013b638979885f503d"
+    },
+    {
+      "id": "array-record-0",
+      "carrier": {
+        "kind": "array",
+        "nullable": false,
+        "item": {
+          "kind": "record",
+          "nullable": false,
+          "fields": [
+            {
+              "name": "雪",
+              "type": {
+                "kind": "scalar",
+                "nativeType": "int32",
+                "nullable": false
+              }
+            },
+            {
+              "name": "__proto__",
+              "type": {
+                "kind": "array",
+                "nullable": false,
+                "item": {
+                  "kind": "scalar",
+                  "nativeType": "int32",
+                  "nullable": false
+                }
+              }
+            }
+          ]
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-record-0.parquet",
+      "sha256": "2a1278413f65e057b69c015aed4ecdec3270b8123eb9db9b83a8cfcee25b9576"
+    },
+    {
+      "id": "nested-array-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "array",
+          "nullable": true,
+          "item": {
+            "kind": "scalar",
+            "nativeType": "int32",
+            "nullable": true
+          }
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/nested-array-1.parquet",
+      "sha256": "29193a8cf3cdbb3ecd76ac85fc3a7672415a5bef475502d406a2d43f723c9292"
+    },
+    {
+      "id": "array-map-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "map",
+          "nullable": true,
+          "keyType": "int64",
+          "value": {
+            "kind": "scalar",
+            "nativeType": "int32",
+            "nullable": true
+          }
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-map-1.parquet",
+      "sha256": "a625dbb1fba6f75306d69821bbeb3cedec2096ef2b44369416865f03bc32c05e"
+    },
+    {
+      "id": "map-array-1",
+      "carrier": {
+        "kind": "map",
+        "nullable": true,
+        "keyType": "string",
+        "value": {
+          "kind": "array",
+          "nullable": true,
+          "item": {
+            "kind": "scalar",
+            "nativeType": "int32",
+            "nullable": true
+          }
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/map-array-1.parquet",
+      "sha256": "4496aa99f52de7448e0633e133e90d8eda5f2f2b4fc71f2637c6c5acd6d8420a"
+    },
+    {
+      "id": "array-record-1",
+      "carrier": {
+        "kind": "array",
+        "nullable": true,
+        "item": {
+          "kind": "record",
+          "nullable": true,
+          "fields": [
+            {
+              "name": "雪",
+              "type": {
+                "kind": "scalar",
+                "nativeType": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "__proto__",
+              "type": {
+                "kind": "array",
+                "nullable": true,
+                "item": {
+                  "kind": "scalar",
+                  "nativeType": "int32",
+                  "nullable": true
+                }
+              }
+            }
+          ]
+        },
+        "fieldId": 37
+      },
+      "path": "fixtures/parquet/cardinality-carriers/array-record-1.parquet",
+      "sha256": "96496cd50ea4098ca8f59063dedb01d16e91daebf679731f9bc31c5777e597eb"
+    }
+  ]
+}
