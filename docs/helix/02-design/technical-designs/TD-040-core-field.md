@@ -1264,3 +1264,31 @@ See [TableSpec namespace evidence](../../../../fixtures/validation/tablespec-nam
 This resolves the observed namespace-accounting pattern across the five priority
 projectors within their published subsets. It does not close the remaining nested
 projection, reference binding, common residual metadata or Field exit requirements.
+
+## Shared authored Field inspection reports
+
+`inspectFieldProjection` now recomputes each of the five priority single-Field
+projectors before exposing a common metadata report. The report retains the original
+receipt, source-qualified mapping paths, authored origin, explicit native carrier
+basis, and full versioned binding on both mapping and residual entries. Residuals
+include the retained source value, outcome, reason and receipt recovery instruction.
+A null target path makes no claim that an omitted assertion has a native property.
+`verifyFieldProjectionInspection` also rejects altered summaries of valid receipts.
+
+PostgreSQL requires the caller's pinned backend; the library performs no implicit
+host access. Legacy TableSpec diagnostic omission is accepted only after all other
+receipt fields recompute correctly; the common view derives current diagnostics.
+Original adapter receipts remain the export/recovery authority, not this summary.
+The report checks consistency, not authorship authenticity or native enforcement.
+
+Two Bun tests pass 174 assertions across twenty five-system clean/loss policy cases.
+Chromium 148 matches all twenty common reports, forty JSON/YAML verifications and
+forged-basis rejection. Typechecking, browser build, PostgreSQL WASM runtime build
+and all 205 schema / 32 package audits pass. An unreachable return left while
+adapting the browser harness was removed before the passing typecheck. Native
+execution was not rerun: this consumer layer recomputes existing adapter operations
+and does not change native generation. See [shared Field report evidence](../../../../fixtures/validation/field-report-evidence.json).
+
+The shared profile covers authored single Fields. Record projections and native
+classifications still need the same common provenance/residual coverage, alongside
+nested projections and the remaining Field exit requirements.

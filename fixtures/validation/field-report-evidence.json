@@ -1,0 +1,33 @@
+{
+  "scope": "Recomputed common metadata for five priority authored single-Field projection receipts; native execution not rerun, records/classifications excluded",
+  "commands": [
+    "bun test tests/core-ideals/field-report.test.ts",
+    "bun scripts/core-ideals/field-report-corpus.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-report-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 174,
+    "browserCases": 20,
+    "browserReportRecoveries": 40,
+    "typecheck": "passed",
+    "schemasPassed": 205,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10096140
+  },
+  "sha256": {
+    "src/core-ideals/field-report.ts": "4b353b00df4be2cafe2ad01ccbcf63df300d519fdd279c69ef9764cfefc83e16",
+    "spec/core/field-projection-inspection.schema.json": "1110fb5a9be22507a2c3430a5fff8c7a2c274963acfc57c08c80086893488e72",
+    "scripts/core-ideals/field-report-schema.ts": "047bb568e2164002f96aa8984ecef9325d30aa9e5dd20dda6116d49af43fbbe8",
+    "scripts/core-ideals/field-report-cases.ts": "105144e690f9d761f7c6b41d54053e7d272c13eeaed64f6b13ceed274e23ba36",
+    "scripts/core-ideals/field-report-corpus.ts": "4bf6f792168614fc0386913761fbe34b8645645eb8c3428f77f53b9364a752fc",
+    "scripts/core-ideals/field-report-browser.ts": "7eadf90f1455245548d4bbb3f3b8f1a7be67e8bcdae25a8b333695c5992b5c50",
+    "tests/core-ideals/field-report.test.ts": "486f90badf73946ba263d0ded850b72f66f938fa7907cce962dc82e6b783b6c5",
+    "fixtures/validation/field-report-corpus.json": "4923326f87012cdb765ed0dda4d0469a9c88bd396a5eaf4d8715713a5cc33379",
+    "fixtures/validation/field-report-browser.json": "0afb43c727057ad3a3801d57d460f9a736355c5371440ade01b5316435f8bd52"
+  }
+}

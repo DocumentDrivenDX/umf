@@ -240,3 +240,21 @@ validation diagnostics. Schema validation establishes structure only; report
 verification must recompute selection from the retained source/query with the same
 registry and compare all results. Unknown reference roles remain traversable links,
 not verified record-type semantics. Recursive references terminate by identity.
+
+### Shared authored Field report inspection
+
+A versioned shared inspection report may wrap the five priority authored Field
+projection receipts without discarding their native-specific representation.
+Inspection MUST recompute the adapter operation and reject inconsistent receipts.
+It exposes authored origin, ideal/native paths, the selected native carrier as the
+mapping basis, and the complete versioned binding on each mapping and residual.
+Residuals retain their source path/value, outcome, reason and receipt-based recovery
+instruction. A null target path explicitly means that no mapped native property is
+claimed for the unexpressed assertion. The original receipt remains authoritative
+for native export/recovery and is retained in full.
+
+This report covers single authored Field projections only. It does not certify
+native enforcement, normalize native types, turn source retention into exactness,
+or add author provenance to native-only classifications. Verification checks
+consistency, not cryptographic authenticity. PostgreSQL inspection still requires
+the caller's explicitly supplied pinned parser backend; no implicit host access.
