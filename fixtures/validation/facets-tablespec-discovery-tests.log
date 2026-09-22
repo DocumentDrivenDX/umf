@@ -1,0 +1,11 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-tablespec-discovery.test.ts:
+(pass) TableSpec native facet evidence is pinned and separates generator and execution profiles [8.05ms]
+(pass) all discovery inputs retain exact native text through both envelope serializations and explicit migrations [1134.84ms]
+(pass) unsafe native integer metadata and unknown width stay native instead of becoming core assertions [63.58ms]
+
+ 3 pass
+ 0 fail
+ 266 expect() calls
+Ran 3 tests across 1 file. [3.63s]

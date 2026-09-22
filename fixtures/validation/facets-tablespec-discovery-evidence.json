@@ -1,0 +1,96 @@
+{
+  "version": "1.0.0",
+  "bead": "umf-97221618-1c44db4c",
+  "scope": "TableSpec native facet discovery and existing archive/migration compatibility only",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "coreBaselineCommit": "fc8330706d6f9299229c56c382fd244ce9871ff2",
+  "results": {
+    "declarations": 44,
+    "values": 23,
+    "nativeTypeParses": 6,
+    "ingestCasts": 10,
+    "gxLengthChecks": 18,
+    "tests": 3,
+    "assertions": 266,
+    "failures": 0,
+    "browserRecoveries": 88,
+    "unsafeNativeTokens": 2,
+    "typecheck": "passed"
+  },
+  "commands": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-profile-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-tablespec-discovery.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-discovery-browser.ts"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "UMF_CHROMIUM_PATH": "/home/erik/.local/bin/chromium"
+      }
+    }
+  ],
+  "remaining": [
+    "Complete facet binding extension and operation schemas",
+    "Profile-qualified native classification and strict/report projection",
+    "Verified native and ideal recovery receipts for the new binding",
+    "Emitted artifact/native/browser acceptance and affected existing gate refresh"
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
+    "dist/umf.js": "cbf22b431a85a6e60536842c986147a64472a6034cf3c7aca8f01464bf9e3423",
+    "docs/helix/04-build/evidence/tablespec-facet-discovery.md": "7ccea7dc5b8a5e98275391035e5767073fe5e507fb2d2b13578e4323a6baaf23",
+    "fixtures/validation/facets-tablespec-discovery-browser.json": "504cd509d844bebfdd7c0d6440f5e977d7f005bb0010837a4c508e9246c5a924",
+    "fixtures/validation/facets-tablespec-discovery-tests.log": "41b6ae20cd4185600597460006613201df5d55e7e9e5db7b2549f5f4e2d0374a",
+    "fixtures/validation/facets-tablespec-discovery-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/facets-tablespec-profile-native.json": "0ed2e93c5627a3e168e031cefc947e9b62203de5095255f70dc1969843092a38",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "native/tablespec/facets-runtime/casting_utils.py": "f59d1fb080bea24705152f2b4b04f3e7f1398c5d2d00bf856f8ae4900dbce114",
+    "native/tablespec/facets-runtime/date_formats.py": "c03014ddc92938c090d82ef9f99ee237046613e5ebe0f3846e1b42aa45599253",
+    "native/tablespec/facets-runtime/dialects.py": "7c5b34d4dbd433e1b85e8a972bb9a529bd406198287adf5854f86d9172f41f4a",
+    "native/tablespec/facets-runtime/ingest_generator.py": "bd1a3dce57e58211202b00d2d231092a46dc88e80abaef6500ecb60e9049c9f0",
+    "native/tablespec/facets-runtime/sources.json": "06287939fe1506dd0efb77230baf2c5c5f9ffd8527a71c879e67858c75178944",
+    "native/tablespec/nullability-runtime/format_utils.py": "a50f9ed9f7292434b04cec57863b02b67f47ab8bd3bd781c3900ef60dc584fa2",
+    "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c",
+    "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+    "scripts/core-ideals/facets-tablespec-discovery-browser.ts": "dac2d2d482446c6d840bfdc49e81c65c7c9902001f84eabe284e1e73bd19131d",
+    "scripts/core-ideals/facets-tablespec-profile-oracle.ts": "6245585de86671a7ff0cd94cb5cd2795bfec0840cb55bc4017d32774d0dfe6fb",
+    "src/adapters/tablespec/index.ts": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8",
+    "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
+    "src/model/facet-transition.ts": "ece8b2c276c93177cdc45ee4cfd5a50517acf2e0af7f41847c0a488f78f1a3dc",
+    "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "tests/core-ideals/facets-tablespec-discovery.test.ts": "303f88a248d156758d46c113d0ed65d27d97801514b594c3b430fa5c63f788f6"
+  }
+}

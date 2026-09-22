@@ -1,0 +1,32 @@
+{
+  "commit": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "sourceRoot": "/home/erik/Projects/tablespec",
+  "scope": "Pinned facet discovery dependencies for ingest target and cast expression generation; execution evidence is separately qualified",
+  "files": [
+    {
+      "path": "native/tablespec/facets-runtime/ingest_generator.py",
+      "upstreamPath": "src/tablespec/schemas/ingest_generator.py",
+      "sha256": "bd1a3dce57e58211202b00d2d231092a46dc88e80abaef6500ecb60e9049c9f0"
+    },
+    {
+      "path": "native/tablespec/facets-runtime/casting_utils.py",
+      "upstreamPath": "src/tablespec/casting_utils.py",
+      "sha256": "f59d1fb080bea24705152f2b4b04f3e7f1398c5d2d00bf856f8ae4900dbce114"
+    },
+    {
+      "path": "native/tablespec/facets-runtime/dialects.py",
+      "upstreamPath": "src/tablespec/dialects.py",
+      "sha256": "7c5b34d4dbd433e1b85e8a972bb9a529bd406198287adf5854f86d9172f41f4a"
+    },
+    {
+      "path": "native/tablespec/facets-runtime/date_formats.py",
+      "upstreamPath": "src/tablespec/date_formats.py",
+      "sha256": "c03014ddc92938c090d82ef9f99ee237046613e5ebe0f3846e1b42aa45599253"
+    },
+    {
+      "path": "native/tablespec/facets-runtime/LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  ]
+}
