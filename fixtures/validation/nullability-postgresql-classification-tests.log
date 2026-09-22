@@ -1,0 +1,85 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [21.83ms]
+(pass) missing availability does not inherit native nullable flags or defaults [1.50ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [19.38ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [1.80ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.18ms]
+
+tests/core/nullability-transition.test.ts:
+(pass) explicit upgrade archives every old label and preserves roles, native refinements and references [2.59ms]
+(pass) both receipt formats roll back original model while retaining subsequent availability and native edits [8.17ms]
+(pass) null, empty, known, future and method-like collisions remain recoverable [9.64ms]
+(pass) forged receipts, wrong identity, wrong versions and malformed current states refuse atomically [3.06ms]
+(pass) 0.1.0 requires the Field transition first and the inverse chain preserves both collisions [2.74ms]
+(pass) getter inputs are refused without invoking artifact code [0.04ms]
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [3.61ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [7.80ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.71ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.96ms]
+
+tests/postgresql/native.test.ts:
+(pass) US-015-AC1: PostgreSQL DDL source and native AST survive UMF and native round trips [651.85ms]
+(pass) US-015-AC2: native candidate edits propagate without modifying the original source [68.89ms]
+(pass) US-015-AC3: unknown AST and representation fields cannot disappear through Protobuf or deparse [70.97ms]
+(pass) US-015-AC3: typed AST schema covers native samples, unions and known field types without stripping unknowns [32.56ms]
+(pass) US-015-AC3: typed Boolean construction repairs the wrapper without hiding raw codec loss [129.87ms]
+(pass) US-015-AC2: Boolean candidate edit uses the native false representation [61.93ms]
+
+tests/postgresql/catalog.test.ts:
+(pass) US-015-AC6: captured PostgreSQL metadata, exact unknowns and reconstruction archives survive both UMF formats [994.70ms]
+(pass) US-015-AC6: candidate edits cannot expose stale reconstruction SQL as synchronized [850.86ms]
+(pass) US-015-AC6: ambiguity and unknown representation data are preserved and reported [272.66ms]
+(pass) US-015-AC6: unsupported minor-version evidence and conflicting capture state cannot overclaim readiness [160.43ms]
+(pass) US-015-AC7: v1 captures remain readable while v2 requires its additional native object families [288.15ms]
+(pass) US-015-AC8: dependency identities distinguish native objects and preserve copied edges [196.68ms]
+
+tests/postgresql/projection.test.ts:
+(pass) US-015-AC9: explicit PostgreSQL row encodings produce a qualified JSON Schema and quoted query [97.13ms]
+(pass) US-015-AC9: strict policy, unsafe encodings and edited metadata block projection [447.68ms]
+(pass) US-015-AC9: generated SQL quotes identifiers and keys instead of interpolating executable fragments [168.17ms]
+(pass) US-015-AC9: projection result schema distinguishes blocked results from executable results [130.15ms]
+(pass) US-015-AC9: boolean, smallint and SQL/JSON null encodings retain their distinct contracts [66.07ms]
+
+tests/postgresql/metadata.test.ts:
+(pass) CONTRACT-015 catalog identities drive core families without flattening native meaning [811.95ms]
+(pass) CONTRACT-015 legacy captures do not guess types and field metadata cannot be lost [644.42ms]
+
+tests/postgresql/avro-projection.test.ts:
+(pass) CONTRACT-034 PostgreSQL captured columns project with explicit restricted domains and native recovery [892.45ms]
+(pass) CONTRACT-034 numeric typmods are decoded without truncation or inventing unconstrained precision [1876.95ms]
+(pass) CONTRACT-034 unsupported mappings, ambiguity, stale metadata and modified captures block [2965.79ms]
+
+tests/postgresql/declarations.test.ts:
+(pass) CONTRACT-015 raw DDL exposes copied declarations without resolving search_path, LIKE or ALTER state [340.71ms]
+(pass) CONTRACT-015 DDL type inventory respects native edits, unknown type syntax, foreign tables and version guards [187.50ms]
+
+tests/postgresql/edit-preservation.test.ts:
+(pass) CONTRACT-015 candidate edits cannot erase unknown tagged representation content [2352.15ms]
+
+tests/postgresql/ddl-edits.test.ts:
+(pass) US-015-AC12 edited native DDL evidence binds current proposals and fresh catalog recovery [438.35ms]
+
+tests/postgresql/integer-tokens.test.ts:
+(pass) CONTRACT-015 exact catalog integers prevent false scalar classification through rounding [3799.49ms]
+
+tests/core-ideals/field-postgresql.test.ts:
+(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [6929.79ms]
+(pass) native text formatting and unknown numeric metadata survive both receipt formats [992.59ms]
+(pass) verified authored conflict blocks both modes without a partial target [522.09ms]
+(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [686.88ms]
+
+tests/core-ideals/nullability-postgresql.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [49953.86ms]
+(pass) domain NOT NULL, CHECK UNKNOWN, NOT VALID and generated expressions do not become column permission [1211.43ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1424.77ms]
+(pass) unknown exact native content remains recoverable while uncertain permission is withheld [602.01ms]
+(pass) missing flags, triggers, unsupported profiles and source state remain explicit [877.19ms]
+
+ 51 pass
+ 0 fail
+ 1932 expect() calls
+Ran 51 tests across 14 files. [84.22s]

@@ -1,14 +1,24 @@
 {
-  "scope": "Browser import and JSON/YAML recovery of the native availability catalog tree; PostgreSQL runs only in the native oracle, no ideal binding claim",
+  "scope": "Browser scoped availability classification, refusal and exact captured-source recovery through JSON/YAML; PostgreSQL runs only in the native oracle; authored projection and ideal recovery remain unfinished",
   "browser": "148.0.7778.0",
   "checks": {
     "nativeCasesRetained": 18,
-    "catalogTreeRecoveries": 2
+    "catalogTreeRecoveries": 2,
+    "classificationCases": 176,
+    "classified": 91,
+    "blocked": 85,
+    "exactSourceRecoveries": 182,
+    "forgedRefusals": 91
   },
   "externalRequests": [],
   "fingerprints": {
     "fixtures/validation/nullability-postgresql-native.json": "8746926af99388d5c961eab9e8a737e497152a56ae0795de6813ad887dbf18c6",
-    "dist/umf.js": "5ab31f95f59fc20a136b35c3c5b2be84d97dcc887ffec83b3ba921b8d6c40ab7",
-    "scripts/core-ideals/nullability-postgresql-browser.ts": "edcc22573c3f829405c6885913b85239bdd9ac913f85a8381c00e9d944c52316"
+    "dist/umf.js": "ec6bfadd01a8bf2364f8537fc7c51e2525b6da481656960d8d7d9b9b63149ab9",
+    "scripts/core-ideals/nullability-postgresql-browser.ts": "3d1d7d90365fa5026d6e15528d29319e79dd9cc2488da54320e5909c00294bae",
+    "scripts/core-ideals/nullability-postgresql-cases.ts": "59861630c559b69d14afb03c39dd610059fb1f5fd224e6d85dc499dc1b4e4434",
+    "src/core-ideals/nullability-postgresql.ts": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259",
+    "spec/core/postgresql-nullability-classification.schema.json": "d665d8c558d77682a649caaf9765ef1230e89075fa97dbaf5232736e1e9d2872",
+    "spec/extensions/postgresql-nullability/schema.json": "2bc17a61ba27967d199bd3dc2dd175170841bd897b62f88dfb604e6b4426eea1",
+    "spec/extensions/postgresql-nullability/package.json": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b"
   }
 }

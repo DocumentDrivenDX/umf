@@ -261,3 +261,5 @@ export * from './core-ideals/classification-report';
 export * from './core-ideals/structured-report';
 export * from './core-ideals/nullability-tablespec';
 export * from './core-ideals/nullability-tablespec-projection';
+
+export * from './core-ideals/nullability-postgresql';

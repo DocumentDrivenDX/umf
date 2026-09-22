@@ -85,11 +85,12 @@ migration/rollback, selection and versioned Field kind/record-type receipts.
 The TableSpec Nullability binding has passed its expanded acceptance, with
 selected-context classification, authored strict/report projection, retained
 scope metadata, both recovery directions and qualified native row checks.
-Prior five-system Field evidence has been rerun and its current gate passes.
-PostgreSQL is in progress: 18 pinned native availability probes pass, including
-domain NULL bypass, defaults and unvalidated constraints. Bun and Chromium
-preserve the native capture tree through JSON/YAML. This is discovery evidence;
-classification, authored projection and both ideal recovery directions remain.
+Prior five-system Field evidence passed its rerun at the TableSpec checkpoint.
+PostgreSQL is in progress: native discovery and scoped up-classification now
+preserve capture text through JSON/YAML, with a retained scope extension and
+explicit refusal/residual paths. Authored projection and ideal recovery remain.
+The preceding Field gate record is historical after this new library API;
+its native/browser checks must be refreshed before PostgreSQL binding acceptance.
 SQL Server, Avro and Parquet are the three remaining ready bindings;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this

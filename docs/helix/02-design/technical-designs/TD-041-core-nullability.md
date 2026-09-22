@@ -553,3 +553,45 @@ Exact input formatting, ideal classification/projection, author recovery and
 native-equivalence graduation are not established by these checks. The binding
 bead remains open and these two harnesses must grow to cover both ideal round
 trips before acceptance.
+
+
+### PostgreSQL classification implementation checkpoint
+
+`classifyPostgresqlNullability` now consumes explicitly migrated core 0.3.0
+Fields and retained PostgreSQL 17.4 catalog captures. Its caller selects
+`stored-relation`, `query-result`, `write-input` or unresolved scope, and an
+explicit `sql-null` carrier or unresolved carrier. Only stored-relation/SQL-NULL
+classification can currently establish an availability label.
+
+A captured true column `notNull` flag supplies required for an ordinary or
+partitioned table. A false flag supplies absent-allowed only for the implemented
+built-in scalar declarations, with no generated/identity behavior, relation
+constraints, unresolved relation triggers or unknown column refinements. Domain
+flags, CHECK expressions and generated expressions are retained without inferred
+availability. Unsupported views and unresolved cases produce unspecified plus
+residuals in report mode and no target in strict mode. Malformed captures are
+rejected by the existing native importer; modified captures require recapture.
+The implementation does not authenticate captures or verify a live server.
+
+The `umf.postgresql.nullability` extension package retains scope, carrier,
+interpretation and native path on the classified Field, including when the target
+is saved without its receipt. The operation schema describes source, target,
+request, observation, diagnostics and residuals. Existing authored availability
+requires a matching, current author receipt; conflicts block both modes. Recovery
+recomputes the receipt, checks the entire current target and returns the exact
+retained capture text, including unclaimed native data. Unknown UMF extensions
+remain attached. JSON/YAML round trips do not silently reclassify them.
+
+This is an up-classification checkpoint. Authored down-projection, ideal recovery,
+full binding acceptance and the refreshed five-system Field evidence remain to be
+completed. Adding this public API changes the library fingerprint, so the earlier
+Field acceptance record is historical until its required rerun. Cardinality,
+facets and key remain behind the Nullability delivery gate.
+
+The [classification checkpoint evidence](../../../../fixtures/validation/nullability-postgresql-classification-evidence.json)
+records 51 passing Bun tests / 1,932 assertions across 14 files; 176 Chromium
+classification cases, 182 exact source recoveries and 91 altered-receipt refusals;
+18 native behavior probes; successful typecheck and browser build; and audits of
+219 JSON Schemas and 34 extension packages. Source and evidence hashes qualify
+this checkpoint. The native oracle still measures native behavior separately
+from the browser classifier; it does not establish authored native projection.

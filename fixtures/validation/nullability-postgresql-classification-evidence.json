@@ -1,0 +1,63 @@
+{
+  "phase": "PostgreSQL Nullability up-classification checkpoint",
+  "bindingAcceptance": false,
+  "nativeEquivalence": false,
+  "scope": "PostgreSQL 17.4 captured stored-column declarations, explicit SQL-NULL carrier; exact retained source recovery, not authored projection or live enforcement verification",
+  "native": {
+    "cases": 18,
+    "expectedRejections": 6
+  },
+  "browser": {
+    "nativeCasesRetained": 18,
+    "catalogTreeRecoveries": 2,
+    "classificationCases": 176,
+    "classified": 91,
+    "blocked": 85,
+    "exactSourceRecoveries": 182,
+    "forgedRefusals": 91
+  },
+  "regression": {
+    "command": "bun test tests/core-ideals/nullability-postgresql.test.ts tests/core/nullability-authoring.test.ts tests/core/nullability-transition.test.ts tests/core/nullability-ideals.test.ts tests/postgresql tests/core-ideals/field-postgresql.test.ts",
+    "tests": 51,
+    "assertions": 1932,
+    "files": 14,
+    "failures": 0
+  },
+  "checks": {
+    "typecheck": "passed",
+    "browserBuildBytes": 10225028,
+    "jsonSchemas": 219,
+    "extensionPackages": 34
+  },
+  "remaining": [
+    "Authored PostgreSQL projection in strict/report modes",
+    "Ideal-to-native-to-ideal recovery with explicit residuals",
+    "Refresh five-system Field native/browser evidence after library changes",
+    "Full PostgreSQL Nullability binding acceptance"
+  ],
+  "fingerprints": {
+    "src/index.ts": "c5db42e1b090efdbed8c5e3bbcf7efb3a8c10314b90abdeb438f5fadf98fa8e8",
+    "src/core-ideals/nullability-postgresql.ts": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259",
+    "src/core-ideals/postgresql-field.ts": "d02ba4cdb319a751511f947e04ea91a6c8c0f8eb73ca0752f57d53f6478f2097",
+    "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/adapters/postgresql/catalog.ts": "8ab83b4f377d53e39a293175d7d221a74de930b81f262d6b3093e25d80f7fd5e",
+    "src/adapters/postgresql/column-metadata.ts": "1381e4c69b0b6f31d8a7fb988ef951ca9624fff68d4852a8bdc565a5ae16e81a",
+    "spec/core/postgresql-nullability-classification.schema.json": "d665d8c558d77682a649caaf9765ef1230e89075fa97dbaf5232736e1e9d2872",
+    "spec/extensions/postgresql-nullability/schema.json": "2bc17a61ba27967d199bd3dc2dd175170841bd897b62f88dfb604e6b4426eea1",
+    "spec/extensions/postgresql-nullability/package.json": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b",
+    "scripts/core-ideals/nullability-postgresql-schema.ts": "a8813163f15c5ab34bcb08dc21fd5fa1f7edfa3f560288ca4ac0bf27b9c22c42",
+    "scripts/core-ideals/nullability-postgresql-package.ts": "49f4bafe2933d487704aaf2fe024f8f306e1756ad8717c9f368ae5028c6eec38",
+    "scripts/core-ideals/nullability-postgresql-cases.ts": "59861630c559b69d14afb03c39dd610059fb1f5fd224e6d85dc499dc1b4e4434",
+    "scripts/core-ideals/nullability-postgresql-browser.ts": "3d1d7d90365fa5026d6e15528d29319e79dd9cc2488da54320e5909c00294bae",
+    "scripts/core-ideals/nullability-postgresql-oracle.ts": "f38365d8ae70f8f072c4dc5e20145df926e1972d29f406bde9a4eb191c2c7555",
+    "tests/core-ideals/nullability-postgresql.test.ts": "016c77d573ad603647a98097f2757dde5c4a25b4b18a737728cf3754435e4f29",
+    "fixtures/validation/nullability-postgresql-native.json": "8746926af99388d5c961eab9e8a737e497152a56ae0795de6813ad887dbf18c6",
+    "fixtures/validation/nullability-postgresql-browser.json": "a73cc04f9ffa63c04bae42fdc15bd509fce6443746c6e51b6b4e47201e87d499",
+    "fixtures/validation/nullability-postgresql-classification-tests.log": "073d1ddc27e02f1ca096396e7e51701e90ebc1348f94703d09938401ad559dae",
+    "dist/umf.js": "ec6bfadd01a8bf2364f8537fc7c51e2525b6da481656960d8d7d9b9b63149ab9"
+  }
+}
