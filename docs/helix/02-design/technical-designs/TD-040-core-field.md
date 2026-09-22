@@ -1163,3 +1163,29 @@ audits pass. See [Avro record-type evidence](../../../../fixtures/validation/avr
 
 Other native record-reference bindings, nested/container projections and common
 mapping/residual metadata remain required. Field and the overall goal stay open.
+
+## Parquet classified record-type references
+
+`classifyParquetRecordType` now adds a classified Field-to-record link for a
+non-root interpreted struct member. The value slot remains in `parquet.fields`,
+while a separate record definition references its ordered direct members. Native
+repetition/definition levels and all file bytes remain untouched. A repeated struct
+can supply the element record shape without asserting ideal array cardinality.
+
+The existing checked record classifier establishes the struct interpretation.
+Primitive nodes, LIST/MAP wrappers, opaque group roles, root-as-member requests and
+incompatible author receipts cannot become record-valued Fields. Existing kind
+assertions require a matching field receipt; existing record-type links and scalar
+metadata prevent implicit reconciliation. Blocks have no partial target. Recovery
+recomputes the operation and requires an unchanged current target.
+
+Two Bun tests pass 71 assertions. Across sixteen fixtures, PyArrow 21.0.0 confirms
+five nested struct member lists and accepts all byte-identical recovered files.
+Chromium 148 matches five record-type classifications, ten JSON/YAML byte recoveries
+and twenty-two blocked group selections, alongside the existing Field/record
+matrix. Typechecking, browser build and all 204 schema / 32 package audits pass.
+See [Parquet record-type evidence](../../../../fixtures/validation/parquet-record-type-evidence.json).
+
+Nested authored projections, other priority-system reference bindings and complete
+common projection metadata remain required. No native repetition or storage grouping
+is promoted to ideal cardinality or organizational group semantics by this work.

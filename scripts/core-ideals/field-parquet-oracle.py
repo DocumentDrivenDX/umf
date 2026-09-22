@@ -4,6 +4,7 @@ assert pyarrow.__version__ == '21.0.0'
 corpus=json.loads(pathlib.Path('fixtures/validation/field-parquet-corpus.json').read_text())
 results=[]
 record_count=0
+record_type_count=0
 blocked_records=0
 for ri,row in enumerate(corpus['rows']):
     original=pathlib.Path(row['path']).read_bytes()
@@ -45,8 +46,24 @@ for ri,row in enumerate(corpus['rows']):
         assert restored.read_bytes()==original
         assert pq.ParquetFile(restored).schema.equals(native)
         record_count+=1
+    type_structs=list(structs)
+    for entry in row['recordTypes']:
+        result=entry['result']
+        if result['status']=='blocked': continue
+        record=result['target']['modules'][-1]['elements'][0]
+        fields_module=next(m for m in result['target']['modules'] if m['id']=='parquet.fields')
+        slot=next(e for e in fields_module['elements'] if e['id']=='schema:'+str(entry['request']['index']))
+        assert slot['kind']=='field' and slot['references'][-1]=={'role':'record-type','module':'records','element':'type'}
+        names=[next(e['name'] for e in fields_module['elements'] if e['id']==ref['element']) for ref in record['references']]
+        assert names in type_structs
+        type_structs.remove(names)
+        restored=pathlib.Path(f'.cache/parquet-field/type-{ri}-{entry["request"]["index"]}.parquet')
+        assert restored.read_bytes()==original
+        assert pq.ParquetFile(restored).schema.equals(native)
+        record_type_count+=1
+    assert not type_structs
     assert not expected_structs, (row['path'],expected_structs)
     results.append({'path':row['path'],'fields':len(selected),'sha256':hashlib.sha256(original).hexdigest()})
-out={'runtime':'PyArrow '+pyarrow.__version__,'records':record_count,'blockedRecords':blocked_records,'files':len(results),'fields':sum(r['fields'] for r in results),'results':results,'scope':'Physical leaf roles/levels, Arrow root and nested struct member names, and byte recovery; no value-domain or cardinality equivalence'}
+out={'runtime':'PyArrow '+pyarrow.__version__,'recordTypes':record_type_count,'records':record_count,'blockedRecords':blocked_records,'files':len(results),'fields':sum(r['fields'] for r in results),'results':results,'scope':'Physical leaf roles/levels, Arrow root and nested struct member names, and byte recovery; no value-domain or cardinality equivalence'}
 pathlib.Path('fixtures/validation/field-parquet-native.json').write_text(json.dumps(out,indent=2)+'\n')
-print(json.dumps({'files':out['files'],'fields':out['fields'],'records':record_count,'blockedRecords':blocked_records}))
+print(json.dumps({'files':out['files'],'fields':out['fields'],'recordTypes':record_type_count,'records':record_count,'blockedRecords':blocked_records}))

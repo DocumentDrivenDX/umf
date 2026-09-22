@@ -1,0 +1,36 @@
+{
+  "scope": "Interpreted non-root Parquet struct member type references and exact bytes; not cardinality inference or nested authored projection",
+  "commands": [
+    "bun test tests/core-ideals/parquet-record-type.test.ts",
+    "bun scripts/core-ideals/field-parquet-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-parquet-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-parquet-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 71,
+    "nativeFiles": 16,
+    "recordTypes": 5,
+    "blockedTypes": 22,
+    "browserTypeRecoveries": 10,
+    "typecheck": "passed",
+    "schemasPassed": 204,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10086461
+  },
+  "sha256": {
+    "src/core-ideals/parquet-record-type.ts": "5bb556b3ca6e63ff04f7cfbf83a0396885476dcbbeb7d241f8f3f827d6dd0230",
+    "spec/core/parquet-record-type-classification.schema.json": "7a5a9050dc44cff0cdce918a36826942a14bdfc03a87cca7248c6a63a844d244",
+    "scripts/core-ideals/parquet-record-type-schema.ts": "7c86c9eef0cb5a8014c9a4cb05d898775ec90a22faa46167b5b973640cedd325",
+    "tests/core-ideals/parquet-record-type.test.ts": "23a33d8aacacd7a1348d809ba11a4264611d75ffd317ab96e51472e3240cc10c",
+    "scripts/core-ideals/field-parquet-corpus.ts": "01d4e33a0559400b01944f405889f48f1b758bedccf538a0e25d3f8eb3ef7767",
+    "scripts/core-ideals/field-parquet-oracle.py": "8827668cce2a9b0a4c15533c67e9cca1e4126d3707135bc9fa803b380cf9486b",
+    "scripts/core-ideals/field-parquet-browser.ts": "83c2da92742d7e9520159150bf03966b9e70105fcbd8698673d4f261ff6f66e1",
+    "fixtures/validation/field-parquet-corpus.json": "c8aca4b31faca39d2a08189e00f3778da47e0fb626255843c4c49a3437a243b9",
+    "fixtures/validation/field-parquet-native.json": "3b44461502826b3e19e642d9a86ff635e512eb8a1c2002a66206d86b29c3dab7",
+    "fixtures/validation/field-parquet-browser.json": "27c1a3594cfece2a753ccc3a5284eddb5858d36446cf8b790cc72a57cf72bb89"
+  }
+}
