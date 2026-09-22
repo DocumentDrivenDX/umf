@@ -776,3 +776,53 @@ also records 34 existing SQL Server/core Nullability regression tests with 687
 assertions, alongside the five focused tests. Both suites pass. Evidence hashes
 bind the native version, new supplement schema, public API, browser bundle and
 recovery checks; they do not close the broader delivery gate.
+
+### SQL Server authored projection checkpoint
+
+`projectNullabilityToSqlServer` now accepts verified core 0.3.0 Field availability
+with an explicit native scalar carrier. Required maps to `NOT NULL`;
+absent-allowed maps to `NULL`. Unspecified has no authored availability obligation:
+the binding chooses explicit `NULL` and records `no-authored-requirement` as its
+basis. The original unspecified assertion remains in the receipt. Native-only
+classification observes absence permission rather than reconstructing authorship.
+
+This native choice makes generated DDL deterministic. SQL Server can obtain an
+omitted nullability clause from session/database settings; explicit clauses are
+independent of those settings, as described in Microsoft's
+[ANSI_NULL_DFLT_ON documentation](https://learn.microsoft.com/en-us/sql/t-sql/statements/set-ansi-null-dflt-on-transact-sql?view=sql-server-ver17).
+The native oracle executes every emitted target under both opposing session
+settings and includes omitted-clause controls that deliberately yield different
+nullable flags. The projection does not mutate the caller's session settings.
+
+Known availability obligations require stored-relation scope and the SQL-NULL
+carrier. Unsupported scopes/carriers produce residuals: strict blocks, while
+report emits a permissive candidate with `unprojected-requirement` as its basis.
+Other source metadata, vocabulary semantics, elements, references, namespaces and
+unknown extensions are audited into explicit residuals. Extended-property size
+limits are also reported. Quoted Unicode names and descriptions survive native
+execution; temporary, unsafe and overlength identifiers refuse.
+
+`recoverNullabilityFromSqlServer` recomputes the entire projection receipt and
+requires unchanged native DDL before returning the complete original model.
+Report-mode losses remain recoverable. The 79-case corpus includes all 14 current
+SQL Server scalar carriers, all three ideals, strict/report policies, unresolved
+bindings, conflicting names/types, unknown metadata, long descriptions and quoted
+identifiers. It emits 63 targets and blocks 16. The native oracle executes the
+targets twice, checks NULL/omitted/present writes, comments and native type IDs,
+and recovers/reclassifies all 63 retained models/captures. Two ambient controls
+verify the omitted-clause counterexample. These probes do not establish scalar
+value-domain equivalence or general SQL Server DDL conformance.
+
+Authored projection and both retained recovery directions now have implementation
+evidence. The broader Field/core refresh and final SQL Server binding acceptance
+remain open. Avro and Parquet Nullability follow; no native concept is replaced.
+
+The [authored projection evidence](../../../../fixtures/validation/nullability-sqlserver-projection-evidence.json)
+records 126 native executions across 63 emitted targets, 16 strict blocks,
+63 native reclassifications and 63 recoveries in each retained direction.
+Chromium recovers 126 ideal models through JSON/YAML and refuses 63 altered
+receipts. The classification browser rerun still passes all 288 cases / 312 source
+recoveries. Ten focused/existing Bun tests pass with 765 assertions, along with
+typecheck, browser build and audits of 224 schemas / 35 packages. Source and
+runtime fingerprints qualify these results; broader binding acceptance remains
+pending.

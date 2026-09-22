@@ -265,3 +265,4 @@ export * from './core-ideals/nullability-tablespec-projection';
 export * from './core-ideals/nullability-postgresql';
 export * from './core-ideals/nullability-postgresql-projection';
 export * from './core-ideals/nullability-sqlserver';
+export * from './core-ideals/nullability-sqlserver-projection';

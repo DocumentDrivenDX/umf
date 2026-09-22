@@ -23,8 +23,8 @@ recovery directions. Native checks preserve the differences between domain and
 column constraints, omission and NULL, and authored and observed availability.
 The prior five-system Field native/browser checks and their fingerprints passed
 at the PostgreSQL checkpoint. SQL Server now has native discovery and scoped
-classification with exact source recovery. Its authored projection remains open,
-and Field gate fingerprints need revalidation after the API addition. Avro and
+classification and authored projection with both recovery directions. Its final
+binding acceptance and Field gate fingerprint refresh remain open. Avro and
 Parquet Nullability remain;
 the experimental Nullability concept has not passed its five-system delivery gate.
 Cardinality, facets and key follow Nullability. See the

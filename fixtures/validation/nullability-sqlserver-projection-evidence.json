@@ -1,0 +1,75 @@
+{
+  "phase": "SQL Server authored Nullability projection checkpoint",
+  "bindingAcceptance": false,
+  "nativeEquivalence": false,
+  "scope": "Single authored core 0.3.0 Field, explicit builtin carrier and stored-relation SQL-NULL policy; SQL Server 16.0.4295.3 execution under opposing ANSI null defaults, browser receipt parity and retained-report ideal recovery; no value-domain equivalence",
+  "native": {
+    "serverVersion": "16.0.4295.3",
+    "executed": 126,
+    "blocked": 16,
+    "idealRecoveries": 63,
+    "classified": 63,
+    "nativeRecoveries": 63,
+    "controls": [
+      {
+        "setting": "nullable",
+        "is_nullable": true
+      },
+      {
+        "setting": "required",
+        "is_nullable": false
+      }
+    ]
+  },
+  "browser": {
+    "cases": 79,
+    "blocked": 16,
+    "recoveries": 126,
+    "forgedRefusals": 63,
+    "identifierRefusals": 6
+  },
+  "classificationBrowser": {
+    "nativeCasesRetained": 24,
+    "catalogTreeRecoveries": 2,
+    "sidecarPreserved": true,
+    "classificationCases": 288,
+    "classified": 156,
+    "blocked": 132,
+    "exactSourceRecoveries": 312,
+    "forgedRefusals": 156
+  },
+  "regression": {
+    "command": "bun test tests/core-ideals/nullability-sqlserver-projection.test.ts tests/core-ideals/field-sqlserver-projection.test.ts tests/core/nullability-authoring.test.ts",
+    "tests": 10,
+    "assertions": 765,
+    "files": 3,
+    "failures": 0
+  },
+  "checks": {
+    "typecheck": "passed",
+    "browserBuildBytes": 10281028,
+    "jsonSchemas": 224,
+    "extensionPackages": 35
+  },
+  "remaining": [
+    "Broader Field/core regression",
+    "Refresh five-system Field native/browser evidence after library changes",
+    "Full SQL Server Nullability binding acceptance"
+  ],
+  "fingerprints": {
+    "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110",
+    "src/core-ideals/nullability-sqlserver-projection.ts": "28bf3e24af429b80539ec5039a333d69248682465beb9d3615bbdff5c4d8d042",
+    "src/core-ideals/sqlserver-syntax.ts": "5099fb29ea4672e70f155cb3e999f8c6eaa9a914831dc9c042e6887134a97ef9",
+    "spec/core/nullability-sqlserver-projection.schema.json": "129aee0fd3580dc3ca41a43b59f7899a33a33c5fcdd347cfd2ab8a7f664ee043",
+    "scripts/core-ideals/nullability-sqlserver-projection-schema.ts": "33abbcecf2994caeda0a76d376d825e2894ce84e731212b153f01eb85e90cf0f",
+    "scripts/core-ideals/nullability-sqlserver-projection-cases.ts": "5a2bc88144bd734538c5338e334973730ed4adbc0acfb591decc305b2713c14a",
+    "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts": "6e04f803b521b7cd2415aacb1fcee9d7f963e8e32085740100fcebebd3ef9af5",
+    "scripts/core-ideals/nullability-sqlserver-projection-browser.ts": "7b142a675e591baea6ef394f117b9a3cfcdae75e0150f513804b563a923d5d1c",
+    "tests/core-ideals/nullability-sqlserver-projection.test.ts": "4f1ab7e46915085466e8270e618031c58d3e3f67c665a157f69a6462f99208bc",
+    "fixtures/validation/nullability-sqlserver-projection-tests.log": "baf9356cdb39196c7c5b70b46c2d0fd9812caf7314df4d0627a42eea1829a152",
+    "fixtures/validation/nullability-sqlserver-projection-native.json": "33878da5ed5d3a1df502884e4982894ed8e41d4c06dcbba2a8a2dc950269d0d2",
+    "fixtures/validation/nullability-sqlserver-projection-browser.json": "5172249338c40ee8d7ef2dc9ba19b6a78d2577ac361e77eac81151e4c33f46f9",
+    "fixtures/validation/nullability-sqlserver-browser.json": "7361ade758860683f4add0062124cc975e9a217da1a6f1ebcdee7ae000e23371",
+    "dist/umf.js": "58f3b9bd0ecdce45ffa54f594c4f2344aedecbb53b12a9e9ade77bd3f32b4d13"
+  }
+}

@@ -95,7 +95,8 @@ fingerprints replaced the prior stale-gate status at that checkpoint. See the
 [PostgreSQL acceptance record](../../../fixtures/validation/postgresql-nullability-acceptance-evidence.json).
 SQL Server is in progress: native availability discovery and scoped classification
 now have evidence, including both serialization formats and exact source recovery.
-Authored projection and ideal recovery remain unfinished. The previous Field gate
+Authored projection and ideal recovery now have native execution evidence under
+both SQL Server null-default settings. Binding acceptance remains open. The previous Field gate
 is historical after this public API addition and needs its required refresh.
 Avro and Parquet are ready;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
