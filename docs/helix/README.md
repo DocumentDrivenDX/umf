@@ -15,7 +15,10 @@ nullability, cardinality, author-stated facets and key. See
 Experimental Field authoring and validation are implemented in core 0.2.0.
 Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
-is next, followed by its five bindings, then cardinality, facets and key. See the
+is in progress: experimental core 0.3.0 validation and preservation are implemented;
+authoring receipts, migration and native bindings remain pending. Prior Field
+fingerprints require refresh before this new integration can be qualified.
+Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038

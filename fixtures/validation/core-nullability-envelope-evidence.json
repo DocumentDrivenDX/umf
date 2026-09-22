@@ -1,0 +1,61 @@
+{
+  "scope": "Experimental 0.3.0 nullability envelope validation, public metadata and JSON/YAML preservation only; not core authoring completion or native admission",
+  "results": {
+    "coreTests": 45,
+    "assertions": 730,
+    "testFiles": 8,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 209,
+    "packages": 32,
+    "browserBuildBytes": 10129651,
+    "browser": {
+      "scope": "Experimental nullability envelope validation and JSON/YAML preservation only; authoring receipts, migration and bindings remain pending",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "decisions": 150,
+        "recoveries": 218,
+        "legacyCollisions": 90,
+        "refusals": 41
+      },
+      "externalRequests": []
+    }
+  },
+  "commands": [
+    "bun scripts/core-nullability-schema.ts",
+    "bun test tests/core/nullability-ideals.test.ts tests/core/field-ideals.test.ts",
+    "bun test tests/core/core.test.ts tests/core/field-ideals.test.ts tests/core/field-kind.test.ts tests/core/field-transition.test.ts tests/core/native-json.test.ts tests/core/nullability-ideals.test.ts tests/core/scalar.test.ts tests/core/selection.test.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-nullability-browser.ts"
+  ],
+  "remaining": [
+    "Explicit typed nullability authoring/inspection and operation schemas",
+    "0.2.0-to-0.3.0 collision-preserving migration and rollback receipts",
+    "0.3.0 integration with existing version-qualified core operations",
+    "Five native bindings and their native/browser admission gates",
+    "Refresh prior Field evidence after the new core integration stabilizes"
+  ],
+  "priorFieldEvidence": {
+    "command": "bun scripts/core-ideals/field-conformance.ts",
+    "exitCode": 1,
+    "status": "stale source fingerprints",
+    "firstMismatch": "src/index.ts",
+    "note": "Prior 0.2.0 qualification remains historical; its fingerprints were not silently rewritten for this new envelope."
+  },
+  "sha256": {
+    "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
+    "scripts/core-nullability-schema.ts": "50c3d5b16f2e4fc6869efd265e373912905676a0f36e585703fc198dd9139370",
+    "scripts/core-nullability-browser.ts": "8746316c97cb4f974308ec2f3e8d858fe1d69060846e4e1035d276451347b66c",
+    "src/model/types.ts": "68ab29ccfcd07c4add8fec8506184452ce97fafe53e125c4b575b9fdb65aedfd",
+    "src/validation/schema.ts": "1bcf83123ddec50c3df5704aed3bc144718c0f8f4250288141a3ae4f4d49ade6",
+    "src/validation/document.ts": "a2c7e7992f2365ab60e5651ab797a2a2a7c5e140745d2ab95564c6e3967e9b7c",
+    "src/index.ts": "0cb0ebdd7ccfe56cc60d55e6b00e091e5e3731b9fbeb7aa0738e974baeea26e7",
+    "tests/core/nullability-ideals.test.ts": "a5a9b60ed2b90f7f08807066d85d1fb315d9c66d8587d84a3dced0e09e9baa20",
+    "tests/core/field-ideals.test.ts": "dbd1e908609e1dcd2fc171ff93c35425e0ba65625ae571c9829e62fffbab7216",
+    "fixtures/validation/core-nullability-browser.json": "383a38b97eb3012fb1a169aa9fe50286004229291e8140366d3219aebafc3596",
+    "fixtures/validation/core-nullability-tests.log": "7257eb2bc76292d27755be8767866f01f17ec8a413d70fe7c75dbba2a08c7539",
+    "fixtures/validation/core-nullability-prior-field-gate.log": "6a48d3abf44175a4082a284a48a30fa75d91428179839d052319ae54c02f887b"
+  }
+}

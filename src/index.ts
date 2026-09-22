@@ -15,6 +15,7 @@ export * from './model/selection';
 export * from './registry/registry';
 export * from './validation/document';
 export { default as coreSchema } from '../spec/core/schema.json';
+export { default as coreNullabilitySchema } from '../spec/core/nullability-document.schema.json';
 export { default as extensionPackageSchema } from '../spec/core/extension-package.schema.json';
 export * from './adapters/json-schema';
 export * from './adapters/protobuf';

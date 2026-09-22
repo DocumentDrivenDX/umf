@@ -1,0 +1,67 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/core.test.ts:
+(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [14.16ms]
+(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [24.81ms]
+(pass) US-001-AC2: native semantics are not inferred by extension structural validation [8.72ms]
+(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [12.29ms]
+(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [10.52ms]
+(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [5.14ms]
+(pass) US-001-AC2: validator exceptions never become successful validation [4.40ms]
+(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [1.80ms]
+(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [1.05ms]
+(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.14ms]
+(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.23ms]
+(pass) US-001-AC4: document depth and size limits fail explicitly [1.13ms]
+(pass) US-001-AC1: generated unknown content survives repeated portable serialization [96.62ms]
+(pass) registry captures a frozen copy, independent of subsequent package edits [7.05ms]
+(pass) published minimal document fixture validates with independent namespaces and references [2.46ms]
+(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.60ms]
+(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [6.34ms]
+
+tests/core/native-json.test.ts:
+(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [9.97ms]
+(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.53ms]
+(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.23ms]
+(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.34ms]
+
+tests/core/scalar.test.ts:
+(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [3.68ms]
+(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [0.40ms]
+
+tests/core/selection.test.ts:
+(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [4.95ms]
+(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [121.03ms]
+(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [13.48ms]
+(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [1135.38ms]
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [3.00ms]
+(pass) legacy collisions stay opaque, including names that are now known [3.41ms]
+(pass) new profile refuses malformed kinds and structured scalar claims atomically [1.37ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [0.56ms]
+(pass) future envelope versions and unsafe getter inputs cannot be interpreted [0.14ms]
+
+tests/core/field-transition.test.ts:
+(pass) upgrade explicitly archives every legacy collision and preserves all other metadata [14.12ms]
+(pass) serialized receipts support exact model rollback while retaining later assertions and native edits [4.43ms]
+(pass) tampered or stale receipts fail without overwriting source or edited model [2.78ms]
+(pass) null, method-like names, unknown content, and malformed inputs retain copy safety [2.72ms]
+
+tests/core/field-kind.test.ts:
+(pass) kind lookup separates legacy, unknown, missing and defined roles without inventing provenance [9.55ms]
+(pass) author provenance survives serialization, verification and rollback without claiming native meaning [6.72ms]
+(pass) authoring blocks unknown meaning, legacy versions and structured/scalar conflicts atomically [0.62ms]
+(pass) provenance verification rejects forged paths, altered assertions and stale native or unrelated content [1.61ms]
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [2.20ms]
+(pass) missing availability does not inherit native nullable flags or defaults [0.50ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [5.95ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [1.12ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.08ms]
+
+ 45 pass
+ 0 fail
+ 730 expect() calls
+Ran 45 tests across 8 files. [2.95s]

@@ -6,6 +6,9 @@ export const SCALAR_TYPES=['boolean','integer','decimal','float','string','binar
 export type ScalarType=typeof SCALAR_TYPES[number];
 export const ELEMENT_KINDS=['field','record','group'] as const;
 export type ElementKind=typeof ELEMENT_KINDS[number];
+/** Ideal availability only; native absence representations require explicit bindings. */
+export const NULLABILITIES=['required','absent-allowed','unspecified'] as const;
+export type Nullability=typeof NULLABILITIES[number];
 export interface Element {
   id: string;
   name?: string;
@@ -21,7 +24,7 @@ export interface Module {
   [key: string]: unknown;
 }
 export interface Document {
-  umf: '0.1.0' | '0.2.0'; id: string;
+  umf: '0.1.0' | '0.2.0' | '0.3.0'; id: string;
   vocabularies: Record<string, { version: string; [key: string]: unknown }>;
   modules: Module[];
   extensions?: Record<string, Json>;

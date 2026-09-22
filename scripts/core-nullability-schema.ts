@@ -1,0 +1,10 @@
+export {};
+const schema=await Bun.file('spec/core/field-document.schema.json').json();
+schema.$id='urn:umf:core:0.3.0';
+schema.title='UMF 0.3.0 experimental nullability envelope';
+schema.description='Explicit ideal value availability on Fields. No implicit upgrade from older envelopes, native NULL mapping, or default execution.';
+schema.properties.umf.const='0.3.0';
+schema.$defs.knownNullability={enum:['required','absent-allowed','unspecified']};
+schema.$defs.element.properties.nullability={type:'string',minLength:1,description:'Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings.'};
+schema.$defs.element.allOf.push({if:{required:['nullability'],properties:{nullability:{}}},then:{required:['kind'],properties:{kind:{const:'field'}}}});
+await Bun.write('spec/core/nullability-document.schema.json',JSON.stringify(schema,null,2)+'\n');

@@ -1,6 +1,7 @@
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import fields from '../../spec/core/field-document.schema.json';
+import nullability from '../../spec/core/nullability-document.schema.json';
 import manifest from '../../spec/core/extension-package.schema.json';
 // JSON equality must not inspect prototypes or invoke valueOf/toString. Checked
 // values deliberately use null-prototype dictionaries, including reference arrays.
@@ -22,4 +23,5 @@ export function installJsonEquality(validator:Pick<Ajv2020,'removeKeyword'|'addK
 const ajv = createValidator();
 export const checkCore = ajv.compile(core);
 export const checkCoreFields = ajv.compile(fields);
+export const checkCoreNullability = ajv.compile(nullability);
 export const checkPackage = ajv.compile(manifest);

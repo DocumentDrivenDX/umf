@@ -20,8 +20,9 @@ ddx:
 ## Scope
 
 Implement US-041 under CONTRACT-040. Architecture is the direct parent; no
-separate solution design exists for this core slice. The current envelope only
-implements scalar-family metadata. This design is planned, not executed evidence.
+separate solution design exists for this core slice. Core 0.2.0 implements the
+admitted Field ideal and scalar-family metadata. Nullability remains a new
+experimental slice; its five-system admission is not established.
 
 ## Technical Approach
 
@@ -72,6 +73,21 @@ version/subset and exactness obligations; unsupported native syntax blocks safel
 Consumer selection must preserve source identity and source paths, not merge names.
 
 ## Data Model Changes
+
+Use a separate opt-in envelope `umf: "0.3.0"`, schema ID
+`urn:umf:core:0.3.0`. Versions 0.1.0 and 0.2.0 retain opaque nullability members of
+any JSON shape. Version 0.3.0 interprets only nonempty string labels on explicit
+`kind: field` elements: required, absent-allowed and unspecified are known;
+unknown strings remain retained and uninterpreted. Missing nullability is never
+filled from defaults, native flags or scalar families. Record/group elements
+cannot carry this field. This version choice precedes schema publication.
+
+Migration must be explicit from 0.2.0, archive every old nullability collision
+(including known-looking strings), and preserve Field roles. A 0.1.0 source must
+first use the existing Field transition. Rollback restores the retained 0.2.0
+source and keeps any later 0.3.0 edits separately. Typed authoring/inspection and
+operation receipts follow the envelope foundation; old 0.2.0-only operations do
+not silently acquire 0.3.0 support. This is not a release or admission decision.
 
 Add this concept incrementally, retaining author/classification provenance and
 native extension data. An absent member on an old model asserts nothing. No
@@ -144,3 +160,28 @@ and follow-up bindings; report mode must never imply execution enforcement.
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
 - [ ] Schema/version transition, five bindings and regression evidence implemented.
+
+### Initial envelope foundation evidence
+
+The opt-in 0.3.0 schema, public `coreNullabilitySchema`/`NULLABILITIES` metadata,
+version-qualified validation and ordinary JSON/YAML document I/O are implemented.
+Older envelopes still report nullability as opaque content, including values that
+look like new labels. New known/unknown availability strings require an explicit
+Field; malformed values and record/group use fail atomically. Missing availability
+does not inherit native flags or defaults.
+
+`fixtures/validation/core-nullability-envelope-evidence.json` records 45 passing
+core tests with 730 assertions across eight files, typecheck, all 209 schemas and
+32 packages, and a 10,129,651-byte browser build. Chromium 148 matches 150
+validation decisions, 218 document recoveries, 90 legacy collision cases and
+41 expected refusals, with public metadata available and no external requests or
+Bun/Node globals.
+
+This is a foundation, not completion of the Nullability core bead. Authoring and
+inspection receipts, explicit collision-preserving migration/rollback and 0.3.0
+integration with version-qualified core operations remain required. The five
+native bindings have not started. The prior Field conformance command correctly
+fails its current-source fingerprint check after these changes (first mismatch:
+`src/index.ts`). Its accepted 0.2.0 evidence remains historical; do not refresh
+hashes alone or claim a current full regression. Reverify the affected Field
+behavior before closing the Nullability core integration.

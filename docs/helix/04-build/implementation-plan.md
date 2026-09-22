@@ -67,7 +67,7 @@ acceptance evidence committed in `e0c04bb`. The scoped TableSpec Field binding
 is closed with refreshed native/browser evidence in `3236095`, and PostgreSQL
 in `b7545c2`. SQL Server, Avro and Parquet close with `1283337`. Field admission
 and qualified five-system delivery pass in `d6c4108`; native equivalence is not
-claimed. Seven tasks are closed and 28 remain open. The portable CLI-managed
+claimed. Seven tasks are closed and 28 remain unfinished. The portable CLI-managed
 queue is `.ddx/beads.jsonl`.
 
 | Concept | Core implementation | Five-system exit gate |
@@ -80,7 +80,9 @@ queue is `.ddx/beads.jsonl`.
 
 Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
 `ddx bead status` to inspect execution state. Nullability core implementation
-is the sole dependency-ready task. Its five bindings and every later concept
+is in progress with the experimental 0.3.0 envelope foundation. Authoring,
+migration and prior Field evidence refresh remain before core closure. Its five
+bindings and every later concept
 remain waiting for their preceding implementation or gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

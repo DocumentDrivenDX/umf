@@ -21,7 +21,8 @@ ddx:
 
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
 revision 1. **Status:** Field ideal admitted for the qualified bindings recorded
-below; nullability, cardinality, facets and key remain specified, not implemented.
+below; Nullability has an experimental envelope foundation but no admission.
+Nullability operations/bindings and the later ideals remain incomplete.
 
 ## Purpose
 
@@ -322,3 +323,16 @@ The envelope remains experimental: admission of one ideal does not stabilize the
 whole envelope or imply author provenance from a bare label. Nullability is the
 next ordered concept, with its own contract interpretation, schema transition,
 five binding tasks and exit gate. This decision does not admit the later concepts.
+
+### Experimental Nullability envelope boundary
+
+Core 0.3.0 reserves `Element.nullability` only on explicit Fields. Core 0.1.0 and
+0.2.0 retain that member as opaque JSON, even for strings that resemble the three
+new labels. No reader silently upgrades those documents. The 0.3.0 validator
+retains unknown nonempty labels with an incomplete-semantics diagnostic and rejects
+non-string values and non-Field use. Missing availability asserts nothing.
+
+TD-041 records this version choice and the initial validation/preservation evidence.
+Typed operations and migration/rollback remain required before the core task can
+close. This envelope publication does not establish any native absence binding,
+Nullability admission, or equivalence with SQL NULL or Avro reader defaults.
