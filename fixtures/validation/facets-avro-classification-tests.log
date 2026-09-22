@@ -1,0 +1,42 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-avro.test.ts:
+(pass) declaration and writer profiles separate native domain from enforcement counterexamples [603.47ms]
+(pass) fixed, union and explicit item selection retain native refinements [381.88ms]
+(pass) original source texts, dependency order, unknown numeric tokens and defaults recover exactly [325.20ms]
+(pass) authored bounds require fresh provenance and cannot be silently overwritten [276.54ms]
+(pass) shape conflicts, archive changes, invalid profiles and unsafe inputs refuse [182.89ms]
+(pass) closed operation and extension schemas constrain real classification output [51.80ms]
+(pass) unannotated precision metadata stays unknown and authored losses point back to the ideal [157.01ms]
+
+tests/core-ideals/facets-avro-selection.test.ts:
+(pass) facet selection retains named declarations, branch order, containers and null context [2.91ms]
+(pass) reference use and dependency definition retain distinct identities and unknown tokens [1.11ms]
+(pass) union widths remain distinct; array/map items are never promoted onto containers [0.40ms]
+(pass) facet zero-size profile does not widen previously qualified Cardinality resolution [0.59ms]
+(pass) selection cannot interpret defaults, metadata, missing dependencies or duplicate names as types [0.78ms]
+
+tests/core-ideals/facets-avro-type.test.ts:
+(pass) Avro declaration facts never claim codec enforcement or input exactness [0.19ms]
+(pass) fixed exact size includes zero without relabeling a nonzero exact size as a maximum [1.11ms]
+(pass) decimal coefficient domains require exact pairs and bounded signed carrier capacity [21.14ms]
+(pass) unknown and invalid logical meaning stays native instead of becoming a physical scalar facet [1.12ms]
+(pass) custom constraints and exact tokens remain unclaimed and copied [0.15ms]
+(pass) malformed or future tagged representation refuses interpretation and does not execute getters [0.33ms]
+(pass) every native discovery schema remains available with explicit declaration or refusal [4.08ms]
+
+tests/core-ideals/avro-cardinality-type.test.ts:
+(pass) native discovery types retain outer shape, branch order and item paths without claiming item or availability equivalence [6.25ms]
+(pass) qualified dependency and recursive references retain separate definition locations [1.29ms]
+(pass) ambiguous, missing and invalid structural type syntax refuses rather than defaulting to one [1.55ms]
+(pass) nested item/value traversal uses registered type locations and keeps container/member availability separate [1.62ms]
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [23.53ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [2.13ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.47ms]
+
+ 26 pass
+ 0 fail
+ 1548 expect() calls
+Ran 26 tests across 5 files. [4.66s]

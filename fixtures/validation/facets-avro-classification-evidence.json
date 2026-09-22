@@ -1,0 +1,62 @@
+{
+  "scope": "Experimental Avro core0.5.0 scalar facet classification, strict/report profiles and retained native-text recovery; authored projection and full binding acceptance remain pending",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "tests": {
+    "passed": 26,
+    "failures": 0,
+    "assertions": 1548,
+    "files": 5
+  },
+  "typecheck": "passed",
+  "schemas": 273,
+  "packages": 46,
+  "browserBuildBytes": 10989127,
+  "browser": {
+    "cases": 148,
+    "classified": 100,
+    "blocked": 48,
+    "nativeRecoveries": 200,
+    "forgedRejected": true,
+    "getterCalls": 0
+  },
+  "nativeEvidence": "Pinned prior discovery/selection executions reused and fingerprints verified; no fresh native engine run claimed",
+  "limits": [
+    "Declared-schema profile is not native enforcement. Apache1.12.0 and fastavro1.12.2 writer limitations are explicit.",
+    "Native original text/dependencies recover from retained archives, not reconstruction.",
+    "Different branch identities and wire tags remain native; integer-domain union may use largest signed width.",
+    "Authored projection, native target composition, ideal recovery, full refresh and binding acceptance remain required."
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-discovery-native.py": "20e4c51560e00dee6f4a0beba207e2a80f974237a9598625aca9bfd12bb56f40",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-selection-native.py": "38d5bbab7d5f85bc1254a5840b5bd5a4456ca8d20b1343206df29e718cceafe6",
+    "dist/umf.js": "a709c17489ad8b5e36c55f610b1309d815c8f221d91a39fe14abb2c2b8f1fd2e",
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": "ae42efd48c9449777e8f2da28ad355fa09c779836b1789ce322cbf16290bc7c0",
+    "docs/helix/04-build/evidence/avro-facet-discovery.md": "30294d3d18e96abdae13a4949465e544de25973debaacadbad987025a6c47cd5",
+    "docs/helix/04-build/implementation-plan.md": "68043fc4285260e74e2cd28248c15fcb8d780e383a80475ee756927972409730",
+    "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
+    "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
+    "fixtures/validation/facets-avro-classification-browser.json": "aaa7b9888cf64ba8fb00f3d6ecfecb7eb6e30b33fd19f66d9e44316d81b9141c",
+    "fixtures/validation/facets-avro-classification-tests.log": "3d1a050ba6d1f078ca02bc3ef7d0e8d308b2756e324e9c03b5748c2977d5252b",
+    "fixtures/validation/facets-avro-classification-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/facets-avro-discovery-native.json": "5ae691e1c1562de96c676168a08a0990462c96dc69c675d0f62fda9eddd2b270",
+    "fixtures/validation/facets-avro-selection-native.json": "1d8e58c8f2d40bd947e3d8682b1e958a8c64f310293f34c53131c3da9375fe34",
+    "scripts/core-ideals/facets-avro-cases.ts": "3d461a5175c61bbd5b41842457f07e5b8a8a7cc358f28061e12bcb0e7fe5a0ee",
+    "scripts/core-ideals/facets-avro-classification-browser.ts": "200fb343f4a1d05d9619d98c5371a4ab2fae77f245adb0cca532dc565325fd96",
+    "scripts/core-ideals/facets-avro-schema.ts": "1778564c88b585993347cf9c6125bdb62095b86b014ad34087dba61261fc9a70",
+    "spec/core/avro-facet-classification.schema.json": "3f8548127581f7f60a15af05f93aede7b03605844a984a1c1e148cdc6c681f6d",
+    "spec/extensions/avro-facets/package.json": "fff60df37dc63bda33e813cacc80edead206a2888a7b2e5d15ec196921163d3e",
+    "spec/extensions/avro-facets/schema.json": "d78378d8b8f159cb9685d98508b03a4be0810375ef99792ca9f084a926d2741a",
+    "src/adapters/avro/facet-type.ts": "26db0fcce82230f65a14e0284c2cc6c84c03747c06858dcb5ed68cd04ab67a5b",
+    "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
+    "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
+    "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
+    "src/index.ts": "3df972f01a71ca5a800dacb8b74a0ec09d8511507efb691291d61d022880f484",
+    "tests/core-ideals/avro-cardinality-type.test.ts": "3b889213ad8f65ffe3cd39bbbb839f2c8aa5829b84fe2320b1b79a897b30b42a",
+    "tests/core-ideals/facets-avro-selection.test.ts": "d8aa9cef0f57063dc8c6201d0c5103690d3edbc4b9f0d4dc41d56a8d6ce74591",
+    "tests/core-ideals/facets-avro-type.test.ts": "279f845d6545da325b55cff80bab7407db3579b05c9a80cb51e0009446dbcaf4",
+    "tests/core-ideals/facets-avro.test.ts": "e74a235b3018f8df33b1088ad31a247f94c133627895b070c3ab1de0b3385426",
+    "tests/core/facet-ideals.test.ts": "456c67f425c6cfb681d3d3e9c03a5a072f0fcac481daaa631500b2174b82279d"
+  }
+}

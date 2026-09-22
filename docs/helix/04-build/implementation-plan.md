@@ -4347,3 +4347,17 @@ is preserved, not described as native parser consensus. See the
 [selection checkpoint](evidence/avro-facet-discovery.md#native-selection-checkpoint).
 Public schemas/classification/projection, both retained recovery directions and
 full binding acceptance remain next; the Avro facet bead stays in progress.
+
+Experimental Avro classification now has complete operation/extension schemas and
+public classify/verify/recover APIs. It separates declared domains from native
+writer profiles, requires explicit logical scalar identity and verified authored
+provenance, and retains branch/dependency distinctions plus strict/report losses.
+Chromium passes 148 cases (100 classified, 48 blocked), 200 original native-text
+recoveries and forged/getter refusals. Schema audits pass 273 schemas / 46 packages;
+the public and optional PostgreSQL browser builds pass. Scoped test/typecheck
+logs and native-evidence limits are linked from the
+[classification checkpoint](evidence/avro-facet-discovery.md#experimental-classification-checkpoint).
+Next authored projection, native target/composition and ideal recovery, then full
+compatibility refresh and binding acceptance. Earlier gates remain historical
+snapshots after this public-bundle change. No ideal admission or native equivalence
+is claimed; the Avro bead remains in progress.

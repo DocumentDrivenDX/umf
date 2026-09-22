@@ -120,3 +120,34 @@ Next author complete public operation/extension schemas, then implement core
 0.5.0 classification and authored projection with provenance, strict/report
 residuals and retained original-text/ideal recovery. This checkpoint does not
 close the Avro facet binding or qualify native enforcement.
+
+## Experimental classification checkpoint
+
+The public classifier and retained-source verifier/recovery operations now have a
+closed operation schema and `umf.avro.facets` 1.0.0 package. They distinguish
+declared-schema meaning from pinned writer behavior, preserve native branch and
+dependency identity, and require an explicit logical scalar Field. Strict/report
+outcomes retain codec limitations, unknown metadata and fixed-length refinements.
+Author conflicts and stale/forged receipts refuse. Neither a matching annotation
+nor a bare facet label establishes authored provenance or native enforcement.
+
+Chromium 148 passes 148 cases: 100 classified, 48 blocked, 200 exact original
+native-text recoveries across JSON/YAML receipts, forged-receipt refusal and zero
+getter invocations. It uses the public browser bundle with no host globals or
+external requests. The [browser record](../../../../fixtures/validation/facets-avro-classification-browser.json)
+contains current fingerprints. Native discovery and selection evidence are reused;
+this checkpoint does not claim a fresh independent engine run.
+
+Twenty-six Bun tests pass with 1,548 assertions across five files. Typechecking
+passes. The test and typecheck logs are
+[classification tests](../../../../fixtures/validation/facets-avro-classification-tests.log)
+and [typechecking](../../../../fixtures/validation/facets-avro-classification-typecheck.log).
+The schema audit passes 273 schemas and 46 packages. Browser build and optional
+PostgreSQL runtime build pass. Earlier accepted bindings retain historical
+snapshots after the public bundle change. A full refresh remains part of final
+Avro binding acceptance.
+
+Next implement authored Avro facet projection and its complete schema, qualify
+emitted schemas/values natively, compose recapture with classification and verify
+ideal recovery or explicit residuals. Avro remains in progress; Parquet, the facet
+admission/delivery gate and Key also remain required.

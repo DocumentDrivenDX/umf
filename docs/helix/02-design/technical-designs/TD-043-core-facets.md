@@ -804,3 +804,40 @@ Named recursion terminates at the definition location rather than expanding it.
 The [selection evidence](../../04-build/evidence/avro-facet-discovery.md#native-selection-checkpoint)
 records a duplicate-union parser disagreement, so structural selection is not
 described as universal native parser agreement or full schema validity.
+
+### Experimental Avro facet classification API
+
+`classifyAvroFacets` now consumes core 0.5.0, exact original schema/dependency texts,
+an explicit native type location and a separate scalar logical Field identity.
+The selected Field must have cardinality one and a matching known scalar family.
+Native `schema` and `avro.fields` elements are not relabeled. The closed receipt
+schema is `spec/core/avro-facet-classification.schema.json`; the element package is
+`umf.avro.facets` 1.0.0. Its current capability is import/classification only.
+
+Profiles are `declared-schema`, `apache-datum-writer`,
+`fastavro-schemaless-writer` and `unresolved`; obligations are `value-domain` and
+`exact-input`. Declaration meaning does not certify enforcement. Writer profiles
+retain the pinned int-overflow, decimal rescaling/rounding and physical-byte bypass
+counterexamples. Exact-input requests never follow solely from schema metadata.
+The binary64-to-binary32 case is an explicit approximation.
+
+Branches retain their use site, declaration location, native fragments and distinct
+facet observations. For signed int/long unions, the mathematical value-domain
+union has the largest signed width; the classifier may publish that width while
+retaining every branch/tag distinction. Other differing branch facet domains stay
+explicit residuals. A nonzero fixed byte count provides a maximum bound plus a
+residual for its unrepresented lower bound. Size zero represents the empty-byte
+domain. Unannotated precision/scale and unknown schema metadata never gain meaning.
+
+Strict mode blocks with no candidate when any loss or uncertainty remains.
+Report mode retains those obligations alongside the candidate; shape, vocabulary
+and author conflicts block both modes. Existing facets require a fresh verified
+declaration receipt. Author assertions are not overwritten by observed refinements.
+`verifyAvroFacetClassification` recomputes source/profile consistency and checks
+the current target. `recoverAvroFacetSource` restores exact original main and
+dependency texts, including whitespace and numeric spellings. This is retained
+archive recovery, not original-text reconstruction or source authentication.
+
+Authored Avro projection, emitted-target composition and final binding acceptance
+remain required. The [classification checkpoint](../../04-build/evidence/avro-facet-discovery.md#experimental-classification-checkpoint)
+records scoped tests and Chromium evidence, not facet admission or equivalence.
