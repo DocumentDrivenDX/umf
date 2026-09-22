@@ -1,0 +1,65 @@
+{
+  "scope": "Avro 1.12.0 underlying-field-value Nullability classification with retained native bundles; no authored projection or native replacement",
+  "bead": "umf-97221618-891e0275",
+  "bindingAccepted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "tests": 4,
+    "assertions": 1968,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 226,
+    "packages": 36,
+    "browserBuildBytes": 10301137,
+    "nativeChecks": 171,
+    "recoveredNativeChecks": 342,
+    "unionOrderResolutions": 8,
+    "floatNarrowingChecks": 2,
+    "browser": {
+      "cases": 304,
+      "classified": 171,
+      "blocked": 133,
+      "recoveries": 342,
+      "forgedRefusals": 171
+    },
+    "nativeClassificationComparisons": 76
+  },
+  "commands": [
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "bun test tests/core-ideals/nullability-avro.test.ts",
+    "bun scripts/core-ideals/nullability-avro-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-avro-browser.ts"
+  ],
+  "limits": [
+    "Underlying field value in a present containing record only; no ancestor availability, writer omission or reader default claim.",
+    "avsc 5.7.9 validates a structural type view; defaults, logical constraints and arbitrary metadata remain native, without a full-schema conformance claim.",
+    "Pinned Apache Avro Python 1.12.0 and fastavro 1.12.2 outcomes differ and remain recorded.",
+    "Unknown native numeric metadata stays exact; unsupported structural/name cases require residuals or refusal.",
+    "Receipts establish unchanged source/target consistency, not authentication.",
+    "Authored projection, broader regression/Field gate refresh and final Avro binding acceptance remain unfinished."
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-native.py": "71be3dd319b6bd4bdbef146b02d2a5a55d836f959b19b1d97717c7fe204cd53e",
+    "dist/umf.js": "cfc38ba90e76b3d727e3b5d065c56755c7661ba7d06a41dcf3d623d09f81bb08",
+    "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
+    "fixtures/validation/nullability-avro-browser.json": "61d436dd94db6626dfe3d4c18765d0c1b88b12353232687e829dd01c3d702945",
+    "fixtures/validation/nullability-avro-classification-tests.log": "6c41b6839d11ef4cb8729dda207d3e2e8d86ae3d6bda6b37ff0001b60bc08a8f",
+    "fixtures/validation/nullability-avro-native.json": "22149d3bea8eae49d9f683aa21cb56350636689495f221b9692706c53932ffa6",
+    "fixtures/validation/nullability-avro-recovered.json": "7e575f902c90b1c8330c31ad3ac4646f0e27a012f89cb37019da7dbf4dd9a86b",
+    "scripts/core-ideals/nullability-avro-browser.ts": "356f374d28c503e120cb08821cf19d4e218dbcba7fa9666355c3003575f992cd",
+    "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "b44d498bb04abbea018db09a4031712ccfe3038c39c5a11ae723af68a6862866",
+    "scripts/core-ideals/nullability-avro-schema.ts": "f01e468ad9af694e78cb96dc0f7f3f953bc873c2da7e26e8b7b24cf743d620ed",
+    "spec/core/avro-nullability-classification.schema.json": "d8a7d23eb55464227eabad5c2c94d2fa6cb51c5056675c81949a77b51318d616",
+    "spec/extensions/avro-nullability/package.json": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7",
+    "spec/extensions/avro-nullability/schema.json": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
+    "src/core-ideals/nullability-avro.ts": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606",
+    "src/index.ts": "c14d74bba9363ae60c3f7172bf7e4a0a9810254238c6316b9050f503b8d4411c",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "tests/core-ideals/nullability-avro.test.ts": "746a21952dba8f65e27b1a7a82a0e616e33f8eee3e9c63f74a3f1f7c235d6bdf"
+  }
+}

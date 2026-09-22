@@ -905,3 +905,51 @@ scalar cardinality to container fields. No new native-equivalence claim follows.
 The [discovery checkpoint](../../../../fixtures/validation/nullability-avro-discovery-evidence.json)
 records source/runtime fingerprints, six existing Avro Field tests / 334 assertions
 and typechecking. It is not final binding acceptance.
+
+
+### Avro scoped Nullability classification
+
+`classifyAvroNullability` now consumes an explicitly migrated core 0.3.0 Field
+and its exact native bundle archive. The request must select
+`underlying-field-value` scope and an `avro-null` carrier to obtain a declared
+classification. The claim applies to the selected field when its containing
+record is present. It does not classify ancestor availability, member omission,
+reader defaults or logical constraints. Those native meanings stay attached.
+
+A structural type view is checked with the existing browser-compatible avsc 5.7.9
+name/union resolver. It preserves declaration order, namespaces, record fields,
+union branches, enum symbols, array/map structure and exact fixed-size checks.
+Defaults, logical annotations and other metadata are excluded from this temporary
+view, never from the retained schema. Consequently this check is not validation
+of the whole native schema or proof that every native implementation accepts it.
+Unresolved names, invalid unions and invalid structural types produce residuals;
+strict mode blocks while report mode retains unspecified availability.
+
+A resolved null type or explicit null union branch maps to absent-allowed; other
+resolved underlying types map to required. This includes record/container-valued
+fields without inventing scalar cardinality. Named dependencies and recursive
+fields retain their dependency-qualified paths. Neither union ordering nor
+reader defaults are rewritten. Unknown logical annotations remain uninterpreted
+even when their underlying null carrier is classified.
+
+The `umf.avro.nullability` package stores the binding scope alongside the core
+label. Existing labels need matching verified author provenance. Conflicting
+labels, existing binding payloads and incompatible versions block in both modes.
+`verifyAvroNullabilityClassification` recomputes the receipt and checks the current
+target; `recoverAvroNullabilityBundle` returns exact original source/dependency
+texts. Receipt consistency is not authentication. Complete operation and retained
+scope schemas are published with the package; the original Avro native syntax
+schema still describes its retained native representation.
+
+The 304-case scope/carrier/mode matrix and name, conflict, unsafe-input and stale
+receipt tests pass. Native discovery is now replayed after these Nullability
+receipts, with 171 native checks and 342 recovered-source checks. Authored
+projection, its result schema, broader regression refresh and final binding
+acceptance remain unfinished. The prior Field gate fingerprints are historical
+after this public API addition and must be refreshed before acceptance.
+
+The [classification checkpoint](../../../../fixtures/validation/nullability-avro-classification-evidence.json)
+records four tests / 1,968 assertions, 226 audited schemas / 36 packages,
+typechecking and browser build. Chromium passes 304 cases, 342 exact recoveries
+and 171 altered-receipt refusals. This supersedes the discovery-only scope above;
+final binding acceptance remains open.

@@ -64,12 +64,15 @@ for c in checks:
     if op=='null' and accepted:
         if id=='null-only':assert c['hex']=='',c
         else:assert c['hex']==('02' if id in {'null-last','null-last-default-null','null-last-default-int','multiple-values'} else '00'),c
-# The full native tree and numeric tokens must survive the UMF archival cycle.
+# The full native tree and numeric tokens must survive scoped Nullability classification and recovery.
 recovered=json.loads(Path('fixtures/validation/nullability-avro-recovered.json').read_text())
 recovery_checks=0
 for r in recovered['rows']:
     original=next(row for row in rows if row['id']==r['id'])
     assert r['schema']==original['schema']
+    assert r['scope']=='underlying-field-value' and r['carrier']=='avro-null'
+    for c in (c for c in checks if c['id']==r['id'] and c['operation']=='null'):
+        assert r['nullability']==('absent-allowed' if c['status']=='accepted' else 'required'),(r,c)
     for c in (c for c in checks if c['id']==r['id']):
         op=c['operation'];datum=original['present'] if op=='present' else {'value':None} if op=='null' else {}
         actual=observe(c['codec'],json.dumps(empty) if op=='reader-missing-field' else r['schema'],datum,r['schema'] if op=='reader-missing-field' else None,op=='strict-omitted')
@@ -89,7 +92,7 @@ for codec in ['apache','fastavro']:
     schema=json.dumps({'type':'record','name':'FloatExample','fields':[{'name':'value','type':'float'}]})
     o=observe(codec,schema,{'value':1.0000000000000002});assert o['status']=='accepted' and o['value']['value']==1.0
     float_checks.append({'codec':codec,'input':1.0000000000000002,**o})
-output.update({'recoveredNativeChecks':recovery_checks,'unionResolution':union_checks,'floatNarrowing':float_checks,'limitations':['These are native availability counterexamples, not an implemented core Nullability binding.','Apache and fastavro differ in writer omission/default and reader union-default handling.','Unknown logical annotations are native refinements; accepted underlying values do not establish their meaning.','No writer API behavior is generalized to all Avro implementations or interpreted as portable member omission.']})
+output.update({'recoveredNativeChecks':recovery_checks,'unionResolution':union_checks,'floatNarrowing':float_checks,'limitations':['These probes validate underlying native carrier behavior and retained classification sources; authored projection and full binding acceptance remain unfinished.','Apache and fastavro differ in writer omission/default and reader union-default handling.','Unknown logical annotations are native refinements; accepted underlying values do not establish their meaning.','No writer API behavior is generalized to all Avro implementations or interpreted as portable member omission.']})
 output['fingerprints'].update({p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in ['scripts/core-ideals/nullability-avro-oracle.ts','fixtures/validation/nullability-avro-recovered.json']})
 Path('fixtures/validation/nullability-avro-native.json').write_text(json.dumps(output,indent=2)+'\n')
 print(json.dumps({'schemas':len(rows),'nativeChecks':len(checks),'recoveredNativeChecks':recovery_checks,'unionResolution':len(union_checks),'floatNarrowing':len(float_checks)}))

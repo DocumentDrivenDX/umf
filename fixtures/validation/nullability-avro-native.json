@@ -1675,9 +1675,9 @@
   "scope": "Pinned Python binary datum writers/readers; API omission behavior is not schema-level optionality",
   "fingerprints": {
     "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
-    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-native.py": "6055dadb97361ece8678ccd89ae9c1b1aaa706e8357af0cf083b2d6872e804d6",
-    "scripts/core-ideals/nullability-avro-oracle.ts": "54d8eabcc4a1b8533818d0a879e7996b383c6cc6b57f0176be719737211f053e",
-    "fixtures/validation/nullability-avro-recovered.json": "e6682bdc5c20038486f4662834ac268056f5871f32e6ffc808a70472ea69f38d"
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-native.py": "71be3dd319b6bd4bdbef146b02d2a5a55d836f959b19b1d97717c7fe204cd53e",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "b44d498bb04abbea018db09a4031712ccfe3038c39c5a11ae723af68a6862866",
+    "fixtures/validation/nullability-avro-recovered.json": "7e575f902c90b1c8330c31ad3ac4646f0e27a012f89cb37019da7dbf4dd9a86b"
   },
   "recoveredNativeChecks": 342,
   "unionResolution": [
@@ -1793,7 +1793,7 @@
     }
   ],
   "limitations": [
-    "These are native availability counterexamples, not an implemented core Nullability binding.",
+    "These probes validate underlying native carrier behavior and retained classification sources; authored projection and full binding acceptance remain unfinished.",
     "Apache and fastavro differ in writer omission/default and reader union-default handling.",
     "Unknown logical annotations are native refinements; accepted underlying values do not establish their meaning.",
     "No writer API behavior is generalized to all Avro implementations or interpreted as portable member omission."

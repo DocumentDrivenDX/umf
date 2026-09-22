@@ -1,0 +1,15 @@
+import {readFileSync} from 'node:fs';
+const schema=JSON.parse(readFileSync('spec/core/postgresql-nullability-classification.schema.json','utf8'));
+const binding={id:'umf.avro.nullability',version:'1.0.0',nativeVersion:'1.12.0',subset:'Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements'};
+schema.$id='urn:umf:core:avro-nullability-classification:1.0.0';schema.title='Avro underlying field-value availability classification';
+const p=schema.properties;p.operation.const='classify-avro-nullability';p.binding.const=binding;
+p.request.properties.scope.enum=['underlying-field-value','write-input','reader-resolution','unresolved'];p.request.properties.carrier.enum=['avro-null','unresolved'];
+p.request.properties.dependencies={type:'array',items:{type:'object',additionalProperties:false,required:['id','schema'],properties:{id:{type:'string',minLength:1},schema:{type:'string',minLength:1}}}};
+p.mapping.properties.scope=p.request.properties.scope;p.mapping.properties.carrier=p.request.properties.carrier;
+p.mapping.properties.basis.const='Underlying field type in a present containing record; not member omission, reader defaults, ancestor availability or logical refinements';
+p.mapping.properties.dependencyId={type:'string',minLength:1};
+await Bun.write('spec/core/avro-nullability-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
+const extension={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:avro:nullability-binding:1.0.0',title:'Retained Avro availability scope',type:'object',required:['origin','binding','scope','carrier','interpretation','nativePath'],properties:{origin:{const:'classified'},binding:{const:{id:binding.id,version:binding.version}},scope:p.request.properties.scope,carrier:p.request.properties.carrier,interpretation:{enum:['declared','unknown','unsupported']},nativePath:{type:'string',minLength:1},dependencyId:{type:'string',minLength:1}}};
+const manifest={id:binding.id,version:'1.0.0',coreVersion:'0.1.0',description:'Retained Avro underlying field-value availability scope; native content, defaults, logical and ancestor meanings remain separate',schema:extension,semantics:'CONTRACT-040 and TD-041; operation requires core 0.3.0 and explicit Field kind. Scope is underlying declared field-value null permission, not semantic optionality or native equivalence.',scopes:['element'],capabilities:{validation:'structural',directions:['import'],native:{system:'Avro',version:'1.12.0',subset:binding.subset},evidence:['tests/core-ideals/nullability-avro.test.ts','fixtures/validation/nullability-avro-native.json']}};
+await Bun.write('spec/extensions/avro-nullability/schema.json',JSON.stringify(extension,null,2)+'\n');
+await Bun.write('spec/extensions/avro-nullability/package.json',JSON.stringify(manifest,null,2)+'\n');

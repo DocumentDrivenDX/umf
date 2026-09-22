@@ -1,0 +1,12 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/nullability-avro.test.ts:
+(pass) Avro underlying-value availability matrix preserves exact source, scope and both formats [27361.62ms]
+(pass) author conflicts, stale/forged receipts and malformed requests refuse without losing unknown content [613.82ms]
+(pass) native names, dependencies and recursive fields resolve without claiming parent availability [491.39ms]
+(pass) invalid structural types and unresolved names stay native with explicit report residuals [1081.46ms]
+
+ 4 pass
+ 0 fail
+ 1968 expect() calls
+Ran 4 tests across 1 file. [31.14s]

@@ -422,3 +422,20 @@ includes fresh five-system Field and three-binding Nullability evidence. It
 supersedes the outstanding SQL Server status above. Avro and Parquet Nullability
 and the delivery gate remain open. This qualification never replaces native
 payloads or constitutes equivalence graduation.
+
+
+### Avro underlying-value scope
+
+The in-progress Avro binding classifies the underlying field-value carrier only
+when its containing record is present. An explicit `avro-null` policy interprets
+native null as ideal absence. A null branch allows that absence; a resolved
+non-null type requires a value at that scope. Parent absence, omitted writer
+inputs, reader-resolution defaults and logical annotations are separate meanings.
+A required nested field therefore makes no assertion that its parent is present.
+
+The `umf.avro.nullability` extension retains this scope and native path. Complete
+native schema/dependency text remains recoverable, including defaults, branch
+order and unknown exact metadata. Unresolved structural types become explicit
+residuals/refusals. This scoped classification does not validate all native
+semantics, replace native concepts, or complete authored projection and binding
+acceptance. TD-041 records the implementation and remaining evidence obligations.

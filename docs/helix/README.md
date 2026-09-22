@@ -25,8 +25,9 @@ All five prior Field bindings have fresh native/browser evidence and the Field
 conformance gate passes. SQL Server's authored DDL also passes under opposing
 session null-default settings. See the
 [SQL Server acceptance record](../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
-Avro Nullability now has native discovery and browser source-preservation
-evidence; its classification/projection and the Parquet binding remain. The
+Avro Nullability now has scoped underlying-value classification and retained
+native recovery. Its authored projection and the Parquet binding remain. The
+prior Field gate needs its required refresh after the new public API. The
 experimental 0.3.0 concept has not passed
 its five-system delivery gate. No native equivalence is claimed.
 Cardinality, facets and key follow Nullability. See the

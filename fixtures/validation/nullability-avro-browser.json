@@ -1,17 +1,24 @@
 {
-  "scope": "Existing Field archival receipts retain the Avro availability discovery corpus; Nullability classification and projection remain unfinished",
+  "scope": "Scoped underlying-field-value Nullability classification and exact source recovery; authored projection remains unfinished",
   "browser": "148.0.7778.0",
   "checks": {
-    "schemas": 19,
-    "recoveries": 38,
-    "forgedRefusals": 19
+    "cases": 304,
+    "classified": 171,
+    "blocked": 133,
+    "recoveries": 342,
+    "forgedRefusals": 171
   },
   "externalRequests": [],
   "fingerprints": {
     "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
-    "dist/umf.js": "58f3b9bd0ecdce45ffa54f594c4f2344aedecbb53b12a9e9ade77bd3f32b4d13",
-    "scripts/core-ideals/nullability-avro-browser.ts": "979c587e06cd5532c8e0796cc4a507b765382d859893ffd949f11cd710cf6914",
+    "dist/umf.js": "cfc38ba90e76b3d727e3b5d065c56755c7661ba7d06a41dcf3d623d09f81bb08",
+    "scripts/core-ideals/nullability-avro-browser.ts": "356f374d28c503e120cb08821cf19d4e218dbcba7fa9666355c3003575f992cd",
     "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
-    "src/core-ideals/avro-field.ts": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f"
+    "src/core-ideals/nullability-avro.ts": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606",
+    "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
+    "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
+    "spec/core/avro-nullability-classification.schema.json": "d8a7d23eb55464227eabad5c2c94d2fa6cb51c5056675c81949a77b51318d616",
+    "spec/extensions/avro-nullability/schema.json": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26",
+    "spec/extensions/avro-nullability/package.json": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7"
   }
 }

@@ -1,202 +1,321 @@
 {
-  "scope": "Existing Field archival receipts preserve native availability corpus; this does not classify Nullability",
+  "scope": "Scoped underlying-field-value Nullability classifications retain the native availability corpus",
   "rows": [
     {
       "id": "integer",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "integer",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "integer-default",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\",\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\",\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "integer-default",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\",\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"int\",\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-first",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-first",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-last",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-last",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-first-default-null",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-first-default-null",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-last-default-null",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-last-default-null",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": null\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-first-default-int",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-first-default-int",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-last-default-int",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-last-default-int",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"int\",\n        \"null\"\n      ],\n      \"default\": 7\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-only",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"null\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"null\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "null-only",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"null\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"null\"\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "multiple-values",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"string\",\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"string\",\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "multiple-values",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"string\",\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"string\",\n        \"null\",\n        \"int\"\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "array-null-items",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "array-null-items",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "nullable-array",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "nullable-array",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "map-null-values",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "map-null-values",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"map\",\n        \"values\": [\n          \"null\",\n          \"int\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "nullable-map",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"map\",\n          \"values\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"map\",\n          \"values\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "nullable-map",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"map\",\n          \"values\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"map\",\n          \"values\": \"int\"\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "required-parent",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Child\",\n        \"fields\": [\n          {\n            \"name\": \"item\",\n            \"type\": [\n              \"null\",\n              \"int\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Child\",\n        \"fields\": [\n          {\n            \"name\": \"item\",\n            \"type\": [\n              \"null\",\n              \"int\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "required-parent",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Child\",\n        \"fields\": [\n          {\n            \"name\": \"item\",\n            \"type\": [\n              \"null\",\n              \"int\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Child\",\n        \"fields\": [\n          {\n            \"name\": \"item\",\n            \"type\": [\n              \"null\",\n              \"int\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "optional-parent",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"Child\",\n          \"fields\": [\n            {\n              \"name\": \"item\",\n              \"type\": [\n                \"null\",\n                \"int\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"Child\",\n          \"fields\": [\n            {\n              \"name\": \"item\",\n              \"type\": [\n                \"null\",\n                \"int\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "optional-parent",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"Child\",\n          \"fields\": [\n            {\n              \"name\": \"item\",\n              \"type\": [\n                \"null\",\n                \"int\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"Child\",\n          \"fields\": [\n            {\n              \"name\": \"item\",\n              \"type\": [\n                \"null\",\n                \"int\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "absent-allowed",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "recursive",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Node\",\n        \"fields\": [\n          {\n            \"name\": \"next\",\n            \"type\": [\n              \"null\",\n              \"Node\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Node\",\n        \"fields\": [\n          {\n            \"name\": \"next\",\n            \"type\": [\n              \"null\",\n              \"Node\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "recursive",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Node\",\n        \"fields\": [\n          {\n            \"name\": \"next\",\n            \"type\": [\n              \"null\",\n              \"Node\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Node\",\n        \"fields\": [\n          {\n            \"name\": \"next\",\n            \"type\": [\n              \"null\",\n              \"Node\"\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "unknown-logical",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"futureAvailability\"\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"futureAvailability\"\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "unknown-logical",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"futureAvailability\"\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"futureAvailability\"\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "enum",
       "format": "json",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"enum\",\n        \"name\": \"Choice\",\n        \"symbols\": [\n          \"A\",\n          \"B\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"enum\",\n        \"name\": \"Choice\",\n        \"symbols\": [\n          \"A\",\n          \"B\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     },
     {
       "id": "enum",
       "format": "yaml",
-      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"enum\",\n        \"name\": \"Choice\",\n        \"symbols\": [\n          \"A\",\n          \"B\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n"
+      "schema": "{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"availability\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"enum\",\n        \"name\": \"Choice\",\n        \"symbols\": [\n          \"A\",\n          \"B\"\n        ]\n      }\n    }\n  ],\n  \"futureMetadata\": {\n    \"meaning\": \"unclassified\",\n    \"integer\": 9007199254740993\n  }\n}\n",
+      "nullability": "required",
+      "scope": "underlying-field-value",
+      "carrier": "avro-null"
     }
   ],
   "fingerprints": {
     "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
-    "scripts/core-ideals/nullability-avro-oracle.ts": "54d8eabcc4a1b8533818d0a879e7996b383c6cc6b57f0176be719737211f053e",
+    "scripts/core-ideals/nullability-avro-oracle.ts": "b44d498bb04abbea018db09a4031712ccfe3038c39c5a11ae723af68a6862866",
     "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
-    "src/core-ideals/avro-field.ts": "fc4379036ab4cfce8d9053c3a6e680a9d1026515c04c99874171f6027d82dc5f",
+    "src/core-ideals/nullability-avro.ts": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606",
+    "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
+    "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
+    "spec/core/avro-nullability-classification.schema.json": "d8a7d23eb55464227eabad5c2c94d2fa6cb51c5056675c81949a77b51318d616",
+    "spec/extensions/avro-nullability/schema.json": "eb2e9b1bdad830c66de6ecf0c5d5766c358476a82d1470eaa59f2dacbcc4ae26",
+    "spec/extensions/avro-nullability/package.json": "6ee31adcac84a93eb49acb61f97ef4bf733f18fe8bc20bb26df3640a319ba2d7",
     "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882"
   }
 }
