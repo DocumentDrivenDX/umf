@@ -1,0 +1,26 @@
+{
+  "scope": "Internal catalog correspondence with actual browser WASM SQL parsing, native source retention and mismatch refusal; no public facet classification or authenticated provenance",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "constraints": 12,
+    "verified": 8,
+    "unsupported": 4,
+    "recoveries": 2,
+    "refusals": 4,
+    "unknownExactToken": true
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/adapters/postgresql/facet-catalog.ts": "94aaf4263cb2e2306bbdd84073929601fc503ca4291faaa5c4bc1a652db46940",
+    "spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json": "555d101a110dcd0464736117c38efb0ce691ac454e338512e3af469ad475ac55",
+    "src/adapters/postgresql/facet-resolved-predicate.ts": "fa74430f538e1cc51d46e84eb832ea3008a0afe28fed50f8dda68029d0e12fdb",
+    "src/adapters/postgresql/facet-node-tree.ts": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c",
+    "src/adapters/postgresql/facet-predicate.ts": "76e113ec5cb1e93fc4239f22095c981280984b9392a8f93be84f1d66e617d523",
+    "scripts/core-ideals/facets-postgresql-catalog-browser.ts": "672c7d666457a827f2bbb0158f99ff5085b86b0cae7c243af0c8046efc61b7d3",
+    "fixtures/validation/facets-postgresql-constraints-native.json": "32fd5b5cf6f3bfed6d9530f274c48b014879fb584bb0db0ea7461f88f761556c",
+    "dist/umf.js": "862bb0007afded90f13afb7b0692d8ec91c5f14b1b759ae8d0cb26c9013fdf5c",
+    "dist/postgresql-facet-catalog.js": "73424401ed6d1706bfe4cf67506b6fd2ac4170723a1d3810fbca89ae06f13f09",
+    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+    "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
+  }
+}

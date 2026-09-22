@@ -146,3 +146,38 @@ requests. See [the verification record](../../../../fixtures/validation/facets-p
 This advances internal predicate qualification; the public PostgreSQL facet
 classifier, authored projection, package schemas and full binding acceptance
 remain required. Earlier checkpoint fingerprints qualify their recorded snapshots.
+
+## Catalog correspondence checkpoint
+
+The internal facet supplement now has a Draft 2020-12 JSON Schema and an
+exact-token reader. Known integer fields reject rounding; unknown properties,
+including numbers beyond JavaScript precision, stay in the original supplement
+text and tagged tree. Interpreted convenience views contain only owned fields.
+
+The correspondence operation requires an unmodified catalog and complete table
+CHECK coverage. It compares qualified relation/constraint identities, constraint
+definitions and validation state, and complete column names, positions, type
+identities, modifiers and dimensions. Duplicate, missing and extra observations
+fail. For a verified expression, the pinned parser also checks that the deparsed
+SQL and retained CHECK definition match the analyzed tree's exact predicate
+values. A matching constraint name or copied definition alone is insufficient.
+
+The native harness now captures both catalog queries in one repeatable-read
+transaction and records the original general-catalog source. The pg_dump archive
+is collected separately. The library verifies overlapping observations; it does
+not authenticate the capture or claim same-snapshot provenance. Returned native
+catalog JSON is canonical; exact original general-catalog whitespace recovery
+remains a responsibility of the later source-bound binding. Supplement text is
+retained exactly. No core facet assertions or public exports are added here.
+
+Seventeen Bun tests and 439 assertions pass; typechecking and audits of 265
+schemas/43 extension packages pass. Chromium 148 executes the optional WASM SQL
+parser and correlates twelve CHECKs: eight have verified predicates and four stay
+unsupported. It verifies two JSON/YAML recoveries, four mismatch refusals and
+unknown exact-token retention, with no host globals or external requests. The
+prior resolved-expression browser matrix also passes against the refreshed native
+capture. See [catalog correspondence evidence](../../../../fixtures/validation/facets-postgresql-catalog-evidence.json).
+
+The next binding work is scoped core facet classification, source-bound recovery,
+authored projection and its operation/package schemas, followed by the full
+native/browser compatibility acceptance. The facet admission gate remains open.

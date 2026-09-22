@@ -1,0 +1,27 @@
+{
+  "scope": "Internal facet supplement schema, exact-token preservation and catalog/SQL/analyzed-expression consistency; public facet classification, projection and binding acceptance remain unfinished",
+  "bun": {
+    "tests": 17,
+    "assertions": 439,
+    "failures": 0
+  },
+  "typecheck": "passed",
+  "schemas": 265,
+  "packages": 43,
+  "browser": "fixtures/validation/facets-postgresql-catalog-browser.json",
+  "sha256": {
+    "src/adapters/postgresql/facet-catalog.ts": "94aaf4263cb2e2306bbdd84073929601fc503ca4291faaa5c4bc1a652db46940",
+    "spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json": "555d101a110dcd0464736117c38efb0ce691ac454e338512e3af469ad475ac55",
+    "tests/core-ideals/facets-postgresql-catalog.test.ts": "2d010eca3bf6489294a218276912c6ede4080642799f46c61c72112af6f14c63",
+    "scripts/core-ideals/facets-postgresql-catalog-browser.ts": "672c7d666457a827f2bbb0158f99ff5085b86b0cae7c243af0c8046efc61b7d3",
+    "native/postgresql/catalog/facet-constraints.sql": "432f5cb9c9b21e754c8cb98db146a71ebefc766e63ed0078c7df3475e43be4e9",
+    "scripts/core-ideals/facets-postgresql-constraints-native.ts": "1cfce6a6e616730573ee2a5dfdc251a85b61ab3aeb562e9655232e6d9dfb1ede",
+    "fixtures/validation/facets-postgresql-constraints-native.json": "32fd5b5cf6f3bfed6d9530f274c48b014879fb584bb0db0ea7461f88f761556c",
+    "fixtures/validation/facets-postgresql-resolved-browser.json": "4b0c883b06b582c4511c87733f91f26f31ab15b4ab676e4e757e36c20aef0872",
+    "fixtures/validation/facets-postgresql-catalog-browser.json": "4c10cf37d6e584d77ca9bac92f147f167de1e24f10ef4f4e271970f6001ecacb",
+    "fixtures/validation/facets-postgresql-catalog-tests.log": "cd3e30c7be6f8ac4f5ad3ccab316e2f05f1250427555acb15df9f24892d474bb",
+    "fixtures/validation/facets-postgresql-catalog-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/facets-postgresql-catalog-schemas.log": "f1613df27d3ba39f95ab5aac1c366c22ac8bd35732a4f0b4d7b26cbf11c9932c",
+    "docs/helix/04-build/evidence/postgresql-facet-discovery.md": "c2bb1f89c103bc964490ba1500a64e3c5c4c6689ccdc14b6146c65754a82c015"
+  }
+}

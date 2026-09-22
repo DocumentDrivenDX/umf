@@ -11,6 +11,7 @@ SELECT jsonb_build_object(
   'oid',c.oid::text,'schema',ns.nspname,'relation',r.relname,'relationKind',r.relkind,
   'name',c.conname,'validated',c.convalidated,'noInherit',c.connoinherit,
   'isLocal',c.conislocal,'inheritanceCount',c.coninhcount,'parentOid',c.conparentid::text,
+  'definition',pg_get_constraintdef(c.oid,false),
   'columnNumbers',c.conkey,'expression',pg_get_expr(c.conbin,c.conrelid,false),
   'nodeTree',c.conbin::text,
   'columns',(SELECT jsonb_agg(jsonb_build_object('number',a.attnum,'name',a.attname,

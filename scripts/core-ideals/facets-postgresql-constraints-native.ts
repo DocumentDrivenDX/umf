@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {inspectPostgresqlFacetPredicate} from '../../src/adapters/postgresql/facet-predicate';
-const paths=['native/postgresql/catalog/image.json','native/postgresql/catalog/facet-constraints.sql','fixtures/postgresql/facets.sql','fixtures/postgresql/facet-predicate-lookalikes.sql','scripts/core-ideals/facets-postgresql-constraints-native.ts','src/adapters/postgresql/facet-predicate.ts'];
+const paths=['native/postgresql/catalog/image.json','native/postgresql/catalog/facet-constraints.sql','fixtures/postgresql/facets.sql','fixtures/postgresql/facet-predicate-lookalikes.sql','scripts/core-ideals/facets-postgresql-constraints-native.ts','src/adapters/postgresql/facet-predicate.ts','native/postgresql/catalog/snapshot.sql'];
 const manifest=await Bun.file(paths[0]!).json(),query=await Bun.file(paths[1]!).text();
 const name='umf-facet-checks-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,err||out);return out;}
@@ -15,7 +15,11 @@ try{
  let ready=false;for(let i=0;i<120;i++){try{assert.equal((await exec(['cat','/proc/1/comm'])).trim(),'postgres');await exec(['pg_isready','-U','postgres']);ready=true;break;}catch{await Bun.sleep(250);}}assert.ok(ready);
  assert.equal((await sql('SHOW server_version_num')).trim(),'170004');
  await sql(await Bun.file(paths[2]!).text());await sql(await Bun.file(paths[3]!).text());
- const capture=JSON.parse(await sql(query));assert.equal(capture.serverVersion,170004);assert.equal(capture.encoding,'UTF8');
+ const catalogQuery=await Bun.file('native/postgresql/catalog/snapshot.sql').text();
+ const combined=query.replace('COMMIT;',catalogQuery+'\nCOMMIT;');
+ const captures=(await sql(combined)).trim().split('\n').map(line=>JSON.parse(line));assert.equal(captures.length,2);
+ const capture=captures[0],snapshot=captures[1];
+ const sourceText=JSON.stringify({profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query:catalogQuery,snapshot,reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}},null,2);assert.equal(capture.serverVersion,170004);assert.equal(capture.encoding,'UTF8');
  const find=(schema:string,relation:string)=>capture.constraints.find((c:any)=>c.schema===schema&&c.relation===relation);
  assert.ok(find('facet','decimal_exact').functionLookups.some((f:any)=>f.schema==='pg_catalog'&&f.name==='trunc'));
  assert.ok(find('facet','text_bound').functionLookups.some((f:any)=>f.schema==='pg_catalog'&&f.name==='char_length'));
@@ -33,6 +37,6 @@ try{
  const observedProbes=[];
  for(const p of probes){const actual=(await sql(p.sql)).trim();assert.equal(actual,p.expected,p.id);observedProbes.push({...p,actual});}
  const sha256=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
- await Bun.write('fixtures/validation/facets-postgresql-constraints-native.json',JSON.stringify({scope:'PostgreSQL 17.4 resolved constraint observations and custom predicate counterexamples. OID lookup extraction does not validate node-tree structure or authorize core facets.',image:manifest.reference,query,capture,rows,probes:observedProbes,sha256},null,2)+'\n');
+ await Bun.write('fixtures/validation/facets-postgresql-constraints-native.json',JSON.stringify({scope:'PostgreSQL 17.4 resolved constraint observations and custom predicate counterexamples. OID lookup extraction does not validate node-tree structure or authorize core facets.',image:manifest.reference,query,capture,sourceText,snapshotCaptureScope:'both catalog queries in one repeatable-read transaction; pg_dump archive separately captured',rows,probes:observedProbes,sha256},null,2)+'\n');
  console.log(JSON.stringify({constraints:rows.length,candidates:rows.filter(r=>r.inspection.state==='candidate').length,unsupported:rows.filter(r=>r.inspection.state==='unsupported').length,probes:probes.length}));
 }finally{if(created)await run(['docker','rm','-f',name]);}
