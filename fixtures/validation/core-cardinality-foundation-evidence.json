@@ -1,0 +1,105 @@
+{
+  "scope": "Experimental core 0.4.0 Cardinality document validation and explicit collision-preserving 0.3.0 migration/rollback foundation",
+  "bead": "umf-97221618-231a08d7",
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "failures": 0,
+    "focused": {
+      "tests": 15,
+      "assertions": 660,
+      "files": 3
+    },
+    "coreRegression": {
+      "tests": 60,
+      "assertions": 1217,
+      "files": 11,
+      "includesFocusedTests": true
+    },
+    "browser": {
+      "recoveries": 18,
+      "transitions": 16,
+      "refusals": 14,
+      "getterCalls": 0
+    },
+    "typecheck": "passed",
+    "schemas": 232,
+    "packages": 37,
+    "browserBuildBytes": 10379175
+  },
+  "commands": [
+    [
+      "bun",
+      "test",
+      "tests/core/cardinality-ideals.test.ts",
+      "tests/core/nullability-ideals.test.ts",
+      "tests/core/field-ideals.test.ts"
+    ],
+    [
+      "bun",
+      "test",
+      "./tests/core/cardinality-ideals.test.ts",
+      "./tests/core/core.test.ts",
+      "./tests/core/field-ideals.test.ts",
+      "./tests/core/field-kind.test.ts",
+      "./tests/core/field-transition.test.ts",
+      "./tests/core/native-json.test.ts",
+      "./tests/core/nullability-authoring.test.ts",
+      "./tests/core/nullability-ideals.test.ts",
+      "./tests/core/nullability-transition.test.ts",
+      "./tests/core/scalar.test.ts",
+      "./tests/core/selection.test.ts"
+    ],
+    [
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    [
+      "bun",
+      "run",
+      "test:schemas"
+    ],
+    [
+      "bun",
+      "run",
+      "build"
+    ],
+    [
+      "bun",
+      "scripts/core-cardinality-browser.ts"
+    ]
+  ],
+  "limits": [
+    "Cardinality and itemType are interpreted only in explicit 0.4.0 envelopes; legacy lookalike members stay opaque and are archived by upgrade.",
+    "Arrays/maps have no container scalarType; optional itemType refers to a Field. No item type, native container shape, dimensions, encoding or native equivalence is inferred.",
+    "Schema/reference checks do not validate arbitrary row values or map-key uniqueness in native files.",
+    "Authoring, inspection, provenance/result APIs, consumer selection, versioned existing-operation integration and full core acceptance remain unfinished.",
+    "All five native Cardinality bindings and the admission/delivery gate remain unfinished. Prior Field/Nullability gate evidence requires the normal post-library-change refresh.",
+    "A substring-filter Bun run selecting unintended core-ideals tests was cancelled; only the explicitly listed core files count as regression evidence."
+  ],
+  "sha256": {
+    "dist/umf.js": "6f1d7e330001824d4e0298fe51b9b440507058e7d465fc0f2913e1bd5e272ba6",
+    "fixtures/validation/core-cardinality-browser.json": "f9123c0865158d849b973787abae91b8624e7bcad09105e267aa66d3c328fb62",
+    "fixtures/validation/core-cardinality-core-regression.log": "634d0005e680aa54e162b826f5300a1a2bf5f3616f24188fde129e8b8d940415",
+    "fixtures/validation/core-cardinality-foundation-browser.log": "eb38eab70d60cb8c2bcb22ad2a95fc177b82bc032b8745720c06e3546110d896",
+    "fixtures/validation/core-cardinality-foundation-build.log": "64ce47a5cb5c12d912453038b4ad11ef796b3d989cbc18edd4ead665b4a02dda",
+    "fixtures/validation/core-cardinality-foundation-schemas.log": "3306efb8b881a145bfbbac81f4c585aaf1d8ff2fff3efedab8cbbd45b9285663",
+    "fixtures/validation/core-cardinality-foundation-tests.log": "19ffe6a196938deab6cd9ac2ff091074377625c76f15ba09505d282c995e2d7d",
+    "fixtures/validation/core-cardinality-foundation-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-cardinality-browser.ts": "4a66e535d220a9b19652ee60398d0994d353343e48833048489033d243a58087",
+    "scripts/core-cardinality-schema.ts": "8527888a70f77b28c29b78570ab25b6f72ec02b09eafb21112703ad8b8e6ac96",
+    "scripts/core-cardinality-transition-schema.ts": "a6271154fb2a7098cc01cfbb14435700d8c7dfebe4f8d3a1bc09f60200624940",
+    "spec/core/cardinality-document.schema.json": "04ce91d7af9a4d144a6b51fb8ae35ddd0ed3d9158f68208a06b3a717799a7018",
+    "spec/core/cardinality-transition.schema.json": "5ebf87ec95c193716add27bc17c5324050b60519b74fcc50c807ef7fca80e8db",
+    "src/index.ts": "4fdba4aa0eb3debadf27537aeb125a5f798bc1ecad88a7778d699b1d4fbb16b2",
+    "src/model/cardinality-transition.ts": "633c2f75c10dfee21f7e4eba162fdf3fed2e8164b6bdbd2cab65b43465452e95",
+    "src/model/types.ts": "7339153f49e43091a9084ec9659b92fd943f6178875d2f201b12d49886ca6b2f",
+    "src/validation/document.ts": "f410e0ea4170ff5d436b4cb2f17b67805f892f0b818594c2c00e871685b03783",
+    "src/validation/schema.ts": "1d849a74dae576b8c70307981595778289fd41ae1d4ffc74caa64024260dc69a",
+    "tests/core/cardinality-ideals.test.ts": "542fc37156602067ca4c6beb5cebb4abfaf754f6969fb7977b0f68842dc1ea5b",
+    "tests/core/field-ideals.test.ts": "8d693a3756c0e2525d8000b2e2f0c4a18b9d278cf25a5e503ac4ec75d0d2a272",
+    "tests/core/nullability-ideals.test.ts": "566bb2d18678215b84bf1e68cda10be45a7404c0ed09ebc52aeb2ef0f8c43352"
+  }
+}

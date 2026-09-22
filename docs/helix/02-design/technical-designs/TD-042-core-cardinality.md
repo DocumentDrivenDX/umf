@@ -20,8 +20,9 @@ ddx:
 ## Scope
 
 Implement US-042 under CONTRACT-040. Architecture is the direct parent; no
-separate solution design exists for this core slice. The current envelope only
-implements scalar-family metadata. This design is planned, not executed evidence.
+separate solution design exists for this core slice. Field and Nullability have passed their qualified five-system gates. Cardinality
+implementation starts from core 0.3.0; the native Cardinality bindings and their
+admission/delivery evidence remain unfinished.
 
 ## Technical Approach
 
@@ -143,3 +144,54 @@ and follow-up bindings; report mode must never imply execution enforcement.
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
 - [ ] Schema/version transition, five bindings and regression evidence implemented.
+
+
+## Core 0.4.0 implementation decision
+
+CONTRACT-040 reserves `cardinality` and optional `itemType` only through an explicit
+0.3.0-to-0.4.0 transition. The initial schema/validator foundation checks Field
+applicability, known container/scalar conflicts and exact item reference identity.
+An item reference targets a Field and is permitted only for known arrays/maps;
+its target may itself describe a nested container or a record-valued Field.
+Recursive definitions are checked by identity without recursive expansion.
+
+Do not silently relocate an existing scalarType onto an item or discard it when
+setting array/map. Authoring must either receive an explicit consistent model or
+return a conflict; original assertions remain in receipts. Old cardinality/itemType
+members are opaque even when they look valid. Upgrade archives/removes both;
+rollback restores the original and retains later content separately.
+
+After the schema/transition foundation, add complete author/inspection/result
+schemas, provenance verification, copied consumer selection, and versioned
+Field/Nullability/record-type API integration for 0.4.0. Existing operation versions
+must continue to validate their original envelopes. Run real Chromium checks and
+refresh both Field and Nullability gate evidence after public library changes.
+The core task stays open until those operations and acceptance checks are complete.
+
+
+### Schema and transition foundation evidence
+
+The [foundation checkpoint](../../../../fixtures/validation/core-cardinality-foundation-evidence.json)
+records the new 0.4.0 document schema and complete upgrade/rollback receipt schemas.
+Validation rejects scalar-labelled arrays/maps, non-Field use and unresolved or
+non-Field item targets. Known-looking legacy members are archived without becoming
+assertions; unknown labels, extension payloads and nested/cross-module/recursive
+references retain their explicit meanings. Recursive identity checks do not expand
+the type graph. Transition recovery preserves both the original and later model.
+
+The focused suite passes 15 tests / 660 assertions. The explicitly enumerated
+`tests/core/` regression passes 60 tests / 1,217 assertions across 11 files (including
+those focused tests). Chromium 148 passes 18 model recoveries, 16 serialized
+transition recoveries and 14 invalid-model/receipt refusals with no host globals,
+external requests or invoked getters. Typechecking, 232 schema audits, 37 package
+audits and the browser build pass. A prior `bun test tests/core` substring-filter
+run also selected `core-ideals`; it was cancelled and is not regression evidence.
+
+This is a foundation checkpoint, not completion of the core task or ideal admission.
+Explicit Cardinality authoring/inspection, provenance/result operations, consumer
+selection and versioned Field/Nullability/record-type integration still need 0.4.0
+support. Existing operation versions retain their original envelope profiles.
+Native Cardinality bindings and the separate admission/delivery gate are unfinished.
+Prior Field/Nullability evidence fingerprints are now historical until their
+required native/browser refresh follows these library changes. No native meaning
+has been replaced.

@@ -1,0 +1,27 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [21.76ms]
+(pass) legacy collisions stay opaque, including names that are now known [9.98ms]
+(pass) new profile refuses malformed kinds and structured scalar claims atomically [1.81ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [1.42ms]
+(pass) future envelope versions and unsafe getter inputs cannot be interpreted [0.20ms]
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [3.15ms]
+(pass) missing availability does not inherit native nullable flags or defaults [0.83ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [11.40ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [1.92ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.10ms]
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [8.78ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [2.10ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [2.95ms]
+(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [48.78ms]
+(pass) rollback retains later assertions separately and refuses forged receipts or changed identities [1.24ms]
+
+ 15 pass
+ 0 fail
+ 660 expect() calls
+Ran 15 tests across 3 files. [249.00ms]

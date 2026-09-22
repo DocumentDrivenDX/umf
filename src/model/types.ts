@@ -9,6 +9,10 @@ export type ElementKind=typeof ELEMENT_KINDS[number];
 /** Ideal availability only; native absence representations require explicit bindings. */
 export const NULLABILITIES=['required','absent-allowed','unspecified'] as const;
 export type Nullability=typeof NULLABILITIES[number];
+/** Ideal container shape; native repetition and storage encodings remain separate. */
+export const CARDINALITIES=['one','array','map','unspecified'] as const;
+export type Cardinality=typeof CARDINALITIES[number];
+export interface CoreItemTypeReference {module:string;element:string;[key:string]:unknown}
 export interface Element {
   id: string;
   name?: string;
@@ -24,7 +28,7 @@ export interface Module {
   [key: string]: unknown;
 }
 export interface Document {
-  umf: '0.1.0' | '0.2.0' | '0.3.0'; id: string;
+  umf: '0.1.0' | '0.2.0' | '0.3.0' | '0.4.0'; id: string;
   vocabularies: Record<string, { version: string; [key: string]: unknown }>;
   modules: Module[];
   extensions?: Record<string, Json>;

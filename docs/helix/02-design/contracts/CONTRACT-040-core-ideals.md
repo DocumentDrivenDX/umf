@@ -62,6 +62,7 @@ this contract. Existing documents do not acquire these assertions by default.
 | Element.kind | `field`, `record`, or `group` | A field is a named member/value slot; a record defines named members; a group organizes members without asserting a value shape. Missing means unspecified, never inferred solely from scalarType. |
 | Element.nullability | `required`, `absent-allowed`, or `unspecified` | Required means the field supplies a value in the ideal instance; absent-allowed permits no value; unspecified asserts neither. This is ideal value availability, not native syntax or an is_nullable copy. |
 | Element.cardinality | `one`, `array`, `map`, or `unspecified` | One value, ordered finite sequence (duplicates allowed), finite mapping with unique exact string keys, or no assertion. Container emptiness is not absence. |
+| Element.itemType | `{module, element}` reference to a Field | Optional array-item or map-value definition. Requires explicit array/map cardinality. Does not describe the container, map keys, dimensions or storage encoding. Missing leaves item meaning unasserted in core. |
 | Element.facets.length | `{max: integer >= 0, unit: "unicode-scalar" or "byte"}` | Maximum Unicode scalar count for string, or maximum byte count for binary. No grapheme, collation, padding, normalization or storage-length inference. |
 | Element.facets.precision | positive integer | Decimal coefficient digit bound for fixed-scale decimal. Requires scale. |
 | Element.facets.scale | integer >= 0 | Fixed decimal fractional digit count; requires precision, with scale <= precision. Value domain is integer coefficient times 10^-scale and absolute coefficient < 10^precision. No rounding permitted implicitly. |
@@ -516,3 +517,29 @@ logical constraints and repetition do not silently acquire core equivalence.
 Ninety ideal and sixty native serialized recoveries pass. Native-equivalence
 graduation is not claimed; no extension payload may be discarded. This decision
 supersedes earlier pending Nullability gate notes and permits Cardinality work.
+
+
+### Cardinality representation and version decision
+
+Experimental core 0.4.0 reserves `cardinality` and `itemType` on elements after
+explicit migration from 0.3.0. Cardinality applies only to Fields. Known array/map
+containers cannot carry `scalarType`; an optional `itemType` reference identifies
+a Field whose own scalar, record-reference, nullability or nested cardinality
+meaning describes each array item or map value. The container's availability
+remains independent. No item definition is synthesized when the reference is
+missing. Exact module/element IDs resolve the reference; record/group targets do
+not stand in for the required value Field. Recursive references are permitted
+without recursively expanding them during validation.
+
+`itemType` requires known array/map cardinality. One, unspecified, missing and
+unknown cardinality cannot acquire an item reference under this version. Unknown
+nonempty cardinality labels remain uninterpreted when otherwise structurally
+valid. Other native references and all extension content remain separate.
+
+Migration archives every preexisting cardinality/itemType member, including
+known-looking labels or references, and removes those members from the new
+interpretation. It retains scalarType and all existing 0.3.0 meanings. Rollback
+restores the exact original envelope and separately retains the whole subsequent
+0.4.0 model; it never inserts newly authored assertions into legacy semantics.
+This representation decision does not admit native Cardinality bindings or
+replace any native meaning.

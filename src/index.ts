@@ -270,3 +270,6 @@ export * from './core-ideals/nullability-avro';
 export * from './core-ideals/nullability-avro-projection';
 export * from './core-ideals/nullability-parquet';
 export * from './core-ideals/nullability-parquet-projection';
+
+export {default as coreCardinalitySchema} from '../spec/core/cardinality-document.schema.json';
+export * from './model/cardinality-transition';

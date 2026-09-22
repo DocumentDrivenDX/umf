@@ -1,7 +1,7 @@
-import { checkCore, checkCoreFields, checkCoreNullability } from './schema';
+import { checkCore, checkCoreFields, checkCoreNullability, checkCoreCardinality } from './schema';
 import { Registry } from '../registry/registry';
 import { copyJson } from '../model/json';
-import { UmfError, pointer, SCALAR_TYPES, ELEMENT_KINDS, NULLABILITIES, type Document, type Validation, type Diagnostic, type Json, type Scope } from '../model/types';
+import { UmfError, pointer, SCALAR_TYPES, ELEMENT_KINDS, NULLABILITIES, CARDINALITIES, type Element, type Document, type Validation, type Diagnostic, type Json, type Scope } from '../model/types';
 export function validateDocument(input: unknown, registry = new Registry()): Validation {
   const diagnostics: Diagnostic[] = [];
   const add = (code: string, path: string, message: string, severity: 'error' | 'warning' = 'error') => diagnostics.push({code, path, message, severity});
@@ -13,14 +13,16 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
     return {valid: false, complete: false, diagnostics};
   }
   const version=(value as {umf?:unknown}|null)?.umf;
-  const check=version==='0.3.0'?checkCoreNullability:version==='0.2.0'?checkCoreFields:checkCore;
+  const check=version==='0.4.0'?checkCoreCardinality:version==='0.3.0'?checkCoreNullability:version==='0.2.0'?checkCoreFields:checkCore;
   if (!check(value)) {
     for (const error of check.errors || []) add('STRUCTURE', error.instancePath, error.message || 'Invalid structure');
     return {valid: false, complete: false, diagnostics};
   }
   const doc = value as Document;
+  const availability=doc.umf==='0.3.0'||doc.umf==='0.4.0';
   if(doc.umf==='0.2.0')add('EXPERIMENTAL_CORE_FIELDS','/umf','Field envelope is experimental; kind labels alone establish neither author provenance nor native equivalence','warning');
-  if(doc.umf==='0.3.0')add('EXPERIMENTAL_CORE_NULLABILITY','/umf','Nullability envelope is experimental; no native absence encoding or default execution is implied','warning');
+  if(availability)add('EXPERIMENTAL_CORE_NULLABILITY','/umf','Nullability envelope is experimental; no native absence encoding or default execution is implied','warning');
+  if(doc.umf==='0.4.0')add('EXPERIMENTAL_CORE_CARDINALITY','/umf','Cardinality envelope is experimental; native shape and item semantics require explicit bindings','warning');
   const unknown = (obj: object, known: string[], path: string) => {
     for (const key of Object.keys(obj)) if (!known.includes(key)) add('UNKNOWN_CORE_FIELD', `${path}/${pointer(key)}`, 'Field retained without interpretation', 'warning');
   };
@@ -51,18 +53,22 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
   };
   extensions(doc.extensions, 'document', '');
   const modules = new Map<string, Set<string>>();
+  const definitions = new Map<string, Map<string,Element>>();
   doc.modules.forEach((module, mi) => {
     const path = `/modules/${mi}`;
     unknown(module, ['id','namespace','elements','extensions'], path);
     if (modules.has(module.id)) add('DUPLICATE_MODULE', path + '/id', 'Module id is not unique');
     const ids = new Set<string>();
     modules.set(module.id, ids);
+    definitions.set(module.id,new Map(module.elements.map(e=>[e.id,e])));
     extensions(module.extensions, 'module', path);
     module.elements.forEach((element, ei) => {
       const location = `${path}/elements/${ei}`;
-      unknown(element, ['id','name','description','scalarType','extensions','references',...(doc.umf!=='0.1.0'?['kind']:[]),...(doc.umf==='0.3.0'?['nullability']:[])], location);
+      unknown(element, ['id','name','description','scalarType','extensions','references',...(doc.umf!=='0.1.0'?['kind']:[]),...(availability?['nullability']:[]),...(doc.umf==='0.4.0'?['cardinality','itemType']:[])], location);
       if(doc.umf!=='0.1.0'&&element.kind!==undefined&&!(ELEMENT_KINDS as readonly unknown[]).includes(element.kind))add('UNKNOWN_ELEMENT_KIND',location+'/kind','Kind retained without interpretation','warning');
-      if(doc.umf==='0.3.0'&&element.nullability!==undefined&&!(NULLABILITIES as readonly unknown[]).includes(element.nullability))add('UNKNOWN_NULLABILITY',location+'/nullability','Availability label retained without interpretation','warning');
+      if(availability&&element.nullability!==undefined&&!(NULLABILITIES as readonly unknown[]).includes(element.nullability))add('UNKNOWN_NULLABILITY',location+'/nullability','Availability label retained without interpretation','warning');
+      if(doc.umf==='0.4.0'&&element.cardinality!==undefined&&!(CARDINALITIES as readonly unknown[]).includes(element.cardinality))add('UNKNOWN_CARDINALITY',location+'/cardinality','Container label retained without interpretation','warning');
+      if(doc.umf==='0.4.0'&&element.itemType)unknown(element.itemType as object,['module','element'],location+'/itemType');
       if(element.scalarType!==undefined&&!(SCALAR_TYPES as readonly string[]).includes(element.scalarType))add('UNKNOWN_SCALAR_TYPE',location+'/scalarType','Scalar family retained without interpretation','warning');
       if (ids.has(element.id)) add('DUPLICATE_ELEMENT', location + '/id', 'Element id is not unique within module');
       ids.add(element.id);
@@ -73,5 +79,11 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
   doc.modules.forEach((module, mi) => module.elements.forEach((element, ei) => element.references?.forEach((ref, ri) => {
     if (!modules.get(ref.module)?.has(ref.element)) add('UNRESOLVED_REFERENCE', `/modules/${mi}/elements/${ei}/references/${ri}`, 'Target element does not exist in supplied document');
   })));
+  if(doc.umf==='0.4.0')doc.modules.forEach((module,mi)=>module.elements.forEach((element,ei)=>{
+    if(!Object.hasOwn(element,'itemType'))return;
+    const ref=element.itemType as {module:string;element:string},target=definitions.get(ref.module)?.get(ref.element),path=`/modules/${mi}/elements/${ei}/itemType`;
+    if(!target)add('UNRESOLVED_ITEM_TYPE',path,'Item/value Field does not exist in supplied document');
+    else if(target.kind!=='field')add('ITEM_TYPE_ROLE',path,'Item/value definition must be an explicit Field');
+  }));
   return {valid: !diagnostics.some(d => d.severity === 'error'), complete: diagnostics.length === 0, diagnostics};
 }
