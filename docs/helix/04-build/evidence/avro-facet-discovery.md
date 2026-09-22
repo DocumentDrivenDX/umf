@@ -151,3 +151,31 @@ Next implement authored Avro facet projection and its complete schema, qualify
 emitted schemas/values natively, compose recapture with classification and verify
 ideal recovery or explicit residuals. Avro remains in progress; Parquet, the facet
 admission/delivery gate and Key also remain required.
+
+### Authored projection native and browser checkpoint
+
+The internal authored projector now has a 558-case matrix spanning 31 carrier
+and facet seeds, three writer/declaration profiles, three encodings and both
+strict/report modes. It emits 388 record schemas and blocks 170 requests with
+explicit residuals. Every emitted schema parses in Apache Avro Python 1.12.0
+and fastavro 1.12.2. The native harness exercises 776 writes and 1,552 cross-codec
+reads with complete byte consumption. Positive decimals use a coefficient scaled
+to the emitted schema; mismatched-scale behavior remains a separate assertion.
+
+The native assertions preserve float narrowing, fastavro int overflow, Apache
+decimal coefficient rescaling, physical-byte input, unenforced string maxima and
+fixed-length lower bounds. Apache ignores `local-timestamp-micros`: its warning
+and integer result are retained alongside fastavro's datetime result. These
+observations do not establish host-input conversion equivalence or complete
+codec conformance. See the [native results](../../../../fixtures/validation/facets-avro-projection-native.json)
+and [emitted targets](../../../../fixtures/validation/facets-avro-projection-targets.json).
+
+Chromium verifies parity for all 558 cases using an internal browser bundle,
+including 776 JSON/YAML ideal recoveries, forged-receipt rejection and zero getter
+calls, host globals or external requests. See [browser evidence](../../../../fixtures/validation/facets-avro-projection-browser.json).
+Typechecking passes; the schema audit passes 274 schemas and 46 packages.
+Public exports and the import-only package capability remain unchanged.
+
+Next qualify native recapture/classification composition, then integrate the
+public export and refresh public-browser and compatibility evidence. Avro binding
+acceptance, facet admission and native equivalence remain unclaimed.

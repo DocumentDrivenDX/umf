@@ -4361,3 +4361,11 @@ Next authored projection, native target/composition and ideal recovery, then ful
 compatibility refresh and binding acceptance. Earlier gates remain historical
 snapshots after this public-bundle change. No ideal admission or native equivalence
 is claimed; the Avro bead remains in progress.
+
+Avro authored facet projection now has independent native and internal-browser
+evidence: 558 cases, 388 emitted schemas, 170 refusals, 776 pinned-codec writes,
+1,552 cross-codec reads and 776 Chromium ideal recoveries. Native discrepancies
+remain explicit, including Apache's ignored local-timestamp annotation. See the
+[projection checkpoint](evidence/avro-facet-discovery.md#authored-projection-native-and-browser-checkpoint).
+Composition, public integration and full compatibility acceptance remain next;
+the Avro bead stays in progress and package export support is not yet claimed.
