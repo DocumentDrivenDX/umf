@@ -923,3 +923,10 @@ receipt recovery. Independent native execution covers 145 emitted targets from
 238 cases; Chromium covers 290 ideal recoveries. Composition through native capture
 and classification, then full binding acceptance, remain required. See
 [TD-043](02-design/technical-designs/TD-043-core-facets.md#experimental-sql-server-authored-facet-projection).
+
+SQL Server facet composition now passes: 145 ideal/native recoveries, 57 direct
+authored-facet recoveries and 88 explicit residual cases, plus full-catalog
+serialization and independent CHECK-association evidence. Chromium verifies both
+recovery directions and scoped association behavior. Full compatibility refresh
+and binding acceptance remain next; see the
+[composition record](../../fixtures/validation/facets-sqlserver-composition-evidence.json).

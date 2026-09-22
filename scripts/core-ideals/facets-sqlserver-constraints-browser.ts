@@ -23,7 +23,7 @@ try{
   let calls=0,rejected=false;try{m.inspectSqlServerFacetConstraints({get umf(){calls++;return '0.1.0';}},input.rows[0].path);}catch{rejected=true;}if(!rejected||calls)throw Error('Getter executed');
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {columns:input.rows.length,interpreted,residual,writeOnly,getterCalls:calls,sourceUnchanged:true,versionRefusal:true};
  },{document,rows} as any);
- assert.deepEqual(checks,{columns:37,interpreted:6,residual:5,writeOnly:2,getterCalls:0,sourceUnchanged:true,versionRefusal:true});assert.deepEqual(externalRequests,[]);
+ assert.deepEqual(checks,{columns:37,interpreted:7,residual:4,writeOnly:2,getterCalls:0,sourceUnchanged:true,versionRefusal:true});assert.deepEqual(externalRequests,[]);
  const paths=['src/adapters/sqlserver/facet-constraints.ts','src/adapters/sqlserver/facet-predicate.ts','src/adapters/sqlserver/facet-type.ts','src/adapters/sqlserver/index.ts','scripts/core-ideals/facets-sqlserver-constraints-browser.ts','tests/core-ideals/facets-sqlserver-constraints.test.ts','fixtures/validation/facets-sqlserver-discovery-native.json','dist/sqlserver-facet-constraints.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/facets-sqlserver-constraints-browser.json',JSON.stringify({scope:'Internal pinned catalog CHECK interpretation, with non-null stored/ordinary-checked-write scopes. No public binding, input exactness, source authenticity or complete constraint inventory claim.',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));

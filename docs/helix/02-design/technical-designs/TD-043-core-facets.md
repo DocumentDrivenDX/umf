@@ -678,3 +678,34 @@ operation and checks unchanged native SQL before recovering the retained author
 model. This is receipt recovery, not inference of author intent from native DDL.
 Independent execution, native capture and browser evidence accompany the API;
 full capture/classification composition and final binding acceptance remain open.
+
+### SQL Server composed recovery and association qualification
+
+Authored DDL now composes with independently captured native table metadata and
+stored-value classification. All 145 emitted cases recover their retained ideal
+and native table view. Fifty-seven recover the authored facets by classification;
+88 require explicit residuals. Extra inferred native facets are recorded separately
+and do not become author assertions. The original aggregate capture also recovers
+through both receipt formats, so single-table test views are not the sole native
+recovery evidence.
+
+A qualified zero-byte CHECK on variable character storage now classifies as
+Unicode-scalar length zero. Only the empty non-null value remains; collation and
+malformed-surrogate distinctions cannot add a nonempty zero-byte value. LEN=0,
+nonzero byte limits, fixed padding, disabled checks and inappropriate trust scopes
+do not establish that ideal. Broader Unicode-scalar bounds remain residuals.
+
+Independent table-declaration probes resolve an earlier ambiguity: on the pinned
+engine, a CHECK written at table level but referencing one column receives that
+column's positive catalog ID. The qualified parser therefore supports those
+captured declarations, including escaped identifiers. Cross-column expressions
+retain ID zero and remain residuals; native probes show they can admit values
+outside a naive unsigned-eight-bit domain. No parent-ID zero scalar association
+is invented. Untrusted checks retain ordinary-checked-write scope only.
+
+Bun and Chromium verify both composed recovery paths, native-versus-authored
+refinements and the association counterexamples. See the
+[composition evidence](../../04-build/evidence/sqlserver-facet-discovery.md#composed-recovery-and-association-checkpoint).
+Full compatibility refresh and binding acceptance remain required. Cross-column
+predicate interpretation remains outside this qualified subset with explicit
+residuals, rather than disappearing from native metadata.

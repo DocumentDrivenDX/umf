@@ -12,10 +12,10 @@ test('captured CHECKs yield scoped native facts without changing source or asser
   const r=inspect(document,`/tables/${i}/columns/${j}`);expect(r.complete).toBe(false);expect(r.sourceAuthenticity).toBe('unverified');expect(r.checksAvailable).toBe(true);
   for(const o of r.observations){if(o.state==='interpreted')interpreted++;else residual++;expect(o.native).toEqual(parseNativeJson(JSON.stringify(t.checks[0])));}
  }
- expect({interpreted,residual}).toEqual({interpreted:6,residual:5});expect(exportSqlServerCatalog(document)).toBe(before);
+ expect({interpreted,residual}).toEqual({interpreted:7,residual:4});expect(exportSqlServerCatalog(document)).toBe(before);
  expect(observation('signed8')).toMatchObject({state:'interpreted',scope:'stored-and-ordinary-checked-write-non-null',facts:[{kind:'integer-bound',operator:'>=',literal:'-128'},{kind:'integer-bound',operator:'<=',literal:'127'}]});
  expect(observation('bytes_bound').facts).toEqual([{kind:'binary-byte-bound',maximum:'2'}]);
- expect(observation('length_zero')).toMatchObject({state:'residual',facts:[]});
+ expect(observation('length_zero')).toMatchObject({state:'interpreted',facts:[{kind:'unicode-empty'}]});
  expect(observation('decimal_checked').facts).toEqual([{kind:'decimal-stored-scale',scale:'2',inputExactness:false}]);
 },20000);
 test('disabled, untrusted and replication checks cannot become unconditional guarantees',()=>{
@@ -47,4 +47,11 @@ test('scope boundaries agree with pinned independent native value probes',()=>{
  expect(result('untrusted-existing').value).toBe('256');expect(result('untrusted-new-rejects').error).toBe(547);
  expect(result('disabled-accepts').value).toBe('256');expect(result('replication-ordinary-rejects').error).toBe(547);
  expect(result('decimal-checked-still-rounds').value).toBe('1.24');
+});
+test('empty-string inference requires zero bytes, variable storage and scoped enforcement',()=>{
+ expect(observation('length_zero')).toMatchObject({facts:[{kind:'unicode-empty'}],scope:'stored-and-ordinary-checked-write-non-null'});
+ expect(observation('length_zero',t=>{t.checks[0].is_not_trusted=true;})).toMatchObject({facts:[{kind:'unicode-empty'}],scope:'ordinary-checked-write-non-null'});
+ expect(observation('length_zero',t=>{t.checks[0].is_disabled=true;})).toMatchObject({state:'residual',facts:[]});
+ for(const definition of ['len([value])=0','datalength([value])<=1'])expect(observation('length_zero',t=>{t.checks[0].definition=definition;})).toMatchObject({state:'residual',facts:[]});
+ expect(observation('length_zero',t=>{Object.assign(t.columns[0],{system_type_id:239,user_type_id:239,type_name:'nchar',base_type_name:'nchar',max_length:2});})).toMatchObject({state:'residual',facts:[]});
 });

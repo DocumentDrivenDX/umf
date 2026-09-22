@@ -4247,3 +4247,25 @@ reconciliation, table-level CHECK qualification, then full compatibility refresh
 and SQL Server facet binding acceptance. The bead remains in progress. Avro,
 Parquet, separate facet admission/delivery and Key remain required; native
 equivalence is unclaimed.
+
+### SQL Server facet composed recovery checkpoint
+
+All 145 emitted native schemas now compose with facet classification and both
+retained source recoveries. Classification recovers authored facets directly in
+57 cases; 88 have explicit residuals. Extra native facets remain inferred rather
+than authored. The full aggregate catalog also recovers through JSON and YAML.
+Zero-byte variable-string checks now classify as empty-string length zero.
+
+Independent table-declaration association evidence passes 11 probes / three
+expected rejections / 12 columns / two catalog recoveries. The pinned engine
+assigns positive column IDs to single-column table-syntax CHECKs; cross-column
+ID-zero predicates stay residuals with native counterexamples. Chromium passes
+145 composed cases, 290 ideal and 290 native-view recoveries, two full-catalog
+recoveries, and 24 association cases. Forty-eight Bun tests / 2,890 assertions /
+16 files and typechecking pass. See the
+[checkpoint record](../../../fixtures/validation/facets-sqlserver-composition-evidence.json).
+
+Next: full priority compatibility refresh, earlier concept gates and SQL Server
+facet binding acceptance. SQL Server remains in progress until those pass. Avro,
+Parquet, facet admission/delivery and Key remain required. No native equivalence
+is claimed; cross-column expression semantics remain explicit native residuals.

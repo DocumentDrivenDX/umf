@@ -199,6 +199,40 @@ This checkpoint does not complete SQL Server facet delivery or the facet ideal
 gate, and does not claim native equivalence. Earlier binding gates retain their
 historical evidence snapshots until the full refresh.
 
+## Composed recovery and association checkpoint
+
+The 145 independently executed targets now compose with stored-value facet
+classification: 145 retained ideal recoveries, 145 complete native-table-view
+recoveries, 57 direct authored-facet recoveries and 88 explicit residual cases.
+Native refinements beyond the author's assertions remain separately identified.
+Both receipt formats also recover the original aggregate catalog containing all
+145 tables. Zero-byte variable-string checks now recover Unicode-scalar length
+zero; LEN=0, fixed padding, nonzero byte limits and inappropriate enforcement
+scopes do not acquire that meaning.
+
+A new pinned native association fixture passes 11 probes, including three expected
+rejections, 12 captured columns and two catalog recoveries. SQL Server reports
+positive column IDs for the tested single-column CHECKs written at table level,
+including the bracket-escaped identifier. Cross-column predicates have ID zero
+and admit values outside naive per-column bounds. Disabled/untrusted cases retain
+their distinct enforcement scopes. The initial assumption that all table-syntax
+checks would have ID zero was contradicted by native observation and corrected
+before publishing the evidence; no ID-zero scalar interpretation was added.
+
+Chromium 148 verifies 145 composed cases, 290 retained ideal recoveries, 290 native
+view recoveries, two full-catalog recoveries and 24 association recoveries. Only
+five expected column/profile combinations narrow to unsigned eight-bit domains.
+The browser uses no host globals or external requests. The public bundle is
+10,947,175 bytes. Forty-eight Bun tests / 2,890 assertions across 16 files and
+typechecking pass. See the
+[composition checkpoint](../../../../fixtures/validation/facets-sqlserver-composition-evidence.json).
+
+Next: the full compatibility refresh and SQL Server facet binding acceptance.
+Prior gates retain their historical snapshots until refreshed. Cross-column
+predicate interpretation remains an explicitly unsupported native refinement;
+its refusal is now independently tested. This checkpoint does not admit the facet
+ideal or graduate native equivalence.
+
 ## Primary reference material
 
 The native fixture is the qualification evidence. These Microsoft references

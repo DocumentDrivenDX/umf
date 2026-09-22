@@ -1,0 +1,86 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-sqlserver-composition.test.ts:
+(pass) native projected schemas recover authored facets or explicit residuals without inventing authorship [3.59ms]
+
+tests/core-ideals/facets-sqlserver-association.test.ts:
+(pass) independent table declaration probes establish catalog association and counterexamples [705.79ms]
+
+tests/core-ideals/facets-sqlserver.test.ts:
+(pass) width, decimal coefficient and byte bounds classify under explicit non-null scopes [1026.00ms]
+(pass) native counterexamples remain explicit and strict/report results differ [1717.11ms]
+(pass) JSON and YAML receipts recover original native text for every discovery column [9813.42ms]
+(pass) authored facets need fresh receipts and conflict without overwriting [531.21ms]
+(pass) unknown exact tokens survive; malformed requests, getters and changed archives refuse [232.57ms]
+(pass) extension schema validates real outputs and rejects forged profile [76.52ms]
+(pass) computed columns, unresolved table associations and noncanonical ranges retain residuals [340.22ms]
+
+tests/core-ideals/facets-sqlserver-constraints.test.ts:
+(pass) captured CHECKs yield scoped native facts without changing source or asserting core facets [4480.78ms]
+(pass) disabled, untrusted and replication checks cannot become unconditional guarantees [799.78ms]
+(pass) missing inventory, column association, type and version are explicit [1508.81ms]
+(pass) exact native numeric tokens and future fields survive; unsafe IDs and getters refuse [284.20ms]
+(pass) scope boundaries agree with pinned independent native value probes [0.31ms]
+(pass) empty-string inference requires zero bytes, variable storage and scoped enforcement [823.83ms]
+
+tests/core-ideals/facets-sqlserver-projection.test.ts:
+(pass) all authored cases block explicitly or recover the ideal through both receipt formats [639.85ms]
+(pass) range, coefficient and byte checks honor declared facets; string and conversion losses remain explicit [5.91ms]
+(pass) unknown meaning, forged receipts, invalid identifiers and unsafe comments never disappear [5.63ms]
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+(pass) pinned native execution matches current authored DDL and keeps exact value counterexamples [108.83ms]
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [0.25ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [0.84ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [0.95ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.19ms]
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [3.53ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.43ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.38ms]
+
+tests/core-ideals/facet-operations.test.ts:
+(pass) versioned existing author APIs preserve facets and both receipt serializations [22.41ms]
+(pass) record-type v4 respects faceted-value conflicts and preserves unrelated facet metadata [10.24ms]
+(pass) older native Cardinality bindings explicitly refuse facet-envelope declarations [127.50ms]
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [194.09ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [362.87ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [93.23ms]
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [252.90ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [324.32ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [828.80ms]
+
+tests/sqlserver/constraints.test.ts:
+(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [151.19ms]
+(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [287.38ms]
+
+tests/sqlserver/constraint-projection.test.ts:
+(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [625.45ms]
+(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [108.61ms]
+
+tests/sqlserver/indexes.test.ts:
+(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [235.68ms]
+(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [447.24ms]
+(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [495.59ms]
+
+tests/sqlserver/ddl.test.ts:
+(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [679.03ms]
+(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [569.12ms]
+(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [43.06ms]
+(pass) CONTRACT-037 native evidence matches current generation and records declared physical losses [265.65ms]
+(pass) CONTRACT-037 copied edits survive native DDL execution without changing original captures [1542.96ms]
+
+tests/sqlserver/integer-tokens.test.ts:
+(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2459.24ms]
+
+ 48 pass
+ 0 fail
+ 2890 expect() calls
+Ran 48 tests across 16 files. [36.11s]

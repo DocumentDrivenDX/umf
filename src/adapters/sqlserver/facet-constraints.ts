@@ -10,6 +10,7 @@ export type SqlServerFacetConstraintScope='stored-and-ordinary-checked-write-non
 export type SqlServerFacetConstraintFact=
  |{kind:'integer-bound';operator:'>='|'<=';literal:string}
  |{kind:'binary-byte-bound';maximum:string}
+ |{kind:'unicode-empty'}
  |{kind:'decimal-stored-scale';scale:string;inputExactness:false};
 export interface SqlServerFacetConstraintObservation {
  path:string;native:NativeJson;state:'interpreted'|'residual';reason:string;
@@ -48,8 +49,9 @@ export function inspectSqlServerFacetConstraints(input:Document,columnPath:strin
   if(type.state!=='observed'||bool(c.is_computed)!==false||id===undefined||id<1)return residual('Direct noncomputed scalar type and column identity are required');
   if(native.kind!=='object')return residual('Expected CHECK metadata');
   const m=native.members,parent=integer(m.parent_column_id);
-  // Table-level expressions require separately qualified association evidence.
-  if(parent!==id)return residual(parent===0?'Table-level CHECK association is not yet qualified':'CHECK belongs to a different or unresolved column');
+  // The pinned engine associates qualified single-column table declarations
+  // with the column ID. Unresolved/table-wide IDs cannot prove a scalar facet.
+  if(parent!==id)return residual(parent===0?'Table-wide CHECK association remains unresolved':'CHECK belongs to a different or unresolved column');
   const definition=str(m.definition);if(definition===undefined)return residual('CHECK definition unavailable');
   const parsed=inspectSqlServerFacetPredicate(definition,column.element.name!);
   if(parsed.state!=='candidate')return residual('Whole CHECK expression is outside the bounded syntax subset');
@@ -60,6 +62,7 @@ export function inspectSqlServerFacetConstraints(input:Document,columnPath:strin
   for(const p of parsed.candidates){
    if(p.kind==='bound'&&type.meaning?.family==='integer'&&/^-?(0|[1-9][0-9]{0,37})$/.test(p.literal))facts.push({kind:'integer-bound',operator:p.operator,literal:p.literal});
    else if(p.kind==='length'&&p.measure==='datalength'&&type.meaning?.family==='binary'&&p.limit.length<=19&&BigInt(p.limit)<=9223372036854775807n)facts.push({kind:'binary-byte-bound',maximum:p.limit});
+   else if(p.kind==='length'&&p.measure==='datalength'&&p.limit==='0'&&type.meaning?.family==='string'&&type.meaning.padding==='variable')facts.push({kind:'unicode-empty'});
    else if(p.kind==='scale'&&type.meaning?.family==='decimal'&&p.scale.length<=2&&Number(p.scale)===type.meaning.scale)facts.push({kind:'decimal-stored-scale',scale:p.scale,inputExactness:false});
    else return residual('Predicate/type combination requires additional native or collation qualification',parsed.candidates);
   }

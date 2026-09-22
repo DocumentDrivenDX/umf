@@ -72,7 +72,11 @@ export function classifySqlServerFacets(input:Document,options:SqlServerFacetReq
   terms.forEach((t,i)=>{if(t.kind!=='binary-byte-bound')return;const n=BigInt(t.maximum);if(n>BigInt(Number.MAX_SAFE_INTEGER))return;max=max===null?Number(n):Math.min(max,Number(n));used.add(i);});
   if(max!==null){result.mapping.facets.length={max,unit:'byte'};observe('length',base,'Native byte capacity and applicable CHECKs establish a non-null upper bound');}
   if(meaning.padding==='fixed')loss(base,row.nativeColumn,'Fixed binary padding is not represented by a maximum byte bound','not-expressible','length');
- }else if(meaning.family==='string')loss(base,row.nativeColumn,'Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet','not-expressible','length');
+ }else if(meaning.family==='string'){
+  const empty=terms.findIndex(t=>t.kind==='unicode-empty');
+  if(empty>=0){used.add(empty);result.mapping.facets.length={max:0,unit:'unicode-scalar'};observe('length',base,'Variable character storage with a qualified zero-byte CHECK admits only the empty non-null string');}
+  else loss(base,row.nativeColumn,'Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet','not-expressible','length');
+ }
  terms.forEach((t,i)=>{if(!used.has(i))loss(base,t,'Additional native predicate remains outside interpreted facets');});
  if(request.obligation==='exact-input')loss(base,row.nativeColumn,meaning?.family==='float'&&meaning.bits===32?'Binary64 1.0000000000000002 narrows to binary32 1.0':meaning?.family==='decimal'?'Decimal input can round before CHECK evaluation; runtime settings can also produce error or NULL':'Catalog value-domain facts do not prove exact conversion of arbitrary SQL inputs',meaning?.family==='decimal'||meaning?.family==='float'&&meaning.bits===32?'approximated':'unknown','conversion');
  // All unknown capture properties stay attached and are made explicit, including
