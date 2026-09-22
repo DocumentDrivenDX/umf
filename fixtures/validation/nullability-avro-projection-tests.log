@@ -1,0 +1,16 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-avro-projection.test.ts:
+(pass) explicit Avro carriers preserve field docs and recover ideal through serialized reports [1766.92ms]
+(pass) strict/report loss, invalid names, structured-kind refusals and stale schemas fail explicitly [198.06ms]
+
+tests/core-ideals/nullability-avro-projection.test.ts:
+(pass) authored Avro availability projects null carriers and recovers every ideal and residual [8573.28ms]
+(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [104.76ms]
+(pass) native changes, forged source/meaning and invalid Avro names refuse [153.72ms]
+(pass) unmapped document, module, relationship and extension meaning remains recoverable [96.29ms]
+
+ 6 pass
+ 0 fail
+ 681 expect() calls
+Ran 6 tests across 2 files. [11.11s]

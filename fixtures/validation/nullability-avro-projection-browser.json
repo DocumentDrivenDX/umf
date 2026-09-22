@@ -1,0 +1,17 @@
+{
+  "scope": "Portable Avro schema/receipt parity and ideal recovery; native codec checks recorded separately",
+  "fingerprints": {
+    "dist/umf.js": "2a5ef707295f68dff2675e4fb3428575fb0dd410e960889852215dec8b490ffd",
+    "fixtures/validation/nullability-avro-projection-corpus.json": "330efb6e9ba6358ccf70a2b6d8fab4f5f9ba507479481584c41dbd94ecc26021",
+    "scripts/core-ideals/nullability-avro-projection-browser.ts": "58eaf83a6b53e41e03f3620a57da3d58e5822e16b191955e5a39c9ff9415dc34"
+  },
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 88,
+    "blocked": 20,
+    "recoveries": 136,
+    "forgedRefusals": 68,
+    "identifierRefusals": 5
+  },
+  "externalRequests": []
+}

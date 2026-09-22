@@ -1,0 +1,4851 @@
+{
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "checks": [
+    {
+      "id": "availability_1",
+      "nativeType": "null",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_1",
+      "nativeType": "null",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_2",
+      "nativeType": "null",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_2",
+      "nativeType": "null",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_3",
+      "nativeType": "boolean",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "01",
+          "decoded": "True",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_3",
+      "nativeType": "boolean",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "01",
+          "decoded": "True",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "False",
+          "inputNullCoercedToFalse": true,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_4",
+      "nativeType": "boolean",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0201",
+          "decoded": "True",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_4",
+      "nativeType": "boolean",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0201",
+          "decoded": "True",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_5",
+      "nativeType": "boolean",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "01",
+          "decoded": "True",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_5",
+      "nativeType": "boolean",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "01",
+          "decoded": "True",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "False",
+          "inputNullCoercedToFalse": true,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_6",
+      "nativeType": "int",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "feffffff0f",
+          "decoded": "2147483647",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_6",
+      "nativeType": "int",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "feffffff0f",
+          "decoded": "2147483647",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_7",
+      "nativeType": "int",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02feffffff0f",
+          "decoded": "2147483647",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_7",
+      "nativeType": "int",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02feffffff0f",
+          "decoded": "2147483647",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_8",
+      "nativeType": "int",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "feffffff0f",
+          "decoded": "2147483647",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_8",
+      "nativeType": "int",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "feffffff0f",
+          "decoded": "2147483647",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_9",
+      "nativeType": "long",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8280808080808020",
+          "decoded": "9007199254740993",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_9",
+      "nativeType": "long",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8280808080808020",
+          "decoded": "9007199254740993",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_10",
+      "nativeType": "long",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "028280808080808020",
+          "decoded": "9007199254740993",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_10",
+      "nativeType": "long",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "028280808080808020",
+          "decoded": "9007199254740993",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_11",
+      "nativeType": "long",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8280808080808020",
+          "decoded": "9007199254740993",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_11",
+      "nativeType": "long",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8280808080808020",
+          "decoded": "9007199254740993",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_12",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_12",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_13",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_13",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_14",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_14",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_15",
+      "nativeType": "double",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "010000000000f03f",
+          "decoded": "1.0000000000000002",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_15",
+      "nativeType": "double",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "010000000000f03f",
+          "decoded": "1.0000000000000002",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_16",
+      "nativeType": "double",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02010000000000f03f",
+          "decoded": "1.0000000000000002",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_16",
+      "nativeType": "double",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02010000000000f03f",
+          "decoded": "1.0000000000000002",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_17",
+      "nativeType": "double",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "010000000000f03f",
+          "decoded": "1.0000000000000002",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_17",
+      "nativeType": "double",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "010000000000f03f",
+          "decoded": "1.0000000000000002",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_18",
+      "nativeType": "bytes",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0400ff",
+          "decoded": "b'\\x00\\xff'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_18",
+      "nativeType": "bytes",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0400ff",
+          "decoded": "b'\\x00\\xff'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_19",
+      "nativeType": "bytes",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020400ff",
+          "decoded": "b'\\x00\\xff'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_19",
+      "nativeType": "bytes",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020400ff",
+          "decoded": "b'\\x00\\xff'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_20",
+      "nativeType": "bytes",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0400ff",
+          "decoded": "b'\\x00\\xff'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_20",
+      "nativeType": "bytes",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0400ff",
+          "decoded": "b'\\x00\\xff'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_21",
+      "nativeType": "string",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "16556e69636f646520e99baa",
+          "decoded": "'Unicode \u96ea'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_21",
+      "nativeType": "string",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "16556e69636f646520e99baa",
+          "decoded": "'Unicode \u96ea'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_22",
+      "nativeType": "string",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0216556e69636f646520e99baa",
+          "decoded": "'Unicode \u96ea'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_22",
+      "nativeType": "string",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0216556e69636f646520e99baa",
+          "decoded": "'Unicode \u96ea'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_23",
+      "nativeType": "string",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "16556e69636f646520e99baa",
+          "decoded": "'Unicode \u96ea'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_23",
+      "nativeType": "string",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "16556e69636f646520e99baa",
+          "decoded": "'Unicode \u96ea'",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_24",
+      "nativeType": "date",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "98b402",
+          "decoded": "datetime.date(2024, 1, 2)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_24",
+      "nativeType": "date",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "98b402",
+          "decoded": "datetime.date(2024, 1, 2)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_25",
+      "nativeType": "date",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0298b402",
+          "decoded": "datetime.date(2024, 1, 2)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_25",
+      "nativeType": "date",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0298b402",
+          "decoded": "datetime.date(2024, 1, 2)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_26",
+      "nativeType": "date",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "98b402",
+          "decoded": "datetime.date(2024, 1, 2)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_26",
+      "nativeType": "date",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "98b402",
+          "decoded": "datetime.date(2024, 1, 2)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_27",
+      "nativeType": "time-millis",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab2992b",
+          "decoded": "datetime.time(12, 34, 56, 789000)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_27",
+      "nativeType": "time-millis",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab2992b",
+          "decoded": "datetime.time(12, 34, 56, 789000)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_28",
+      "nativeType": "time-millis",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02aab2992b",
+          "decoded": "datetime.time(12, 34, 56, 789000)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_28",
+      "nativeType": "time-millis",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02aab2992b",
+          "decoded": "datetime.time(12, 34, 56, 789000)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_29",
+      "nativeType": "time-millis",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab2992b",
+          "decoded": "datetime.time(12, 34, 56, 789000)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_29",
+      "nativeType": "time-millis",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab2992b",
+          "decoded": "datetime.time(12, 34, 56, 789000)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_30",
+      "nativeType": "time-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "869ab1bed102",
+          "decoded": "datetime.time(12, 34, 56, 789123)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_30",
+      "nativeType": "time-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "869ab1bed102",
+          "decoded": "datetime.time(12, 34, 56, 789123)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_31",
+      "nativeType": "time-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02869ab1bed102",
+          "decoded": "datetime.time(12, 34, 56, 789123)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_31",
+      "nativeType": "time-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02869ab1bed102",
+          "decoded": "datetime.time(12, 34, 56, 789123)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_32",
+      "nativeType": "time-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "869ab1bed102",
+          "decoded": "datetime.time(12, 34, 56, 789123)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_32",
+      "nativeType": "time-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "869ab1bed102",
+          "decoded": "datetime.time(12, 34, 56, 789123)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_33",
+      "nativeType": "timestamp-millis",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "80c0c2f79863",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffa9a0b5f0>)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_33",
+      "nativeType": "timestamp-millis",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "80c0c2f79863",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_34",
+      "nativeType": "timestamp-millis",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0280c0c2f79863",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffa9a0b5f0>)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_34",
+      "nativeType": "timestamp-millis",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0280c0c2f79863",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_35",
+      "nativeType": "timestamp-millis",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "80c0c2f79863",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffa9a0b5f0>)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_35",
+      "nativeType": "timestamp-millis",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "80c0c2f79863",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, tzinfo=datetime.timezone.utc)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_36",
+      "nativeType": "timestamp-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8089d3dfe5fa8606",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffa9a0b5f0>)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_36",
+      "nativeType": "timestamp-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8089d3dfe5fa8606",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=datetime.timezone.utc)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_37",
+      "nativeType": "timestamp-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "028089d3dfe5fa8606",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffa9a0b5f0>)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_37",
+      "nativeType": "timestamp-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "028089d3dfe5fa8606",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=datetime.timezone.utc)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_38",
+      "nativeType": "timestamp-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8089d3dfe5fa8606",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=<avro.timezones.UTCTzinfo object at 0xffffa9a0b5f0>)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_38",
+      "nativeType": "timestamp-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "8089d3dfe5fa8606",
+          "decoded": "datetime.datetime(2024, 1, 2, 0, 0, 0, 123456, tzinfo=datetime.timezone.utc)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_39",
+      "nativeType": "local-timestamp-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab4de75",
+          "decoded": "123456789",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": [
+        "Unknown local-timestamp-micros, using long."
+      ]
+    },
+    {
+      "id": "availability_39",
+      "nativeType": "local-timestamp-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab4de75",
+          "decoded": "datetime.datetime(1970, 1, 1, 0, 2, 3, 456789)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_40",
+      "nativeType": "local-timestamp-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02aab4de75",
+          "decoded": "123456789",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": [
+        "Unknown local-timestamp-micros, using long."
+      ]
+    },
+    {
+      "id": "availability_40",
+      "nativeType": "local-timestamp-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "02aab4de75",
+          "decoded": "datetime.datetime(1970, 1, 1, 0, 2, 3, 456789)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_41",
+      "nativeType": "local-timestamp-micros",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab4de75",
+          "decoded": "123456789",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": [
+        "Unknown local-timestamp-micros, using long."
+      ]
+    },
+    {
+      "id": "availability_41",
+      "nativeType": "local-timestamp-micros",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "aab4de75",
+          "decoded": "datetime.datetime(1970, 1, 1, 0, 2, 3, 456789)",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_42",
+      "nativeType": "decimal(38,9)",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0a1cbe318280",
+          "decoded": "Decimal('123.450000000')",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_42",
+      "nativeType": "decimal(38,9)",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0a1cbe318280",
+          "decoded": "Decimal('123.450000000')",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_43",
+      "nativeType": "decimal(38,9)",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020a1cbe318280",
+          "decoded": "Decimal('123.450000000')",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_43",
+      "nativeType": "decimal(38,9)",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020a1cbe318280",
+          "decoded": "Decimal('123.450000000')",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_44",
+      "nativeType": "decimal(38,9)",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0a1cbe318280",
+          "decoded": "Decimal('123.450000000')",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_44",
+      "nativeType": "decimal(38,9)",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0a1cbe318280",
+          "decoded": "Decimal('123.450000000')",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_46",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_46",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_48",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_48",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_50",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_50",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_52",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_52",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_54",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_54",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_56",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_56",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_58",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_58",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_60",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_60",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_62",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_62",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_64",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_64",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_66",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_66",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_67",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_67",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_68",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_68",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_70",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_70",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_72",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_72",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_73",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_73",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_74",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_74",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_76",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_76",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_78",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_78",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_80",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_80",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_82",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_82",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_84",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_84",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "020000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "00",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_86",
+      "nativeType": "float",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "AvroTypeException"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_86",
+      "nativeType": "float",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "0000803f",
+          "decoded": "1.0",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": true
+        },
+        {
+          "operation": "null",
+          "status": "rejected",
+          "error": "TypeError"
+        },
+        {
+          "operation": "omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_87",
+      "nativeType": "null",
+      "codec": "apache",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionException"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "availability_87",
+      "nativeType": "null",
+      "codec": "fastavro",
+      "outcomes": [
+        {
+          "operation": "present",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "null",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "omitted",
+          "status": "accepted",
+          "hex": "",
+          "decoded": "None",
+          "inputNullCoercedToFalse": false,
+          "floatNarrowing": false
+        },
+        {
+          "operation": "strict-omitted",
+          "status": "rejected",
+          "error": "ValueError"
+        },
+        {
+          "operation": "reader-missing-field",
+          "status": "rejected",
+          "error": "SchemaResolutionError"
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "limitations": [
+    "Single authored field and explicit carrier; sample values do not establish general value-domain equivalence.",
+    "Apache Python ignores local-timestamp-micros and receives the underlying long; fastavro uses its logical datetime codec.",
+    "Null and omitted writer API inputs remain distinct from reader-resolution defaults.",
+    "fastavro coerces explicit None to False for non-null booleans; this is input coercion, not encoded null permission.",
+    "Float narrowing is measured even for availability-exact mappings; value exactness requires separate facets and residuals."
+  ],
+  "fingerprints": {
+    "fixtures/validation/nullability-avro-projection-corpus.json": "330efb6e9ba6358ccf70a2b6d8fab4f5f9ba507479481584c41dbd94ecc26021",
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-avro-projection-native.py": "10604b68ffb6df62784354fe06f6db3e4e9f26f9d2b2cbfb1b18c15fa4a90e96"
+  }
+}

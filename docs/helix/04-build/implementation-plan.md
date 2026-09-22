@@ -104,8 +104,9 @@ refresh counts above. See the
 [SQL Server acceptance record](../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
 Avro Nullability is in progress with scoped underlying-value classification,
 retained native bundles and its own extension package. The native discovery
-corpus distinguishes defaults, omission and null; authored projection and final
-binding acceptance remain unfinished. The Field gate requires a new fingerprint
+corpus distinguishes defaults, omission and null. Authored projection now has
+two-codec execution evidence and both recovery directions; broader refresh and
+final binding acceptance remain unfinished. The Field gate requires a new fingerprint
 refresh after this public API addition. Parquet Nullability is ready;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this

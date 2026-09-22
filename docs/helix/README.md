@@ -26,7 +26,8 @@ conformance gate passes. SQL Server's authored DDL also passes under opposing
 session null-default settings. See the
 [SQL Server acceptance record](../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
 Avro Nullability now has scoped underlying-value classification and retained
-native recovery. Its authored projection and the Parquet binding remain. The
+native recovery, plus authored projection with two-codec evidence. Its final
+binding acceptance and the Parquet binding remain. The
 prior Field gate needs its required refresh after the new public API. The
 experimental 0.3.0 concept has not passed
 its five-system delivery gate. No native equivalence is claimed.

@@ -953,3 +953,55 @@ records four tests / 1,968 assertions, 226 audited schemas / 36 packages,
 typechecking and browser build. Chromium passes 304 cases, 342 exact recoveries
 and 171 altered-receipt refusals. This supersedes the discovery-only scope above;
 final binding acceptance remains open.
+
+
+### Authored Avro Nullability projection
+
+`projectNullabilityToAvro` now verifies a core 0.3.0 availability author receipt
+and projects one Field into a named record with an explicit existing Avro carrier.
+Its request requires the binding scope and null-value carrier. Required emits
+a non-null type; absent-allowed emits a null-first union. A null-only carrier
+already allows absence and cannot satisfy required: strict blocks, while report
+retains the failed requirement with a not-expressible residual. No reader default
+is generated.
+
+Unspecified imposes no availability requirement. The selected native carrier is
+emitted unchanged, and `no-authored-requirement` provenance retains the distinction
+between that native choice and author intent. Native-only reclassification can
+therefore observe required or absent-allowed without recovering unspecified.
+Receipt-based recovery restores the original ideal. Known requirements outside
+underlying-field-value/avro-null scope produce losses rather than inferred writer
+or reader guarantees.
+
+The projection audits all source properties: other elements/modules, vocabularies,
+relationships, unknown extensions, scalar-family conflicts, namespace differences,
+authored defaults and exactness metadata require residuals or strict refusal.
+Field descriptions are emitted as native doc strings. Full source and author
+receipts remain available. `recoverNullabilityFromAvro` recomputes the complete
+projection and requires the unchanged native schema before recovering the ideal.
+
+The 88-case corpus spans all 15 existing native carriers, three ideals, strict and
+report modes, scope/carrier failures, unknown metadata, defaults and exactness.
+Twenty cases block and 68 emit schemas. Bun verifies 136 ideal recoveries and
+136 native recoveries through JSON/YAML, plus reclassification of every emitted
+field. Apache Avro Python 1.12.0 and fastavro 1.12.2 run 612 outcomes across those
+schemas: present/null/omitted writer inputs, fastavro strict omission, and missing
+writer-schema fields during reader resolution. The latter all reject because
+no default was synthesized.
+
+The native check found fastavro coerces explicit None to false for a non-null
+boolean. This is input conversion, not permission to encode null, and reinforces
+the underlying-value scope. Float inputs still narrow from binary64
+1.0000000000000002 to binary32 1.0; exactness obligations remain explicit residuals.
+Apache Python uses the underlying long for local-timestamp-micros while fastavro
+uses its logical datetime codec. Sample checks establish neither general value
+equivalence nor complete logical-type compatibility.
+
+Authored projection now has native evidence; broader regression, refreshed Field
+acceptance fingerprints and final Avro binding acceptance remain unfinished.
+Parquet Nullability follows, and no native concept is replaced.
+
+The [projection checkpoint](../../../../fixtures/validation/nullability-avro-projection-evidence.json)
+records six tests / 681 assertions, typechecking, 227 schema audits / 36 packages
+and browser build. Chromium passes 88 projection cases with 136 ideal recoveries
+and 68 altered-receipt refusals; classification still passes all 304 cases.
