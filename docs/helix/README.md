@@ -43,8 +43,12 @@ classification, explicit scalar/vector carrier projection and retained native/id
 recovery, with strict/report losses and fresh native/Chromium evidence. See the
 [acceptance record](../../fixtures/validation/tablespec-cardinality-acceptance-evidence.json).
 Both existing five-system Field/Nullability gates pass after the library refresh.
-PostgreSQL, SQL Server, Avro and Parquet Cardinality bindings remain pending;
-Cardinality ideal admission still requires at least two useful bindings.
+PostgreSQL Cardinality also passes qualified binding acceptance: explicit type
+relationships, scalar classification, array/map residuals, checked native carriers
+and both retained recovery directions. See the
+[PostgreSQL acceptance record](../../fixtures/validation/postgresql-cardinality-acceptance-evidence.json).
+SQL Server, Avro and Parquet Cardinality bindings remain pending. Cardinality ideal
+admission and all-five delivery still require their separate conformance gate.
 Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

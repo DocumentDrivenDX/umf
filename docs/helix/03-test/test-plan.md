@@ -2707,3 +2707,16 @@ separate evidence. The [acceptance record](../../../fixtures/validation/tablespe
 records 365 priority regression tests / 34,378 assertions and fresh prior
 gates. The remaining four Cardinality bindings and concept admission gate are still
 required; this one-system qualification cannot satisfy US-042-AC8/9 on its own.
+
+
+## PostgreSQL Cardinality acceptance
+
+Run `bun scripts/core-ideals/cardinality-postgresql-oracle.ts` and
+`bun scripts/core-ideals/cardinality-postgresql-browser.ts`. The native evidence
+covers 26 captured columns (18 strict scalar classifications), 48 projections,
+26 emitted SQL candidates, 22 strict blocks and 26 composed native/ideal recoveries.
+Chromium checks include 52 serialized ideal recoveries, nested/cyclic items,
+independent availability, unknown metadata and forged receipts. The
+[acceptance record](../../../fixtures/validation/postgresql-cardinality-acceptance-evidence.json)
+records the five-system refresh and 377 priority regression tests. This is
+qualified PostgreSQL support, not Cardinality admission or all-five delivery.

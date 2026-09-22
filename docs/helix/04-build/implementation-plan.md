@@ -3872,3 +3872,16 @@ through 176 recovery comparisons; differences from structural validation are rec
 TypeScript checks and audits pass: 175 published JSON Schemas, 32 packages. This
 advances the complete-schema deliverable without claiming all extension semantics
 or the overall goal are complete.
+
+
+### PostgreSQL Cardinality qualified binding acceptance
+
+PostgreSQL 17.4 classification and explicit carrier projection pass qualified
+acceptance after 70 refresh commands, 377 priority tests / 34,807
+assertions across 122 files, and both existing conformance gates. See the
+[acceptance record](../../../fixtures/validation/postgresql-cardinality-acceptance-evidence.json).
+The binding retains paired native captures and author receipts, blocks losses in
+strict mode, and reports array rank/bounds, item/value and JSONB representation
+limits. Native-only reclassification does not reconstruct authored map intent.
+SQL Server, Avro and Parquet Cardinality and the separate concept gate remain
+unfinished. No native equivalence is claimed.

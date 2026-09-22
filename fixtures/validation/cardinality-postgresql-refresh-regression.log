@@ -1,0 +1,627 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/avro/bundle.test.ts:
+(pass) US-007-AC7: explicit ordered dependencies resolve native names and survive intact [303.83ms]
+(pass) US-007-AC8: duplicate declarations and unknown dependency representation cannot imply complete support [87.80ms]
+
+tests/avro/candidate-edit.test.ts:
+(pass) US-007-AC9 explicit Avro candidates preserve logical annotations, unknown metadata and exact defaults [703.73ms]
+(pass) US-007-AC9 candidates cannot erase representation content or attached field identity [230.95ms]
+
+tests/avro/corpus.test.ts:
+(pass) US-007-AC6: pinned Apache schema corpus survives with per-file interpretation status [2012.00ms]
+
+tests/avro/integer-metadata.test.ts:
+(pass) CONTRACT-007 decimal metadata never promotes rounded precision, scale or fixed size [1843.98ms]
+
+tests/avro/metadata.test.ts:
+(pass) CONTRACT-007 core scalar metadata retains Avro field semantics [223.78ms]
+(pass) CONTRACT-007 nested records, namespaces and dependency fields retain source paths [29.98ms]
+(pass) CONTRACT-007 edits cannot silently reassociate attached field metadata [60.31ms]
+
+tests/avro/native-schema.test.ts:
+(pass) CONTRACT-007 native syntax schema describes every schema constructor while retaining annotation limits [2504.69ms]
+
+tests/avro/native.test.ts:
+(pass) US-007-AC1: native Avro structure, metadata and logical types survive core serializations [138.50ms]
+(pass) US-007-AC2: precise long defaults and newer union defaults remain explicit incomplete profiles [83.09ms]
+(pass) US-007-AC3: edits are atomic, copies isolated, and unknown representation fields never discarded [123.71ms]
+
+tests/avro/projection.test.ts:
+(pass) US-008-AC1: Avro shapes project with explicit losses and independently validated instances [171.83ms]
+(pass) US-008-AC2: strict policy and unresolved interpretation block, dependencies and recursion stay qualified [144.72ms]
+(pass) US-008-AC5: official corpus projections retain sources and validate native targets [1480.98ms]
+
+tests/avro/tablespec-projection.test.ts:
+(pass) CONTRACT-038 Avro record projections retain defaults, named dependencies and unknown metadata in source [508.75ms]
+(pass) CONTRACT-038 carrier families round trip through TableSpec with independent loss reports [99.62ms]
+(pass) CONTRACT-038 unsupported logical types, numeric widths, names and nullability cannot be guessed [404.59ms]
+
+tests/avro/temporal-metadata.test.ts:
+(pass) CONTRACT-007 temporal core classification requires exact annotation and carrier [4550.85ms]
+
+tests/core-ideals/avro-namespace.test.ts:
+(pass) Avro namespace changes report loss for both Field and record projections [291.46ms]
+
+tests/core-ideals/avro-record-type.test.ts:
+(pass) Avro direct/qualified/recursive record links preserve bundle text; containers and unions block [8919.73ms]
+(pass) author conflicts, existing type assertions and stale sources cannot be overwritten [1151.36ms]
+
+tests/core-ideals/cardinality-field-operations.test.ts:
+(pass) versioned kind and record receipts retain old profiles and preserve 0.4 Cardinality [456.17ms]
+(pass) Nullability authoring and inspection use v2 on containers without changing item meaning [42.93ms]
+(pass) container record meaning belongs on its item Field and dependent kind edits refuse [7.69ms]
+(pass) cross-version, stale and forged receipts refuse without changing original profiles [11.00ms]
+
+tests/core-ideals/cardinality-postgresql-catalog.test.ts:
+(pass) resolves observed arrays, domain wrappers and domain members without category guessing [27.01ms]
+(pass) rejects ambiguity, broken edges, impossible observations and domain cycles [14.33ms]
+(pass) preserves exact unknown tokens and source text; unknown versions are unqualified [5.25ms]
+(pass) does not return rounded unknown metadata in interpreted views [2.16ms]
+(pass) correlates capture observations and refuses mismatches without asserting transaction provenance [659.00ms]
+
+tests/core-ideals/cardinality-postgresql-projection.test.ts:
+(pass) explicit carriers block losses in strict mode and retain ideal recovery in report mode [359.26ms]
+(pass) exact-value requests, tampering, SQL injection and forged receipts are refused [21.94ms]
+(pass) nested and cyclic items retain independent availability and unknown extensions [317.38ms]
+
+tests/core-ideals/cardinality-postgresql.test.ts:
+(pass) all observed native shapes retain paired archives through report classification and serialized recovery [19067.22ms]
+(pass) author conflict and forged or stale recovery receipts are refused [694.13ms]
+(pass) a matched basic scalar declaration classifies exactly without asserting item or availability meaning [322.79ms]
+(pass) classification retains authored cyclic item references, independent availability and unknown native tokens [1100.28ms]
+
+tests/core-ideals/cardinality-selection.test.ts:
+(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [59.43ms]
+(pass) forged item paths, missing boundaries, metadata, filters and traversal scope cannot verify [4.54ms]
+(pass) older item/cardinality members remain opaque and do not add traversal edges [8.14ms]
+(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.64ms]
+
+tests/core-ideals/cardinality-tablespec-projection.test.ts:
+(pass) authored shapes and item obligations project or explicitly residualize, with both retained recovery formats [2489.91ms]
+(pass) invalid native carriers, dimensions, names, getters and forged receipts cannot publish meaning [39.35ms]
+
+tests/core-ideals/cardinality-tablespec.test.ts:
+(pass) native declaration profiles classify shape with explicit refusals and retain source text through both formats [13087.46ms]
+(pass) authored intent, item references and opaque assertions cannot be overwritten by native observations [105.90ms]
+(pass) tampered and stale receipts, malformed requests and legacy source versions refuse [69.05ms]
+(pass) unsafe numeric coercion stays residual while exact large integer tokens remain native [390.10ms]
+(pass) split archives preserve comments, unknown siblings and opaque files after classification [70.68ms]
+
+tests/core-ideals/classification-policy.test.ts:
+(pass) tablespec-field-classification rejects inconsistent success and blocked metadata [2.34ms]
+(pass) tablespec-record-classification rejects inconsistent success and blocked metadata [2.52ms]
+(pass) postgresql-field-classification rejects inconsistent success and blocked metadata [5.08ms]
+(pass) postgresql-record-classification rejects inconsistent success and blocked metadata [7.06ms]
+(pass) postgresql-composite-classification rejects inconsistent success and blocked metadata [4.83ms]
+(pass) postgresql-ddl-kinds rejects inconsistent success and blocked metadata [5.43ms]
+
+tests/core-ideals/classification-report.test.ts:
+(pass) five native classifiers retain classified provenance, exact fragments and conflict residuals [3624.36ms]
+(pass) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [951.43ms]
+
+tests/core-ideals/field-avro-projection.test.ts:
+(pass) explicit Avro carriers preserve field docs and recover ideal through serialized reports [1332.62ms]
+(pass) strict/report loss, invalid names, structured-kind refusals and stale schemas fail explicitly [159.59ms]
+
+tests/core-ideals/field-avro.test.ts:
+(pass) Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles [3025.49ms]
+(pass) missing/reordered dependency archives, authored conflicts and stale receipts are refused [353.01ms]
+
+tests/core-ideals/field-parquet-projection.test.ts:
+(pass) explicit Parquet carrier/repetition schemas recover authored meaning through both formats [5018.82ms]
+(pass) unsupported meaning is explicit and malformed names or wrong roles never project [159.50ms]
+
+tests/core-ideals/field-parquet.test.ts:
+(pass) Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields [17203.50ms]
+(pass) Parquet rejects unknown indices, invalid topology, conflicts and stale recovery [1253.25ms]
+
+tests/core-ideals/field-postgresql-projection.test.ts:
+(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [1073.70ms]
+(pass) unsafe or truncating identifiers are rejected before parser invocation [10.13ms]
+(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [19.35ms]
+(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [20.86ms]
+
+tests/core-ideals/field-postgresql.test.ts:
+(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [6642.09ms]
+(pass) native text formatting and unknown numeric metadata survive both receipt formats [912.41ms]
+(pass) verified authored conflict blocks both modes without a partial target [488.27ms]
+(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [675.88ms]
+
+tests/core-ideals/field-report.test.ts:
+(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [710.21ms]
+(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [162.28ms]
+
+tests/core-ideals/field-selection.test.ts:
+(pass) 0.2 selection schema and report verifier cover qualified cycles and reference boundaries [25.64ms]
+(pass) report structure and recomputation reject forged selections and preserve legacy interpretation [4.74ms]
+(pass) selection verification uses the same caller registry as source validation [6.84ms]
+
+tests/core-ideals/field-sqlserver-projection.test.ts:
+(pass) explicit carriers emit complete SQL artifacts and retained receipts recover authored fields [29.63ms]
+(pass) strict/report loss, structured-kind refusal, Unicode guards and stale artifacts remain explicit [4.99ms]
+
+tests/core-ideals/field-sqlserver.test.ts:
+(pass) SQL Server captured members classify independently of scalar/alias/index semantics [7205.55ms]
+(pass) authored conflicts block both policies, while matching authored fields remain explicit [459.76ms]
+(pass) capture formatting, unknown numeric detail and index constraints survive without identity promotion [147.65ms]
+(pass) stale metadata, archives, author receipts and unsupported versions cannot claim recovery [286.56ms]
+
+tests/core-ideals/field-tablespec-projection.test.ts:
+(pass) authored field projects to a complete native table and recovers author meaning with retained receipt [531.51ms]
+(pass) strict blocks omitted meaning while report retains every residual and source assertion [32.95ms]
+(pass) record/group cannot lower to a single column and name changes are explicit loss [29.81ms]
+(pass) receipt tampering, stale native text, malformed policy and metadata omission cannot pass silently [36.81ms]
+(pass) diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks [69.09ms]
+(pass) empty namespace permits strict projection but discarded namespace receipts cannot claim exactness [23.39ms]
+
+tests/core-ideals/field-tablespec.test.ts:
+(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [59.58ms]
+(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [148.30ms]
+(pass) stale author receipts and metadata cannot be used as a native classification basis [49.03ms]
+(pass) split sources retain sidecars and shadowed metadata after classification [34.04ms]
+(pass) native classification receipts reject tampering and subsequent native changes [51.48ms]
+(pass) new results always diagnose conflicts while historical receipts remain verifiable [71.19ms]
+
+tests/core-ideals/nullability-avro-projection.test.ts:
+(pass) authored Avro availability projects null carriers and recovers every ideal and residual [7436.54ms]
+(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [90.44ms]
+(pass) native changes, forged source/meaning and invalid Avro names refuse [126.51ms]
+(pass) unmapped document, module, relationship and extension meaning remains recoverable [88.54ms]
+
+tests/core-ideals/nullability-avro.test.ts:
+(pass) Avro underlying-value availability matrix preserves exact source, scope and both formats [25057.92ms]
+(pass) author conflicts, stale/forged receipts and malformed requests refuse without losing unknown content [553.26ms]
+(pass) native names, dependencies and recursive fields resolve without claiming parent availability [447.92ms]
+(pass) invalid structural types and unresolved names stay native with explicit report residuals [1031.58ms]
+
+tests/core-ideals/nullability-field-operations.test.ts:
+(pass) versioned kind and record type receipts preserve availability, recursion and native content [188.16ms]
+(pass) availability prevents role erasure and receipts refuse changed versions, sources and provenance [85.43ms]
+(pass) new roles allow availability authoring, with whole-document receipt freshness [2.72ms]
+
+tests/core-ideals/nullability-parquet-projection.test.ts:
+(pass) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [10643.81ms]
+(pass) scope, cardinality, defaults and precision obligations remain explicit losses [728.68ms]
+(pass) changed bytes, forged receipts, stale authors and invalid native names refuse [211.41ms]
+(pass) document/module metadata and relationships survive report-mode ideal recovery [123.70ms]
+
+tests/core-ideals/nullability-parquet.test.ts:
+(pass) native-backed row/entry context matrix preserves exact bytes, metadata and both serializations [152102.56ms]
+(pass) optional ancestors contribute absence while repeated paths require an explicit entry context [450.81ms]
+(pass) author conflicts, altered scope/ancestry, changed targets and unsafe requests refuse [1486.51ms]
+(pass) legacy repeated primitive entries remain required within the selected entry, with exact byte recovery [793.17ms]
+
+tests/core-ideals/nullability-postgresql-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [2527.02ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [44.28ms]
+(pass) identifiers cannot be truncated and strict loss does not invoke the parser [11.66ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [25.27ms]
+
+tests/core-ideals/nullability-postgresql.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [47690.35ms]
+(pass) domain NOT NULL, CHECK UNKNOWN, NOT VALID and generated expressions do not become column permission [1191.27ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1346.56ms]
+(pass) unknown exact native content remains recoverable while uncertain permission is withheld [566.03ms]
+(pass) missing flags, triggers, unsupported profiles and source state remain explicit [849.54ms]
+
+tests/core-ideals/nullability-selection.test.ts:
+(pass) 0.3 reports retain availability distinctions, namespaces, recursive boundaries and native refinements [23.93ms]
+(pass) forged availability, erased native refinements, changed query, diagnostics and boundaries cannot verify [3.21ms]
+(pass) 0.2 availability remains opaque through the old selection schema [2.59ms]
+
+tests/core-ideals/nullability-sqlserver-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [164.56ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [7.31ms]
+(pass) invalid permanent identifiers refuse and native nullability is always explicit [31.54ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [6.90ms]
+
+tests/core-ideals/nullability-sqlserver.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [58102.68ms]
+(pass) CHECK UNKNOWN and untrusted constraints do not become unconditional permission [502.21ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1001.51ms]
+(pass) unknown native fields, legacy evidence and rules retain residuals with exact source recovery [2542.58ms]
+(pass) modified captures, incorrect envelope versions and unsafe numeric refinements refuse interpretation [567.17ms]
+
+tests/core-ideals/nullability-tablespec-projection.test.ts:
+(pass) authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery [10560.23ms]
+(pass) names, unknown obligations, scalar mismatches and unsafe or forged inputs cannot silently succeed [70.21ms]
+(pass) context keys are exact data and other elements/modules remain explicit residuals [117.32ms]
+
+tests/core-ideals/nullability-tablespec.test.ts:
+(pass) selected profile/context classification separates exact declarations, coercions and unknowns [25145.28ms]
+(pass) unresolved carrier blocks strict mode and retains explicit residuals in report mode [60.49ms]
+(pass) author provenance, role conflicts, stale models and forged binding metadata refuse [193.12ms]
+(pass) unknown native precision, escaped context keys and split sidecars remain exact [120.06ms]
+
+tests/core-ideals/parquet-record-type.test.ts:
+(pass) interpreted LIST struct values link to separate records without changing repetition or bytes [1836.88ms]
+(pass) wrappers, primitives, root selection, author conflicts and tampered receipts refuse [1565.68ms]
+
+tests/core-ideals/postgresql-composite.test.ts:
+(pass) catalog composites expose ordered fields without formatted-type guessing and recover exact source [3165.29ms]
+(pass) collisions, duplicate names/order, ambiguity and stale archives cannot publish false roles [1051.87ms]
+(pass) unknown composite refinements remain recoverable and future server versions are refused [194.47ms]
+
+tests/core-ideals/postgresql-ddl-kinds.test.ts:
+(pass) declared records retain source SQL and distinguish unresolved namespace from catalog facts [3255.26ms]
+(pass) collisions, edited AST archives and stale receipts cannot silently publish new roles [254.87ms]
+(pass) composite attributes preserve collations and unresolved nested types without scalar flattening [412.49ms]
+
+tests/core-ideals/projection-policy.test.ts:
+(pass) field-tablespec schema enforces strict/report loss and atomic candidate rules [7.72ms]
+(pass) record-tablespec schema enforces strict/report loss and atomic candidate rules [8.23ms]
+(pass) field-postgresql schema enforces strict/report loss and atomic candidate rules [5.05ms]
+(pass) record-postgresql schema enforces strict/report loss and atomic candidate rules [5.61ms]
+
+tests/core-ideals/record-avro-projection.test.ts:
+(pass) ordered and empty authored records emit complete Avro schemas with recoverable loss reports [592.53ms]
+(pass) duplicate/colliding members, stale authors, invalid native names and edited targets fail safely [145.71ms]
+
+tests/core-ideals/record-avro.test.ts:
+(pass) declared empty, nested, recursive and dependency records retain ordered direct members [3338.87ms]
+(pass) one conflicting member, stale provenance, collisions or a non-declaration selection cannot publish a record [1843.31ms]
+
+tests/core-ideals/record-parquet-projection.test.ts:
+(pass) Parquet records preserve member order, explicit native repetition and authored recovery [1501.68ms]
+(pass) collisions, duplicate bindings, stale authors and report tampering cannot yield partial records [137.86ms]
+
+tests/core-ideals/record-parquet.test.ts:
+(pass) Parquet root records keep ordered value slots separate from container and struct definitions [3906.23ms]
+(pass) Parquet LIST wrappers block; interpreted two-level struct elements supply records [775.67ms]
+(pass) Parquet record conflicts, collisions and receipt edits block atomically [728.28ms]
+
+tests/core-ideals/record-postgresql-projection.test.ts:
+(pass) record members compile in ideal order and recover source through both receipt formats [158.22ms]
+(pass) strict losses and missing bindings expose no partial SQL or target [104.82ms]
+(pass) name collisions, unknown bindings and unsafe identifiers fail without partial output [8.17ms]
+(pass) stale author declarations, native edits and changed receipts fail recovery [48.51ms]
+
+tests/core-ideals/record-postgresql.test.ts:
+(pass) qualified relations remain distinct records and only selected members receive kinds [872.74ms]
+(pass) one member conflict blocks the whole record in both policies [450.51ms]
+(pass) ambiguous relations, unsupported kinds, collisions and stale receipts cannot imply record equivalence [991.19ms]
+(pass) duplicate native member names and inconsistent ordinal order block whole-record publication [752.56ms]
+
+tests/core-ideals/record-report.test.ts:
+(pass) common record reports retain ordered membership, member carriers and all blocked residuals [2697.05ms]
+(pass) member basis and source receipt tampering are rejected, and backend remains explicit [629.94ms]
+
+tests/core-ideals/record-sqlserver-projection.test.ts:
+(pass) record member order and strict/report policies produce atomic SQL with exact ideal recovery [64.01ms]
+(pass) empty records, collisions, stale provenance and altered SQL cannot publish or recover false meaning [16.73ms]
+
+tests/core-ideals/record-sqlserver.test.ts:
+(pass) whole captured tables become ordered records with exact source recovery [10644.14ms]
+(pass) one member conflict blocks the whole record and provenance cannot be silently replaced [7844.91ms]
+(pass) collisions, missing identities, non-increasing ordinals and stale receipts fail safely [7717.96ms]
+
+tests/core-ideals/record-tablespec-projection.test.ts:
+(pass) record projection orders columns by declared membership and recovers the complete ideal [137.29ms]
+(pass) missing, duplicate, non-member and name-colliding bindings block atomically under either policy [19.72ms]
+(pass) scalar mismatch and renamed columns are reportable but strict refuses them [35.83ms]
+(pass) unknown metadata and relationship refinements survive as residuals [28.76ms]
+(pass) stale member provenance and edited native/receipt data cannot claim ideal recovery [37.95ms]
+(pass) an empty-namespace record can project strictly without erasing namespaced inputs [29.70ms]
+
+tests/core-ideals/record-tablespec.test.ts:
+(pass) whole native table becomes a record with ordered explicit member references and unknown type preservation [91.60ms]
+(pass) one conflicting member blocks the whole table in both modes without partial candidate [168.43ms]
+(pass) verified member authors are retained; stale, duplicate and unrelated receipts block [203.65ms]
+(pass) record classification retains split files and empty tables without inventing grouping semantics [61.24ms]
+(pass) changed member references, receipts and native content invalidate classification [116.43ms]
+
+tests/core-ideals/record-type.test.ts:
+(pass) record-valued slots preserve qualified identity, cycles and unknown native meaning [26.28ms]
+(pass) scalar/record conflicts, legacy roles and stale or forged receipt paths refuse [8.91ms]
+
+tests/core-ideals/sql-namespace.test.ts:
+(pass) PostgreSQL and SQL Server schema moves disclose every selected namespace [72.71ms]
+
+tests/core-ideals/structured-report.test.ts:
+(pass) record, composite, type-link and raw DDL reports retain scoped ordered native evidence [12114.82ms]
+(pass) declared-only context and record mappings cannot be forged or silently resolved [3182.09ms]
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [5.60ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [1.88ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [1.47ms]
+(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [30.63ms]
+(pass) rollback retains later assertions separately and refuses forged receipts or changed identities [1.20ms]
+
+tests/core/cardinality-operations.test.ts:
+(pass) authored Cardinality and item meaning survive serialized verified receipts without source mutation [10.87ms]
+(pass) item omission preserves meaning; explicit set or clear retains previous meaning in archived source [0.92ms]
+(pass) legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning [1.84ms]
+(pass) invalid requests and item/scalar conflicts fail atomically; no getters execute [0.47ms]
+(pass) forged or stale author receipts cannot confer provenance [1.82ms]
+
+tests/core/core.test.ts:
+(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [0.87ms]
+(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [24.24ms]
+(pass) US-001-AC2: native semantics are not inferred by extension structural validation [8.01ms]
+(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [12.02ms]
+(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [8.30ms]
+(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [4.27ms]
+(pass) US-001-AC2: validator exceptions never become successful validation [3.84ms]
+(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [6.67ms]
+(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [1.98ms]
+(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.26ms]
+(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.10ms]
+(pass) US-001-AC4: document depth and size limits fail explicitly [1.40ms]
+(pass) US-001-AC1: generated unknown content survives repeated portable serialization [48.54ms]
+(pass) registry captures a frozen copy, independent of subsequent package edits [4.88ms]
+(pass) published minimal document fixture validates with independent namespaces and references [15.31ms]
+(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.65ms]
+(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [7.28ms]
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [2.08ms]
+(pass) legacy collisions stay opaque, including names that are now known [3.08ms]
+(pass) new profile refuses malformed kinds and structured scalar claims atomically [0.94ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [0.48ms]
+(pass) future envelope versions and unsafe getter inputs cannot be interpreted [0.08ms]
+
+tests/core/field-kind.test.ts:
+(pass) kind lookup separates legacy, unknown, missing and defined roles without inventing provenance [6.74ms]
+(pass) author provenance survives serialization, verification and rollback without claiming native meaning [6.83ms]
+(pass) authoring blocks unknown meaning, legacy versions and structured/scalar conflicts atomically [0.42ms]
+(pass) provenance verification rejects forged paths, altered assertions and stale native or unrelated content [1.42ms]
+
+tests/core/field-transition.test.ts:
+(pass) upgrade explicitly archives every legacy collision and preserves all other metadata [0.51ms]
+(pass) serialized receipts support exact model rollback while retaining later assertions and native edits [3.86ms]
+(pass) tampered or stale receipts fail without overwriting source or edited model [2.17ms]
+(pass) null, method-like names, unknown content, and malformed inputs retain copy safety [2.43ms]
+
+tests/core/native-json.test.ts:
+(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [7.10ms]
+(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.49ms]
+(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.21ms]
+(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.39ms]
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [1.35ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [4.77ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.39ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.70ms]
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [1.43ms]
+(pass) missing availability does not inherit native nullable flags or defaults [0.41ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [6.12ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [1.03ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.09ms]
+
+tests/core/nullability-transition.test.ts:
+(pass) explicit upgrade archives every old label and preserves roles, native refinements and references [0.75ms]
+(pass) both receipt formats roll back original model while retaining subsequent availability and native edits [4.66ms]
+(pass) null, empty, known, future and method-like collisions remain recoverable [3.97ms]
+(pass) forged receipts, wrong identity, wrong versions and malformed current states refuse atomically [2.61ms]
+(pass) 0.1.0 requires the Field transition first and the inverse chain preserves both collisions [1.10ms]
+(pass) getter inputs are refused without invoking artifact code [0.05ms]
+
+tests/core/scalar.test.ts:
+(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [1.05ms]
+(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [0.34ms]
+
+tests/core/selection.test.ts:
+(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [5.42ms]
+(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [122.73ms]
+(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [9.87ms]
+(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [1017.93ms]
+
+tests/parquet/arrow-nested.test.ts:
+(pass) US-019-AC23 structural LIST/MAP correspondence retains distinct labels and inverse meaning [9093.72ms]
+
+tests/parquet/arrow-rename.test.ts:
+(pass) US-019-AC23 coordinated renames retain data, metadata and reversible field intent [41436.50ms]
+(pass) US-019-AC23 missing correspondence and invalid policies cannot produce partial files [983.75ms]
+
+tests/parquet/arrow-schema.test.ts:
+(pass) CONTRACT-019 embedded Arrow schema preserves meanings absent from physical Parquet [412.35ms]
+(pass) CONTRACT-019 embedded schema rejects ambiguity and malformed framing without losing source [856.10ms]
+(pass) CONTRACT-019 extracted Arrow messages re-encode and support detached schema transforms [669.85ms]
+
+tests/parquet/avro-arrow-loss.test.ts:
+(pass) CONTRACT-035 Arrow refinements require explicit losses even when physical Avro schemas agree [744.07ms]
+(pass) CONTRACT-035 malformed or ambiguous Arrow metadata blocks physical-only projection [419.67ms]
+
+tests/parquet/avro-projection.test.ts:
+(pass) CONTRACT-035 nested Parquet shapes preserve nullable lists, map entries and scalar precision in Avro [642.94ms]
+(pass) CONTRACT-035 logical and legacy container corpora lower or report blocked source shapes [1955.62ms]
+(pass) CONTRACT-035 unknown native fields on normalized-away LIST wrappers still block lowering [44.04ms]
+
+tests/parquet/bodies.test.ts:
+(pass) US-019-AC14: bounded physical page bodies and CRCs match independent native decompression [2303.29ms]
+(pass) US-019-AC14: Snappy copy/literal variants match native vectors and malformed blocks fail [14.55ms]
+(pass) US-019-AC14: actual corrupted bodies fail without publishing partial pages [78.39ms]
+
+tests/parquet/capture.test.ts:
+(pass) US-019-AC1: bounded binary source copies exact bytes including malformed input and preserves unknown representation [55.17ms]
+(pass) US-019-AC2: footer region checks do not imply metadata validity or plaintext columns [54.82ms]
+(pass) US-019-AC3: pinned Parquet source hashes survive both UMF serializations [960.62ms]
+
+tests/parquet/containers.test.ts:
+(pass) US-019-AC9: container interpretations preserve source and match qualified native evidence [1637.84ms]
+(pass) US-019-AC9: preserve key-only map intent and diagnose repeated map values [43.96ms]
+
+tests/parquet/field-metadata.test.ts:
+(pass) CONTRACT-019 core field families respect native logical and physical meanings [2245.44ms]
+(pass) CONTRACT-019 native rename synchronizes materialized fields without losing attachments [277.36ms]
+
+tests/parquet/footer.test.ts:
+(pass) US-019-AC5: exact footer trees match independent Apache Thrift observations [1191.07ms]
+(pass) US-019-AC5: malformed and excessive wire values fail without partial interpretation [129.34ms]
+(pass) US-019-AC5: unknown UUID fields and trailing bytes remain distinct from native validity [23.18ms]
+
+tests/parquet/hybrid.test.ts:
+(pass) US-019-AC15: hybrid decoding matches independently read native dictionary pages [2.79ms]
+(pass) US-019-AC15: unsigned widths, final padding and strict bounds do not allocate from hostile run counts [0.22ms]
+
+tests/parquet/levels.test.ts:
+(pass) US-019-AC16: bounded page-level integration covers existing native files [2923.71ms]
+(pass) US-019-AC16: native-authored required/optional/repeated/list pages and malformed levels [718.93ms]
+
+tests/parquet/logical.test.ts:
+(pass) US-019-AC8: scalar annotations match native acceptance while preserving all sources [1807.72ms]
+(pass) US-019-AC8: local time meaning, legacy defaults/conflicts and incomplete containers remain explicit [71.07ms]
+
+tests/parquet/metadata.test.ts:
+(pass) US-019-AC6: named metadata matches native generated IDL classes for every fixture [1218.91ms]
+(pass) US-019-AC6: future enum codes and repeated unknown fields survive the named view [19.00ms]
+(pass) US-019-AC6: missing, duplicate or mistyped known fields block mapping while retaining wire/source [67.56ms]
+
+tests/parquet/offset-repair.test.ts:
+(pass) US-019-AC20: explicit legacy offset repair preserves source and every byte before footer [992.68ms]
+(pass) US-019-AC20: already-correct files and damaged dictionaries do not produce repair candidates [336.41ms]
+
+tests/parquet/pages.test.ts:
+(pass) US-019-AC13: page headers and declared budgets match native corpus evidence [1643.88ms]
+(pass) US-019-AC13: malformed declarations block without decoding payloads; payload corruption remains explicit [513.74ms]
+
+tests/parquet/physical.test.ts:
+(pass) US-019-AC17: physical carrier decoding matches independent corpus results [5159.91ms]
+(pass) US-019-AC17: native physical boundaries preserve widths, bits, binary and dictionary carriers [1229.61ms]
+(pass) US-019-AC17: malformed PLAIN counts, lengths and fixed widths are rejected [0.29ms]
+(pass) US-019-AC17: dictionary range and expansion budgets block without partial values [182.66ms]
+
+tests/parquet/rename.test.ts:
+(pass) US-019-AC11: rename every field in nested native files with exact data-prefix preservation [5727.71ms]
+(pass) US-019-AC11: reject semantic wrapper changes, collisions, stale metadata and invalid requests [360.01ms]
+
+tests/parquet/rows.test.ts:
+(pass) US-019-AC18: assembled corpus rows match native-value evidence without source changes [5434.84ms]
+(pass) US-019-AC18: inconsistent shared columns and row-node expansion cannot publish partial rows [3081.46ms]
+
+tests/parquet/schema.test.ts:
+(pass) US-019-AC7: physical schema trees and levels match native columns [1177.59ms]
+(pass) US-019-AC7: inconsistent topology/links block; literal dots remain path components [266.93ms]
+
+tests/parquet/transform.test.ts:
+(pass) US-019-AC10: encoding preserves all native wire observations and guarded metadata transforms preserve data [4483.32ms]
+(pass) US-019-AC10: unsafe metadata edits fail without losing source or publishing output [235.90ms]
+(pass) US-019-AC10: encoder rejects lossy or oversized wire inputs and preserves UUID bits [13.34ms]
+
+tests/parquet/values-trial.test.ts:
+(pass) US-019-AC12 experiment: exact nested decimals, ordered maps, hostile names and temporal meaning match native values [87.65ms]
+
+tests/parquet/values.test.ts:
+(pass) US-019-AC19: bounded logical projections match native values and preserve sources [6860.04ms]
+(pass) US-019-AC19: logical value constraints block while exact/opaque carriers remain available [1152.65ms]
+(pass) US-019-AC19: bounded implementation agrees with the prior native nested-decimal/map experiment [432.43ms]
+(pass) US-019-AC19: logical floating views retain NaN payloads and signed zero exactly [197.70ms]
+(pass) US-019-AC19: JSON syntax validation preserves duplicates/exact text and bounds structure [11.96ms]
+
+tests/postgresql/avro-projection.test.ts:
+(pass) CONTRACT-034 PostgreSQL captured columns project with explicit restricted domains and native recovery [944.64ms]
+(pass) CONTRACT-034 numeric typmods are decoded without truncation or inventing unconstrained precision [1763.13ms]
+(pass) CONTRACT-034 unsupported mappings, ambiguity, stale metadata and modified captures block [2760.36ms]
+
+tests/postgresql/catalog.test.ts:
+(pass) US-015-AC6: captured PostgreSQL metadata, exact unknowns and reconstruction archives survive both UMF formats [852.33ms]
+(pass) US-015-AC6: candidate edits cannot expose stale reconstruction SQL as synchronized [818.73ms]
+(pass) US-015-AC6: ambiguity and unknown representation data are preserved and reported [266.86ms]
+(pass) US-015-AC6: unsupported minor-version evidence and conflicting capture state cannot overclaim readiness [146.80ms]
+(pass) US-015-AC7: v1 captures remain readable while v2 requires its additional native object families [265.16ms]
+(pass) US-015-AC8: dependency identities distinguish native objects and preserve copied edges [186.22ms]
+
+tests/postgresql/ddl-edits.test.ts:
+(pass) US-015-AC12 edited native DDL evidence binds current proposals and fresh catalog recovery [455.55ms]
+
+tests/postgresql/declarations.test.ts:
+(pass) CONTRACT-015 raw DDL exposes copied declarations without resolving search_path, LIKE or ALTER state [347.76ms]
+(pass) CONTRACT-015 DDL type inventory respects native edits, unknown type syntax, foreign tables and version guards [179.33ms]
+
+tests/postgresql/edit-preservation.test.ts:
+(pass) CONTRACT-015 candidate edits cannot erase unknown tagged representation content [2343.66ms]
+
+tests/postgresql/integer-tokens.test.ts:
+(pass) CONTRACT-015 exact catalog integers prevent false scalar classification through rounding [3713.39ms]
+
+tests/postgresql/metadata.test.ts:
+(pass) CONTRACT-015 catalog identities drive core families without flattening native meaning [792.05ms]
+(pass) CONTRACT-015 legacy captures do not guess types and field metadata cannot be lost [655.25ms]
+
+tests/postgresql/native.test.ts:
+(pass) US-015-AC1: PostgreSQL DDL source and native AST survive UMF and native round trips [345.85ms]
+(pass) US-015-AC2: native candidate edits propagate without modifying the original source [60.82ms]
+(pass) US-015-AC3: unknown AST and representation fields cannot disappear through Protobuf or deparse [62.50ms]
+(pass) US-015-AC3: typed AST schema covers native samples, unions and known field types without stripping unknowns [25.34ms]
+(pass) US-015-AC3: typed Boolean construction repairs the wrapper without hiding raw codec loss [117.03ms]
+(pass) US-015-AC2: Boolean candidate edit uses the native false representation [55.75ms]
+
+tests/postgresql/projection.test.ts:
+(pass) US-015-AC9: explicit PostgreSQL row encodings produce a qualified JSON Schema and quoted query [95.31ms]
+(pass) US-015-AC9: strict policy, unsafe encodings and edited metadata block projection [506.12ms]
+(pass) US-015-AC9: generated SQL quotes identifiers and keys instead of interpolating executable fragments [184.19ms]
+(pass) US-015-AC9: projection result schema distinguishes blocked results from executable results [124.04ms]
+(pass) US-015-AC9: boolean, smallint and SQL/JSON null encodings retain their distinct contracts [66.76ms]
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [241.24ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [341.92ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [819.60ms]
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [176.65ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [288.31ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [105.00ms]
+
+tests/sqlserver/constraint-projection.test.ts:
+(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [563.72ms]
+(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [102.85ms]
+
+tests/sqlserver/constraints.test.ts:
+(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [152.08ms]
+(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [274.45ms]
+
+tests/sqlserver/ddl.test.ts:
+(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [664.00ms]
+(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [603.82ms]
+(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [42.21ms]
+(pass) CONTRACT-037 native evidence matches current generation and records declared physical losses [253.06ms]
+(pass) CONTRACT-037 copied edits survive native DDL execution without changing original captures [1480.15ms]
+
+tests/sqlserver/indexes.test.ts:
+(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [203.97ms]
+(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [403.64ms]
+(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [455.05ms]
+
+tests/sqlserver/integer-tokens.test.ts:
+(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2436.10ms]
+
+tests/tablespec/avro-integers.test.ts:
+(pass) CONTRACT-033 interpreted numeric qualifiers cannot round into supported decimal or vector shapes [1080.95ms]
+
+tests/tablespec/avro-projection.test.ts:
+(pass) CONTRACT-033 TableSpec primitive, temporal and vector bindings retain source and report constraints [404.00ms]
+(pass) CONTRACT-033 missing context, default precision and incompatible choices never get inferred [592.21ms]
+
+tests/tablespec/avro-table-loss.test.ts:
+(pass) CONTRACT-033 table keys, context dispatch and opaque metadata survive edits and report path-specific losses [318.78ms]
+
+tests/tablespec/boundaries.test.ts:
+(pass) CONTRACT-030 edit mappings reject non-JSON inputs without evaluating accessors or mutating source [223.76ms]
+(pass) CONTRACT-030 split column suffixes match native glob and preserve unmatched files [29.83ms]
+
+tests/tablespec/roundtrip.test.ts:
+(pass) CONTRACT-030 TableSpec ingestion exposes core scalars and preserves contextual and unknown native metadata [94.91ms]
+(pass) CONTRACT-030 copied native edits synchronize scalar metadata and retain unknown content [119.55ms]
+
+tests/tablespec/split.test.ts:
+(pass) CONTRACT-030 split bundle preserves every file and derives ordered columns [100.24ms]
+(pass) CONTRACT-030 split bundle rejects ambiguous or unmapped changes [35.01ms]
+(pass) CONTRACT-030 filenames follow native Unicode code-point order [10.79ms]
+
+tests/tablespec/table-edits.test.ts:
+(pass) CONTRACT-030 table edits repair native references and preserve monolithic/split sources [422.31ms]
+(pass) CONTRACT-030 table edits cannot replace column identities or bypass encoding guards [73.19ms]
+
+tests/tablespec/table-metadata.test.ts:
+(pass) CONTRACT-030 table metadata inspection is exact, isolated and distinct from split source recovery [118.12ms]
+
+ 377 pass
+ 0 fail
+ 34807 expect() calls
+Ran 377 tests across 122 files. [698.77s]

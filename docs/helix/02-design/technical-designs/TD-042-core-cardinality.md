@@ -530,3 +530,16 @@ Run `bun scripts/core-ideals/cardinality-postgresql-oracle.ts` and
 fingerprinted native/browser evidence. These focused checks do not establish full
 binding acceptance. A current five-system regression refresh, conformance checks,
 and acceptance record remain required. No equivalence graduation is claimed.
+
+
+### PostgreSQL qualified binding acceptance
+
+The [acceptance record](../../../../fixtures/validation/postgresql-cardinality-acceptance-evidence.json)
+supersedes PostgreSQL acceptance-pending notes above. The 70-command refresh and
+377-test priority regression (34,807 assertions, 122 files)
+pass, followed by both separate existing conformance gates. Qualification covers
+the implemented subset described above: scalar shape, retained native array and
+JSONB refinements, explicit carriers and both recovery directions. Item conversion,
+unrestricted map equivalence and authenticated capture provenance are not claimed.
+SQL Server, Avro, Parquet and the separate Cardinality admission/delivery gate
+remain unfinished.
