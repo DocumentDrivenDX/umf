@@ -334,8 +334,8 @@ non-string values and non-Field use. Missing availability asserts nothing.
 
 TD-041 records this version choice and the initial validation/preservation evidence.
 Typed inspection/authoring and migration/rollback now have schema, Bun and browser
-evidence in TD-041. Integration with existing core APIs and prior Field evidence
-revalidation remain required before the core task can close. This does not
+evidence in TD-041. Selection and versioned Field authoring APIs now accept 0.3.0. Prior Field evidence
+revalidation remains required before the core task can close. This does not
 establish any native absence binding,
 Nullability admission, or equivalence with SQL NULL or Avro reader defaults.
 
@@ -355,3 +355,12 @@ for a 0.1.0 or 0.2.0 source. Selection retains full source context, unknown labe
 and extension payloads. Recomputed query, diagnostics and reference boundaries
 must match the receipt. Recursive traversal remains identity-bounded; an unknown
 reference role is not promoted into a verified semantic relationship.
+
+
+Core 0.3.0 kind and record-type authoring use operation version 2.0.0, with separate
+schemas and binding versions. The previous operation schemas remain unchanged.
+A record-valued Field retains nullability; a role change that would make that
+availability assertion invalid refuses. Verification checks the entire retained
+source and target, so a later availability edit requires renewed kind/type receipts.
+The API extension does not admit native 0.3.0 projections or change legacy opaque
+nullability interpretation.

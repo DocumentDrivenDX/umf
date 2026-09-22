@@ -1,0 +1,62 @@
+{
+  "scope": "Versioned core Field authoring in 0.3.0 with unchanged 0.2.0 operation schemas; no native Nullability binding claim",
+  "commands": [
+    "bun scripts/core-ideals/nullability-field-operations-schema.ts",
+    "bun test tests/core tests/core-ideals/record-type.test.ts tests/core-ideals/nullability-field-operations.test.ts",
+    "bun test ./tests/core/nullability-ideals.test.ts ./tests/core/nullability-authoring.test.ts ./tests/core/nullability-transition.test.ts ./tests/core/field-ideals.test.ts ./tests/core-ideals/nullability-selection.test.ts ./tests/core-ideals/field-selection.test.ts ./tests/core-ideals/record-type.test.ts ./tests/core-ideals/nullability-field-operations.test.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-field-operations-browser.ts"
+  ],
+  "results": {
+    "focused": {
+      "passed": 31,
+      "failed": 0,
+      "assertions": 859,
+      "files": 8
+    },
+    "broader": {
+      "passed": 165,
+      "failed": 1,
+      "assertions": 5354,
+      "files": 47,
+      "failure": "Field conformance evidence hashes are stale following Nullability changes; historical acceptance requires actual native/browser revalidation before refresh."
+    },
+    "typecheck": "passed",
+    "schemas": 214,
+    "packages": 32,
+    "browserBuildBytes": 10171442,
+    "browser": {
+      "scope": "Versioned Field and record-type authoring in core 0.2.0 and 0.3.0; no native Nullability projection",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "cases": 18,
+        "recoveries": 36,
+        "refusals": 72,
+        "versionedReceipts": true
+      },
+      "externalRequests": []
+    }
+  },
+  "limits": [
+    "Nullability core remains experimental and in progress pending Field evidence refresh and acceptance review.",
+    "Five-system native Field bindings remain core 0.2.0; native Nullability bindings are separate pending work.",
+    "Receipts establish reproducible operation consistency, not cryptographic authorship; later model edits require renewed declarations."
+  ],
+  "sha256": {
+    "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
+    "src/model/record-type.ts": "67d486d3f87b5b78755e2a02dae35d89a5404efdaabb3589f9cd19c9b37524e0",
+    "spec/core/kind-operation-v2.schema.json": "6178c17dcfff69d517ce7e2cb3eaa75e62910fce82c10b7413532a276f87501b",
+    "spec/core/record-type-operation-v2.schema.json": "972607c0cb34bf5d8db5cf11575f07a9a28f3537489ea2df0c79c3c3979beff9",
+    "spec/core/kind-operation.schema.json": "a51355624e46e1ea7a285a2969814c812e698cd458cfe5f010ba7763b277211c",
+    "spec/core/record-type-operation.schema.json": "8389b3f1580beec91e039efe181bb9eb5c9ecd234bdf4ae1692a25658e3eabe2",
+    "scripts/core-ideals/nullability-field-operations-schema.ts": "1f8886398319767a1433054ca5ec443e2fa56f2c44abd056642aba67e39fb77d",
+    "scripts/core-ideals/nullability-field-operations-cases.ts": "67eb89901d385d3704e33878d888fbd4f84180872d3d684ed711c1aa830da7eb",
+    "scripts/core-ideals/nullability-field-operations-browser.ts": "e1a42bab7009aef0603b834905059f145efe5c167e5dd728302976f69950ab19",
+    "tests/core-ideals/nullability-field-operations.test.ts": "ea9bf7729be73885a0632fa2300a9389ed02aebf3e34d55b3b5fd4aba7d8cbec",
+    "fixtures/validation/nullability-field-operations-tests.log": "8629a5d3652f4b16ebc987b413f2f8e13987309ef4308fef959e8f2ffa79b93e",
+    "fixtures/validation/nullability-field-operations-targeted-tests.log": "785fab7a138c54e7d398d162eee75dda5b3d70015b93e53a8a13dd725011bb99",
+    "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a"
+  }
+}

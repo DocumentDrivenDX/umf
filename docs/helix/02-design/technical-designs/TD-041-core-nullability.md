@@ -238,7 +238,36 @@ and the browser build. Chromium 148 reproduces five scenarios, ten JSON/YAML
 recoveries, five altered-report refusals and legacy opaque-value verification,
 without external requests or Bun/Node globals.
 
-Selection integration is complete for this revision. Field kind and record-type
-authoring/verification still require their 0.3.0 integration, followed by the prior
-Field evidence refresh. The Nullability core bead remains in progress; native
+Selection integration is complete for this revision. The versioned Field kind and
+record-type integration below completes the next core API step. Prior Field evidence
+refresh remains required. The Nullability core bead remains in progress; native
 Nullability binding tasks remain dependency-waiting.
+
+
+### Versioned Field authoring in the Nullability envelope
+
+Kind lookup/declaration and record-type declaration use operation version 2.0.0
+for core 0.3.0. Their separate published schemas are
+`urn:umf:core:kind-operation:2.0.0` and
+`urn:umf:core:record-type-operation:2.0.0`. Version 1.0.0 schemas remain unchanged;
+legacy lookup and core 0.2.0 authoring still produce their original receipts.
+The public APIs choose the receipt contract from the validated source envelope.
+
+A record-valued Field retains its availability and native extension payload.
+Changing a Field with availability to a record or group refuses because availability
+belongs to a Field. Scalar/record conflicts and existing record-type relationships
+still require separate reconciliation. Qualified identities and recursive links
+retain their previous behavior. Every receipt archives its source; recomputation
+rejects altered provenance, mixed profiles and stale current documents. Adding an
+availability declaration changes the document and therefore requires fresh kind
+receipts before relying on current kind provenance.
+
+`fixtures/validation/nullability-field-operations-evidence.json` records Bun,
+TypeScript, schema-audit and Chromium evidence. Focused tests pass 31 tests with
+859 assertions; 214 schemas and 32 packages pass audits. The broader run passes
+165 tests and fails only the expected stale Field evidence fingerprint check; it
+is not a green regression gate. Browser coverage exercises 18
+old/new-envelope scenarios, 36 JSON/YAML recoveries and 72 expected refusals,
+without external requests or host globals. These APIs do not extend native Field
+bindings to 0.3.0 and do not define an absence carrier. Prior Field evidence refresh
+and core-task acceptance review remain before Nullability binding work begins.
