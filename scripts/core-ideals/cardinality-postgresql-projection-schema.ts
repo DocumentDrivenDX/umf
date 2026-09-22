@@ -1,0 +1,15 @@
+import base from '../../spec/core/field-postgresql-projection.schema.json';
+const schema:any=structuredClone(base);
+schema.$id='urn:umf:core:cardinality-postgresql-projection:1.0.0';schema.title='Authored Cardinality projection to PostgreSQL stored columns';
+schema.properties.operation.const='project-cardinality-postgresql';schema.properties.source.$ref='urn:umf:core:0.4.0';
+schema.properties.author.$ref='urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration';
+schema.properties.binding.const={id:'umf.core.cardinality.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored Field Cardinality with explicit pg_catalog carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence'};
+const req=schema.properties.request;
+req.properties.nativeType.enum.push('jsonb');
+Object.assign(req.properties,{storage:{enum:['scalar','array','jsonb-object']},requireExactValues:{type:'boolean'}});req.required.push('storage','requireExactValues');
+req.allOf=[{if:{properties:{storage:{const:'jsonb-object'}}},then:{properties:{nativeType:{const:'jsonb'}}},else:{properties:{nativeType:{not:{const:'jsonb'}}}}}];
+const mapping=schema.properties.mapping;
+Object.assign(mapping.properties,{cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','sequence-check','object-check','carrier-only']}});mapping.required.push('cardinality','encoding');
+mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
+schema.properties.binding.const.subset='Single authored Field with explicit scalar, checked sequence or JSONB object carrier; item/value conversion and native equivalence are not implied';
+await Bun.write('spec/core/cardinality-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
