@@ -2,11 +2,17 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
+import {inspectAvroFieldShape} from '../../src/core-ideals/avro-cardinality-type';
+import {parseNativeJson} from '../../src/model/native-json';
 const fixture='fixtures/avro/cardinality-cases.json';
 const proof='fixtures/validation/cardinality-avro-profile-native.json';
 const cases=(await Bun.file(fixture).json()).cases,native=await Bun.file(proof).json();
+for(const c of cases)c.expectedShape=inspectAvroFieldShape([{root:parseNativeJson(c.schema)}],'cardinality.Example','value');
 const entry='.cache/cardinality-avro-profile-entry.ts';
-await Bun.write(entry,`import {Type} from 'avsc/etc/browser/avsc-types';
+await Bun.write(entry,`import {inspectAvroFieldShape} from '../src/core-ideals/avro-cardinality-type';
+import {parseNativeJson} from '../src/model/native-json';
+export function shape(schema){return inspectAvroFieldShape([{root:parseNativeJson(schema)}],'cardinality.Example','value');}
+import {Type} from 'avsc/etc/browser/avsc-types';
 export function probe(schema,value,wire){
  const type=Type.forSchema(JSON.parse(schema),{wrapUnions:false});
  const encoded=type.toBuffer(value);
@@ -25,17 +31,18 @@ try{
  await page.goto(`http://127.0.0.1:${server.port}/`);
  const checks=await page.evaluate(async(input:string)=>{
   const {cases,native}=JSON.parse(input);
-  const path='/codec.js',{probe}=await import(path);
+  const path='/codec.js',{probe,shape}=await import(path);
   const canonical=(v:any):string=>v!==null&&typeof v==='object'?Array.isArray(v)?'['+v.map(canonical).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);
   const rows=[];
   for(const c of cases){
-   const result=probe(c.schema,c.value);
+   const result=probe(c.schema,c.value),observedShape=shape(c.schema);
+   if(canonical(observedShape)!==canonical(c.expectedShape))throw Error('Shape parity: '+c.id);
    const expected=structuredClone(c.expected??c.value);
    if(c.id==='special-property-keys')delete expected.value.__proto__;
    if(canonical(result.decoded)!==canonical(expected))throw Error('Unexpected codec value: '+c.id);
    const comparison=native.checks.find((n:any)=>n.id===c.id&&n.writer==='apache'&&n.reader==='fastavro');
    if(!comparison||result.hex!==comparison.hex)throw Error('Native binary mismatch: '+c.id);
-   rows.push({id:c.id,...result,exactInputRecovery:canonical(result.decoded)===canonical(c.value),nativeValueAgreement:canonical(result.decoded)===canonical(comparison.value)});
+   rows.push({id:c.id,shape:observedShape,...result,exactInputRecovery:canonical(result.decoded)===canonical(c.value),nativeValueAgreement:canonical(result.decoded)===canonical(comparison.value)});
   }
   const streams=[];
   for(const n of native.duplicateKeyStreams.filter((n:any)=>n.codec==='apache')){
@@ -49,8 +56,8 @@ try{
  assert.equal(external.length,0);
  assert.equal(checks.rows.filter(r=>!r.exactInputRecovery).length,2);
  assert.equal(checks.rows.filter(r=>!r.nativeValueAgreement).length,1);
- const paths=[fixture,proof,'scripts/core-ideals/cardinality-avro-profile-browser.ts','node_modules/avsc/package.json'];
+ const paths=[fixture,proof,'scripts/core-ideals/cardinality-avro-profile-browser.ts','node_modules/avsc/package.json','src/core-ideals/avro-cardinality-type.ts','src/model/native-json.ts','tests/core-ideals/avro-cardinality-type.test.ts'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
- await Bun.write('fixtures/validation/cardinality-avro-profile-browser.json',JSON.stringify({scope:'Native browser codec discovery only; no UMF classification/projection acceptance',browser:browser.version(),avsc:(await Bun.file('node_modules/avsc/package.json').json()).version,checks,externalRequests:external,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256,limitations:['avsc loses the own __proto__ map member while both Python codecs preserve it. This discrepancy is not counted as value agreement.','Float items narrow the binary64 counterexample in all three codecs.','Duplicate-key streams normalize during decoding; source bytes and decoded maps are distinct recovery obligations.']},null,2)+'\n');
+ await Bun.write('fixtures/validation/cardinality-avro-profile-browser.json',JSON.stringify({scope:'Native browser codec discovery and internal type-shape resolver parity; no UMF classification/projection acceptance',browser:browser.version(),avsc:(await Bun.file('node_modules/avsc/package.json').json()).version,checks,externalRequests:external,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256,limitations:['avsc loses the own __proto__ map member while both Python codecs preserve it. This discrepancy is not counted as value agreement.','Float items narrow the binary64 counterexample in all three codecs.','Duplicate-key streams normalize during decoding; source bytes and decoded maps are distinct recovery obligations.']},null,2)+'\n');
  console.log(JSON.stringify({cases:checks.rows.length,duplicateStreams:checks.streams.length,valueDisagreements:1,floatNarrowings:1,externalRequests:external.length}));
 }finally{await browser?.close();server.stop(true);}
