@@ -1175,3 +1175,44 @@ This supersedes the authored-projection-pending status above. Broader priority
 regression, fresh Field evidence and final Parquet binding acceptance remain open.
 The five-system Nullability delivery gate is still separate; no native equivalence
 has graduated.
+
+
+### Parquet binding acceptance
+
+The [qualified acceptance record](../../../../fixtures/validation/parquet-nullability-acceptance-evidence.json)
+closes Parquet binding implementation criteria and supersedes its pending status
+above. The tested profile is physical leaf classification under explicit
+row-leaf-value or repeated-element-value scope, plus authored single-Field
+projection to an empty schema-bearing file. PyArrow 21.0.0 supplies native schema,
+writer and decoded-value observations. Original bytes and unclaimed native
+metadata remain intact.
+
+All 62 refresh commands pass. The broader Bun regression passes 340 tests / 30,057 assertions across 113 files, covering
+core/core-ideals and all five priority adapter directories. The separate Field gate
+passes three tests / 24 assertions after fresh native/browser checks. Typechecking,
+230 schema audits, 37 package audits and browser build pass.
+
+One native projection attempt completed its assertions but remained alive during
+Python/native shutdown. That interrupted attempt is retained as a failure. The
+oracle now reads each file directly with reader threads disabled; 20 consecutive
+native runs exited successfully before retrying the command. The successful
+refresh preserves the earlier 59 checks whose inputs did not change. This is a
+qualified oracle-harness fix, not a general native thread-safety claim.
+
+Native discovery covers 120 writes, 100 emitted files, 132 classified physical
+leaves and 264 byte-exact recoveries with independently rechecked schema/values.
+Chromium passes the 640-case classification matrix, 720 classified recoveries and
+360 altered-receipt refusals. Authored projection covers 91 cases and 66 emitted
+schemas, 132 ideal recoveries and 132 native recoveries; PyArrow checks 198 row
+outcomes, including 40 required-null rejections and 32 binary32 narrowings.
+Projection Chromium passes 132 recoveries and 66 altered-receipt refusals.
+
+Optional parents, repeated-entry boundaries, writer masks, input omission and
+logical annotations remain distinct. Unspecified author intent is retained in
+receipts, not inferred from optional physical encoding. Facets, cardinality and
+other unclaimed obligations require explicit residuals or strict refusal. The
+library emits schemas, not application rows; native writer checks do not widen
+that claim. No equivalence graduation or native payload deletion is authorized.
+
+All five bindings now have qualified evidence. The separate Nullability ideal
+admission/five-system delivery gate remains open before Cardinality begins.

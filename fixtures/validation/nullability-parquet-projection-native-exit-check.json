@@ -1,0 +1,128 @@
+{
+  "reason": "Original native oracle completed all assertions but remained alive in native shutdown; SIGINT ended the child and the refresh correctly failed. Single-file reads now bypass dataset readers and disable reader threads. This bounds the tested harness profile, not a general PyArrow thread-safety claim.",
+  "runs": [
+    {
+      "attempt": 1,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 2,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 3,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 4,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 5,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 6,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 7,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 8,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 9,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 10,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 11,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 12,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 13,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 14,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 15,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 16,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 17,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 18,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 19,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 20,
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n",
+      "stderr": ""
+    }
+  ],
+  "fingerprints": {
+    "scripts/core-ideals/nullability-parquet-projection-native.py": "20046dfbcf744487b003cb028b3263e39434c7941d7c8ba73af4d5e710f9734d"
+  }
+}

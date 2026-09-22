@@ -17,7 +17,7 @@ for row in corpus['rows']:
     file = pq.ParquetFile(io.BytesIO(raw))
     request = row['request']; name = request['fieldName']; kind = request['nativeType']
     assert file.metadata.num_rows == 0 and file.metadata.num_row_groups == 0
-    assert file.read().num_rows == 0 and file.schema.names == [name]
+    assert file.read(use_threads=False).num_rows == 0 and file.schema.names == [name]
     col = file.schema.column(0)
     assert col.max_repetition_level == 0
     assert col.max_definition_level == (0 if row['required'] else 1)
@@ -36,7 +36,8 @@ for row in corpus['rows']:
             checks.append({'id': row['id'], 'case': case, 'outcome': 'rejected', 'error': str(error)})
             continue
         assert not expected_failure, (row['id'], case)
-        decoded = pq.read_table(io.BytesIO(output.getvalue())).to_pylist()[0][name]
+        # Read the single file directly: no dataset scanner or background reader is needed.
+        decoded = pq.ParquetFile(io.BytesIO(output.getvalue())).read(use_threads=False).to_pylist()[0][name]
         expected = (1.0 if kind == 'float32' else values[kind]) if case == 'present' else None
         assert decoded == expected, (row['id'], case, decoded, expected)
         narrowing = case == 'present' and kind == 'float32'

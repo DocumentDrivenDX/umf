@@ -483,3 +483,18 @@ unprojected author intent in verified receipts. Native-only optionality cannot
 recover those intents. Exactness, cardinality, defaults and other unclaimed
 meanings remain explicit residuals. Broader revalidation and final binding
 acceptance remain open, with no native equivalence.
+
+
+### Parquet Nullability binding qualification
+
+TD-041 records qualified Parquet physical-leaf classification and authored
+single-Field schema projection with PyArrow 21.0.0 native evidence and Chromium
+parity. This supersedes pending binding status above. Row and repeated-entry
+scopes remain explicit; physical optionality does not establish writer-input
+validation, cardinality, logical annotation equivalence or original author intent.
+Unknown metadata and original native bytes remain recoverable.
+
+The [acceptance record](../../../../fixtures/validation/parquet-nullability-acceptance-evidence.json)
+includes fresh five-system Field and Nullability evidence. All five bindings are
+qualified, but the separate ideal admission/delivery gate remains open. A binding
+qualification neither removes native payloads nor graduates native equivalence.

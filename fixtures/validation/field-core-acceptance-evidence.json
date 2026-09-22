@@ -49,7 +49,7 @@
     "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
     "fixtures/validation/core-field-browser.json": "a0abde42a5e1932995559a0e74886549f81fb443171aed4582ee728c5f4b50f3",
     "fixtures/validation/field-core-acceptance.log": "676149231b48ab86b7690ac14cd993bc364c6e4a6ffb0486b65fc96791485691",
-    "fixtures/validation/field-gate-refresh-evidence.json": "fce90dc643f42c8798cf240f445b819fb12f776d550a915d2b0aaebf93c09fce",
+    "fixtures/validation/field-gate-refresh-evidence.json": "6abe3e254615590232c395539fcf66750c528cfb842fc8c1ec79ee24182d7807",
     "package.json": "692f5d5c8537d04ac4bf7b079199e28a83edeacfc8291c8dcb6bb1395f7759de",
     "scripts/build.ts": "50f0f4484ad8ff398b57af8a1343d207d946a9ae32656fecb500cbd6523b007a",
     "scripts/core-field-browser.ts": "dcddf6d74ac5c4282438ce6bb3155dacfdfb24ebcbd13aa5c67f296295c53c3f",
@@ -75,12 +75,14 @@
     "spec/core/nullability-avro-projection.schema.json": "2b5ba7a9dd226d9a5c9aa063cf77a85183971f5152db0d1e1c4e06aa1a4887a1",
     "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
     "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
+    "spec/core/nullability-parquet-projection.schema.json": "159edf7c2c597e3c844df198d97e0b2a28c5caf857e8f43a170b14d58a1c14b3",
     "spec/core/nullability-postgresql-projection.schema.json": "073104796361bc965b6b51655d0d27dad59b90094d1c6d8f8279286f2f684570",
     "spec/core/nullability-selection.schema.json": "0d00b993d9f205326bf8879d9d659aac7d9bb4c34d886c5c966a86a1f7e3d47f",
     "spec/core/nullability-sqlserver-projection.schema.json": "129aee0fd3580dc3ca41a43b59f7899a33a33c5fcdd347cfd2ab8a7f664ee043",
     "spec/core/nullability-tablespec-projection.schema.json": "990b20a054b0ef643ad1b4c0deeb0760bf64c4ca9a093747a31c346c227135a2",
     "spec/core/nullability-transition.schema.json": "7c2cd58a09f38503e14d69977c68fc9748b595aed7ec1761867b337ed3aaa68b",
     "spec/core/parquet-field-classification.schema.json": "edf20b952abd2a1b1a69a079244792a2612dacd7fc718f5ada436cea041339be",
+    "spec/core/parquet-nullability-classification.schema.json": "809dfbb4d0a51cb3347e23cedcd70e18519f345df3b2376ce2ca292f096131cf",
     "spec/core/parquet-record-classification.schema.json": "8f9b7bfec8f136e1ba91c9236c3e3a1deeb080fe123d4aa75ea5be70cda63882",
     "spec/core/parquet-record-type-classification.schema.json": "7a5a9050dc44cff0cdce918a36826942a14bdfc03a87cca7248c6a63a844d244",
     "spec/core/postgresql-composite-classification.schema.json": "a3530d6324f27ff9370f357b7dc60f0919d039ff584b26b054de234f725c1006",
@@ -235,6 +237,8 @@
     "spec/extensions/owl/package.json": "1af8a39f8596a66240b4ade9c482c18a8a5748a345aee936b2bf4addb66ae149",
     "spec/extensions/owl/schema.json": "445b6f0c6a2e1fea180200742f60b324d6f4ef392006e256242574cf10c55645",
     "spec/extensions/owl/special-axioms-schema.json": "6626181ab3fd7f02752979d48de4e8be17d29b13b32dc131521d7973786d66b2",
+    "spec/extensions/parquet-nullability/package.json": "25162b0220094da8e5199e502dfb70158aff5c434391005cef9024c7f0d7fd81",
+    "spec/extensions/parquet-nullability/schema.json": "62224ce5cd5dc29b9f4b38120ec47ba1b8b36d5dd7e78be53dad77e9642224ff",
     "spec/extensions/parquet/arrow-rename.schema.json": "449633a5e68e67024cee83115ad1872961bfe150e1d09accff1f3309c7429464",
     "spec/extensions/parquet/arrow-schema.schema.json": "cac56fe1600db1424381c90002d725d2131b85a7c6fdfb8e16fc4ecdeb07b96c",
     "spec/extensions/parquet/container-inspection.schema.json": "20869bead065e8556b5a184a7d19a5606f0075197e11b4d2430592173495dfc2",
@@ -485,6 +489,8 @@
     "src/core-ideals/field-tablespec-projection.ts": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae",
     "src/core-ideals/nullability-avro-projection.ts": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff",
     "src/core-ideals/nullability-avro.ts": "b7befa1bb8ab665d5d689949b048529907cfdb1c48cf205a856930f446536606",
+    "src/core-ideals/nullability-parquet-projection.ts": "d71994fd0f7ad55b24047917a95a4a2fdedf3dc771052208804284c4b57ecddd",
+    "src/core-ideals/nullability-parquet.ts": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc",
     "src/core-ideals/nullability-postgresql-projection.ts": "76baf46987fed262226d3a023584da6a581fe45cb4c4c0bc9510088f7480e954",
     "src/core-ideals/nullability-postgresql.ts": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259",
     "src/core-ideals/nullability-sqlserver-projection.ts": "28bf3e24af429b80539ec5039a333d69248682465beb9d3615bbdff5c4d8d042",
@@ -513,7 +519,7 @@
     "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/index.ts": "c76823d99d466fb202a114c8440406a30300bbd716b528c068833d69324aa060",
+    "src/index.ts": "b2ff6e73830b8a2cea8e024d54c95575aebd42d98d441a7fa8e99da882115a16",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
     "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
     "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
@@ -592,11 +598,11 @@
     "tests/core/selection.test.ts": "672fa0e543190d0e77b38bd5e984c5a9daf9ab238775085828cdd455de01bad7"
   },
   "revalidation": {
-    "reason": "Revalidate five-system Field, core and TableSpec/PostgreSQL/SQL Server Nullability after Avro classification and authored projection; Parquet Nullability remains pending.",
+    "reason": "Revalidate five-system Field, core and all five priority Nullability bindings after Parquet classification and authored projection; the separate Nullability delivery gate remains open.",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "fixtures/validation/field-gate-refresh-evidence.json": "263b482cef73ae85ad8bd75e2508a1f316bc1ebecf47e4fe17a82ca72ed40b57",
-      "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110"
+      "fixtures/validation/field-gate-refresh-evidence.json": "fce90dc643f42c8798cf240f445b819fb12f776d550a915d2b0aaebf93c09fce",
+      "src/index.ts": "c76823d99d466fb202a114c8440406a30300bbd716b528c068833d69324aa060"
     },
     "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
   },
@@ -649,6 +655,15 @@
       "previousFingerprints": {
         "fixtures/validation/field-gate-refresh-evidence.json": "6fcba41e59e9b1884f5a05ed2e1193ff078cfcf4a15f99ccbaf03d4656bd0e90",
         "src/index.ts": "b01825233a3e3b54d7f59dc52a1d8cd09e4f2d3cfec7b956cb4e082977d014aa"
+      },
+      "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
+    },
+    {
+      "reason": "Revalidate five-system Field, core and TableSpec/PostgreSQL/SQL Server Nullability after Avro classification and authored projection; Parquet Nullability remains pending.",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "fixtures/validation/field-gate-refresh-evidence.json": "263b482cef73ae85ad8bd75e2508a1f316bc1ebecf47e4fe17a82ca72ed40b57",
+        "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110"
       },
       "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
     }

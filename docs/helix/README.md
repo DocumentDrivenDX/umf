@@ -17,21 +17,16 @@ Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
 has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
 migration/rollback, selection and versioned Field APIs are implemented.
-TableSpec, PostgreSQL, SQL Server and Avro Nullability bindings have passed
-qualified acceptance, including explicit scope/carrier metadata, strict/report
-projection and both retained recovery directions. Native checks preserve the
-differences between stored values, writer inputs, reader resolution and query
-results. All five Field bindings passed native/browser checks and the Field
-conformance gate at the Avro acceptance checkpoint. See the
-[Avro acceptance record](../../fixtures/validation/avro-nullability-acceptance-evidence.json).
-Parquet Nullability now has scoped physical classification and exact byte
-recovery, including optional ancestors and repeated-entry context. Authored
-single-Field projection now emits required/optional leaves with retained ideal
-receipts; native PyArrow and Chromium checks cover explicit losses and recovery.
-Broader revalidation and final binding acceptance remain. The Field gate needs its evidence
-refresh after this public API addition. The
-experimental 0.3.0 concept has not passed its
-five-system delivery gate. No native equivalence is claimed.
+All five priority Nullability bindings have passed qualified acceptance, including
+explicit scope/carrier metadata, strict/report projection and both retained recovery
+directions. Native checks preserve differences between stored values, writer inputs,
+reader resolution, query results and repeated-entry contexts. Parquet qualification
+covers physical leaf classification and authored single-Field schema projection.
+All five Field bindings passed fresh native/browser checks and their conformance
+gate at the Parquet acceptance checkpoint. See the
+[Parquet acceptance record](../../fixtures/validation/parquet-nullability-acceptance-evidence.json).
+The experimental 0.3.0 concept still requires its separate five-system Nullability
+admission/delivery gate. No native equivalence is claimed.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

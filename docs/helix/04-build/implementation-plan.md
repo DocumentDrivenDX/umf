@@ -112,14 +112,16 @@ core/core-ideals and all five priority adapter test directories. The separate
 Field gate passes three tests / 24 assertions. This supersedes the previous
 refresh counts and stale-fingerprint status above. See the
 [Avro acceptance record](../../../fixtures/validation/avro-nullability-acceptance-evidence.json).
-Parquet Nullability now classifies physical leaves under explicit row or repeated-
-entry contexts, retaining ancestry and source bytes. Native checks distinguish
-optional parents/members and writer handling of masked containers. Authored
-single-Field projection now passes 91 cases: 25 strict refusals, 66 native schemas,
-132 ideal recoveries and 132 native recoveries. PyArrow checks 198 row-write
-outcomes independently, retaining the float-narrowing counterexample. See the
-[projection checkpoint](../../../fixtures/validation/nullability-parquet-projection-evidence.json).
-Broader evidence refresh and final binding acceptance remain open;
+Parquet has now passed qualified binding acceptance for physical leaf classification
+under explicit row/repeated-entry contexts and authored single-Field schema
+projection. Native PyArrow 21.0.0 evidence preserves optional ancestor/member and
+masked-container distinctions, 264 source-byte recoveries, and 198 projection
+row-write outcomes including the float-narrowing counterexample. All 62 refresh
+commands pass, including five-system Field and Nullability checks. The current
+broader regression passes 340 tests / 30,057 assertions across 113 files; the separate Field gate passes three tests /
+24 assertions. See the
+[Parquet acceptance record](../../../fixtures/validation/parquet-nullability-acceptance-evidence.json).
+The five-system Nullability admission/delivery gate is next;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

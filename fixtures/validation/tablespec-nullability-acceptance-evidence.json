@@ -188,8 +188,8 @@
   ],
   "sha256": {
     "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
-    "fixtures/validation/field-conformance.json": "ec8b575dd12ac5e3022cff4d92a38dfb15e2d06e51db1bb34baab7a4e26c3cf6",
-    "fixtures/validation/field-gate-refresh-evidence.json": "fce90dc643f42c8798cf240f445b819fb12f776d550a915d2b0aaebf93c09fce",
+    "fixtures/validation/field-conformance.json": "8b2cac2f3f8d7fa026906a66ec0170a5612f7dd1a1eba0d02cb1bd537b24dfd4",
+    "fixtures/validation/field-gate-refresh-evidence.json": "6abe3e254615590232c395539fcf66750c528cfb842fc8c1ec79ee24182d7807",
     "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
     "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
     "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
@@ -250,7 +250,7 @@
     "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
     "src/core-ideals/nullability-tablespec-projection.ts": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97",
     "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
-    "src/index.ts": "c76823d99d466fb202a114c8440406a30300bbd716b528c068833d69324aa060",
+    "src/index.ts": "b2ff6e73830b8a2cea8e024d54c95575aebd42d98d441a7fa8e99da882115a16",
     "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
     "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
     "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
@@ -264,14 +264,14 @@
     "tests/core-ideals/nullability-tablespec.test.ts": "85d8c062500fa8d19f0694b40e0c18801e6146c94157593d084284894be0a306"
   },
   "revalidation": {
-    "reason": "Existing native/browser bindings rerun after Avro Nullability library additions",
+    "reason": "Existing native/browser bindings rerun after Parquet Nullability library additions",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "fixtures/validation/field-conformance.json": "db8b3835a73c0ff137f9e49e2c1a5a70fdd5cf40d08fa0946a85f793694a4e12",
-      "fixtures/validation/field-gate-refresh-evidence.json": "263b482cef73ae85ad8bd75e2508a1f316bc1ebecf47e4fe17a82ca72ed40b57",
-      "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110"
+      "fixtures/validation/field-conformance.json": "ec8b575dd12ac5e3022cff4d92a38dfb15e2d06e51db1bb34baab7a4e26c3cf6",
+      "fixtures/validation/field-gate-refresh-evidence.json": "fce90dc643f42c8798cf240f445b819fb12f776d550a915d2b0aaebf93c09fce",
+      "src/index.ts": "c76823d99d466fb202a114c8440406a30300bbd716b528c068833d69324aa060"
     },
-    "note": "Original result counts and remaining-binding status are historical; current refresh records current regression/build evidence. Avro acceptance is separate."
+    "note": "Original result counts and remaining-binding status are historical; current refresh records current regression/build evidence. Parquet acceptance is separate."
   },
   "revalidationHistory": [
     {
@@ -293,6 +293,16 @@
         "src/index.ts": "b01825233a3e3b54d7f59dc52a1d8cd09e4f2d3cfec7b956cb4e082977d014aa"
       },
       "note": "Original result counts and remaining-binding status are historical; the current refresh records current build/regression evidence. SQL Server acceptance is separate."
+    },
+    {
+      "reason": "Existing native/browser bindings rerun after Avro Nullability library additions",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "fixtures/validation/field-conformance.json": "db8b3835a73c0ff137f9e49e2c1a5a70fdd5cf40d08fa0946a85f793694a4e12",
+        "fixtures/validation/field-gate-refresh-evidence.json": "263b482cef73ae85ad8bd75e2508a1f316bc1ebecf47e4fe17a82ca72ed40b57",
+        "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110"
+      },
+      "note": "Original result counts and remaining-binding status are historical; current refresh records current regression/build evidence. Avro acceptance is separate."
     }
   ]
 }
