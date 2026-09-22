@@ -1,0 +1,29 @@
+{
+  "scope": "Versioned 0.2 metadata selection report schema and source/query/registry recomputation, preserving 0.1 schema behavior",
+  "commands": [
+    "bun test tests/core-ideals/field-selection.test.ts tests/core-ideals/record-type.test.ts",
+    "bun test tests/core/selection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/record-type-browser.ts"
+  ],
+  "results": {
+    "tests": 9,
+    "assertions": 131,
+    "browserSelectionRecoveries": 12,
+    "browserDeclarationRecoveries": 6,
+    "typecheck": "passed",
+    "schemasPassed": 202,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10059105
+  },
+  "sha256": {
+    "src/model/selection-verification.ts": "fc4e3096354783de9dfc17ed66f94bac9f1eaa308fdf439de5d5af10e4d1f894",
+    "spec/core/field-selection.schema.json": "096733b0061f984b0724737f3c37130b0da2cbd0c5f4259b73c064320db562d1",
+    "scripts/core-ideals/field-selection-schema.ts": "8b4794f4e3909aad4f6a1c86a2821a82e67fae1bd81caedbac293274fcf52afe",
+    "tests/core-ideals/field-selection.test.ts": "f0ce21dbded3a4c8ed10058e4923d89544d574e5d8e645244b8a26654b95bf14",
+    "scripts/core-ideals/record-type-browser.ts": "d7de65bb95fae4fcac170726c0a754e1b929a295657dfeff201acbc7a148f94e",
+    "fixtures/validation/record-type-browser.json": "94d231ae5a60eadc787bb97a95ddb00a733d8e8747f6358b5fa39408b379efe1"
+  }
+}

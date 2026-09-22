@@ -230,3 +230,13 @@ record-definition path; verification recomputes it against the unchanged current
 model. It asserts neither nullability/cardinality nor native equivalence. Recursive
 record membership and same-named records in different modules are permitted;
 identity resolution must terminate without expanding recursive definitions.
+
+### Versioned selection reports
+
+Core 0.2 selections use a separate `urn:umf:core:element-selection:0.2.0` schema.
+The existing 0.1 result schema remains unchanged. A selection report preserves the
+complete source and checked query, selected elements, reference boundaries and
+validation diagnostics. Schema validation establishes structure only; report
+verification must recompute selection from the retained source/query with the same
+registry and compare all results. Unknown reference roles remain traversable links,
+not verified record-type semantics. Recursive references terminate by identity.

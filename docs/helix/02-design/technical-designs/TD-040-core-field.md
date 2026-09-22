@@ -1115,3 +1115,24 @@ at runtime, but its published selection-result schema still restricts source to
 0.1; update/version that schema before claiming complete 0.2 consumer contracts.
 Common provenance/residual metadata and the other Field exit requirements remain
 open. No native payload is deleted or reinterpreted by this authoring operation.
+
+## Core 0.2 selection report contract
+
+The selection-schema gap above is resolved by a separate
+`urn:umf:core:element-selection:0.2.0` schema. It checks source and selected elements
+against the experimental Field envelope. The existing 0.1 schema is unchanged,
+including its opaque legacy kind semantics. Both schemas are exported for consumers.
+`verifyCoreElementSelection` validates the appropriate schema and recomputes the
+report from its retained source/query and caller-supplied registry. Changed paths,
+selected elements, boundary references, queries or diagnostics are rejected.
+This checks consistency, not source authenticity or the meaning of unknown roles.
+
+Five record-type/selection tests pass 68 assertions. Four existing selector tests
+pass 63 assertions, including retained-source recovery across all five priority
+adapters. Chromium 148 verifies twelve JSON/YAML selection report recoveries over
+nested, recursive and cross-module references, alongside six declaration recoveries;
+altered paths reject. Typechecking, browser build and all 202 schema / 32 package
+audits pass. See [selection evidence](../../../../fixtures/validation/field-selection-evidence.json).
+
+Native type-reference classification, nested projections, organizational groups
+and complete common projection metadata still keep the Field delivery gate open.
