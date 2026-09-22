@@ -112,3 +112,37 @@ regressions; typechecking passes. Native value probes record both expected and
 observed results. JSON/YAML serialization preserves the complete supplement.
 This checkpoint adds no browser-library changes or browser qualification claim.
 See [resolved constraint evidence](../../../../fixtures/validation/facets-postgresql-constraints-evidence.json).
+
+## Analyzed-expression verification checkpoint
+
+The internal resolved-predicate inspector now reads the complete analyzed CHECK
+node tree for the observed PostgreSQL 17.4 subset. It checks every node field,
+column reference, operator/function signature and constant, refusing unknown
+nodes, extra conjuncts, duplicate lookup identities and inconsistent resolution.
+It supports the observed signed-smallint range, numeric range/scale and text/bytea
+length predicates. It does not generalize unobserved OIDs or arbitrary SQL.
+
+The bounded constant decoder uses an explicit little-endian, 64-bit Datum profile.
+A fresh native probe confirms that representation with an int8 anchor, then checks
+thirteen constants: ten finite values decode exactly and three special values are
+refused. The corpus includes both int64 limits, negative values, long-format
+numeric headers and decimal values beyond JavaScript precision. Numeric layout
+follows the pinned [PostgreSQL REL_17_4 implementation](https://raw.githubusercontent.com/postgres/postgres/REL_17_4/src/backend/utils/adt/numeric.c).
+No host endianness or JavaScript floating-point conversion determines the value.
+Unsupported datum formats and resource limits produce refusal.
+
+Verified predicates describe non-null values only. Validated local table checks
+have stored/new-value scope; unvalidated checks have new-value scope. Input
+conversion is separate, and neither result asserts a core facet. The verifier
+still requires correspondence with the retained schema capture and projection
+scope checks. Source consistency does not establish authenticity. Domain,
+partition/inheritance and broader native expression behavior remain outside this
+internal subset. The public library exports remain unchanged.
+
+Validation: fourteen Bun tests, 411 assertions, zero failures; typechecking passes.
+Chromium 148 verifies sixteen predicate cases (eight accepted/eight refused) and
+all thirteen native constant cases, with no getter calls, host globals or external
+requests. See [the verification record](../../../../fixtures/validation/facets-postgresql-resolved-evidence.json).
+This advances internal predicate qualification; the public PostgreSQL facet
+classifier, authored projection, package schemas and full binding acceptance
+remain required. Earlier checkpoint fingerprints qualify their recorded snapshots.

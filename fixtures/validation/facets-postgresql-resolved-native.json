@@ -1,0 +1,118 @@
+{
+  "scope": "Native constant decoding for PostgreSQL 17.4 little-endian Datum64; finite values exact, specials refused",
+  "serverVersion": 170004,
+  "encoding": "UTF8",
+  "datumFormat": "little-endian-datum64",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "rows": [
+    {
+      "type": "bigint",
+      "literal": "1",
+      "expected": "1",
+      "actual": "1",
+      "nodeTree": "{OPEXPR :opno 414 :opfuncid 471 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 20 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 20 :consttypmod -1 :constcollid 0 :constlen 8 :constbyval true :constisnull false :location -1 :constvalue 8 [ 1 0 0 0 0 0 0 0 ]}) :location -1}",
+      "expression": "(value <= '1'::bigint)"
+    },
+    {
+      "type": "bigint",
+      "literal": "9223372036854775807",
+      "expected": "9223372036854775807",
+      "actual": "9223372036854775807",
+      "nodeTree": "{OPEXPR :opno 414 :opfuncid 471 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 20 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 20 :consttypmod -1 :constcollid 0 :constlen 8 :constbyval true :constisnull false :location -1 :constvalue 8 [ 255 255 255 255 255 255 255 127 ]}) :location -1}",
+      "expression": "(value <= '9223372036854775807'::bigint)"
+    },
+    {
+      "type": "bigint",
+      "literal": "-9223372036854775808",
+      "expected": "-9223372036854775808",
+      "actual": "-9223372036854775808",
+      "nodeTree": "{OPEXPR :opno 414 :opfuncid 471 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 20 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 20 :consttypmod -1 :constcollid 0 :constlen 8 :constbyval true :constisnull false :location -1 :constvalue 8 [ 0 0 0 0 0 0 0 128 ]}) :location -1}",
+      "expression": "(value <= '-9223372036854775808'::bigint)"
+    },
+    {
+      "type": "numeric",
+      "literal": "0",
+      "expected": "0",
+      "actual": "0",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 6 [ 24 0 0 0 0 128 ]}) :location -1}",
+      "expression": "(value <= '0'::numeric)"
+    },
+    {
+      "type": "numeric",
+      "literal": "1.2300",
+      "expected": "1.23",
+      "actual": "1.23",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 130 1 0 252 8 ]}) :location -1}",
+      "expression": "(value <= 1.2300)"
+    },
+    {
+      "type": "numeric",
+      "literal": "-999.99",
+      "expected": "-999.99",
+      "actual": "-999.99",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 161 231 3 172 38 ]}) :location -1}",
+      "expression": "(value <= '-999.99'::numeric)"
+    },
+    {
+      "type": "numeric",
+      "literal": "0.00001",
+      "expected": "0.00001",
+      "actual": "0.00001",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 8 [ 32 0 0 0 254 130 232 3 ]}) :location -1}",
+      "expression": "(value <= 0.00001)"
+    },
+    {
+      "type": "numeric",
+      "literal": "0.0000000000000000000000000000000000000000000000000000000000000001",
+      "expected": "0.0000000000000000000000000000000000000000000000000000000000000001",
+      "actual": "0.0000000000000000000000000000000000000000000000000000000000000001",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 64 0 240 255 1 0 ]}) :location -1}",
+      "expression": "(value <= 0.0000000000000000000000000000000000000000000000000000000000000001)"
+    },
+    {
+      "type": "numeric",
+      "literal": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "expected": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "actual": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 10 [ 40 0 0 0 0 0 65 0 1 0 ]}) :location -1}",
+      "expression": "(value <= '100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'::numeric)"
+    },
+    {
+      "type": "numeric",
+      "literal": "999999999999999999999999999999.999999999999999999",
+      "expected": "999999999999999999999999999999.999999999999999999",
+      "actual": "999999999999999999999999999999.999999999999999999",
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 32 [ 128 0 0 0 7 137 99 0 15 39 15 39 15 39 15 39 15 39 15 39 15 39 15 39 15 39 15 39 15 39 172 38 ]}) :location -1}",
+      "expression": "(value <= 999999999999999999999999999999.999999999999999999)"
+    },
+    {
+      "type": "numeric",
+      "literal": "'NaN'",
+      "expected": null,
+      "actual": null,
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 6 [ 24 0 0 0 0 192 ]}) :location -1}",
+      "expression": "(value <= 'NaN'::numeric)"
+    },
+    {
+      "type": "numeric",
+      "literal": "'Infinity'",
+      "expected": null,
+      "actual": null,
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 6 [ 24 0 0 0 0 208 ]}) :location -1}",
+      "expression": "(value <= 'Infinity'::numeric)"
+    },
+    {
+      "type": "numeric",
+      "literal": "'-Infinity'",
+      "expected": null,
+      "actual": null,
+      "nodeTree": "{OPEXPR :opno 1755 :opfuncid 1723 :opresulttype 16 :opretset false :opcollid 0 :inputcollid 0 :args ({VAR :varno 1 :varattno 1 :vartype 1700 :vartypmod -1 :varcollid 0 :varnullingrels (b) :varlevelsup 0 :varnosyn 1 :varattnosyn 1 :location -1} {CONST :consttype 1700 :consttypmod -1 :constcollid 0 :constlen -1 :constbyval false :constisnull false :location -1 :constvalue 6 [ 24 0 0 0 0 240 ]}) :location -1}",
+      "expression": "(value <= '-Infinity'::numeric)"
+    }
+  ],
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "scripts/core-ideals/facets-postgresql-resolved-native.ts": "f5575e85b885e54f5da9ce03623e8929fbda7473d75cbdb3bc0e62dd303e2b9f",
+    "src/adapters/postgresql/facet-node-tree.ts": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c"
+  }
+}

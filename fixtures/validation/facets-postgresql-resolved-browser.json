@@ -1,0 +1,23 @@
+{
+  "scope": "Internal pinned analyzed-expression verification and exact Datum decoding; no public core classification or capture-correspondence claim",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "predicates": 16,
+    "verified": 8,
+    "unsupported": 8,
+    "datums": 13,
+    "decoded": 10,
+    "refused": 3,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/adapters/postgresql/facet-resolved-predicate.ts": "fa74430f538e1cc51d46e84eb832ea3008a0afe28fed50f8dda68029d0e12fdb",
+    "src/adapters/postgresql/facet-node-tree.ts": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c",
+    "scripts/core-ideals/facets-postgresql-resolved-browser.ts": "f0ab62e073473c02516a46a840d073ae607759f5a790977ccc8ade6f3290c34d",
+    "fixtures/validation/facets-postgresql-constraints-native.json": "3c34754991193bb426a06316b7c064ae1a003b0a531e5619324198cdc2221c3a",
+    "fixtures/validation/facets-postgresql-resolved-native.json": "cbca58adcb9998eca610fb190b654a3b0a4cbf304c84a4141adb1c5c60ad9b18",
+    "dist/facet-resolved-predicate.js": "5a1317796c58ce4fac9f534b1212f9fbfe3f77ad44965d28c6b8294a6c0b2abf",
+    "dist/facet-node-tree.js": "bded2ed9c3a722e9845db6819b13e115c7a897098bbf3e6b9a8f86225a740b32"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "Internal PostgreSQL 17.4 analyzed predicate and Datum verification; public binding and retained catalog correspondence unfinished",
+  "bun": {
+    "tests": 14,
+    "assertions": 411,
+    "failures": 0
+  },
+  "typecheck": "passed",
+  "native": {
+    "datumCases": 13,
+    "decoded": 10,
+    "refused": 3
+  },
+  "browser": {
+    "predicates": 16,
+    "verified": 8,
+    "unsupported": 8,
+    "datums": 13
+  },
+  "sha256": {
+    "src/adapters/postgresql/facet-node-tree.ts": "d07c5246c144cd20a93a8aa404a276b8bb9ef2996f0f04276ec5312f5812d99c",
+    "src/adapters/postgresql/facet-resolved-predicate.ts": "fa74430f538e1cc51d46e84eb832ea3008a0afe28fed50f8dda68029d0e12fdb",
+    "tests/core-ideals/facets-postgresql-resolved.test.ts": "fb8b4e8a745dcc892b906e64a27195a1c014d579aa941ad464b8c9378cb2d88b",
+    "scripts/core-ideals/facets-postgresql-resolved-native.ts": "f5575e85b885e54f5da9ce03623e8929fbda7473d75cbdb3bc0e62dd303e2b9f",
+    "scripts/core-ideals/facets-postgresql-resolved-browser.ts": "f0ab62e073473c02516a46a840d073ae607759f5a790977ccc8ade6f3290c34d",
+    "fixtures/validation/facets-postgresql-resolved-native.json": "cbca58adcb9998eca610fb190b654a3b0a4cbf304c84a4141adb1c5c60ad9b18",
+    "fixtures/validation/facets-postgresql-resolved-browser.json": "08e02b340e3e4819deeb0aaf6ab18240172cf6c1407affbc49755b7f73f8e9d6",
+    "fixtures/validation/facets-postgresql-resolved-tests.log": "ad97deb9e55e46b82e48032fd84811fd3be6426eb8fc522a1cbc4ef15047bc90",
+    "fixtures/validation/facets-postgresql-resolved-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "docs/helix/04-build/evidence/postgresql-facet-discovery.md": "151e9b8d02136a2321e7948bef3d1007c8ebd17f2385bf75d102beedfd12c8af"
+  }
+}

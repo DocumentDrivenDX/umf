@@ -1,0 +1,28 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-postgresql-resolved.test.ts:
+(pass) complete resolved expressions yield exact predicates and explicit value scope [7.55ms]
+(pass) unknown nodes, forged resolution, context changes and hidden conjuncts refuse atomically [2.36ms]
+(pass) bounded node reader rejects duplicate fields, malformed structure and resource abuse [0.39ms]
+(pass) Datum64 integers remain exact beyond JavaScript precision [0.50ms]
+(pass) independent native Datum corpus replays exactly and fingerprints are current [1.38ms]
+
+tests/core-ideals/facets-postgresql-constraints.test.ts:
+(pass) native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax [2.32ms]
+(pass) native deparsed checks replay as candidates or explicit refusals with complete retained trees [41.01ms]
+
+tests/core-ideals/facets-postgresql-predicate.test.ts:
+(pass) closed predicate syntax retains exact bounds without claiming resolved enforcement [15.39ms]
+(pass) lookalikes and extra syntax stay native; conjuncts never produce partial claims [2.65ms]
+(pass) unknown AST content, forged versions and unsafe objects are never interpreted [0.39ms]
+
+tests/core-ideals/facets-postgresql-discovery.test.ts:
+(pass) native evidence is pinned and preserves counterexamples to direct core promotion [1.22ms]
+(pass) signed numeric modifiers are decoded without importing misleading information_schema scale [6.60ms]
+(pass) unknown qualifiers survive and unsafe or reserved modifier layouts cannot become native facts [2.02ms]
+(pass) catalog observations and native refinements survive both envelope forms without core facet assertions [565.97ms]
+
+ 14 pass
+ 0 fail
+ 411 expect() calls
+Ran 14 tests across 4 files. [3.13s]
