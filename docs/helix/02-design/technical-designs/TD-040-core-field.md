@@ -1316,3 +1316,28 @@ native generation is unchanged. See [shared record report evidence](../../../../
 The common view now covers authored single Fields and flat records. Native
 classification report coverage, nested projections and remaining Field exit
 requirements stay open.
+
+## Shared native Field classification reports
+
+`inspectFieldClassification` now recomputes TableSpec captured-column, PostgreSQL
+and SQL Server catalog-column, Avro member and checked Parquet primitive-leaf
+classifications. Its common report preserves classified origin, the adapter's
+native membership basis, exact copied fragment and dependency identity where
+present. Every mapping/residual includes the native version and subset. Conflicting
+kind assertions remain unknown residuals with retained-source recovery instructions;
+classification is never relabeled as authored intent.
+
+`verifyFieldClassificationInspection` rejects changed native fragments, origins,
+paths, dependency context or binding metadata after structural validation and
+recomputation. TableSpec diagnostic-omission compatibility retains the same checked
+scope as its adapter. Two tests pass 142 assertions across fifteen five-system
+positive/conflict-policy cases. Chromium 148 matches all cases and thirty JSON/YAML
+verifications, including forged-basis rejection. Typechecking, browser build and
+all 207 schema / 32 package audits pass. The deliberate readonly-binding mutation
+in a negative test received an explicit test-only type override before typechecking
+passed. See [classification report evidence](../../../../fixtures/validation/classification-report-evidence.json).
+
+The fixtures reuse native captures already qualified by their adapters. No native
+execution was rerun for this report layer, and no broader native conformance is
+claimed. Raw DDL, record/type classification common reports and nested projections
+remain required before the Field gate can close.

@@ -265,3 +265,12 @@ each Field mapping identifies its own selected native carrier. Mapping order and
 member paths remain those of the recomputed adapter report. Missing member bindings
 remain blocked residuals, never manufactured Field mappings. This does not expand
 the underlying adapter's nested-structure or enforcement support.
+
+Shared native Field classification inspection uses the same retained-receipt and
+recomputation discipline, but origin is always `classified`. It retains each
+adapter's native fragment, source path, dependency identity where present and
+classification basis. Conflicts retain their source assertion with an unknown
+outcome and the binding/recovery instruction; they do not become authored intent.
+The initial profile covers TableSpec captured columns, PostgreSQL/SQL Server
+catalog columns, Avro members and checked Parquet primitive leaves. Raw DDL and
+record/type classifications require separately declared coverage.

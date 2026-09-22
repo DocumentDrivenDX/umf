@@ -1,0 +1,32 @@
+{
+  "scope": "Common metadata for five priority native Field classification subsets; raw DDL and record/type operations excluded; native execution not rerun",
+  "commands": [
+    "bun test tests/core-ideals/classification-report.test.ts",
+    "bun scripts/core-ideals/classification-report-corpus.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/classification-report-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 142,
+    "browserCases": 15,
+    "browserReportRecoveries": 30,
+    "typecheck": "passed",
+    "schemasPassed": 207,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10113613
+  },
+  "sha256": {
+    "src/core-ideals/classification-report.ts": "f2181216f73568e9f51206ef6ff330efa97de529a59807de39c41e222418164a",
+    "spec/core/field-classification-inspection.schema.json": "6d6b8093934c597719dcfb0e1daf4fa846bdf0e0caab5e674973ab15f22b3116",
+    "scripts/core-ideals/classification-report-schema.ts": "afde9e5a14619df49a3487f52315bc0da697a31077bbe32a4fde0c68a24246ac",
+    "scripts/core-ideals/classification-report-cases.ts": "733990bf5b8489aab21e15fa88e8a46a02974d891cf2b10692c5002b11f7a819",
+    "scripts/core-ideals/classification-report-corpus.ts": "1241dcb597484df2b007fec19ebde52291737cdabb8fe53758e9aa2f4ede74b7",
+    "scripts/core-ideals/classification-report-browser.ts": "7d12d845a80648452650191dd3a867c67aef251ca501db700ce8f116e7b71df9",
+    "tests/core-ideals/classification-report.test.ts": "d33ab16b63295085f606743173f1e9852f04e87ab122d613a936ce28f0fe078b",
+    "fixtures/validation/classification-report-corpus.json": "b677321a9c7e6dc647275578097cd85dbedcfe845c6f238574ceef73847033c8",
+    "fixtures/validation/classification-report-browser.json": "824124a9724e722cff93b0a52d721803ca40e6ed5dd302b4e5cad4b1ec342b1c"
+  }
+}
