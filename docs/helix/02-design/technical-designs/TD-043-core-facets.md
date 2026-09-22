@@ -323,3 +323,44 @@ including split-file archives, unknown fields and unsafe numeric tokens.
 Down-projection and the combined binding acceptance remain separate work within
 `umf-97221618-1c44db4c`. A classification checkpoint does not refresh the existing
 core/concept gates, complete both binding directions, or admit native equivalence.
+
+### TableSpec authored projection and explicit suite profile
+
+Add `gx-suite-spark` as a separate consumer profile. It means the native general
+PySpark carrier plus explicitly supplied unified TableSpec expectations, converted
+through the native model's `to_gx_dict` and evaluated by GX. It does not mean the
+baseline generator, a full ingestion run, or proof that writes are blocked.
+Canonical rules require explicit `mostly: 1`, unconditional kwargs, the appropriate
+raw/ingested stage, and blocking/error metadata. Partial, conditional, disabled or
+unknown rule forms remain residuals; they cannot establish an unconditional bound.
+
+The supported suite forms are Unicode-scalar maximum length (including zero),
+canonical signed/unsigned integer ranges that fit the signed-32-bit INTEGER
+carrier, and symmetric coefficient ranges for fixed-scale-zero decimal precision
+up to ten on the general DecimalType(10,0) carrier. Native ingestion casts retain
+the separate explicit decimal(p,s) profile up to precision 38. Exact input
+conversion remains a separate obligation: native decimal rounding and float
+narrowing are losses even when output-domain constraints match.
+
+Authored projection accepts a verified core facet declaration, or a verified
+core 0.5.0 Field-kind declaration for facetless/unknown-facet cases. A Field-kind
+receipt does not establish facet authorship; unverified facet members are retained
+as residuals. This second input form exercises unqualified FLOAT exactness and
+prevents native defaults from being fabricated as authored facets. Other source
+metadata and definitions remain explicit retained losses unless mapped.
+
+Emit a complete TableSpec document with an explicit native scalar carrier and,
+for the suite profile, native unified expectations. No invalid native type or
+count is emitted to bypass strict mode. Strict mode has no target on loss; report
+mode may emit a valid carrier with residuals. Unsupported byte-length encodings,
+wide integer carriers, nonzero decimal scale on the general PySpark carrier,
+unknown qualifiers and item/value relationships remain explicit. Wider or
+cross-family encodings require separate qualification, not claims that TableSpec
+as a whole is incapable of them.
+
+Source-bound projection receipts retain the full authored document, declaration,
+request, native target, mapping and residuals. Recovery recomputes the operation
+and verifies exact native output before restoring the original ideal, including
+unknown metadata. Native-only classification remains distinct from recovering
+verified author intent. Full binding acceptance still requires both directions,
+emitted artifact/value checks, Chromium parity and the prior three concept gates.

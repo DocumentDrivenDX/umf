@@ -3,7 +3,8 @@ import {readJsonValue} from '../model/serialization';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import {type NativeJson} from '../model/native-json';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
-import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,TABLESPEC_EXTENSION} from '../adapters/tablespec';
+import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,getTableSpecTable,TABLESPEC_EXTENSION} from '../adapters/tablespec';
+import {inspectTableSpecFacetSuite} from './tablespec-facet-suite';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import core from '../../spec/core/facet-document.schema.json';import authorSchema from '../../spec/core/facet-operation.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
@@ -12,7 +13,7 @@ import manifest from '../../spec/extensions/tablespec-facets/package.json';
 export const TABLESPEC_FACETS_EXTENSION='umf.tablespec.facets';
 export const tableSpecFacetsPackage=manifest as unknown as ExtensionPackage;
 export {default as tableSpecFacetClassificationSchema} from '../../spec/core/tablespec-facet-classification.schema.json';
-export type TableSpecFacetProfile='declared-metadata'|'json-schema'|'pyspark-schema'|'gx-spark'|'ingest-cast'|'unresolved';
+export type TableSpecFacetProfile='declared-metadata'|'json-schema'|'pyspark-schema'|'gx-spark'|'gx-suite-spark'|'ingest-cast'|'unresolved';
 export interface TableSpecFacetRequest {column:number;mode:'strict'|'report';profile:TableSpecFacetProfile;input:'raw'|'model-normalized';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration}
 type Outcome='exact'|'approximated'|'not-expressible'|'unknown';
 type Concept='length'|'decimal'|'integerWidth'|'conversion'|'native';
@@ -64,7 +65,14 @@ export function classifyTableSpecFacets(input:Document,options:TableSpecFacetReq
  if(!supported)loss('data_type',members.data_type??null,'Native type is outside the qualified scalar subset','not-expressible');
  if(profile==='unresolved')loss('data_type',fragment,'No consumer profile selected; no facet meaning inferred');
  if(model&&malformed.length)for(const key of malformed)loss(key,members[key],'Model-normalized profile cannot infer an exact count from rejected, coerced or unsafe native metadata');
- if(usable){
+ if(usable&&profile==='gx-suite-spark'){
+  const suite=inspectTableSpecFacetSuite(getTableSpecTable(source),request.column);
+  Object.assign(result.mapping.facets,suite.facets);
+  for(const claim of suite.claims)result.mapping.observations.push({concept:claim.concept,idealPath,nativePath:claim.path,interpretation:'inferred',outcome:'exact',basis:claim.basis});
+  for(const issue of suite.issues)loss(issue.path,issue.value,issue.reason);
+  if(request.obligation==='exact-input')loss('data_type',fragment,type==='FLOAT'?'Binary64 1.0000000000000002 narrows to binary32 1.0 before suite validation':type==='DECIMAL'?'The general DecimalType(10,0) carrier can round fractional input before suite validation':'Suite validation does not establish exact conversion into the native carrier',type==='FLOAT'||type==='DECIMAL'?'approximated':'unknown','conversion');
+ }
+ if(usable&&profile!=='gx-suite-spark'){
   const length=members.length,maxLength=members.max_length;
   const lengthSupplied=!absent(length),maxSupplied=!absent(maxLength);
   let lengthKey:'length'|'max_length'|undefined;

@@ -1,0 +1,2011 @@
+{
+  "scope": "Explicit unified TableSpec suite parsing and GX validation on the native-generated Spark carrier; no whole ingestion or write-blocking guarantee",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "versions": {
+    "pydantic": "2.11.10",
+    "spark": "4.0.1",
+    "greatExpectations": "1.15.1",
+    "jsonschema": "4.25.1",
+    "java": "21.0.2"
+  },
+  "cases": [
+    {
+      "case": "length-0",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_value_lengths_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 0,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "raw",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "VARCHAR",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_value_lengths_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 0,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "raw",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_value_lengths_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": 0,
+          "max_value": 0,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "raw",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": "",
+          "nativeValue": "",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "a",
+          "nativeValue": "a",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "😀",
+          "nativeValue": "😀",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "é",
+          "nativeValue": "é",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "😀😀",
+          "nativeValue": "😀😀",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "abc",
+          "nativeValue": "abc",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "a ",
+          "nativeValue": "a ",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "length-2",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "VARCHAR"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_value_lengths_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 2,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "raw",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "VARCHAR",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_value_lengths_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 2,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "raw",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_value_lengths_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": 0,
+          "max_value": 2,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "raw",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": "",
+          "nativeValue": "",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "a",
+          "nativeValue": "a",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "😀",
+          "nativeValue": "😀",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "é",
+          "nativeValue": "é",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "😀😀",
+          "nativeValue": "😀😀",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "abc",
+          "nativeValue": "abc",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "a ",
+          "nativeValue": "a ",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "width-1-signed",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -1,
+                "max_value": 0,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "INTEGER",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -1,
+                "max_value": 0,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": -1,
+          "max_value": 0,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": -2,
+          "nativeValue": -2,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": -1,
+          "nativeValue": -1,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 0,
+          "nativeValue": 0,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 1,
+          "nativeValue": 1,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "width-1-unsigned",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 1,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "INTEGER",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 1,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": 0,
+          "max_value": 1,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": -1,
+          "nativeValue": -1,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": 0,
+          "nativeValue": 0,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 1,
+          "nativeValue": 1,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 2,
+          "nativeValue": 2,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "width-8-signed",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -128,
+                "max_value": 127,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "INTEGER",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -128,
+                "max_value": 127,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": -128,
+          "max_value": 127,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": -129,
+          "nativeValue": -129,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": -128,
+          "nativeValue": -128,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 0,
+          "nativeValue": 0,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 127,
+          "nativeValue": 127,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 128,
+          "nativeValue": 128,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "width-8-unsigned",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 255,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "INTEGER",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 255,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": 0,
+          "max_value": 255,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": -1,
+          "nativeValue": -1,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": 0,
+          "nativeValue": 0,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 255,
+          "nativeValue": 255,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 256,
+          "nativeValue": 256,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "width-31-unsigned",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 2147483647,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "INTEGER",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": 0,
+                "max_value": 2147483647,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": 0,
+          "max_value": 2147483647,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": -1,
+          "nativeValue": -1,
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": 0,
+          "nativeValue": 0,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 2147483647,
+          "nativeValue": 2147483647,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 2147483648,
+          "nativeValue": null,
+          "carrierAccepted": false,
+          "validationSuccess": null,
+          "errorType": "PySparkValueError"
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "width-32-signed",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "INTEGER"
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -2147483648,
+                "max_value": 2147483647,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "INTEGER",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -2147483648,
+                "max_value": 2147483647,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": -2147483648,
+          "max_value": 2147483647,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": -2147483649,
+          "nativeValue": null,
+          "carrierAccepted": false,
+          "validationSuccess": null,
+          "errorType": "PySparkValueError"
+        },
+        {
+          "value": -2147483648,
+          "nativeValue": -2147483648,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 0,
+          "nativeValue": 0,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 2147483647,
+          "nativeValue": 2147483647,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": 2147483648,
+          "nativeValue": null,
+          "carrierAccepted": false,
+          "validationSuccess": null,
+          "errorType": "PySparkValueError"
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "decimal-5-0",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "DECIMAL",
+            "precision": 5,
+            "scale": 0
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -99999,
+                "max_value": 99999,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "DECIMAL",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": 5,
+            "scale": 0,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -99999,
+                "max_value": 99999,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": -99999,
+          "max_value": 99999,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "decimal(10,0)",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": "-99999",
+          "nativeValue": "-99999",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "99999",
+          "nativeValue": "99999",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "0",
+          "nativeValue": "0",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "1.25",
+          "nativeValue": "1",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "-100000",
+          "nativeValue": "-100000",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "100000",
+          "nativeValue": "100000",
+          "carrierAccepted": true,
+          "validationSuccess": false,
+          "errorType": null
+        },
+        {
+          "value": "99999.1",
+          "nativeValue": "99999",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    },
+    {
+      "case": "decimal-10-0",
+      "source": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "columns": [
+          {
+            "name": "value",
+            "data_type": "DECIMAL",
+            "precision": 10,
+            "scale": 0
+          }
+        ],
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -9999999999,
+                "max_value": 9999999999,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "generated_from": "user"
+              }
+            }
+          ]
+        }
+      },
+      "normalized": {
+        "version": "1.0",
+        "table_name": "FacetSuite",
+        "canonical_name": null,
+        "aliases": null,
+        "source_sheet_name": null,
+        "source_file": null,
+        "sheet_name": null,
+        "description": null,
+        "table_type": null,
+        "columns": [
+          {
+            "name": "value",
+            "canonical_name": null,
+            "aliases": null,
+            "data_type": "DECIMAL",
+            "dimension": null,
+            "position": null,
+            "description": null,
+            "nullable": null,
+            "sample_values": null,
+            "length": null,
+            "precision": 10,
+            "scale": 0,
+            "title": null,
+            "format": null,
+            "fallback_formats": null,
+            "notes": null,
+            "source": null,
+            "key_type": null,
+            "exclude_from_change_detection": false,
+            "internal": false,
+            "reporting_requirement": null,
+            "report_sheet": null,
+            "derived_from": null,
+            "derivation_mapping": null,
+            "derivation_expression": null,
+            "domain_type": null,
+            "derivation": null,
+            "provenance_policy": null,
+            "provenance_notes": null,
+            "pivot_field": null,
+            "pivot_source_table": null,
+            "pivot_source_column": null,
+            "pivot_index": null,
+            "pivot_max_count": null,
+            "default": null,
+            "profiling": null,
+            "null_output_value": null,
+            "preserve_literal_null": false,
+            "merge_strategy": null,
+            "merge_source": null,
+            "merge_condition": null
+          }
+        ],
+        "primary_key": null,
+        "unique_constraints": null,
+        "file_format": null,
+        "source": null,
+        "validation_rules": null,
+        "quality_checks": null,
+        "expectations": {
+          "expectations": [
+            {
+              "type": "expect_column_values_to_be_between",
+              "kwargs": {
+                "column": "value",
+                "min_value": -9999999999,
+                "max_value": 9999999999,
+                "mostly": 1
+              },
+              "meta": {
+                "stage": "ingested",
+                "severity": "error",
+                "blocking": true,
+                "description": null,
+                "tags": [],
+                "generated_from": "user"
+              }
+            }
+          ],
+          "thresholds": null,
+          "alert_config": null,
+          "pending": []
+        },
+        "relationships": null,
+        "metadata": null,
+        "config_data": null,
+        "lookup_metadata": null,
+        "sample_data_cases": null,
+        "derivations": null,
+        "ingestion": null,
+        "context_column": null
+      },
+      "gxRule": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "value",
+          "min_value": -9999999999,
+          "max_value": 9999999999,
+          "mostly": 1
+        },
+        "meta": {
+          "validation_stage": "ingested",
+          "severity": "error",
+          "blocking": true,
+          "generated_from": "user"
+        }
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "decimal(10,0)",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "values": [
+        {
+          "value": "-9999999999",
+          "nativeValue": "-9999999999",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "9999999999",
+          "nativeValue": "9999999999",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "0",
+          "nativeValue": "0",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": "1.25",
+          "nativeValue": "1",
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        },
+        {
+          "value": null,
+          "nativeValue": null,
+          "carrierAccepted": true,
+          "validationSuccess": true,
+          "errorType": null
+        }
+      ]
+    }
+  ],
+  "valueChecks": 61,
+  "toleranceControls": [
+    {
+      "mostly": 1,
+      "success": false
+    },
+    {
+      "mostly": 0.5,
+      "success": true
+    }
+  ],
+  "limits": [
+    "GX bounds skip null values; they do not establish nullability or required presence.",
+    "Native INTEGER carrier is signed 32-bit; out-of-carrier values are rejected before GX.",
+    "Mostly below 1 can accept out-of-bound values and cannot supply an unconditional core bound.",
+    "Model metadata retains blocking/stage, but the whole TableSpec pipeline and write policy are not executed here.",
+    "Only well-formed Unicode scalar strings and the recorded integer values are exercised."
+  ],
+  "sha256": {
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-suite-oracle.py": "f8ef9d32a016285db11673ba7a466dce1b25489b840081d23c3f0393f184f771",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd"
+  }
+}

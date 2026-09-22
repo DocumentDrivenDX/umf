@@ -2,7 +2,7 @@ import core from '../../spec/core/facet-document.schema.json';
 const text={type:'string',minLength:1};
 const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const binding={id:'umf.tablespec.facets',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence'};
-const profile={enum:['declared-metadata','json-schema','pyspark-schema','gx-spark','ingest-cast','unresolved']},input={enum:['raw','model-normalized']},obligation={enum:['value-domain','exact-input']};
+const profile={enum:['declared-metadata','json-schema','pyspark-schema','gx-spark','gx-suite-spark','ingest-cast','unresolved']},input={enum:['raw','model-normalized']},obligation={enum:['value-domain','exact-input']};
 const outcome={enum:['exact','approximated','not-expressible','unknown']},interpretation={enum:['declared','inferred','unknown','unsupported']};
 const facets={...structuredClone(core.$defs.facets),additionalProperties:false};
 facets.properties.length={...facets.properties.length,additionalProperties:false,properties:{...facets.properties.length.properties,unit:{enum:['unicode-scalar','byte']}}} as never;
