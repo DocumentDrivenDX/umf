@@ -300,3 +300,5 @@ export * from './core-ideals/facets-postgresql';
 export * from './core-ideals/facets-postgresql-projection';
 
 export * from './core-ideals/facets-sqlserver';
+
+export * from './core-ideals/facets-sqlserver-projection';

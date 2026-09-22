@@ -165,6 +165,40 @@ accepted binding gates retain their historical snapshots; the changed public
 bundle has not undergone the final full compatibility refresh. This checkpoint
 does not admit the facet ideal or graduate native equivalence.
 
+## Authored projection checkpoint
+
+The public authored projector and closed operation schema now emit nullable
+single-column DDL from verified facet/Field declarations, with explicit native
+carrier, encoding, strict/report mode and value-domain/exact-input obligation.
+Matching integer domains and checked narrower ranges, decimal precision/scale,
+and binary byte limits are represented. Character units, Unicode validity, code
+pages, padding, scalar-family changes and conversion losses remain residuals.
+Unknown ideal metadata remains in the receipt. A native-only import cannot
+reconstruct authored provenance; verified receipt recovery restores the full ideal.
+
+Independent SQL Server 2022 16.0.4295.3 execution accepts all 145 emitted targets
+from 238 authored cases; 93 are blocked before DDL emission. All 27 value probes
+pass, including ten expected rejections. Boundary probes cover checked integers,
+127-bit signed values carried in decimal, precision-38 decimals, byte limits,
+zero-length strings, supplementary characters and trailing spaces. Native evidence
+preserves rounding before CHECK, binary64-to-binary32 narrowing, malformed Unicode
+acceptance and modifier truncation errors. A bracket-containing table identifier
+and quoted/multiline Unicode description round-trip through catalog capture.
+Both catalog serialization recoveries and 145 ideal receipt recoveries pass.
+
+Chromium 148 verifies the exported 10,946,624-byte bundle across all 238 cases,
+with 290 ideal recoveries, changed-SQL refusal and getter protection. No host
+globals or external requests are used. Combined Bun validation passes 45 tests /
+2,723 assertions across 14 files, typechecking, 271 schemas and 45 packages. See
+the [projection record](../../../../fixtures/validation/facets-sqlserver-projection-evidence.json).
+
+Next: compose emitted native catalog capture with classification and account for
+native inference versus retained author intent, including explicit residuals.
+Table-level association and full compatibility/binding acceptance remain required.
+This checkpoint does not complete SQL Server facet delivery or the facet ideal
+gate, and does not claim native equivalence. Earlier binding gates retain their
+historical evidence snapshots until the full refresh.
+
 ## Primary reference material
 
 The native fixture is the qualification evidence. These Microsoft references

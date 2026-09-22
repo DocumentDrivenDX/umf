@@ -639,7 +639,42 @@ and numeric spellings; it does not authenticate the database or execute SQL.
 The operation receipt schema is `spec/core/sqlserver-facet-classification.schema.json`.
 The element extension package is `umf.sqlserver.facets` 1.0.0. Its payload includes
 physical column, profile, obligation, outcome and observations; native data remains
-in `umf.sqlserver`. Experimental classification is exported, but authored projection,
-its schema, emitted-target native qualification and full binding acceptance remain
-unfinished. Earlier binding gates retain their prior evidence snapshots until the
+in `umf.sqlserver`. Classification and authored projection are exported experimentally.
+The projection checkpoint below records emitted-target native qualification;
+capture/classification composition and full binding acceptance remain unfinished. Earlier binding gates retain their prior evidence snapshots until the
 scheduled full compatibility refresh.
+
+### Experimental SQL Server authored facet projection
+
+`projectFacetsToSqlServer` now consumes a verified core 0.5.0 facet declaration or
+Field-kind declaration and emits a closed `sqlserver-ddl` target plus its receipt.
+The caller selects an existing namespace, table/column identifiers, native carrier,
+checked/type-modifier/carrier-only encoding, strict/report mode and value-domain
+or exact-input obligation. The schema is
+`spec/core/facets-sqlserver-projection.schema.json`. The nullable column is explicit;
+authored availability and other uncomposed metadata remain residuals.
+
+Integer carrier domains can represent matching canonical widths directly or
+narrow them with CHECK bounds. Checked decimal(38,0) can hold integer domains up
+to its coefficient capacity, but the scalar-family difference remains a residual.
+Decimal precision/scale up to 38 use native decimal(p,s); an optional ROUND check
+does not prevent input rounding. Binary MAX carriers use DATALENGTH checks;
+bounded native modifiers are limited to 8000 bytes. The checked length ceiling is
+2147483647. Character modifiers have their native byte/UTF-16 ceilings, including
+4000 units for Unicode types, and retain unit/domain losses.
+
+Checked variable-character projections use an explicit SC collation and a MAX
+carrier to avoid bounded sentinel concatenation truncation. Zero length uses
+DATALENGTH=0; nonzero length uses LEN(value+N'x')-1. Malformed UTF-16 and code-page
+restrictions remain explicit residuals. Fixed carriers retain padding losses.
+Exact-input obligations always retain conversion uncertainty or a demonstrated
+rounding/narrowing loss. Report mode may emit a carrier with residuals; strict
+mode emits no target when any meaning is lost or unqualified.
+
+Identifier and literal validation is shared with the existing SQL Server bindings.
+Bounded Unicode descriptions use extended properties; unsupported description
+content stays in the receipt. `recoverFacetsFromSqlServer` recomputes the complete
+operation and checks unchanged native SQL before recovering the retained author
+model. This is receipt recovery, not inference of author intent from native DDL.
+Independent execution, native capture and browser evidence accompany the API;
+full capture/classification composition and final binding acceptance remain open.

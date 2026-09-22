@@ -2,7 +2,7 @@
   "id": "umf.sqlserver.facets",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental SQL Server scoped facet classification with retained source meaning",
+  "description": "Experimental SQL Server scoped facet classification and authored DDL projection with retained meaning",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:sqlserver:facet-binding:1.0.0",
@@ -109,7 +109,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 scoped classification and verified original native source recovery. Projection and full binding acceptance remain unfinished.",
+  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 scoped classification, authored DDL projection and verified native/ideal recovery. Full binding acceptance remains gated by composition and compatibility qualification.",
   "scopes": [
     "element"
   ],
@@ -129,7 +129,11 @@
       "fixtures/validation/facets-sqlserver-discovery-native.json",
       "fixtures/validation/facets-sqlserver-constraints-evidence.json",
       "spec/core/sqlserver-facet-classification.schema.json",
-      "fixtures/validation/facets-sqlserver-classification-browser.json"
+      "fixtures/validation/facets-sqlserver-classification-browser.json",
+      "spec/core/facets-sqlserver-projection.schema.json",
+      "tests/core-ideals/facets-sqlserver-projection.test.ts",
+      "fixtures/validation/facets-sqlserver-projection-native.json",
+      "fixtures/validation/facets-sqlserver-projection-browser.json"
     ]
   }
 }

@@ -914,5 +914,12 @@ SQL Server facets now have an experimental public classification API, operation
 schema and extension package. Classification uses a separately selected logical
 scalar Field, explicit stored/ordinary-checked-write profiles, strict/report
 residuals and verified original native-text recovery. Physical catalog columns
-remain unchanged. Authored projection and full SQL Server facet acceptance remain
+remain unchanged. Full SQL Server facet acceptance remains
 open; see [TD-043](02-design/technical-designs/TD-043-core-facets.md#experimental-sql-server-facet-classification-api).
+
+SQL Server authored facet projection is also implemented experimentally, with
+checked/type-modifier/carrier-only DDL, strict/report residuals and verified ideal
+receipt recovery. Independent native execution covers 145 emitted targets from
+238 cases; Chromium covers 290 ideal recoveries. Composition through native capture
+and classification, then full binding acceptance, remain required. See
+[TD-043](02-design/technical-designs/TD-043-core-facets.md#experimental-sql-server-authored-facet-projection).

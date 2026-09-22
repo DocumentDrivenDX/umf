@@ -1,0 +1,461 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:facets-sqlserver-projection:1.0.0",
+  "title": "Authored scalar facets to SQL Server carriers and CHECKs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-facets-sqlserver"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.5.0"
+    },
+    "author": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+        },
+        {
+          "$ref": "urn:umf:core:kind-operation:4.0.0#/$defs/declaration"
+        }
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "sql"
+      ],
+      "properties": {
+        "format": {
+          "const": "sqlserver-ddl"
+        },
+        "sql": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tableName",
+        "columnName",
+        "nativeType",
+        "mode",
+        "namespace",
+        "encoding",
+        "obligation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "columnName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeType": {
+          "enum": [
+            "bit",
+            "tinyint",
+            "smallint",
+            "int",
+            "bigint",
+            "decimal",
+            "real",
+            "float(53)",
+            "nvarchar",
+            "nchar",
+            "varchar",
+            "char",
+            "varbinary",
+            "binary",
+            "date",
+            "time(7)",
+            "datetime2(7)",
+            "datetimeoffset(7)"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encoding": {
+          "enum": [
+            "checked",
+            "type-modifier",
+            "carrier-only"
+          ]
+        },
+        "obligation": {
+          "enum": [
+            "value-domain",
+            "exact-input"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.facets.sqlserver",
+        "version": "1.0.0",
+        "nativeVersion": "2022 16.0.4295.3",
+        "subset": "Single authored scalar Field facets; nullable column, explicit native carrier/encoding, scoped value-domain enforcement and retained conversion/Unicode residuals; no native equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "outcome",
+        "facets",
+        "encoding"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string"
+        },
+        "nativePath": {
+          "const": "/sql"
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible",
+            "approximated"
+          ]
+        },
+        "facets": {
+          "type": "object",
+          "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+          "properties": {
+            "length": {
+              "type": "object",
+              "required": [
+                "max",
+                "unit"
+              ],
+              "properties": {
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "unit": {
+                  "enum": [
+                    "unicode-scalar",
+                    "byte"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "precision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991,
+              "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+            },
+            "integerWidth": {
+              "type": "object",
+              "required": [
+                "bits",
+                "signed"
+              ],
+              "properties": {
+                "bits": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "signed": {
+                  "type": "boolean"
+                }
+              },
+              "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
+              "additionalProperties": false
+            }
+          },
+          "dependentRequired": {
+            "precision": [
+              "scale"
+            ],
+            "scale": [
+              "precision"
+            ]
+          },
+          "additionalProperties": false
+        },
+        "encoding": {
+          "enum": [
+            "checked",
+            "type-modifier",
+            "carrier-only"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "nativeSql": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSql"
+        ],
+        "properties": {
+          "target": true,
+          "nativeSql": true
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeSql": false
+        }
+      }
+    },
+    {
+      "$comment": "UMF projection policy",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "warning"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              },
+              "diagnostics": {
+                "type": "array",
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "error"
+                    }
+                  },
+                  "required": [
+                    "severity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "request": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "const": "strict"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "const": "exact"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "projected"
+              },
+              "mapping": {
+                "type": "object",
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "unknown",
+                      "approximated",
+                      "not-expressible"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

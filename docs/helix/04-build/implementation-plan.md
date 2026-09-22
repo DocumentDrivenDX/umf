@@ -4226,3 +4226,24 @@ qualification for emitted targets/table-level CHECK associations; ideal recovery
 and composition; then full binding acceptance. SQL Server facets remain in
 progress, followed by Avro, Parquet, the separate facet gate and Key. No native
 equivalence or completed five-system facet delivery is claimed.
+
+### SQL Server authored facet projection checkpoint
+
+`projectFacetsToSqlServer` and `recoverFacetsFromSqlServer` now expose authored
+facet DDL and retained ideal recovery under a closed operation schema. Carrier,
+encoding and value-domain/exact-input obligations are explicit. Strict mode blocks
+loss; report mode retains residuals for Unicode, padding, conversion, unsupported
+facets, scalar-family changes and other unprojected meaning.
+
+Independent SQL Server 16.0.4295.3 execution passes 145 emitted DDL targets from
+238 cases (93 blocked), 27 value probes with ten expected rejections, quoted
+identifier/Unicode description controls and two catalog recoveries. Chromium 148
+passes all 238 cases with 290 retained ideal recoveries. Combined validation passes
+45 tests / 2,723 assertions / 14 files, typechecking, 271 schemas and 45 packages.
+See the [projection record](../../../fixtures/validation/facets-sqlserver-projection-evidence.json).
+
+Next: emitted-capture classification composition and native-versus-authored facet
+reconciliation, table-level CHECK qualification, then full compatibility refresh
+and SQL Server facet binding acceptance. The bead remains in progress. Avro,
+Parquet, separate facet admission/delivery and Key remain required; native
+equivalence is unclaimed.
