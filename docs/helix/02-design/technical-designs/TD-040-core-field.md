@@ -1292,3 +1292,27 @@ and does not change native generation. See [shared Field report evidence](../../
 The shared profile covers authored single Fields. Record projections and native
 classifications still need the same common provenance/residual coverage, alongside
 nested projections and the remaining Field exit requirements.
+
+## Shared authored record inspection reports
+
+`inspectRecordProjection` now recomputes flat-record receipts for TableSpec,
+PostgreSQL, SQL Server, Avro and Parquet before publishing a common metadata view.
+Record mappings identify explicit authored membership; member mappings retain
+their individual native carriers, original order and ideal/native paths. Every
+mapping and residual includes the complete binding version/subset. The original
+receipt, blocked diagnostics, source values and recovery instructions remain intact.
+Missing member bindings do not acquire invented mappings in this view.
+
+`verifyRecordProjectionInspection` rejects changed bases, mappings or retained
+adapter receipts. PostgreSQL still requires an explicit pinned backend. This adds
+consumer metadata consistency, not native execution or nested projection support.
+Two Bun tests pass 432 assertions. Chromium 148 matches thirty-three record cases,
+sixty-six JSON/YAML report verifications and forged-basis refusals. Typechecking,
+browser build, PostgreSQL runtime build and all 206 schema / 32 package audits pass.
+The initial test startup caught an incorrectly adapted envelope-schema import;
+it was corrected before the passing checks. Native execution was not rerun because
+native generation is unchanged. See [shared record report evidence](../../../../fixtures/validation/record-report-evidence.json).
+
+The common view now covers authored single Fields and flat records. Native
+classification report coverage, nested projections and remaining Field exit
+requirements stay open.

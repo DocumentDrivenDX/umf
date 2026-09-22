@@ -258,3 +258,10 @@ native enforcement, normalize native types, turn source retention into exactness
 or add author provenance to native-only classifications. Verification checks
 consistency, not cryptographic authenticity. PostgreSQL inspection still requires
 the caller's explicitly supplied pinned parser backend; no implicit host access.
+
+The shared authored inspection profile also applies to flat-record projection
+receipts. A record mapping identifies explicit authored membership as its basis;
+each Field mapping identifies its own selected native carrier. Mapping order and
+member paths remain those of the recomputed adapter report. Missing member bindings
+remain blocked residuals, never manufactured Field mappings. This does not expand
+the underlying adapter's nested-structure or enforcement support.

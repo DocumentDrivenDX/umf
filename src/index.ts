@@ -253,3 +253,4 @@ export * from './model/selection-verification';
 export * from './core-ideals/avro-record-type';
 export * from './core-ideals/parquet-record-type';
 export * from './core-ideals/field-report';
+export * from './core-ideals/record-report';

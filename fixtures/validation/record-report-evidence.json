@@ -1,0 +1,33 @@
+{
+  "scope": "Recomputed common metadata for authored flat-record projection receipts across five priority systems; classifications and nested projections excluded",
+  "commands": [
+    "bun test tests/core-ideals/record-report.test.ts",
+    "bun scripts/core-ideals/record-report-corpus.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/record-report-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 432,
+    "browserCases": 33,
+    "browserReportRecoveries": 66,
+    "typecheck": "passed",
+    "schemasPassed": 206,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10105532
+  },
+  "sha256": {
+    "src/core-ideals/record-report.ts": "31175fbce46d5055a713e75cada1e30d1a0b9ea5ec0c2f5d26ae0ec24527a486",
+    "spec/core/record-projection-inspection.schema.json": "29bc4d9c53f32f10f1ba7a8900906cc5e5e9ce8d0b2430f211e297cc4ef75c1a",
+    "scripts/core-ideals/record-report-schema.ts": "1ea5e4fc8131f0ed5f71656c359b19ad5d4b76bf7d5fefa139353c56615e6e05",
+    "scripts/core-ideals/record-report-cases.ts": "8ec8046fce03351e5c2b150b2dc6ff88fe1fa345e0252338d14991e9e06d1f2f",
+    "scripts/core-ideals/record-report-corpus.ts": "79901a80aefe8cbda66e53fe0a1b8e09cd070950164137cb25880cdeddfcb785",
+    "scripts/core-ideals/record-report-browser.ts": "a54fb657341b2358701d15242c083db135f3ddf3e5ca45c087ffec91d9dc5af2",
+    "tests/core-ideals/record-report.test.ts": "936699fa01e92785c36b597dc90ce7991cd9ee7982825d14fcea4d8050e81a68",
+    "fixtures/validation/record-report-corpus.json": "2c7054038102c6b82ce3abcc072f5b425430c37067af87972fdd60066b99e425",
+    "fixtures/validation/record-report-browser.json": "ebf3f495a4273d1bef16ae6ecb5154c1064ed6423000b5237998aee4e1c39127"
+  }
+}
