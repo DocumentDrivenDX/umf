@@ -226,3 +226,48 @@ the public bundle and optional WASM parser, with no host globals or external
 requests. See [the classification checkpoint](../../../../fixtures/validation/facets-postgresql-classification-evidence.json).
 These counts cover the PostgreSQL facet checkpoint, not the full repository or
 five-system facet admission gate.
+
+## Authored PostgreSQL facet projection checkpoint
+
+`projectFacetsToPostgresql` now lowers a verified core 0.5.0 facet declaration,
+or a facetless Field-kind declaration, into a selected PostgreSQL scalar carrier.
+The operation schema records checked, type-modifier or carrier-only policy,
+strict/report mode and value-domain/exact-input obligation. A kind receipt alone
+does not authorize existing facet members. `recoverFacetsFromPostgresql` verifies
+the whole receipt and exact native SQL before restoring the original ideal.
+
+Checked projection emits canonical integer bounds, byte/character length checks,
+or finite decimal bounds with truncation equality. Numeric type modifiers also
+receive finite checks to exclude NaN, while input rounding remains explicit.
+Checked numeric carriers can express integer bounds beyond native int64, but the
+scalar-family conversion remains a residual. Generated types, functions and
+comparison operators are explicitly qualified with `pg_catalog`; an adversarial
+native fixture proves that shadow operators in `search_path` do not weaken them.
+
+The qualified binding ceilings are length 10485760, checked integer width 1024
+bits and decimal precision 1000. These are binding limits, not a claim that every
+PostgreSQL representation has those engine limits. Unsupported requests produce
+losses; strict mode emits no target. Character NUL/padding restrictions and
+arbitrary SQL expression conversion remain explicit. Invalid native comments
+produce retained description losses rather than disappearing. Other source
+metadata and concept semantics are disclosed when outside this Field projection.
+
+PostgreSQL 17.4/UTF8 executes 145 emitted tables from 232 cases; 87 requests block.
+The native oracle passes 479 value probes, including 166 expected rejections,
+under a deliberately shadowed operator search path. It covers width boundaries,
+128/1024-bit numeric integer carriers, finite decimal bounds, scale enforcement,
+Unicode/byte lengths and the float-narrowing counterexample. Both catalog
+serializations recover the captured tree. This is scoped schema/value evidence,
+not a general input-expression conversion guarantee.
+
+Chromium 148 matches all 232 projection cases and recovers 290 ideal receipts
+through JSON/YAML, plus a separate unrepresentable-comment refusal/recovery
+control. The public library uses the optional WASM parser without host globals
+or external requests. The focused PostgreSQL suite passes 26 tests and 1960
+assertions; typechecking passes. See
+[the projection checkpoint](../../../../fixtures/validation/facets-postgresql-projection-evidence.json).
+
+The classifier and authored projector are implemented, but full PostgreSQL facet
+binding acceptance is still open. Aggregate workflows and a fresh compatibility
+run for existing Field, Nullability and Cardinality bindings/gates remain required.
+Earlier proofs continue to qualify their recorded snapshots.

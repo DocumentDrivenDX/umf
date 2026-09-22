@@ -475,3 +475,23 @@ See [the classification evidence](../../04-build/evidence/postgresql-facet-disco
 This is an up-classification checkpoint. Authored down-projection, its operation
 schema, independent emitted-native/value evidence, and the full compatibility
 refresh still gate PostgreSQL binding acceptance. No equivalence is claimed.
+
+### PostgreSQL authored projection implementation
+
+The public authored facet projector now emits checked, type-modifier or
+carrier-only PostgreSQL SQL with strict/report residuals and verified ideal
+recovery. Types, functions and comparison operators are qualified with
+`pg_catalog`; ambient operator shadowing cannot redefine generated comparisons.
+Checked numeric integer carriers expose their scalar-family conversion separately.
+Finite decimal checks exclude NaN, while type-modifier rounding is not hidden.
+The operation does not establish exact conversion of arbitrary SQL expressions.
+
+Current binding ceilings are length 10485760, integer width 1024 and decimal
+precision 1000. These bound the qualified implementation rather than define
+universal PostgreSQL capacity. Other source concepts, unknown facet qualifiers,
+character NUL/padding differences and unrepresentable comments remain residuals.
+A facetless Field-kind receipt does not authorize existing facet members.
+
+Native and Chromium evidence is in the [projection checkpoint](../../04-build/evidence/postgresql-facet-discovery.md).
+The classifier/projector pair still requires aggregate acceptance and refreshed
+prior binding/concept gates before PostgreSQL facet qualification is complete.

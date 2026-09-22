@@ -2,7 +2,7 @@
   "id": "umf.postgresql.facets",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental PostgreSQL facet classification with retained source meaning",
+  "description": "Experimental PostgreSQL facet classification and authored projection with retained source meaning",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:postgresql:facet-binding:1.0.0",
@@ -116,7 +116,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification; strict/report residuals and verified source recovery; full binding acceptance is recorded separately",
+  "semantics": "CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance remains gated by the compatibility refresh",
   "scopes": [
     "element"
   ],
@@ -129,13 +129,18 @@
     "native": {
       "system": "PostgreSQL",
       "version": "17.4",
-      "subset": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence"
+      "subset": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence; authored projection uses explicit checked, type-modifier or carrier-only SQL with resource limits and conversion residuals"
     },
     "evidence": [
       "tests/core-ideals/facets-postgresql.test.ts",
       "fixtures/validation/facets-postgresql-catalog-evidence.json",
       "fixtures/validation/facets-postgresql-resolved-native.json",
-      "fixtures/validation/facets-postgresql-classification-browser.json"
+      "fixtures/validation/facets-postgresql-classification-browser.json",
+      "tests/core-ideals/facets-postgresql-projection.test.ts",
+      "tests/core-ideals/facets-postgresql-projection-native.test.ts",
+      "spec/core/facets-postgresql-projection.schema.json",
+      "fixtures/validation/facets-postgresql-projection-native.json",
+      "fixtures/validation/facets-postgresql-projection-browser.json"
     ]
   }
 }

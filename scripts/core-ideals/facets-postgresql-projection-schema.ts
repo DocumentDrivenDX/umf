@@ -1,0 +1,18 @@
+import base from '../../spec/core/field-postgresql-projection.schema.json';
+import classification from '../../spec/core/postgresql-facet-classification.schema.json';
+const schema:any=structuredClone(base);
+schema.$id='urn:umf:core:facets-postgresql-projection:1.0.0';schema.title='Authored scalar facets to PostgreSQL carriers and CHECKs';
+schema.properties.operation.const='project-facets-postgresql';schema.properties.source.$ref='urn:umf:core:0.5.0';
+schema.properties.author={anyOf:[{$ref:'urn:umf:core:facet-operation:1.0.0#/$defs/declaration'},{$ref:'urn:umf:core:kind-operation:4.0.0#/$defs/declaration'}]};
+schema.properties.binding.const={id:'umf.core.facets.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored scalar Field; explicit carrier and checked/type-modifier/carrier-only policy; non-null facet domains, retained losses and ideal recovery; no general SQL expression conversion or native equivalence'};
+const request=schema.properties.request;
+request.properties.nativeType.enum.push('varchar','char');
+request.properties.encoding={enum:['checked','type-modifier','carrier-only']};request.required.push('encoding');
+request.properties.obligation={enum:['value-domain','exact-input']};request.required.push('obligation');
+const mapping=schema.properties.mapping;
+mapping.properties.facets=structuredClone(classification.properties.mapping.properties.facets);mapping.required.push('facets');
+mapping.properties.encoding=request.properties.encoding;mapping.required.push('encoding');
+mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
+if(!schema.required.includes('diagnostics'))schema.required.push('diagnostics');
+await Bun.write('spec/core/facets-postgresql-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+export {};

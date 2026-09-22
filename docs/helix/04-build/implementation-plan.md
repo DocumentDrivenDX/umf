@@ -4072,3 +4072,22 @@ Authored facet projection, emitted-native/value qualification and a full prior
 binding/concept-gate refresh remain required before PostgreSQL facet acceptance.
 The public bundle changed, so earlier gates qualify their recorded snapshots.
 SQL Server, Avro, Parquet, the five-system facet gate and Key remain required.
+
+### PostgreSQL authored facet projection checkpoint
+
+The authored projector and operation schema now complement public classification.
+It generates qualified PostgreSQL types/functions/operators and explicit checked,
+type-modifier or carrier-only encodings, preserving unprojected meaning in the
+receipt. Both ideal recovery serializations are verified against exact native SQL.
+
+The [projection record](../../../fixtures/validation/facets-postgresql-projection-evidence.json)
+covers 232 cases, 145 emitted tables, 87 blocks, and 479 PostgreSQL 17.4 value
+probes with 166 expected rejections. Native creation runs with deliberately
+shadowed comparison operators. Chromium/WASM matches the matrix and performs
+290 ideal recoveries, plus the unrepresentable-comment control. The focused
+PostgreSQL suite passes 26 tests/1960 assertions and typechecking.
+
+Next: aggregate the PostgreSQL facet workflows and run the complete compatibility
+refresh and prior Field/Nullability/Cardinality gates. Do not close the binding
+bead or claim facet admission from this projection checkpoint. SQL Server, Avro,
+Parquet and Key remain in their existing dependency order.

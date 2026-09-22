@@ -1,0 +1,61 @@
+{
+  "scope": "Experimental public authored PostgreSQL facet projection and verified ideal recovery; full compatibility/binding acceptance remains open",
+  "bun": {
+    "tests": 26,
+    "assertions": 1960,
+    "failures": 0
+  },
+  "typecheck": "passed",
+  "schemas": 268,
+  "packages": 44,
+  "native": {
+    "cases": 232,
+    "emitted": 145,
+    "blocked": 87,
+    "probes": 479,
+    "rejections": 166,
+    "catalogRecoveries": 2
+  },
+  "ambientOperatorShadow": true,
+  "browser": {
+    "cases": 232,
+    "projected": 145,
+    "blocked": 87,
+    "recoveries": 290,
+    "commentRefusals": 1,
+    "commentRecoveries": 1
+  },
+  "limits": [
+    "Single scalar Field projection; other source meaning is retained with residuals",
+    "Binding ceilings: length 10485760, integer width 1024, decimal precision 1000",
+    "Cross-family numeric integer representation, character restrictions and input coercion remain explicit",
+    "No full prior-gate refresh, five-system facet admission or native equivalence claim"
+  ],
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
+    "src/core-ideals/facets-postgresql-projection.ts": "e625d0c583ed9451eb815a239817771bdf6987a27a4e559a2171c338264c44e8",
+    "spec/core/facets-postgresql-projection.schema.json": "ed76ebc56b23843f95bf4a19bb66e0a08a055090838c14ac2f4ccc8890a93675",
+    "scripts/core-ideals/facets-postgresql-projection-cases.ts": "d78ebd7742f3c4a414a3a0b1273b326e99bac5695e7252ed13ff6d1f7f75f8d3",
+    "scripts/core-ideals/facets-postgresql-projection-native.ts": "1b3ac7a7ab3da89075c35139a3e3bba196cb7451eb587ad91ec56a10bebd7815",
+    "src/index.ts": "4b51e32da947a60f69a0aaa4e7ff161b45ba50930a7ca9640ea4c394d4fc0785",
+    "scripts/core-ideals/facets-postgresql-projection-browser.ts": "72ba659fb1ea6d6c4d8462b0579d5a3549eb732a3723be4997d53df1c9e41d17",
+    "fixtures/validation/facets-postgresql-projection-native.json": "e15685ec8cd176074ebd7afe6f947ed1269151f34b2aafe01011f1740b206cc9",
+    "dist/umf.js": "0a929b7e09b389d758e528e8d70cee262b3747602764c68b9255754719b475ac",
+    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+    "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
+    "tests/core-ideals/facets-postgresql-projection.test.ts": "71bd879db72ea6c4b509b4538e347c2e9d3faa725caca9882716f59630d3f7eb",
+    "tests/core-ideals/facets-postgresql-projection-native.test.ts": "cc9cdf1ebd303314563af5c7a433b4df6d3404c3b063243a16e356f77d6d90d2",
+    "scripts/core-ideals/facets-postgresql-projection-schema.ts": "fc8e2846b53e2f38af5a0d10714959aec2a6c2fecc9848784036407bcfac7c8a",
+    "scripts/core-ideals/facets-postgresql-schema.ts": "f508763eff31b761a292e4a9f72c7aada67de54da079d7859fec041fb06397d9",
+    "spec/extensions/postgresql-facets/package.json": "b16d15865492e6e60ba4e004e67932ed245cdeb587a791f08e9060b0b9a64645",
+    "fixtures/validation/facets-postgresql-projection-browser.json": "9bb7592d7543123101c18ce76aeadc20743a10eb6dff80abaea9927079910d70",
+    "fixtures/validation/facets-postgresql-projection-tests.log": "c68c9b2bb3faed4d95587e42971c618c096e1cc923289b3d24a7d644b128b38f",
+    "fixtures/validation/facets-postgresql-projection-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/facets-postgresql-projection-schemas.log": "33fd419f126cb6ed6fb1f3419a80f2c0b6f7beca33483321b37ed706433a1203",
+    "docs/helix/README.md": "0d9874b9d8ad49c3d277b09b0ac68570daf8e539795e23e6d27823bcc2f20ee6",
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": "4054892155dc7074bfc4bb764ea4170388c10dd574304ca02014799b4128f15e",
+    "docs/helix/04-build/implementation-plan.md": "f73fdaf344f19e453673cfef6b6f92147e1249847088e9ce037ab203a4d9ca30",
+    "docs/helix/04-build/evidence/postgresql-facet-discovery.md": "551ab1329af2e36e588c794c59424455ab18179de249460e2263c6a591ba13bd"
+  }
+}
