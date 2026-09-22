@@ -19,6 +19,11 @@ test('current native/browser evidence fingerprints pass; changed inputs and miss
   const record=JSON.parse(new TextDecoder().decode(bytes));delete record.sha256['fixtures/validation/core-field-browser.json'];
   return new TextEncoder().encode(JSON.stringify(record));
  })).rejects.toThrow('missing required proof');
+ await expect(verifyFieldEvidence(async path=>{
+  const bytes=await reader(path);if(!path.endsWith('field-core-acceptance-evidence.json'))return bytes;
+  const record=JSON.parse(new TextDecoder().decode(bytes));delete record.sha256['spec/core/kind-operation-v2.schema.json'];
+  return new TextEncoder().encode(JSON.stringify(record));
+ })).rejects.toThrow('missing required proof');
 },30000);
 
 test('group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable',()=>{

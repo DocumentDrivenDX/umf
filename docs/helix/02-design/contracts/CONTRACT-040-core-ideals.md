@@ -21,8 +21,8 @@ ddx:
 
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
 revision 1. **Status:** Field ideal admitted for the qualified bindings recorded
-below; Nullability has an experimental envelope foundation but no admission.
-Nullability operations/bindings and the later ideals remain incomplete.
+below; Nullability core APIs have passed core-task acceptance but have no native
+binding admission. Its five native bindings and the later ideals remain incomplete.
 
 ## Purpose
 
@@ -335,7 +335,7 @@ non-string values and non-Field use. Missing availability asserts nothing.
 TD-041 records this version choice and the initial validation/preservation evidence.
 Typed inspection/authoring and migration/rollback now have schema, Bun and browser
 evidence in TD-041. Selection and versioned Field authoring APIs now accept 0.3.0. Prior Field evidence
-revalidation remains required before the core task can close. This does not
+revalidation and core-task acceptance now pass; native binding tasks remain open. This does not
 establish any native absence binding,
 Nullability admission, or equivalence with SQL NULL or Avro reader defaults.
 

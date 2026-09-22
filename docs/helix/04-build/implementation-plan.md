@@ -80,12 +80,11 @@ queue is `.ddx/beads.jsonl`.
 
 Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
 `ddx bead status` to inspect execution state. Nullability core implementation
-is in progress with the experimental 0.3.0 envelope, typed authoring and
-migration/rollback, 0.3.0 selection reports and versioned Field kind/record-type
-authoring receipts. Prior Field evidence refresh and core acceptance review
-remain before core closure. Its five
-bindings and every later concept
-remain waiting for their preceding implementation or gate. Existing untracked bootstrap implementation/evidence must
+has passed acceptance with the experimental 0.3.0 envelope, typed authoring,
+migration/rollback, selection and versioned Field kind/record-type receipts.
+Prior Field native/browser evidence has been rerun and its current gate passes.
+The five native Nullability bindings are next, beginning with TableSpec; every
+later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not
 that those future implementation commands already pass.

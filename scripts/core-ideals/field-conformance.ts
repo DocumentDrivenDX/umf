@@ -16,7 +16,9 @@ import type {Element} from '../../src/model/types';
 export const fieldSystems=['tablespec','postgresql','sqlserver','avro','parquet'] as const;
 const evidenceFiles=['field-core-acceptance-evidence','field-tablespec-acceptance-evidence','field-postgresql-acceptance-evidence','remaining-field-bindings-acceptance-evidence'];
 const requiredProofs:Record<string,string[]>={
- 'field-core-acceptance-evidence':['spec/core/field-document.schema.json','src/model/field-kind.ts','src/model/field-transition.ts','fixtures/validation/core-field-browser.json'],
+ 'field-core-acceptance-evidence':['spec/core/field-document.schema.json','src/model/field-kind.ts','src/model/field-transition.ts','fixtures/validation/core-field-browser.json',
+  'spec/core/nullability-document.schema.json','spec/core/kind-operation-v2.schema.json','spec/core/record-type-operation-v2.schema.json',
+  'src/model/nullability.ts','src/model/nullability-transition.ts'],
  'field-tablespec-acceptance-evidence':['field-tablespec-classification','field-tablespec-native','field-tablespec-projection','field-tablespec-projection-native'].map(n=>`fixtures/validation/${n}.json`),
  'field-postgresql-acceptance-evidence':['field-postgresql-native','field-postgresql-browser','field-postgresql-projection-native','field-postgresql-projection-browser','postgresql-ddl-kinds-native','postgresql-ddl-kinds-browser'].map(n=>`fixtures/validation/${n}.json`),
  'remaining-field-bindings-acceptance-evidence':[

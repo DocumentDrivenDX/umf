@@ -2651,3 +2651,11 @@ native/browser and regression checks; refreshing hashes alone is not verificatio
 The Field gate refresh evidence records the native/browser reruns after correcting
 the experimental-envelope diagnostic. Nullability starts only after the Field gate
 closes; each later ideal repeats its own admission and delivery audit.
+
+
+The Nullability core acceptance record now links a second Field evidence refresh:
+all five native/browser subsets were rerun after core 0.3.0 integration. New kind
+and record-type operation schema dependencies are required fingerprints; deleting
+one must fail the gate. Earlier acceptance counts remain historical. The current
+core/core-ideals regression and separate Field gate are recorded independently
+from the unfinished native Nullability admission/delivery tests.

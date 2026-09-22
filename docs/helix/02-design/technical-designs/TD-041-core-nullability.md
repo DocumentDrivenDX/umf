@@ -271,3 +271,32 @@ old/new-envelope scenarios, 36 JSON/YAML recoveries and 72 expected refusals,
 without external requests or host globals. These APIs do not extend native Field
 bindings to 0.3.0 and do not define an absence carrier. Prior Field evidence refresh
 and core-task acceptance review remain before Nullability binding work begins.
+
+
+### Core task acceptance and prior Field revalidation
+
+The core task `umf-97221618-a91c451b` passes its expanded acceptance criteria in
+`fixtures/validation/nullability-core-acceptance-evidence.json`. This supersedes
+the earlier pending-integration and stale-fingerprint status above. It does not
+complete US-041 or admit native Nullability bindings.
+
+The current regression passes 163 tests across 46 files with
+5,336 Bun assertions. The separately run Field gate passes 3 tests
+with 24 assertions, including rejection of a removed new-operation-schema
+fingerprint. TypeScript, 214 schema and 32 package audits, and the browser build
+pass. All 31 prior Field native/browser/corpus commands were rerun, followed by
+all three Nullability Chromium probes. The native fixtures remained unchanged.
+
+The refreshed Field records preserve earlier result counts as history and retain
+previous fingerprints. Current results and command outputs live in
+`fixtures/validation/field-gate-refresh-evidence.json`; hashes were refreshed only
+after those executions passed. The verifier now requires the new shared schema
+and model dependencies, and its own source is included in the refresh fingerprints.
+
+Core acceptance covers versioned metadata meaning, authoring, copied inspection,
+unknown-content retention, explicit migration/rollback and the existing core API
+integrations. US-041-AC1 and AC10 have core evidence. AC2–9 still require their
+native Nullability classifications, strict/report projections, absence-carrier
+counterexamples, recovery tests and admission/delivery gate. The five binding
+beads can now proceed; TableSpec is the next implementation focus. Cardinality,
+facets and key remain behind the Nullability delivery gate.

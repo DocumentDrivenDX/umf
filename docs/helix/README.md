@@ -15,10 +15,10 @@ nullability, cardinality, author-stated facets and key. See
 Experimental Field authoring and validation are implemented in core 0.2.0.
 Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
-is in progress: experimental core 0.3.0 validation and preservation are implemented;
-typed authoring and migration/rollback are implemented; integration with existing
-core APIs and native bindings remain pending. Prior Field
-fingerprints require refresh before this new integration can be qualified.
+has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
+migration/rollback, selection and versioned Field APIs are implemented. The prior
+Field native/browser evidence has been rerun and its current fingerprints pass.
+The five native Nullability bindings and Nullability admission remain pending.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
