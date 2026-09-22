@@ -94,6 +94,42 @@ collation; independently probe any additional accepted native expression shapes.
 Then implement public schemas and both facet operations. The public package and
 binding acceptance remain unchanged by this internal syntax checkpoint.
 
+## Catalog CHECK interpretation checkpoint
+
+The internal catalog interpreter validates the source document and exact catalog
+integers, resolves the selected column within its captured table, and requires a
+captured v3 profile at SQL Server 16.0.4295.3. Modified or other-version captures
+retain their source but produce no interpreted type or CHECK facts. Column-level
+CHECK association must match the selected native column ID; table-level association
+remains an explicit residual pending its native qualification.
+
+For supported direct noncomputed scalars, the interpreter recognizes integer
+bounds, binary DATALENGTH byte bounds and a decimal ROUND equality at the native
+scale. These are native facts, not authored facets. Decimal facts explicitly deny
+input-exactness proof. String predicates remain residuals, including the captured
+nvarchar DATALENGTH-zero check. No collation or Unicode meaning is inferred.
+
+Disabled checks yield no enforced fact. Untrusted and NOT FOR REPLICATION checks
+are limited to ordinary checked writes on non-null values; existing rows and
+replication bypass do not inherit their bounds. Trusted enabled checks additionally
+cover the observed stored non-null domain. These scope rules follow the
+[Microsoft catalog definitions](https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-check-constraints-transact-sql?view=sql-server-ver17)
+and the pinned native probes. The interpreter does not authenticate a capture,
+assert complete inventory, guarantee arbitrary bulk/replication writes, or infer
+nullability. Complete native CHECK and column payloads remain attached.
+
+Twelve targeted Bun tests pass with 711 assertions; typechecking passes. Chromium
+148 checks all 37 columns, yielding six interpreted CHECKs and five residuals,
+including two interpretations limited to ordinary checked writes. Source content
+is unchanged; other-version captures and getters are rejected without host globals
+or external requests. The prior independent native probes remain the behavioral
+evidence; no new SQL Server run is claimed at this checkpoint. See the
+[catalog interpretation record](../../../../fixtures/validation/facets-sqlserver-constraints-evidence.json).
+
+Next: public classification/projection schemas and API implementation, broader
+native qualification for emitted targets and table-level CHECKs, retained recovery,
+and full binding acceptance. SQL Server facet delivery remains in progress.
+
 ## Primary reference material
 
 The native fixture is the qualification evidence. These Microsoft references

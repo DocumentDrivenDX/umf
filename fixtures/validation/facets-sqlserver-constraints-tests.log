@@ -1,0 +1,24 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-sqlserver-constraints.test.ts:
+(pass) captured CHECKs yield scoped native facts without changing source or asserting core facets [5313.44ms]
+(pass) disabled, untrusted and replication checks cannot become unconditional guarantees [926.46ms]
+(pass) missing inventory, column association, type and version are explicit [1620.68ms]
+(pass) exact native numeric tokens and future fields survive; unsafe IDs and getters refuse [296.32ms]
+(pass) scope boundaries agree with pinned independent native value probes [0.60ms]
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [0.26ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [1.12ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [0.85ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.17ms]
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [5.07ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [3.26ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.55ms]
+
+ 12 pass
+ 0 fail
+ 711 expect() calls
+Ran 12 tests across 3 files. [10.91s]

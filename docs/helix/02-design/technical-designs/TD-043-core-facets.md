@@ -598,3 +598,14 @@ requires catalog/type/column association, enforcement and collation qualificatio
 none of its candidates is a core guarantee. Captured disabled/untrusted predicates
 exercise this boundary. See the [syntax checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#bounded-check-syntax-checkpoint).
 Public schemas and APIs remain pending that qualification.
+
+Internal catalog interpretation now binds CHECK candidates to validated native
+column identity, direct type and enforcement state in captured v3 documents at
+16.0.4295.3. Integer bounds, binary byte bounds and decimal stored scale have
+explicit non-null stored/ordinary-checked-write scopes. Disabled checks provide no
+facts; untrusted/replication checks provide only ordinary-checked-write facts.
+Character predicates and table-level association remain explicit residuals. Other
+versions and modified captures yield no interpreted facts. Source authenticity and
+complete inventory remain unverified. This is implementation groundwork for the
+public receipt/schema design, not public binding acceptance; see the
+[catalog interpretation checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#catalog-check-interpretation-checkpoint).

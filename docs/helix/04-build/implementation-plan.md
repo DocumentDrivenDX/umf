@@ -4189,3 +4189,19 @@ Next: qualify type/column association, trust and enforcement scope, and collatio
 then implement public schemas, classification/projection, retained recovery and
 full acceptance. The SQL Server facet bead remains in progress. No new ideal
 admission or equivalence graduation is claimed.
+
+### SQL Server facet catalog interpretation checkpoint
+
+The internal catalog interpreter now checks source profile/version/state, native
+column association, direct type and CHECK enforcement flags before exposing scoped
+native facts. All 37 discovery columns pass Chromium parity: six CHECKs are
+interpreted, five retain explicit residuals, and two interpretations are limited
+to ordinary checked writes. Twelve targeted Bun tests / 711 assertions and
+typechecking pass. Native source remains unchanged. See the
+[checkpoint record](../../../fixtures/validation/facets-sqlserver-constraints-evidence.json).
+
+Next: public facet operation/extension schemas and classifier/projector, additional
+native qualification for emitted target schemas and table-level association, both
+retained recovery directions, and full binding acceptance. The SQL Server facet
+bead remains in progress; Avro, Parquet, facet admission/delivery and Key remain
+required. This checkpoint does not grant native equivalence.

@@ -1,0 +1,40 @@
+{
+  "scope": "Internal pinned catalog CHECK interpretation with explicit non-null scopes; no public binding, source authentication or complete inventory claim",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "tests": {
+    "passed": 12,
+    "assertions": 711
+  },
+  "typecheck": true,
+  "browser": {
+    "columns": 37,
+    "interpreted": 6,
+    "residual": 5,
+    "writeOnly": 2,
+    "getterCalls": 0,
+    "sourceUnchanged": true,
+    "versionRefusal": true
+  },
+  "nativeEvidence": "Reuses pinned discovery probes; no additional engine run at this checkpoint",
+  "remaining": [
+    "public classifier/projector and schemas",
+    "native emitted-target and table-level association qualification",
+    "both retained recovery paths",
+    "full compatibility and binding acceptance"
+  ],
+  "sha256": {
+    "src/adapters/sqlserver/facet-constraints.ts": "92281fd980bc0e6533fcb4cebad56cbef030f0cc995ee51c24a1fec5040e7f82",
+    "src/adapters/sqlserver/facet-predicate.ts": "53edc4e5f5611c91c06170551fde20c280f5a65cbf64e857e87c7b584d08d579",
+    "src/adapters/sqlserver/facet-type.ts": "8831415c9ca140be4a3d7eec773e164abd1858597f42805fa7ca67e3331706ff",
+    "src/adapters/sqlserver/index.ts": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40",
+    "scripts/core-ideals/facets-sqlserver-constraints-browser.ts": "59a456bd1b5c83238a03f860a817b79b93df1332e80fdd6fb74bf56da7c43dc8",
+    "tests/core-ideals/facets-sqlserver-constraints.test.ts": "175ca219e0eb7dc921e3f31e156ff6133c2d89554a5b855e10750b938576683b",
+    "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
+    "dist/sqlserver-facet-constraints.js": "c5dd19c9790de41be9257af041c8c5678ec03b9c41ec52c89cb006b986399506",
+    "fixtures/validation/facets-sqlserver-constraints-browser.json": "2f50ae7740a266cc60910ff19a9e0eae0c9493be48921fd605bb0b830ac1587b",
+    "fixtures/validation/facets-sqlserver-constraints-tests.log": "eb6064a664f315e58a16b15475b1cd52544a4659e02985b8909454a7250bfee0",
+    "fixtures/validation/facets-sqlserver-constraints-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+  }
+}
