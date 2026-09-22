@@ -1,0 +1,36 @@
+{
+  "review": "Focused local contract review, not independent-agent review",
+  "scope": "CONTRACT-040 / TD-042 Parquet Cardinality classification, explicit carrier projection and retained recovery",
+  "findings": [],
+  "checked": [
+    "Core 0.4.0 requires explicit migration; physical modules and byte archive remain preserved.",
+    "Logical container Fields have item/value links without scalar-container conflation; record-member observations do not invent record definitions.",
+    "MAP uniqueness and non-string key semantics have strict refusal/report residuals; duplicate native pairs remain native.",
+    "Availability uses a selected definition-level carrier without writer-default or omitted-input equivalence.",
+    "Unknown core/document/reference metadata is retained and reported on projection; native carrier content cannot be silently dropped.",
+    "Receipt recomputation and exact target comparison refuse stale or forged recoveries; consistency is not authentication.",
+    "Fresh native ingestion does not consume author intent; exact claims check observed shape, scalar family and selected availability.",
+    "Browser library has no added host imports; host-only native/oracle tooling stays in scripts.",
+    "Combined native and real Chromium commands pass; child-proof fingerprints verify."
+  ],
+  "pending": [
+    "Full shared-library refresh and existing conformance gates",
+    "Qualified binding acceptance and separate Cardinality ideal admission/delivery gate"
+  ],
+  "sha256": {
+    "src/core-ideals/cardinality-parquet.ts": "23cda37ec621cc6f67e456ceff1b57a7f7b0201f5a1dd74a9be7638a74b09b8f",
+    "src/core-ideals/cardinality-parquet-projection.ts": "7de30da5185cd6a31aaff514c1617948571e351aeda066b48d8efa9e5ab33924",
+    "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
+    "src/core-ideals/parquet-cardinality-carrier.ts": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270",
+    "spec/core/parquet-cardinality-classification.schema.json": "130e415489075a40603f721b08ab9e1da716e858751ccd1bde4e333ea844b5c8",
+    "spec/core/cardinality-parquet-projection.schema.json": "633f86720229f41409fec137d85c92833f204483cc0487ec8a53cafe0299abc0",
+    "spec/extensions/parquet-cardinality/schema.json": "ea3c031d744c511da6efd56c5962684c8b411c961b95c4f43d6d010ad70093e7",
+    "spec/extensions/parquet-cardinality/package.json": "f45dc53137a550f17c93a2afa0f9b92f978cb17d8de9d05b73e2e1919dc33c1c",
+    "tests/core-ideals/cardinality-parquet.test.ts": "e847deb1c435cda781efc6ec6fa920a4f8844e0d04d55e9e6955f532710a4ab1",
+    "tests/core-ideals/cardinality-parquet-projection.test.ts": "ffc3084565620e497a13d1f2fe409fd4e5c22003f0f29ae56416308b22e1f8a0",
+    "tests/core-ideals/parquet-cardinality-shape.test.ts": "9bc4b8c4f28e44c9301dc8ed667203679feb3204861ddf655cd66cb9516dbd88",
+    "tests/core-ideals/parquet-cardinality-carrier.test.ts": "a7a29557ce918eb0b34054ff46714298324c7e31d2ea2e41fc9d304e216376a6",
+    "scripts/core-ideals/cardinality-parquet-composition.ts": "3c581ee25df0bc4063d02f73bcfdf249c14d82ada79fe948d2b2bebd9ef53a01",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "1577abc3cdfd947a36a36582e9c0fdb1167132c839b3dba66eb4cb93b3aecbdd"
+  }
+}

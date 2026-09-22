@@ -1,24 +1,25 @@
 {
-  "scope": "Authored Parquet Cardinality projection and retained ideal recovery; composed native recovery and acceptance remain unfinished",
+  "scope": "Authored Parquet Cardinality projection and fresh-native classification with both retained recovery directions; acceptance remains unfinished",
   "browser": "148.0.7778.0",
   "checks": {
     "cases": 160,
     "projected": 132,
     "blocked": 28,
     "recoveries": 264,
+    "nativeRecoveries": 264,
     "forgedRefusals": 132
   },
   "externalRequests": [],
   "bundleSha256": "7a3d22d50e7c8ad5aa33a92e39c5860dc3429bcd9f60165dea7a73ccaae62f0c",
   "sha256": {
-    "fixtures/validation/cardinality-parquet-projection-corpus.json": "7634ef21510710ca22a19e0760db4b53104a633b9849b1eda7792814422301d6",
-    "fixtures/validation/cardinality-parquet-projection-native.json": "a68f259ad3ecc00739c6190ea24ee4341b7dab92b675c8cc52d11b9621012fab",
+    "fixtures/validation/cardinality-parquet-projection-corpus.json": "49fb56593eca9bd9681ed8c2819f3a9e223139c2a9c7d4e097e83ad49307e4cc",
+    "fixtures/validation/cardinality-parquet-projection-native.json": "e67e965538843641b0539aee90c6a46f45e68eec4ac8892e0ad5cb9946b3e4fc",
     "src/index.ts": "367f24d90393cd0b297f4056c0b9afb36d99433ace9bfbc6fcbc28627c2130b2",
     "src/core-ideals/cardinality-parquet-projection.ts": "7de30da5185cd6a31aaff514c1617948571e351aeda066b48d8efa9e5ab33924",
     "src/core-ideals/parquet-cardinality-carrier.ts": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270",
     "spec/core/cardinality-parquet-projection.schema.json": "633f86720229f41409fec137d85c92833f204483cc0487ec8a53cafe0299abc0",
-    "scripts/core-ideals/cardinality-parquet-projection-browser.ts": "a84a5c6a7561906e50941769f6a22b23ceced2438d6b06d66f5e87876e189d15",
-    "tests/core-ideals/cardinality-parquet-projection.test.ts": "f065030158e2ab6b6445112e8d8cb0acfa5d6e5f30ccac660542224921b5bf74",
+    "scripts/core-ideals/cardinality-parquet-projection-browser.ts": "e0e0ccacb5c1d32ee8ab3a7fbbd54c5f03ad77da3171aa713b5b0dac352f22cb",
+    "tests/core-ideals/cardinality-parquet-projection.test.ts": "ffc3084565620e497a13d1f2fe409fd4e5c22003f0f29ae56416308b22e1f8a0",
     "fixtures/parquet/cardinality-projections/scalar-boolean-0-strict.parquet": "39c94af986674ce4d9ae2ad6504616cb23d61293c44beafb6209cbe35bedb4bf",
     "fixtures/parquet/cardinality-projections/scalar-boolean-0-report.parquet": "39c94af986674ce4d9ae2ad6504616cb23d61293c44beafb6209cbe35bedb4bf",
     "fixtures/parquet/cardinality-projections/array-boolean-0-strict.parquet": "7097e0f1bf38358b39a24076a682508fb8b5fe6b085c78dabcc099ec6cf87b5d",
@@ -155,6 +156,6 @@
   "limits": [
     "MAP projection in report mode retains uniqueness/key-carrier residuals; native enforcement is not inferred.",
     "Record members are native observations; no core record definition is fabricated.",
-    "PyArrow independently validates generated schemas and row writes; these browser checks recover retained author meaning."
+    "PyArrow independently validates generated schemas and row writes; these browser checks recover retained author meaning and native bytes."
   ]
 }

@@ -1,6 +1,7 @@
 import {test,expect} from 'bun:test';
 import {declareCoreCardinality,exportParquetCapture,readJsonValue,writeJsonValue,type Document,type Cardinality} from '../../src';
 import {projectCardinalityToParquet,recoverCardinalityFromParquet,type CardinalityParquetRequest,type ParquetCardinalityCarrier} from '../../src/core-ideals/cardinality-parquet-projection';
+import {verifyParquetCardinalityComposition} from '../../scripts/core-ideals/cardinality-parquet-composition';
 const scalar:ParquetCardinalityCarrier={kind:'scalar',nativeType:'int64',nullable:false};
 const base:CardinalityParquetRequest={id:'projection',recordName:'Example',fieldName:'value',nativeType:scalar,availability:'definition-level',requireExactValues:false,mode:'strict'};
 const doc=():Document=>({umf:'0.4.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]});
@@ -12,6 +13,9 @@ test('Parquet projection reports shape mismatch and unasserted item meaning, rec
   expect(r.status).toBe(mode==='strict'&&!(cardinality==='one'&&nativeType.kind==='scalar')?'blocked':'projected');
   if(!r.target){expect(r).not.toHaveProperty('target');continue;}
   const bytes=exportParquetCapture(r.target);
+  const composition=verifyParquetCardinalityComposition(r);
+  expect(composition.nativeRecoveries).toBe(2);expect(composition.idealRecoveries).toBe(2);
+  if(composition.nativeCardinality!==cardinality)expect(r.mapping.outcome).not.toBe('exact');
   for(const format of ['json','yaml'] as const){
    const back=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;
    expect(recoverCardinalityFromParquet(back,bytes)).toEqual(a.target);
