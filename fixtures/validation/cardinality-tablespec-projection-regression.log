@@ -1,0 +1,73 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/cardinality-field-operations.test.ts:
+(pass) versioned kind and record receipts retain old profiles and preserve 0.4 Cardinality [586.46ms]
+(pass) Nullability authoring and inspection use v2 on containers without changing item meaning [52.14ms]
+(pass) container record meaning belongs on its item Field and dependent kind edits refuse [11.46ms]
+(pass) cross-version, stale and forged receipts refuse without changing original profiles [10.33ms]
+
+tests/core-ideals/cardinality-selection.test.ts:
+(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [69.24ms]
+(pass) forged item paths, missing boundaries, metadata, filters and traversal scope cannot verify [6.16ms]
+(pass) older item/cardinality members remain opaque and do not add traversal edges [8.91ms]
+(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.56ms]
+
+tests/core-ideals/cardinality-tablespec-projection.test.ts:
+(pass) authored shapes and item obligations project or explicitly residualize, with both retained recovery formats [2907.98ms]
+(pass) invalid native carriers, dimensions, names, getters and forged receipts cannot publish meaning [43.90ms]
+
+tests/core-ideals/cardinality-tablespec.test.ts:
+(pass) native declaration profiles classify shape with explicit refusals and retain source text through both formats [13585.68ms]
+(pass) authored intent, item references and opaque assertions cannot be overwritten by native observations [122.17ms]
+(pass) tampered and stale receipts, malformed requests and legacy source versions refuse [69.12ms]
+(pass) unsafe numeric coercion stays residual while exact large integer tokens remain native [435.85ms]
+(pass) split archives preserve comments, unknown siblings and opaque files after classification [80.81ms]
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [6.30ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [1.66ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [1.85ms]
+(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [53.07ms]
+(pass) rollback retains later assertions separately and refuses forged receipts or changed identities [1.22ms]
+
+tests/core/cardinality-operations.test.ts:
+(pass) authored Cardinality and item meaning survive serialized verified receipts without source mutation [12.82ms]
+(pass) item omission preserves meaning; explicit set or clear retains previous meaning in archived source [0.87ms]
+(pass) legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning [1.97ms]
+(pass) invalid requests and item/scalar conflicts fail atomically; no getters execute [0.44ms]
+(pass) forged or stale author receipts cannot confer provenance [1.76ms]
+
+tests/tablespec/avro-integers.test.ts:
+(pass) CONTRACT-033 interpreted numeric qualifiers cannot round into supported decimal or vector shapes [1039.51ms]
+
+tests/tablespec/avro-projection.test.ts:
+(pass) CONTRACT-033 TableSpec primitive, temporal and vector bindings retain source and report constraints [413.20ms]
+(pass) CONTRACT-033 missing context, default precision and incompatible choices never get inferred [607.72ms]
+
+tests/tablespec/avro-table-loss.test.ts:
+(pass) CONTRACT-033 table keys, context dispatch and opaque metadata survive edits and report path-specific losses [342.24ms]
+
+tests/tablespec/boundaries.test.ts:
+(pass) CONTRACT-030 edit mappings reject non-JSON inputs without evaluating accessors or mutating source [244.64ms]
+(pass) CONTRACT-030 split column suffixes match native glob and preserve unmatched files [30.41ms]
+
+tests/tablespec/roundtrip.test.ts:
+(pass) CONTRACT-030 TableSpec ingestion exposes core scalars and preserves contextual and unknown native metadata [106.16ms]
+(pass) CONTRACT-030 copied native edits synchronize scalar metadata and retain unknown content [129.43ms]
+
+tests/tablespec/split.test.ts:
+(pass) CONTRACT-030 split bundle preserves every file and derives ordered columns [102.28ms]
+(pass) CONTRACT-030 split bundle rejects ambiguous or unmapped changes [35.84ms]
+(pass) CONTRACT-030 filenames follow native Unicode code-point order [11.58ms]
+
+tests/tablespec/table-edits.test.ts:
+(pass) CONTRACT-030 table edits repair native references and preserve monolithic/split sources [454.80ms]
+(pass) CONTRACT-030 table edits cannot replace column identities or bypass encoding guards [79.13ms]
+
+tests/tablespec/table-metadata.test.ts:
+(pass) CONTRACT-030 table metadata inspection is exact, isolated and distinct from split source recovery [124.74ms]
+
+ 39 pass
+ 0 fail
+ 4593 expect() calls
+Ran 39 tests across 14 files. [23.89s]

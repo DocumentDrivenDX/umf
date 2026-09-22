@@ -276,3 +276,4 @@ export * from './model/cardinality-transition';
 export * from './model/cardinality';
 
 export * from './core-ideals/cardinality-tablespec';
+export * from './core-ideals/cardinality-tablespec-projection';

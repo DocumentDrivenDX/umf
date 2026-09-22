@@ -387,3 +387,48 @@ Down-projection, ideal-to-native-to-ideal recovery, item-aware projection and fu
 TableSpec binding acceptance remain unfinished. The public library addition makes
 prior Field/Nullability gate fingerprints historical until their required refresh;
 this checkpoint does not re-admit either ideal or admit Cardinality.
+
+### TableSpec down-projection and retained ideal recovery
+
+`projectCardinalityToTableSpec` and `recoverCardinalityFromTableSpec` now implement
+an explicit single-Field carrier binding. The complete operation schema requires
+a native type, generated-JSON/generated-Spark/unresolved profile, dimension policy,
+and `requireExactValues` choice. Names are validated before rendering. EMBEDDING
+requires an integer dimension from 1 through 2,147,483,647 in this request profile;
+scalar carriers require null dimension. This request bound is not a claim about
+TableSpec's full native dimension domain.
+
+Scalar `one` and `unspecified` shapes can project within the declared subset.
+Unspecified remains unasserted intent in the retained receipt; native-only imports
+cannot recover that intent. Exact-value requests carry an explicit residual because
+this shape binding does not establish value-domain equivalence. Spark FLOAT and
+EMBEDDING identify the permanent binary64-to-binary32 narrowing counterexample.
+
+General arrays projected onto EMBEDDING retain vector-dimension and numeric/float
+item restrictions as approximations. The generated-Spark profile records that
+native dimension metadata is not enforced by its schema; it does not delete the
+metadata or treat another consumer's behavior as equivalent. Item references are
+resolved by exact identity without recursively expanding cycles. Scalar family,
+member availability, nested shape, record references and unknown refinements remain
+in the source; unrepresented obligations receive path-qualified residuals.
+
+Maps and incompatible carrier/shape pairs report `not-expressible` and
+`encoding: carrier-only`. A report-mode candidate is only the explicitly requested
+carrier; it does not claim JSON/text serialization, a child-table layout or a value
+conversion. Strict mode blocks every residual and exposes no partial candidate.
+Unknown document/module/element/extension content is retained and disclosed rather
+than treated as projected metadata. Verified JSON/YAML receipts recover the entire
+authored model only while the emitted native text and receipt remain unchanged.
+
+The [projection checkpoint](../../../../fixtures/validation/cardinality-tablespec-projection-evidence.json)
+records 78 cases, 44 emitted candidates, 88 ideal recoveries, 34 strict blocks and
+44 Chromium tamper refusals. Native TableSpec validates every emitted candidate;
+generated JSON schemas and real Spark schemas undergo 105 vector-value checks,
+including 15 float narrowings. The combined Cardinality/TableSpec regression passes
+39 tests / 4,593 assertions; typechecking, 240 schemas, 38 packages and browser build
+pass. No full ingestion pipeline, generated SQL execution or map encoding is claimed.
+
+Up-classification and down-projection now have focused native/browser evidence.
+Full TableSpec binding acceptance still requires the combined entrypoints, current
+five-system Field/Nullability gate refresh and broader priority regression. Cardinality
+ideal admission and the other four native Cardinality bindings remain unfinished.

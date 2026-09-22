@@ -1,0 +1,17 @@
+import base from '../../spec/core/field-tablespec-projection.schema.json';
+const schema:any=structuredClone(base);
+schema.$id='urn:umf:core:cardinality-tablespec-projection:1.0.0';schema.title='Authored Cardinality to explicit TableSpec carrier';
+schema.properties.operation.const='project-cardinality-tablespec';schema.properties.source.$ref='urn:umf:core:0.4.0';schema.properties.author.$ref='urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration';
+schema.properties.binding.const={id:'umf.core.cardinality.tablespec',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Single authored Field with selected scalar/vector carrier and execution profile; explicit residuals, no implicit map encoding or item conversion'};
+const request=schema.properties.request;
+for(const key of ['tableName','columnName'])request.properties[key]={type:'string',minLength:1,maxLength:128,pattern:'^[A-Za-z][A-Za-z0-9_]*$'};
+request.properties.nativeType.enum.push('EMBEDDING');
+request.properties.dimension={anyOf:[{type:'integer',minimum:1,maximum:2147483647},{type:'null'}]};
+request.properties.profile={enum:['generated-json','generated-spark','unresolved']};request.properties.requireExactValues={type:'boolean'};request.required.push('dimension','profile','requireExactValues');
+request.allOf=[{if:{properties:{nativeType:{const:'EMBEDDING'}}},then:{properties:{dimension:{type:'integer'}}},else:{properties:{dimension:{type:'null'}}}}];
+const mapping=schema.properties.mapping;
+Object.assign(mapping.properties,{cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','embedding','carrier-only']},profile:request.properties.profile,itemPath:{anyOf:[{type:'string',minLength:1},{type:'null'}]}});mapping.required.push('cardinality','encoding','profile','itemPath');
+mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
+if(!schema.required.includes('diagnostics'))schema.required.push('diagnostics');
+await Bun.write('spec/core/cardinality-tablespec-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+export {};

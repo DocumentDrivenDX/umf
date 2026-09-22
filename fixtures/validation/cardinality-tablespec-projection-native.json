@@ -1,0 +1,1826 @@
+{
+  "scope": "Emitted TableSpec declaration validation, generated JSON/Spark schemas and vector values; no full pipeline, SQL or map encoding equivalence",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "pydantic": "2.11.10",
+  "spark": "4.0.1",
+  "cases": 78,
+  "emitted": 44,
+  "idealRecoveries": 88,
+  "vectorValueChecks": 105,
+  "floatNarrowings": 15,
+  "observations": [
+    {
+      "name": "one-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "strict",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "one-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "one-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "strict",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "one-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "one-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "approximated"
+    },
+    {
+      "name": "array-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "approximated"
+    },
+    {
+      "name": "array-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-float",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-float",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-float",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-nested",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "array-nested",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "array-nested",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "array-record",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-record",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-record",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "array-unknown",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "array-unknown",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "array-unknown",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "EMBEDDING",
+        "dimension": 3,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "float",
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-float",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-float",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-float",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-nested",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-nested",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-nested",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-record",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-record",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-record",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-unknown",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-unknown",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "map-unknown",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "not-expressible"
+    },
+    {
+      "name": "unspecified-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "strict",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "unspecified-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "unspecified-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "strict",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "unspecified-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "unspecified-missing",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "unresolved",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    },
+    {
+      "name": "scalar-float-exactness",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "strict",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "float",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "scalar-float-exactness",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "float",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "exact"
+    },
+    {
+      "name": "scalar-float-exactness",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "dimension": null,
+        "profile": "generated-spark",
+        "mode": "report",
+        "requireExactValues": true
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "float",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "approximated"
+    },
+    {
+      "name": "unknown-source",
+      "request": {
+        "id": "native",
+        "tableName": "Shapes",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "dimension": null,
+        "profile": "generated-json",
+        "mode": "report",
+        "requireExactValues": false
+      },
+      "jsonSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Shapes Schema",
+        "type": "object",
+        "description": "Schema for Shapes table",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": ""
+          }
+        },
+        "required": []
+      },
+      "sparkSchema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "outcome": "unknown"
+    }
+  ],
+  "sha256": {
+    "fixtures/validation/cardinality-tablespec-projection.json": "b7ab2ca735ad656e7460ba114bc09bd3a360e444e4f5cae297ae5072cf138098",
+    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-projection-oracle.py": "faedbb760a14e911c8ef331127c05c39913f6e8bd92a581d4ef39d1f0900f559",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0"
+  }
+}
