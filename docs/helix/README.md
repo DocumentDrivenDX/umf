@@ -71,10 +71,11 @@ core-task checkpoint, all three existing concept gates passed after the
 five-system native/browser refresh.
 [Facet core acceptance](../../fixtures/validation/facet-core-acceptance-evidence.json)
 does not admit native facet bindings or equivalence. Experimental TableSpec facet
-classification now has a versioned extension/operation schema and native/Chromium
-evidence; authored down-projection and the full compatibility refresh remain
-pending. Prior acceptance records qualify their recorded source snapshots, not
-this new API/bundle. See the [classification checkpoint](04-build/evidence/tablespec-facet-classification.md).
+classification and authored projection now have versioned operation schemas and
+native/Chromium evidence, including explicit GX suites and retained recovery in
+both directions. Complete binding acceptance still requires the full compatibility
+refresh. Prior acceptance records qualify their recorded source snapshots, not
+this new API/bundle. See the [projection checkpoint](04-build/evidence/tablespec-facet-projection.md).
 Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

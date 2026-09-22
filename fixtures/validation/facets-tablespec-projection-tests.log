@@ -1,0 +1,13 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-tablespec-projection.test.ts:
+(pass) authored facet matrix projects or explicitly residualizes with exact retained ideal recovery [36444.06ms]
+(pass) positive projections are required, including zero length and narrow signed/unsigned widths [68.04ms]
+(pass) unknown source and facet refinements survive receipts; Field-kind receipts cannot establish facet authorship [47.60ms]
+(pass) forged receipts, stale native text, accessors and invalid native requests refuse [43.51ms]
+(pass) unsupported widths and carriers cannot pass strict mode; float exactness has a permanent counterexample [159.92ms]
+
+ 5 pass
+ 0 fail
+ 2506 expect() calls
+Ran 5 tests across 1 file. [39.42s]

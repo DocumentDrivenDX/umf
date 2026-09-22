@@ -1,5 +1,5 @@
 {
-  "scope": "Experimental facet classification and retained native recovery only; authored down-projection and binding acceptance unfinished",
+  "scope": "Experimental facet classification, authored projection and retained recovery; complete compatibility refresh required before binding acceptance",
   "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
   "bindingAccepted": false,
   "idealAdmitted": false,
@@ -25,14 +25,49 @@
         "scripts/core-ideals/facets-tablespec-classification-oracle.py"
       ],
       "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/facets-tablespec-suite-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-projection-capture.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/facets-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/facets-tablespec-projection-values-oracle.py"
+      ],
+      "exitCode": 0
     }
   ],
   "sha256": {
     "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-classification-oracle.py": "0aef55b62b9afcc485b72a33f5a76c0076351e25f78ed478bfe3d27f91c9a52e",
     "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-projection-oracle.py": "4b7ba77a4d4ac778f9b4a7cae1b8da92bc246423de859816e10c1aa2e0575167",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-projection-values-oracle.py": "f839493dad4a134f4da149862f3b523cd786bb9f6a9ccae76461d9a1592f603d",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-suite-oracle.py": "f8ef9d32a016285db11673ba7a466dce1b25489b840081d23c3f0393f184f771",
     "fixtures/validation/facets-tablespec-classification-native.json": "5c76e6e925a91932e2657a8318628a62e9b1d5744ff51890e8a70784e4a64abb",
     "fixtures/validation/facets-tablespec-classification.json": "0ef5c6aef6e357cf255d2104f7cf016e35b2bb9a2718c19bdd0fbc9820cd0014",
     "fixtures/validation/facets-tablespec-profile-native.json": "0ed2e93c5627a3e168e031cefc947e9b62203de5095255f70dc1969843092a38",
+    "fixtures/validation/facets-tablespec-projection-native.json": "c7ae6d13e53f50a959e052ae54f2609bf2a179d05555fab148f3aacf92381d9f",
+    "fixtures/validation/facets-tablespec-projection-values-native.json": "9759a732fc373af011e66c893deb025196c7aa15c0ed43b94f46be50b87e2e96",
+    "fixtures/validation/facets-tablespec-projection.json": "f0eb7903035d56f550ab2f15d6011ed0dfe43f267bddec0c1ea375b2b136b06a",
+    "fixtures/validation/facets-tablespec-suite-native.json": "66a715042311351c9bd1e0cd299b35ecc5838b2d8e7bfc3682294fa20dc69dcf",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
     "native/tablespec/facets-runtime/casting_utils.py": "f59d1fb080bea24705152f2b4b04f3e7f1398c5d2d00bf856f8ae4900dbce114",
@@ -50,11 +85,15 @@
     "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
     "scripts/core-ideals/facets-tablespec-capture.ts": "fb60a4b0ae9199998fe1bac1fe0295563201c622534fdaae192bdbd96f51cc1f",
     "scripts/core-ideals/facets-tablespec-cases.ts": "83bec4481d9ed047461da151c80e474233c3c77525449cd2dccde3d5c4b33f26",
-    "scripts/core-ideals/facets-tablespec-oracle.ts": "c1c1f4c9dc508a14c9c8ca1c51a275fba503df544cfdd5d4dc3da1d92624f025",
+    "scripts/core-ideals/facets-tablespec-oracle.ts": "e0ec598e1ecf6fedc5692673bf8a8d14c143ba7b1ef661215fbeb2e30a083b29",
     "scripts/core-ideals/facets-tablespec-profile-oracle.ts": "6245585de86671a7ff0cd94cb5cd2795bfec0840cb55bc4017d32774d0dfe6fb",
-    "spec/core/tablespec-facet-classification.schema.json": "9ce5b2af45fd61d80f0c5c88a3764164be9076f7454ce2085265384309741b35",
-    "spec/extensions/tablespec-facets/package.json": "ee5c6176541cd86b97f43034c855dec4c66204748cdb752dd7bc29eb5a18e16b",
-    "spec/extensions/tablespec-facets/schema.json": "d24949285e3b26b85e38ffbda39b0555cc2905925ae4ddd91562522084c8d14b",
-    "src/core-ideals/facets-tablespec.ts": "5add4ac2196fbac52c6f94a5465f8a9bed885f8390049321366748f3e3ea32c5"
+    "scripts/core-ideals/facets-tablespec-projection-cases.ts": "4bc5b134865c0df979bb65029260aa654fc70f244c77e939fe3e142c218e43dc",
+    "spec/core/facets-tablespec-projection.schema.json": "899efd30aa2542ab25e4cb65fc2163efa2bb29f07e25939e2186e3b2819f9046",
+    "spec/core/tablespec-facet-classification.schema.json": "65b41d0a6ef03e292f6539c3c0aab192245457c04c6a662001059c2198d015b3",
+    "spec/extensions/tablespec-facets/package.json": "12be2c7d316116a38f7d8d3f76088cc1984994c64f67ceb31ac41d05d4977167",
+    "spec/extensions/tablespec-facets/schema.json": "4eb6436aa5de58b3749bcc7d8e31a2b87898179860971d1f27bb4b4d72b9b7a7",
+    "src/core-ideals/facets-tablespec-projection.ts": "3046a9c5c2afcaa62c235f367a5783791524b43ab18125f8baef3d56df641497",
+    "src/core-ideals/facets-tablespec.ts": "85788db939b162e3ca3af3d7aa06919afb4f428218d906e38ecde96033462f5d",
+    "src/core-ideals/tablespec-facet-suite.ts": "95f2d4b35276c7832d8fa9ef6108a526eddfc545efbbf9e205231264c7730744"
   }
 }

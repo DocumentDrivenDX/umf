@@ -293,3 +293,4 @@ export * from './model/facet-transition';
 export * from './model/facets';
 
 export * from './core-ideals/facets-tablespec';
+export * from './core-ideals/facets-tablespec-projection';

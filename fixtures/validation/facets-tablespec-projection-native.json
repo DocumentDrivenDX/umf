@@ -1,0 +1,5745 @@
+{
+  "scope": "Emitted artifact model/schema validity, native consumer representation and retained ideal recovery; no whole pipeline or complete binding qualification",
+  "cases": 540,
+  "projected": 331,
+  "idealRecoveries": 662,
+  "facetClaims": 104,
+  "uniqueSuiteRules": 11,
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "versions": {
+    "pydantic": "2.11.10",
+    "jsonschema": "4.25.1",
+    "pyspark": "4.0.1"
+  },
+  "rows": [
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {
+        "length": {
+          "max": 200,
+          "unit": "unicode-scalar"
+        }
+      }
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "length-200",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "VARCHAR",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "byte-length",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "TEXT",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "string",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 1,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-1-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-8-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 31,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 31,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 31,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 31,
+          "signed": false
+        }
+      }
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-31-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      }
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-32-false",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-64-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "width-9007199254740991-true",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 10,
+        "scale": 0
+      }
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-10-0",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-5-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 38,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-38-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 39,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 39,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 39,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "declared-metadata",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {
+        "precision": 39,
+        "scale": 2
+      }
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "json-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "decimal-39-2",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "unresolved",
+        "input": "model-normalized",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-float",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "FLOAT",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "float",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-decimal",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "DECIMAL",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "decimal(10,0)",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "pyspark-schema",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "gx-suite-spark",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "strict",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "value-domain"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    },
+    {
+      "case": "facetless-integer",
+      "request": {
+        "id": "native",
+        "tableName": "Facets",
+        "columnName": "value",
+        "nativeType": "INTEGER",
+        "mode": "report",
+        "profile": "ingest-cast",
+        "input": "raw",
+        "obligation": "exact-input"
+      },
+      "nativeValid": true,
+      "carrier": "integer",
+      "facetClaims": {}
+    }
+  ],
+  "sha256": {
+    "fixtures/validation/facets-tablespec-projection.json": "f0eb7903035d56f550ab2f15d6011ed0dfe43f267bddec0c1ea375b2b136b06a",
+    "fixtures/validation/facets-tablespec-suite-native.json": "66a715042311351c9bd1e0cd299b35ecc5838b2d8e7bfc3682294fa20dc69dcf",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-projection-oracle.py": "4b7ba77a4d4ac778f9b4a7cae1b8da92bc246423de859816e10c1aa2e0575167",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
+    "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c"
+  }
+}

@@ -364,3 +364,15 @@ and verifies exact native output before restoring the original ideal, including
 unknown metadata. Native-only classification remains distinct from recovering
 verified author intent. Full binding acceptance still requires both directions,
 emitted artifact/value checks, Chromium parity and the prior three concept gates.
+
+### TableSpec projection checkpoint
+
+The public authored projection and verified ideal recovery APIs are implemented.
+The general Spark `(10,0)` decimal case is classified when explicitly declared;
+this does not infer absent facets or prove exact input conversion. A 540-case
+projection corpus covers seven profiles, raw/normalized forms, strict/report
+modes, unsupported bounds and facetless exactness controls. Native model/schema,
+consumer-generator, emitted GX value and Chromium evidence is recorded in
+[the projection checkpoint](../../04-build/evidence/tablespec-facet-projection.md).
+Complete binding acceptance remains gated by the full compatibility refresh and
+all three previously qualified concept gates. No native-equivalence claim changes.
