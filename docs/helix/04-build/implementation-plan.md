@@ -65,9 +65,9 @@ tracks 35 tasks: one core implementation, five native bindings and one
 conformance gate per concept. The Field authoring/validation task is closed with
 acceptance evidence committed in `e0c04bb`. The scoped TableSpec Field binding
 is closed with refreshed native/browser evidence in `3236095`, and PostgreSQL
-in `b7545c2`; 32 tasks remain open. Field admission and all-five delivery remain
-unverified. The
-portable CLI-managed queue is `.ddx/beads.jsonl`.
+in `b7545c2`. SQL Server, Avro and Parquet close with `1283337`; 29 tasks remain
+open. The separate Field admission/all-five conformance gate is now ready,
+not complete. The portable CLI-managed queue is `.ddx/beads.jsonl`.
 
 | Concept | Core implementation | Five-system exit gate |
 | --- | --- | --- |
@@ -78,11 +78,9 @@ portable CLI-managed queue is `.ddx/beads.jsonl`.
 | key | `umf-97221618-bbefbb0a` | `umf-97221618-f4f9b4e8` |
 
 Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
-`ddx bead status` to inspect execution state. The SQL Server, Avro and Parquet
-Field binding tasks are dependency-ready for verification against
-their revised bidirectional criteria.
-The Field gate and every later concept remain dependency-waiting. Existing
-untracked bootstrap implementation/evidence must
+`ddx bead status` to inspect execution state. The Field admission/conformance
+gate is the sole dependency-ready task. Every later concept remains waiting
+for its preceding gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not
 that those future implementation commands already pass.
