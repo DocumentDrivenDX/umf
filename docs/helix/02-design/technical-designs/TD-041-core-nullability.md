@@ -1033,3 +1033,49 @@ narrowing remains a counterexample; no general value conversion is claimed.
 Four bindings now have qualified evidence. Parquet Nullability and the five-system
 delivery gate remain open. No native payload is replaced, and acceptance does not
 graduate native equivalence or complete the broader UMF extension goal.
+
+
+### Parquet Nullability native discovery
+
+The pinned PyArrow 21.0.0 corpus now covers 120 cases: primitive fields,
+required/optional struct parents and children, lists/maps with independently
+nullable containers and members, and explicitly masked child buffers. Each case
+runs with and without embedded Arrow schemas. One hundred files are emitted and
+20 non-nullable leaf writes reject with the asserted native error. The generation
+script and emitted bytes live under `scripts/core-ideals/nullability-parquet-*`
+and `fixtures/parquet/nullability/`.
+
+Parquet stores nullity through definition levels, while repetition levels and
+LIST/MAP structure carry separate information. See the format's
+[null encoding](https://parquet.apache.org/docs/file-format/nulls/) and
+[logical container rules](https://parquet.apache.org/docs/file-format/types/logicaltypes/).
+A required leaf beneath an optional parent must not be classified from its own
+repetition flag alone. A nullable list is distinct from nullable list members,
+and an empty repeated container is distinct from null.
+
+Native writer behavior also differs from schema declarations. In the PyArrow
+from-pylist cases, a null parent declared required becomes a present struct with
+zero-valued children, or an empty list/map. Explicitly constructed Arrow arrays
+show that these are not portable defaults: the same required-container write can
+expose existing hidden child values (99, [7, 9], or a map entry). Optional parents
+preserve null in both constructions. Required primitive leaves reject present
+null and omitted-input null; metadata must not be treated as a universal writer
+input validator. The corpus records original logical input, construction method,
+hidden child values and decoded output separately.
+
+With `store_schema=False`, this writer omits the custom Arrow schema metadata;
+with it enabled, the footer retains that metadata and ARROW:schema. UMF recovers
+the exact bytes actually present in each source file. It cannot reconstruct
+metadata a native writer never stored, nor infer unavailable original Arrow masks.
+
+`bun scripts/core-ideals/nullability-parquet-oracle.ts` generates the native cases,
+compares 132 physical leaf paths/definition/repetition levels with UMF's existing
+metadata view, and recovers all 100 files through both UMF formats. Independent
+PyArrow checks confirm schema equality and exact decoded values for all 200
+recovered files. These are discovery and source-fidelity checks, not core
+Nullability classification or authored projection. Those operations, their
+schemas, strict/report losses and final binding acceptance remain unfinished.
+
+The [discovery checkpoint](../../../../fixtures/validation/nullability-parquet-discovery-evidence.json)
+records Chromium parity for all 100 files / 200 recoveries without host globals or
+external requests, typechecking, and 6 focused tests / 1,125 assertions.

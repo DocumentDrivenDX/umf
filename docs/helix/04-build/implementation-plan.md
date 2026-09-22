@@ -112,7 +112,9 @@ core/core-ideals and all five priority adapter test directories. The separate
 Field gate passes three tests / 24 assertions. This supersedes the previous
 refresh counts and stale-fingerprint status above. See the
 [Avro acceptance record](../../../fixtures/validation/avro-nullability-acceptance-evidence.json).
-Parquet Nullability is ready;
+Parquet Nullability is in progress: a 120-case PyArrow discovery corpus now
+distinguishes definition levels, parent/member availability and writer handling
+of null-masked containers. Classification and authored projection remain open;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

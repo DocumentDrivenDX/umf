@@ -1,0 +1,18 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/parquet/levels.test.ts:
+(pass) US-019-AC16: bounded page-level integration covers existing native files [2918.96ms]
+(pass) US-019-AC16: native-authored required/optional/repeated/list pages and malformed levels [735.78ms]
+
+tests/parquet/field-metadata.test.ts:
+(pass) CONTRACT-019 core field families respect native logical and physical meanings [2309.86ms]
+(pass) CONTRACT-019 native rename synchronizes materialized fields without losing attachments [284.82ms]
+
+tests/core-ideals/field-parquet.test.ts:
+(pass) Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields [18133.01ms]
+(pass) Parquet rejects unknown indices, invalid topology, conflicts and stale recovery [1284.88ms]
+
+ 6 pass
+ 0 fail
+ 1125 expect() calls
+Ran 6 tests across 3 files. [27.29s]

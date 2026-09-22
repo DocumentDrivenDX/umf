@@ -1,0 +1,5651 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "writer": {
+    "formatVersion": "2.6",
+    "compression": "NONE",
+    "useDictionary": false
+  },
+  "cases": [
+    {
+      "id": "scalar-0-0-null-0",
+      "kind": "scalar",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "scalar-0-0-null-1",
+      "kind": "scalar",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "scalar-0-0-omitted-0",
+      "kind": "scalar",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "omitted",
+      "storeSchema": false,
+      "input": {},
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "scalar-0-0-omitted-1",
+      "kind": "scalar",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "omitted",
+      "storeSchema": true,
+      "input": {},
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "scalar-0-0-present-0",
+      "kind": "scalar",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": 7
+      },
+      "expectedOutput": {
+        "value": 7
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": 7
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-0-0-present-0.parquet",
+      "bytes": 211,
+      "sha256": "655e52fb5c0f8b101803f9270c06a2c0a9acbeb28c44403dafb063eaaff5ef7a",
+      "output": [
+        {
+          "value": 7
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "scalar-0-0-present-1",
+      "kind": "scalar",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": 7
+      },
+      "expectedOutput": {
+        "value": 7
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": 7
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-0-0-present-1.parquet",
+      "bytes": 659,
+      "sha256": "aa885843309228f4abfc5d3a0f9447174c93d0031970b2a647cf172ee815bbda",
+      "output": [
+        {
+          "value": 7
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-0-parent-null-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "parent-null",
+      "storeSchema": false,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 0
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-0-parent-null-0.parquet",
+      "bytes": 231,
+      "sha256": "17535e7ddadcfd451fdad2f87df414ab33711eb5ceb27b3a68973e50cf6d7d0a",
+      "output": [
+        {
+          "parent": {
+            "value": 0
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-0-parent-null-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "parent-null",
+      "storeSchema": true,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 0
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-0-parent-null-1.parquet",
+      "bytes": 743,
+      "sha256": "f5145b02bdf8396b01da825bb8b17429b890de7da09cb530b3f2a6c43a69a1d4",
+      "output": [
+        {
+          "parent": {
+            "value": 0
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-0-child-null-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "child-null",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-0-0-child-null-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "child-null",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-0-0-child-omitted-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "child-omitted",
+      "storeSchema": false,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-0-0-child-omitted-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "child-omitted",
+      "storeSchema": true,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-0-0-present-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-0-present-0.parquet",
+      "bytes": 231,
+      "sha256": "65fca909eacf029e7061b9d21741ebe13806a1fb6b61a1504c86b6955d08a380",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-0-present-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-0-present-1.parquet",
+      "bytes": 743,
+      "sha256": "68d039b154900f1bf009d4d094d7381a8e4a9f8557d2473fc6aa841aac87abf1",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-0-null-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-null-0.parquet",
+      "bytes": 225,
+      "sha256": "41c70e0c4c54cfe06d92aae02b9b68b5ce77f4caf215026d47f9b27434fd163e",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-0-null-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-null-1.parquet",
+      "bytes": 737,
+      "sha256": "68933f93347ada22ecee6363c82d897c969816120dbf4a14ea7b74260c098f0a",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-0-empty-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-empty-0.parquet",
+      "bytes": 225,
+      "sha256": "41c70e0c4c54cfe06d92aae02b9b68b5ce77f4caf215026d47f9b27434fd163e",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-0-empty-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-empty-1.parquet",
+      "bytes": 737,
+      "sha256": "68933f93347ada22ecee6363c82d897c969816120dbf4a14ea7b74260c098f0a",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-0-null-member-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'element' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "list-0-0-null-member-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'element' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "list-0-0-present-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-present-0.parquet",
+      "bytes": 277,
+      "sha256": "89027c59941d6b2d739a51a9fda3ae27af0282a7810189c43b6da882b44afd91",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-0-present-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-present-1.parquet",
+      "bytes": 789,
+      "sha256": "c429570b23ca50a22d988938fc73585611d036e689eef9a3e7c4f1c33965970c",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-0-null-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-null-0.parquet",
+      "bytes": 353,
+      "sha256": "b77d242e77e11be4ac7011caa33b20c53d8e3fba6d70b7bbdac9287905897c59",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-0-null-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-null-1.parquet",
+      "bytes": 973,
+      "sha256": "24cbe9650216a258072a8a4284d694ded58384bb2f783dda5ee874dc7e37efbc",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-0-empty-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-empty-0.parquet",
+      "bytes": 353,
+      "sha256": "b77d242e77e11be4ac7011caa33b20c53d8e3fba6d70b7bbdac9287905897c59",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-0-empty-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-empty-1.parquet",
+      "bytes": 973,
+      "sha256": "24cbe9650216a258072a8a4284d694ded58384bb2f783dda5ee874dc7e37efbc",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-0-null-member-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "map-0-0-null-member-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "map-0-0-present-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-present-0.parquet",
+      "bytes": 422,
+      "sha256": "01d28852238af6da487f466b0b8f057404b3d3a02ed21aed73a26b14171e670e",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-0-present-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-present-1.parquet",
+      "bytes": 1042,
+      "sha256": "3548b1edb411f3276941fce6d695b6ae36ff5413fbc4ab2e02b81af583a93560",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-1-parent-null-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "parent-null",
+      "storeSchema": false,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 0
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-parent-null-0.parquet",
+      "bytes": 245,
+      "sha256": "f7ee99af450c4913af507f356b3bee170e4fd5a4cda75d5c03272f13b58d2f18",
+      "output": [
+        {
+          "parent": {
+            "value": 0
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-1-parent-null-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "parent-null",
+      "storeSchema": true,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 0
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-parent-null-1.parquet",
+      "bytes": 777,
+      "sha256": "43dcc29721fceff8d9fac456b975c434693dbf3c015d0b5087e4bfaa6d50f978",
+      "output": [
+        {
+          "parent": {
+            "value": 0
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-1-child-null-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "child-null",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-child-null-0.parquet",
+      "bytes": 193,
+      "sha256": "987b0303ee7d615ca30953659f69429c83c84cce36ab75187fcbb3b9b299a06c",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-1-child-null-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "child-null",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-child-null-1.parquet",
+      "bytes": 725,
+      "sha256": "56265076bc819cf34f0886f399e3e7627801f83c37a6a90560b943872e4b4b69",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-1-child-omitted-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "child-omitted",
+      "storeSchema": false,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-child-omitted-0.parquet",
+      "bytes": 193,
+      "sha256": "987b0303ee7d615ca30953659f69429c83c84cce36ab75187fcbb3b9b299a06c",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-1-child-omitted-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "child-omitted",
+      "storeSchema": true,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-child-omitted-1.parquet",
+      "bytes": 725,
+      "sha256": "56265076bc819cf34f0886f399e3e7627801f83c37a6a90560b943872e4b4b69",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-1-present-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-present-0.parquet",
+      "bytes": 245,
+      "sha256": "cb94cb6b2389f8f9cf02d407adcf58bbd1a00e19b23298dbefee53e6b4dd2730",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-1-present-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-1-present-1.parquet",
+      "bytes": 777,
+      "sha256": "9630a4c10f483dbabb864edf57c475aa1cc55f56dc343b58a943e483269b883b",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-1-null-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-null-0.parquet",
+      "bytes": 226,
+      "sha256": "d4375dcbc2089ee83588429ba5d29012d50ca67a449c3ba757fb1dfc0c14dcac",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-1-null-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-null-1.parquet",
+      "bytes": 758,
+      "sha256": "7343d8c4c3d6abd9f6219f9473f6fbd34e337e8f2d44e10b9124878456bda9c4",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-1-empty-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-empty-0.parquet",
+      "bytes": 226,
+      "sha256": "d4375dcbc2089ee83588429ba5d29012d50ca67a449c3ba757fb1dfc0c14dcac",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-1-empty-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-empty-1.parquet",
+      "bytes": 758,
+      "sha256": "7343d8c4c3d6abd9f6219f9473f6fbd34e337e8f2d44e10b9124878456bda9c4",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-1-null-member-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-null-member-0.parquet",
+      "bytes": 226,
+      "sha256": "5ef8082ab9a77e89648e75d134ea92e3bd0455a370d5931c14086de738be98d9",
+      "output": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-1-null-member-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-null-member-1.parquet",
+      "bytes": 758,
+      "sha256": "5024f013e7d6b42e874144088f5a807355e40da7755fe956756674235fc879aa",
+      "output": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-1-present-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-present-0.parquet",
+      "bytes": 278,
+      "sha256": "163511c657222aa38c3fe05d2e0fbec98f5e2ff07a5d55678231f8878f197234",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-1-present-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-1-present-1.parquet",
+      "bytes": 810,
+      "sha256": "58837dd12579feb72154908215b7cbab3e8a3f6836a16ef25ae15eb51b7db212",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-1-null-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-null-0.parquet",
+      "bytes": 354,
+      "sha256": "f25dfdf8b2e4301f86055d18f6abac48db44e1291659dd5454914974debb9d75",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-1-null-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-null-1.parquet",
+      "bytes": 994,
+      "sha256": "65cc393ac806c0c6064ca74a41b9cfaa338b96c27498525a069a55b6ebeabadd",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-1-empty-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-empty-0.parquet",
+      "bytes": 354,
+      "sha256": "f25dfdf8b2e4301f86055d18f6abac48db44e1291659dd5454914974debb9d75",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-1-empty-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-empty-1.parquet",
+      "bytes": 994,
+      "sha256": "65cc393ac806c0c6064ca74a41b9cfaa338b96c27498525a069a55b6ebeabadd",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-1-null-member-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-null-member-0.parquet",
+      "bytes": 371,
+      "sha256": "70dcaf75f6697b0ae14e1adaa6928b16b35cd30de57a4134222f59f013f7d0a1",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-1-null-member-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-null-member-1.parquet",
+      "bytes": 1011,
+      "sha256": "b52ea188a66fb45ffac41d12c21f01ccf0a6d2ede2cd0fab5ed74ba4c76f807a",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-1-present-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-present-0.parquet",
+      "bytes": 423,
+      "sha256": "1deb89af4d01f55df47b62ab9d74a66a1d8f6cf754416c182fec887e19b56235",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-1-present-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-1-present-1.parquet",
+      "bytes": 1063,
+      "sha256": "293ca438a6ef179796ea80708ea6149deb0350a4878ffa743762ee14e6f84b81",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "scalar-1-0-null-0",
+      "kind": "scalar",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-1-0-null-0.parquet",
+      "bytes": 173,
+      "sha256": "7f3796b5c334e38cb8adf45396ad8c957df6f148710c3aabe153b9f1e4936c8a",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "scalar-1-0-null-1",
+      "kind": "scalar",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-1-0-null-1.parquet",
+      "bytes": 621,
+      "sha256": "cbd9b4d78672ea80f3874c4c2e474165d5b82a7b673e035bb4c30129ac27cde5",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "scalar-1-0-omitted-0",
+      "kind": "scalar",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "omitted",
+      "storeSchema": false,
+      "input": {},
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-1-0-omitted-0.parquet",
+      "bytes": 173,
+      "sha256": "7f3796b5c334e38cb8adf45396ad8c957df6f148710c3aabe153b9f1e4936c8a",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "scalar-1-0-omitted-1",
+      "kind": "scalar",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "omitted",
+      "storeSchema": true,
+      "input": {},
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-1-0-omitted-1.parquet",
+      "bytes": 621,
+      "sha256": "cbd9b4d78672ea80f3874c4c2e474165d5b82a7b673e035bb4c30129ac27cde5",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "scalar-1-0-present-0",
+      "kind": "scalar",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": 7
+      },
+      "expectedOutput": {
+        "value": 7
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": 7
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-1-0-present-0.parquet",
+      "bytes": 225,
+      "sha256": "e04fb6ed8b07287e0da568c44715cc4838ed8786fd7bef9d629474f245cfb7b5",
+      "output": [
+        {
+          "value": 7
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "scalar-1-0-present-1",
+      "kind": "scalar",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": 7
+      },
+      "expectedOutput": {
+        "value": 7
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": 7
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/scalar-1-0-present-1.parquet",
+      "bytes": 673,
+      "sha256": "390543a80a4ef637fe912837c3d70c07b4e5c1757712d4c80bfe3d0d89796d6d",
+      "output": [
+        {
+          "value": 7
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional int32 field_id=-1 value;\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-0-parent-null-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "parent-null",
+      "storeSchema": false,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-0-parent-null-0.parquet",
+      "bytes": 193,
+      "sha256": "53532bea074a169afb3ad2c393783a88d51f40286838cf2a52e66114f2246609",
+      "output": [
+        {
+          "parent": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-0-parent-null-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "parent-null",
+      "storeSchema": true,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-0-parent-null-1.parquet",
+      "bytes": 725,
+      "sha256": "91477b7c33382f34a0f9e83f5037f7f5d2adf11f2f82067136f1614e7f76b067",
+      "output": [
+        {
+          "parent": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-0-child-null-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "child-null",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-1-0-child-null-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "child-null",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-1-0-child-omitted-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "child-omitted",
+      "storeSchema": false,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-1-0-child-omitted-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "child-omitted",
+      "storeSchema": true,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "struct-1-0-present-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-0-present-0.parquet",
+      "bytes": 245,
+      "sha256": "4b4320c921e7364fbbb09fc8073b8124d7ed617a96fa3fe19d3033b3061bda9d",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-0-present-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-0-present-1.parquet",
+      "bytes": 777,
+      "sha256": "32de7202ad8d4a388699d1feb816f93103807eddb0f68b68a860c54d631752df",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-0-null-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-null-0.parquet",
+      "bytes": 226,
+      "sha256": "d1cd92dcf3beac346cbf14d4f483973a17724b03d3b6eebded741ff5311b3b26",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-0-null-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-null-1.parquet",
+      "bytes": 758,
+      "sha256": "169eb798bbf5fb16b0dc946d6e7cc5af38f7146cf79f3b9fbb042cb9aac42e31",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-0-empty-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-empty-0.parquet",
+      "bytes": 226,
+      "sha256": "aa8fd97970534ce0c031b96134aa3c2a5a0c3aaac3687d53121892cf3e7a3dea",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-0-empty-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-empty-1.parquet",
+      "bytes": 758,
+      "sha256": "3981990cdce00b4a899649fd104d718d03d0dbf48b0cc70827814fef2f0dbf18",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-0-null-member-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'element' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "list-1-0-null-member-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'element' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "list-1-0-present-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-present-0.parquet",
+      "bytes": 278,
+      "sha256": "b32146afab21ab64168b27d2d2ee77aa6c97085fbfb87d4d61c7f2ab7a04162f",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-0-present-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-present-1.parquet",
+      "bytes": 810,
+      "sha256": "b28c71f83b9b3becad5817f421a9bb74c15e86277881baf69049508fe76ebe71",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      required int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-0-null-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-null-0.parquet",
+      "bytes": 355,
+      "sha256": "105c5346f7717ff7cc9574198d7c18e16c4e3d5702288adbdcba7fb5d6e706b7",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-0-null-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-null-1.parquet",
+      "bytes": 995,
+      "sha256": "9ce8e332daba2f57b5019e821786a6e9a7e76208d135639115abaa17ed4990ad",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-0-empty-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-empty-0.parquet",
+      "bytes": 355,
+      "sha256": "a35c0e4d6e96b46fb328001a59958c4ddaab3178cb68b3aeccc0d123ba9427a1",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-0-empty-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-empty-1.parquet",
+      "bytes": 995,
+      "sha256": "78220baabc4e125c3dcd50813f696c34ee733fcecdc1c9566c5e34022b117017",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-0-null-member-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "map-1-0-null-member-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": true,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "rejected",
+      "stage": "write",
+      "error": "ArrowInvalid",
+      "message": "Column 'value' is declared non-nullable but contains nulls"
+    },
+    {
+      "id": "map-1-0-present-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-present-0.parquet",
+      "bytes": 424,
+      "sha256": "71d95026a81fcca6bb8ab7c0ff833b02e1c4bcf1ba0eb96c607f6e4bb2ba1fe8",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-0-present-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-present-1.parquet",
+      "bytes": 1064,
+      "sha256": "a9c1eff411d8020f5c7e49c69e6efbc7e5d174d67aea64b116e5a6442f9952b0",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      required int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-1-parent-null-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "parent-null",
+      "storeSchema": false,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-parent-null-0.parquet",
+      "bytes": 194,
+      "sha256": "9765da29e88529f905a3718f2f10209fc619ae9edbc22ce27badc5153a9a7090",
+      "output": [
+        {
+          "parent": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-1-parent-null-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "parent-null",
+      "storeSchema": true,
+      "input": {
+        "parent": null
+      },
+      "expectedOutput": {
+        "parent": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-parent-null-1.parquet",
+      "bytes": 706,
+      "sha256": "f1d8cfa663221824bf049aee83f0dbcbcac833f34b3fad7f5d35564a7109757e",
+      "output": [
+        {
+          "parent": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-1-child-null-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "child-null",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-child-null-0.parquet",
+      "bytes": 194,
+      "sha256": "40733d48d135a91aee18cac33a23462d21e22c5697ddb2dbacd57378da682dc0",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-1-child-null-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "child-null",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-child-null-1.parquet",
+      "bytes": 706,
+      "sha256": "6ed077338b8f1e449b8c1a355f1eef0c7b6dab63cdd07952b0f56e4171388a86",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-1-child-omitted-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "child-omitted",
+      "storeSchema": false,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-child-omitted-0.parquet",
+      "bytes": 194,
+      "sha256": "40733d48d135a91aee18cac33a23462d21e22c5697ddb2dbacd57378da682dc0",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-1-child-omitted-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "child-omitted",
+      "storeSchema": true,
+      "input": {
+        "parent": {}
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": null
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-child-omitted-1.parquet",
+      "bytes": 706,
+      "sha256": "6ed077338b8f1e449b8c1a355f1eef0c7b6dab63cdd07952b0f56e4171388a86",
+      "output": [
+        {
+          "parent": {
+            "value": null
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-1-present-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-present-0.parquet",
+      "bytes": 246,
+      "sha256": "f93c3b434c9179a866480aa8ab56b54c2f3534db10593585a7b532c530ced75c",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-1-present-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedOutput": {
+        "parent": {
+          "value": 7
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-1-present-1.parquet",
+      "bytes": 758,
+      "sha256": "fe603c295def1f38ff3d945735d8946073f8c383954a586a4e3a1b5a26a33ffd",
+      "output": [
+        {
+          "parent": {
+            "value": 7
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 parent {\n    optional int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "parent.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-1-null-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-null-0.parquet",
+      "bytes": 227,
+      "sha256": "ffafe5ecade5a121f86362eb00d64bc0df8019613c19c825d442638e4bb3e7f3",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-1-null-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-null-1.parquet",
+      "bytes": 739,
+      "sha256": "d10754ce878e0b6b88f342f59e058c8a1d53ea07a7dc9ca61fd51fb7f2b16a35",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-1-empty-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-empty-0.parquet",
+      "bytes": 227,
+      "sha256": "e6b061972433fa30f406af54686288d5d91f99ec81c568a350ad99f6803d9743",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-1-empty-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-empty-1.parquet",
+      "bytes": 739,
+      "sha256": "8d2f354b303d4a507d8e132b2a08ebbdcabf14c1181913d921aacc4b7d9fa9ae",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-1-null-member-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-null-member-0.parquet",
+      "bytes": 227,
+      "sha256": "8f7c8a1d35ce56b3c6498514933d8243e4e064437272845d2c27e1bc3681b860",
+      "output": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-1-null-member-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          null
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          null
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-null-member-1.parquet",
+      "bytes": 739,
+      "sha256": "5d04a9f727e99ebd7ef8fc1bf8c9b0130ca182afc5213aea7647eb0732e36145",
+      "output": [
+        {
+          "value": [
+            null
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-1-present-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-present-0.parquet",
+      "bytes": 279,
+      "sha256": "04aefd7457f694716d6ecc67e2a99d3ea92932e7982d7a21b1e2758746dc5afe",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-1-present-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          7
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          7
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-1-present-1.parquet",
+      "bytes": 791,
+      "sha256": "2c48901cc487e35932386a8a175a23387333d3aaec3f1fd92bafd4db4de5192b",
+      "output": [
+        {
+          "value": [
+            7
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-1-null-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-null-0.parquet",
+      "bytes": 356,
+      "sha256": "788f79ca80110a8a5069c81bb1607282c38c80a76dc63c62e8c49fee36ffc894",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-1-null-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-null-1.parquet",
+      "bytes": 996,
+      "sha256": "f9b5fa7540bf39eaaa92e7b0e19ad5757a337cd6d0d15127bb21ccee72deb524",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-1-empty-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": false,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-empty-0.parquet",
+      "bytes": 356,
+      "sha256": "cfadfc9534805d25441164cdd30ef1ab119cc93455c90026e2eac941d2e20aed",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-1-empty-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "empty",
+      "storeSchema": true,
+      "input": {
+        "value": []
+      },
+      "expectedOutput": {
+        "value": []
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": []
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-empty-1.parquet",
+      "bytes": 996,
+      "sha256": "f1a708ae8a3a782654353132b661a9bb70d8637b9b1fad419a8e02a8828e5173",
+      "output": [
+        {
+          "value": []
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-1-null-member-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-null-member-0.parquet",
+      "bytes": 373,
+      "sha256": "296f87e20b1100600fd8f287123dd01437193b7e275d6855fe1864a1fc164fb8",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-1-null-member-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "null-member",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            null
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-null-member-1.parquet",
+      "bytes": 1013,
+      "sha256": "1ac48f025dc33209715382fa56d8eed3acb8ff1bc715e0ef94b37e68fec51750",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              null
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-1-present-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": false,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-present-0.parquet",
+      "bytes": 425,
+      "sha256": "180768030314e727f32e375bd26bfc8b0f3cc056e8a186318b3aa5395650720b",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-1-present-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": true,
+      "case": "present",
+      "storeSchema": true,
+      "input": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            7
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "construction": "from-pylist",
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-1-present-1.parquet",
+      "bytes": 1065,
+      "sha256": "0173c72976cacd1310d5b390bb4ac5c4a7b8b296c5899bb1235d08a223f19f9b",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              7
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-0-0-masked-buffers-0",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": {
+          "value": 99
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": {
+        "value": 99
+      },
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-0-masked-buffers-0.parquet",
+      "bytes": 229,
+      "sha256": "fd298e1efcdcbc1ef45f34eb8fe82e90a9ff4159478cb2038110f1b30672a0d4",
+      "output": [
+        {
+          "value": {
+            "value": 99
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value.value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-0-0-masked-buffers-1",
+      "kind": "struct",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": {
+          "value": 99
+        }
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": {
+        "value": 99
+      },
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-0-0-masked-buffers-1.parquet",
+      "bytes": 741,
+      "sha256": "d528fda19a5abed450023c23fd467ccdceee69e4e3229e00fc99fc0e2c7dd794",
+      "output": [
+        {
+          "value": {
+            "value": 99
+          }
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value.value",
+          "definitionLevel": 0,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "struct-1-0-masked-buffers-0",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": {
+        "value": 99
+      },
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-0-masked-buffers-0.parquet",
+      "bytes": 191,
+      "sha256": "33f5a5f72000548fe130f6708106e2c02dd9e330c23039099c0ec4329c0a2383",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "struct-1-0-masked-buffers-1",
+      "kind": "struct",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": {
+        "value": 99
+      },
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/struct-1-0-masked-buffers-1.parquet",
+      "bytes": 723,
+      "sha256": "552a1d220d9312e88915c1ce6598c81b92d5b16ab954e6c3004928c71cf7cfd6",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value {\n    required int32 field_id=-1 value;\n  }\n}",
+      "columns": [
+        {
+          "name": "value",
+          "path": "value.value",
+          "definitionLevel": 1,
+          "repetitionLevel": 0
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-0-0-masked-buffers-0",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": [
+          7,
+          9
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        7,
+        9
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-masked-buffers-0.parquet",
+      "bytes": 286,
+      "sha256": "38dd27af4424f537c2d0ee7044eac3557f9eb53e976e831b01899d98d9f65e69",
+      "output": [
+        {
+          "value": [
+            7,
+            9
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-0-0-masked-buffers-1",
+      "kind": "list",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": [
+          7,
+          9
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        7,
+        9
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-0-0-masked-buffers-1.parquet",
+      "bytes": 818,
+      "sha256": "40c1845d1d881545197a442e2178dd5168ac9fc21302a2f9af3fbbf2925ea0f1",
+      "output": [
+        {
+          "value": [
+            7,
+            9
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "list-1-0-masked-buffers-0",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        7,
+        9
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-masked-buffers-0.parquet",
+      "bytes": 227,
+      "sha256": "ffafe5ecade5a121f86362eb00d64bc0df8019613c19c825d442638e4bb3e7f3",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "list-1-0-masked-buffers-1",
+      "kind": "list",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        7,
+        9
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/list-1-0-masked-buffers-1.parquet",
+      "bytes": 739,
+      "sha256": "e3dfb232e854d5654f52aff7322992564da5010f8f68577bd6d47ff37fadb0f0",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "element",
+          "path": "value.list.element",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-0-0-masked-buffers-0",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            99
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        [
+          "a",
+          99
+        ]
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-masked-buffers-0.parquet",
+      "bytes": 423,
+      "sha256": "5b84f88f83117ad56d6776dfc0763c33cbb2e03cc8784116c6eb00dc789b76f6",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              99
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-0-0-masked-buffers-1",
+      "kind": "map",
+      "parentNullable": false,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": [
+          [
+            "a",
+            99
+          ]
+        ]
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        [
+          "a",
+          99
+        ]
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-0-0-masked-buffers-1.parquet",
+      "bytes": 1063,
+      "sha256": "d0c0f51df6b826ca4da401dbfba2b88400f7a4d65a9f31b470346a776c56d221",
+      "output": [
+        {
+          "value": [
+            [
+              "a",
+              99
+            ]
+          ]
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  required group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 1,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    },
+    {
+      "id": "map-1-0-masked-buffers-0",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": false,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        [
+          "a",
+          99
+        ]
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-masked-buffers-0.parquet",
+      "bytes": 356,
+      "sha256": "788f79ca80110a8a5069c81bb1607282c38c80a76dc63c62e8c49fee36ffc894",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {},
+      "embeddedArrow": false
+    },
+    {
+      "id": "map-1-0-masked-buffers-1",
+      "kind": "map",
+      "parentNullable": true,
+      "memberNullable": false,
+      "case": "masked-buffers",
+      "storeSchema": true,
+      "input": {
+        "value": null
+      },
+      "expectedOutput": {
+        "value": null
+      },
+      "expectedRejected": false,
+      "arrowInput": [
+        {
+          "value": null
+        }
+      ],
+      "construction": "explicit-mask-and-child-buffers",
+      "hiddenChildValues": [
+        [
+          "a",
+          99
+        ]
+      ],
+      "outcome": "accepted",
+      "path": "fixtures/parquet/nullability/map-1-0-masked-buffers-1.parquet",
+      "bytes": 996,
+      "sha256": "f9b5fa7540bf39eaaa92e7b0e19ad5757a337cd6d0d15127bb21ccee72deb524",
+      "output": [
+        {
+          "value": null
+        }
+      ],
+      "physicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 value (Map) {\n    repeated group field_id=-1 key_value {\n      required binary field_id=-1 key (String);\n      optional int32 field_id=-1 value;\n    }\n  }\n}",
+      "columns": [
+        {
+          "name": "key",
+          "path": "value.key_value.key",
+          "definitionLevel": 2,
+          "repetitionLevel": 1
+        },
+        {
+          "name": "value",
+          "path": "value.key_value.value",
+          "definitionLevel": 3,
+          "repetitionLevel": 1
+        }
+      ],
+      "footerMetadata": {
+        "future.exact": "9007199254740993",
+        "future.meaning": "unclassified"
+      },
+      "embeddedArrow": true
+    }
+  ],
+  "summary": {
+    "cases": 120,
+    "accepted": 100,
+    "rejected": 20
+  },
+  "scope": "Native input/value/nullability counterexamples; not a UMF classification or projection",
+  "sourceSchemaMetadata": {
+    "future.meaning": "unclassified",
+    "future.exact": "9007199254740993"
+  },
+  "limits": [
+    "PyArrow 21.0.0 behavior, not all Parquet writers.",
+    "Required container writes can expose hidden child values; no defaulting or omission equivalence is inferred.",
+    "store_schema=False omits source schema metadata in this writer; only metadata actually present in each file can be recovered.",
+    "Physical definition/repetition levels, Arrow parent masks and core ideals remain distinct."
+  ],
+  "fingerprints": {
+    "scripts/core-ideals/nullability-parquet-native.py": "4f37a5c5a4b8359192f638626372171ff8ac4702f3de02ed5e0025858a529dd6"
+  }
+}

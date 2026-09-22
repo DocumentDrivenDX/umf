@@ -24,7 +24,9 @@ differences between stored values, writer inputs, reader resolution and query
 results. All five prior Field bindings have fresh native/browser evidence and
 the Field conformance gate passes. See the
 [Avro acceptance record](../../fixtures/validation/avro-nullability-acceptance-evidence.json).
-Parquet Nullability remains; the experimental 0.3.0 concept has not passed its
+Parquet Nullability is in progress with native discovery and exact source
+recovery evidence; classification and authored projection remain. The
+experimental 0.3.0 concept has not passed its
 five-system delivery gate. No native equivalence is claimed.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
