@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
+import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource} from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlCardinalityProjectionCases} from './cardinality-postgresql-projection-cases';
 import {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql} from '../../src/core-ideals/cardinality-postgresql-projection';
@@ -34,8 +35,25 @@ try{
   assert.deepEqual(await recoverCardinalityFromPostgresql(result,result.nativeSql!,backend),c.author.target);idealRecoveries++;
   rows.push({...c,result,probes});
  }
- const paths=['scripts/core-ideals/cardinality-postgresql-projection-oracle.ts','scripts/core-ideals/cardinality-postgresql-projection-cases.ts','src/core-ideals/cardinality-postgresql-projection.ts','spec/core/cardinality-postgresql-projection.schema.json','native/postgresql/catalog/image.json'];
+ const supplementQuery=await Bun.file('native/postgresql/catalog/cardinality-v1.sql').text();
+ const pair=(await sql('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\n'+query+'\n'+supplementQuery+'\nCOMMIT;')).trim().split('\n').map(v=>JSON.parse(v));assert.equal(pair.length,2);
+ const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query,snapshot:pair[0],reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
+ const nativeSource=JSON.stringify(capture),supplement=JSON.stringify(pair[1]);
+ const model=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'projected-capture'})).target).target).target;
+ for(const e of model.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
+ const observations=[];
+ for(const row of rows){
+  const column=getPostgresqlColumnMetadata(model).find(c=>c.relation.name===row.request.tableName);
+  if(row.result.status==='blocked'){assert.equal(column,undefined);continue;}
+  assert.ok(column);
+  const r=classifyPostgresqlCardinality(model,{column:column.path,nativeSource,supplement,mode:'report',profile:'stored-value'});
+  assert.equal(r.status,'classified');assert.equal(r.mapping.cardinality,row.request.storage==='scalar'?'one':row.request.storage==='array'?'array':'unspecified');
+  assert.deepEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource,supplement});
+  assert.deepEqual(await recoverCardinalityFromPostgresql(row.result,row.result.nativeSql!,backend),row.author.target);
+  observations.push({table:row.request.tableName,authored:row.author.provenance.cardinality,observed:r.mapping.cardinality,outcome:r.mapping.outcome,residualReasons:r.residuals.map(r=>r.reason)});
+ }
+ const paths=['scripts/core-ideals/cardinality-postgresql-projection-oracle.ts','scripts/core-ideals/cardinality-postgresql-projection-cases.ts','src/core-ideals/cardinality-postgresql-projection.ts','spec/core/cardinality-postgresql-projection.schema.json','native/postgresql/catalog/image.json','native/postgresql/catalog/snapshot.sql','native/postgresql/catalog/cardinality-v1.sql','src/core-ideals/cardinality-postgresql.ts','src/adapters/postgresql/cardinality-catalog.ts'];
  const fingerprints=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
- await Bun.write('fixtures/validation/cardinality-postgresql-projection-native.json',JSON.stringify({scope:'PostgreSQL 17.4 explicit Cardinality carriers and retained ideal recovery; item/value conversions and full binding acceptance remain unclaimed',image:manifest.reference,serverVersion:170004,executed,blocked,idealRecoveries,rows,fingerprints},null,2)+'\n');
- console.log(JSON.stringify({cases:rows.length,executed,blocked,idealRecoveries}));
+ await Bun.write('fixtures/validation/cardinality-postgresql-projection-native.json',JSON.stringify({scope:'PostgreSQL 17.4 explicit Cardinality carriers and retained ideal recovery; item/value conversions and full binding acceptance remain unclaimed',image:manifest.reference,serverVersion:170004,executed,blocked,idealRecoveries,observations,nativeSource,supplement,rows,fingerprints},null,2)+'\n');
+ console.log(JSON.stringify({cases:rows.length,executed,blocked,idealRecoveries,nativeRecoveries:observations.length}));
 }finally{if(created)await run(['docker','rm','-f',name]);}

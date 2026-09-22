@@ -35,3 +35,18 @@ test('a matched basic scalar declaration classifies exactly without asserting it
  expect(r.status).toBe('classified');expect(r.mapping.cardinality).toBe('one');expect(r.mapping.outcome).toBe('exact');expect(r.residuals).toHaveLength(0);
  expect(recoverPostgresqlCardinalitySource(r,r.target!).nativeSource).toBe(nativeSource);
 });
+test('classification retains authored cyclic item references, independent availability and unknown native tokens',()=>{
+ for(const availability of ['required','absent-allowed'] as const){
+  const source=input(),column=getPostgresqlColumnMetadata(source).find(c=>c.relation.name==='declared')!.path;
+  const e=source.modules.find(m=>m.id==='postgresql.columns')!.elements.find(e=>e.id===column)!;
+  e.nullability=availability;source.vocabularies.future={version:'1.0.0'};e.extensions.future={unknown:'keep'};
+  const author=declareCoreCardinality(source,{module:'postgresql.columns',element:column},{cardinality:'array',itemType:{module:'postgresql.columns',element:column}});
+  const supplement=JSON.stringify(fixture.supplement).slice(0,-1)+',"future":9007199254740993123456789}';
+  const request={column,nativeSource:fixture.captureSource,supplement,mode:'report' as const,profile:'stored-value' as const,author};
+  const r=classifyPostgresqlCardinality(author.target,request);expect(r.status).toBe('classified');
+  const target=r.target!.modules.find(m=>m.id==='postgresql.columns')!.elements.find(e=>e.id===column)!;
+  expect(target.nullability).toBe(availability);expect(target.itemType).toEqual({module:'postgresql.columns',element:column});expect(target.extensions.future).toEqual({unknown:'keep'});
+  expect(recoverPostgresqlCardinalitySource(r,r.target!).supplement).toBe(supplement);
+  expect(classifyPostgresqlCardinality(author.target,{...request,mode:'strict'}).status).toBe('blocked');
+ }
+},120000);

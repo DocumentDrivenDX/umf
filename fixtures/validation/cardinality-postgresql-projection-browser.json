@@ -4,15 +4,15 @@
     "dist/umf.js": "9e91d6268bcce66324cdc3f1c50098496757dc6f171917844075f0c3e6e32cec",
     "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
-    "fixtures/validation/cardinality-postgresql-projection-native.json": "cb11365e547a2961ce4e44198812b87b52b619a1b4d40b8670f59f5b74c7fd65",
+    "fixtures/validation/cardinality-postgresql-projection-native.json": "1888f90f55589b9beb0830b6f28499066d045d6c3e9731b5c6f04a11608c9f19",
     "scripts/core-ideals/cardinality-postgresql-projection-browser.ts": "9d8ed680338b44c1f9f5751f79612dcdb5acdae449022f1a8ee21a6bb823845d"
   },
   "browser": "148.0.7778.0",
   "checks": {
-    "cases": 24,
-    "blocked": 10,
-    "recoveries": 28,
-    "forgedRefusals": 14,
+    "cases": 48,
+    "blocked": 22,
+    "recoveries": 52,
+    "forgedRefusals": 26,
     "identifierRefusals": 4
   },
   "externalRequests": []

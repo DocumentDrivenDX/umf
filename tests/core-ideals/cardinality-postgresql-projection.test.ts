@@ -28,3 +28,14 @@ test('exact-value requests, tampering, SQL injection and forged receipts are ref
  const forged=structuredClone(r);forged.mapping.cardinality='map';await expect(recoverCardinalityFromPostgresql(forged,r.nativeSql!,backend)).rejects.toThrow();
  await expect(projectCardinalityToPostgresql(a,{...base,nativeType:'integer); DROP TABLE x' as any},backend)).rejects.toThrow();
 });
+test('nested and cyclic items retain independent availability and unknown extensions',async()=>{
+ const {postgresqlCardinalityProjectionCases}=await import('../../scripts/core-ideals/cardinality-postgresql-projection-cases');
+ for(const c of postgresqlCardinalityProjectionCases().slice(24)){
+  const r=await projectCardinalityToPostgresql(c.author,c.request,backend);
+  expect(r.residuals.some(x=>x.path.endsWith('/itemType'))).toBe(true);
+  expect(r.residuals.some(x=>x.path.endsWith('/nullability'))).toBe(true);
+  expect(r.residuals.some(x=>x.path==='/vocabularies')).toBe(true);
+  expect(r.status).toBe(c.request.mode==='strict'?'blocked':'projected');
+  if(r.status==='projected')expect(await recoverCardinalityFromPostgresql(r,r.nativeSql!,backend)).toEqual(c.author.target);
+ }
+},120000);

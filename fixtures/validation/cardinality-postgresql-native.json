@@ -1,0 +1,46 @@
+{
+  "scope": "Qualified declared shape and explicit native carrier projection; retained native/ideal recovery; no native equivalence",
+  "nativeVersion": "17.4",
+  "nativeEquivalence": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "proofs": [
+    "fixtures/validation/cardinality-postgresql-catalog-native.json",
+    "fixtures/validation/cardinality-postgresql-projection-native.json"
+  ],
+  "sha256": {
+    "fixtures/postgresql/cardinality-scalars.sql": "c0d311d5fdf922491b1edd52869d51fc608aaf1efd119af178c0f33afd139957",
+    "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
+    "fixtures/validation/cardinality-postgresql-catalog-native.json": "93cf4ed6f0ca4ce8b5e6088f57a59056eead20131b9b7b56340f702a5f7db579",
+    "fixtures/validation/cardinality-postgresql-projection-native.json": "1888f90f55589b9beb0830b6f28499066d045d6c3e9731b5c6f04a11608c9f19",
+    "native/postgresql/catalog/cardinality-v1.sql": "534e8996085e600c697a5d1e799e4ab4816ee0663290a44283b46a1195952344",
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
+    "scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts": "d40f1d22f514638907b8f5865b4ee1d1498893a080af18357c0c6e044e6df212",
+    "scripts/core-ideals/cardinality-postgresql-oracle.ts": "7c67d69fc1af8da5b468312be9294e35a14685b9c2945aad40292ec86263d613",
+    "scripts/core-ideals/cardinality-postgresql-projection-cases.ts": "787ace9570b0f78c0b11016ba54f012b8b963fc4493203a29a63fca40f209d4e",
+    "scripts/core-ideals/cardinality-postgresql-projection-oracle.ts": "8e4937ed000191bd9999c8f8e98665bea446f8e99d8e78d0c58416b1c98f8a62",
+    "spec/core/cardinality-postgresql-projection.schema.json": "976333cc27daa527f4bb8ac6baebbc87d9300921145841f5bb05d5a99addfd3c",
+    "spec/core/postgresql-cardinality-classification.schema.json": "ea0f34a7ebd8a525a57ab8579987c379a617e8d17296bf36cfa5378fb2c03041",
+    "spec/extensions/postgresql-cardinality/package.json": "9e1b128f3354a56b321043fc1d0bef3894732d4d8216699f2c6b2f3ede1772b7",
+    "spec/extensions/postgresql-cardinality/schema.json": "66da62750b4aa342b7086990bb3b42c695e741923f3815ff72b0adfeb4ffa904",
+    "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6",
+    "src/adapters/postgresql/cardinality-catalog.ts": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9",
+    "src/core-ideals/cardinality-postgresql-projection.ts": "8a98bafa76523c29e96b82cff106b63c79aa7228f7ae7e00122be08d4d335b15",
+    "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608"
+  }
+}
