@@ -64,6 +64,72 @@
         "base": null,
         "kind": "b",
         "element": null,
+        "category": "B",
+        "identity": {
+          "name": "bool",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "S",
+        "identity": {
+          "name": "bpchar",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "U",
+        "identity": {
+          "name": "bytea",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "D",
+        "identity": {
+          "name": "date",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "N",
+        "identity": {
+          "name": "float4",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "N",
+        "identity": {
+          "name": "float8",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
         "category": "N",
         "identity": {
           "name": "int2",
@@ -100,6 +166,17 @@
         "base": null,
         "kind": "b",
         "element": null,
+        "category": "N",
+        "identity": {
+          "name": "int8",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
         "category": "U",
         "identity": {
           "name": "json",
@@ -114,6 +191,94 @@
         "category": "U",
         "identity": {
           "name": "jsonb",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "N",
+        "identity": {
+          "name": "numeric",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "S",
+        "identity": {
+          "name": "text",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "D",
+        "identity": {
+          "name": "time",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "D",
+        "identity": {
+          "name": "timestamp",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "D",
+        "identity": {
+          "name": "timestamptz",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "D",
+        "identity": {
+          "name": "timetz",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "U",
+        "identity": {
+          "name": "uuid",
+          "schema": "pg_catalog"
+        },
+        "standardArray": false
+      },
+      {
+        "base": null,
+        "kind": "b",
+        "element": null,
+        "category": "S",
+        "identity": {
+          "name": "varchar",
           "schema": "pg_catalog"
         },
         "standardArray": false
@@ -187,6 +352,204 @@
         "declaredDimensions": 0
       },
       {
+        "name": "flag",
+        "type": {
+          "name": "bool",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 1,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "i16",
+        "type": {
+          "name": "int2",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 2,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "i32",
+        "type": {
+          "name": "int4",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 3,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "i64",
+        "type": {
+          "name": "int8",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 4,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "amount",
+        "type": {
+          "name": "numeric",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 5,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "f32",
+        "type": {
+          "name": "float4",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 6,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "f64",
+        "type": {
+          "name": "float8",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 7,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "label",
+        "type": {
+          "name": "text",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 8,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "bounded",
+        "type": {
+          "name": "varchar",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 9,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "fixed",
+        "type": {
+          "name": "bpchar",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 10,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "bytes",
+        "type": {
+          "name": "bytea",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 11,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "day",
+        "type": {
+          "name": "date",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 12,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "clock",
+        "type": {
+          "name": "time",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 13,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "zoned_clock",
+        "type": {
+          "name": "timetz",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 14,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "moment",
+        "type": {
+          "name": "timestamp",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 15,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "instant",
+        "type": {
+          "name": "timestamptz",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 16,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "identifier",
+        "type": {
+          "name": "uuid",
+          "schema": "pg_catalog"
+        },
+        "schema": "cardinality",
+        "ordinal": 17,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
+        "name": "positive",
+        "type": {
+          "name": "positive",
+          "schema": "cardinality"
+        },
+        "schema": "cardinality",
+        "ordinal": 18,
+        "relation": "scalars",
+        "declaredDimensions": 0
+      },
+      {
         "name": "value",
         "type": {
           "name": "_int4",
@@ -213,7 +576,7 @@
     "version": "1.0.0",
     "serverVersion": 170004
   },
-  "captureSource": "{\"profile\":\"postgresql-catalog-capture-v1\",\"state\":\"captured\",\"serverVersion\":170004,\"query\":\"-- Test evidence query for PostgreSQL 17. This is an explicitly bounded catalog view,\\n-- not a full catalog interchange vocabulary. OIDs and physical file identifiers are\\n-- replaced by qualified names; exact sequence bounds are strings.\\nWITH namespaces AS (\\n SELECT oid,nspname,pg_get_userbyid(nspowner) AS owner,nspacl::text AS acl\\n FROM pg_namespace WHERE nspname !~ '^pg_' AND nspname <> 'information_schema'\\n), relations AS (\\n SELECT c.*,n.nspname FROM pg_class c JOIN namespaces n ON n.oid=c.relnamespace\\n WHERE c.relkind IN ('r','p','v','m','S','f')\\n), dependency_objects AS (\\n SELECT 'pg_class'::regclass AS classid,c.oid AS objid FROM pg_class c JOIN namespaces n ON n.oid=c.relnamespace\\n UNION SELECT 'pg_type'::regclass,t.oid FROM pg_type t JOIN namespaces n ON n.oid=t.typnamespace\\n UNION SELECT 'pg_proc'::regclass,p.oid FROM pg_proc p JOIN namespaces n ON n.oid=p.pronamespace\\n UNION SELECT 'pg_constraint'::regclass,c.oid FROM pg_constraint c JOIN namespaces n ON n.oid=c.connamespace\\n UNION SELECT 'pg_attrdef'::regclass,d.oid FROM pg_attrdef d JOIN relations r ON r.oid=d.adrelid\\n UNION SELECT 'pg_trigger'::regclass,t.oid FROM pg_trigger t JOIN relations r ON r.oid=t.tgrelid WHERE NOT t.tgisinternal\\n UNION SELECT 'pg_rewrite'::regclass,w.oid FROM pg_rewrite w JOIN relations r ON r.oid=w.ev_class\\n UNION SELECT 'pg_collation'::regclass,c.oid FROM pg_collation c JOIN namespaces n ON n.oid=c.collnamespace\\n UNION SELECT 'pg_policy'::regclass,p.oid FROM pg_policy p JOIN relations r ON r.oid=p.polrelid\\n), dependency_rows AS (\\n SELECT jsonb_build_object('dependent',jsonb_build_object('catalog',d.classid::regclass::text,'type',a.type,'schema',a.schema,'name',a.name,'identity',a.identity),\\n  'referenced',jsonb_build_object('catalog',d.refclassid::regclass::text,'type',b.type,'schema',b.schema,'name',b.name,'identity',b.identity),'kind',d.deptype) AS edge\\n FROM pg_depend d JOIN dependency_objects o ON o.classid=d.classid AND o.objid=d.objid\\n CROSS JOIN LATERAL pg_identify_object(d.classid,d.objid,d.objsubid) a\\n CROSS JOIN LATERAL pg_identify_object(d.refclassid,d.refobjid,d.refobjsubid) b\\n)\\nSELECT jsonb_build_object(\\n 'profile','umf-postgresql-catalog-evidence-17-v3',\\n 'namespaces',(SELECT jsonb_agg(jsonb_build_object('name',nspname,'owner',owner,'acl',acl) ORDER BY nspname) FROM namespaces),\\n 'relations',(SELECT jsonb_agg(jsonb_build_object(\\n  'schema',r.nspname,'name',r.relname,'kind',r.relkind,'persistence',r.relpersistence,\\n  'owner',pg_get_userbyid(r.relowner),'acl',r.relacl::text,'options',r.reloptions,\\n  'rowSecurity',r.relrowsecurity,'forceRowSecurity',r.relforcerowsecurity,\\n  'comment',obj_description(r.oid,'pg_class'),\\n  'partitionKey',pg_get_partkeydef(r.oid),'partitionBound',pg_get_expr(r.relpartbound,r.oid),\\n  'parents',(SELECT jsonb_agg(p.inhparent::regclass::text ORDER BY p.inhseqno) FROM pg_inherits p WHERE p.inhrelid=r.oid),\\n  'view',CASE WHEN r.relkind IN ('v','m') THEN pg_get_viewdef(r.oid,false) END,\\n  'columns',(SELECT jsonb_agg(jsonb_build_object(\\n   'name',a.attname,'position',a.attnum,'type',format_type(a.atttypid,a.atttypmod),\\n   'nativeType',(SELECT jsonb_build_object('schema',n.nspname,'name',t.typname,'kind',t.typtype,'category',t.typcategory,'dimensions',a.attndims,'modifier',a.atttypmod) FROM pg_type t JOIN pg_namespace n ON n.oid=t.typnamespace WHERE t.oid=a.atttypid),\\n   'notNull',a.attnotnull,'identity',a.attidentity,'generated',a.attgenerated,\\n   'collation',CASE WHEN a.attcollation<>0 THEN a.attcollation::regcollation::text END,\\n   'default',pg_get_expr(d.adbin,d.adrelid),'comment',col_description(r.oid,a.attnum),\\n   'storage',a.attstorage,'compression',a.attcompression,'acl',a.attacl::text\\n  ) ORDER BY a.attnum) FROM pg_attribute a LEFT JOIN pg_attrdef d ON d.adrelid=a.attrelid AND d.adnum=a.attnum WHERE a.attrelid=r.oid AND a.attnum>0 AND NOT a.attisdropped),\\n  'constraints',(SELECT jsonb_agg(jsonb_build_object('name',c.conname,'kind',c.contype,'definition',pg_get_constraintdef(c.oid,false),'deferrable',c.condeferrable,'deferred',c.condeferred,'validated',c.convalidated) ORDER BY c.conname) FROM pg_constraint c WHERE c.conrelid=r.oid),\\n  'indexes',(SELECT jsonb_agg(jsonb_build_object('definition',pg_get_indexdef(i.indexrelid),'valid',i.indisvalid,'ready',i.indisready,'replicaIdentity',i.indisreplident) ORDER BY pg_get_indexdef(i.indexrelid)) FROM pg_index i WHERE i.indrelid=r.oid),\\n  'policies',(SELECT jsonb_agg(jsonb_build_object('name',p.polname,'command',p.polcmd,'permissive',p.polpermissive,'roles',(SELECT jsonb_agg(CASE WHEN role=0 THEN 'PUBLIC' ELSE pg_get_userbyid(role) END ORDER BY role) FROM unnest(p.polroles) role),'using',pg_get_expr(p.polqual,p.polrelid),'check',pg_get_expr(p.polwithcheck,p.polrelid)) ORDER BY p.polname) FROM pg_policy p WHERE p.polrelid=r.oid),\\n  'sequence',(SELECT jsonb_build_object('type',format_type(s.seqtypid,NULL),'start',s.seqstart::text,'increment',s.seqincrement::text,'min',s.seqmin::text,'max',s.seqmax::text,'cache',s.seqcache::text,'cycle',s.seqcycle) FROM pg_sequence s WHERE s.seqrelid=r.oid)\\n ) ORDER BY r.nspname,r.relname) FROM relations r),\\n 'types',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',t.typname,'kind',t.typtype,'owner',pg_get_userbyid(t.typowner),'acl',t.typacl::text,'base',format_type(t.typbasetype,t.typtypmod),'notNull',t.typnotnull,'default',t.typdefault,'comment',obj_description(t.oid,'pg_type'),\\n  'labels',(SELECT jsonb_agg(e.enumlabel ORDER BY e.enumsortorder) FROM pg_enum e WHERE e.enumtypid=t.oid),\\n  'constraints',(SELECT jsonb_agg(jsonb_build_object('name',c.conname,'definition',pg_get_constraintdef(c.oid,false),'validated',c.convalidated) ORDER BY c.conname) FROM pg_constraint c WHERE c.contypid=t.oid)\\n ) ORDER BY n.nspname,t.typname) FROM pg_type t JOIN namespaces n ON n.oid=t.typnamespace WHERE t.typtype IN ('d','e')),\\n 'functions',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',p.proname,'identity',pg_get_function_identity_arguments(p.oid),'definition',pg_get_functiondef(p.oid),'owner',pg_get_userbyid(p.proowner),'acl',p.proacl::text,'comment',obj_description(p.oid,'pg_proc')) ORDER BY n.nspname,p.proname,pg_get_function_identity_arguments(p.oid)) FROM pg_proc p JOIN namespaces n ON n.oid=p.pronamespace WHERE p.prokind IN ('f','p')),\\n 'triggers',(SELECT jsonb_agg(jsonb_build_object('schema',r.nspname,'relation',r.relname,'name',t.tgname,'enabled',t.tgenabled,'definition',pg_get_triggerdef(t.oid,false),'function',t.tgfoid::regprocedure::text,'deferrable',t.tgdeferrable,'deferred',t.tginitdeferred,'comment',obj_description(t.oid,'pg_trigger')) ORDER BY r.nspname,r.relname,t.tgname) FROM pg_trigger t JOIN relations r ON r.oid=t.tgrelid WHERE NOT t.tgisinternal),\\n 'compositeTypes',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',t.typname,'owner',pg_get_userbyid(t.typowner),'acl',t.typacl::text,'comment',obj_description(t.oid,'pg_type'),'attributes',(SELECT jsonb_agg(jsonb_build_object('name',a.attname,'position',a.attnum,'type',format_type(a.atttypid,a.atttypmod),'collation',CASE WHEN a.attcollation<>0 THEN a.attcollation::regcollation::text END) ORDER BY a.attnum) FROM pg_attribute a WHERE a.attrelid=t.typrelid AND a.attnum>0 AND NOT a.attisdropped)) ORDER BY n.nspname,t.typname) FROM pg_type t JOIN namespaces n ON n.oid=t.typnamespace JOIN pg_class c ON c.oid=t.typrelid WHERE t.typtype='c' AND c.relkind='c'),\\n 'rangeTypes',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',t.typname,'owner',pg_get_userbyid(t.typowner),'acl',t.typacl::text,'comment',obj_description(t.oid,'pg_type'),'subtype',format_type(r.rngsubtype,NULL),'multirange',format_type(r.rngmultitypid,NULL),'collation',CASE WHEN r.rngcollation<>0 THEN r.rngcollation::regcollation::text END,'operatorClass',(SELECT format('%I.%I',ns.nspname,o.opcname) FROM pg_opclass o JOIN pg_namespace ns ON ns.oid=o.opcnamespace WHERE o.oid=r.rngsubopc),'canonical',r.rngcanonical::regprocedure::text,'subtypeDifference',r.rngsubdiff::regprocedure::text) ORDER BY n.nspname,t.typname) FROM pg_range r JOIN pg_type t ON t.oid=r.rngtypid JOIN namespaces n ON n.oid=t.typnamespace),\\n 'collations',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',c.collname,'owner',pg_get_userbyid(c.collowner),'provider',c.collprovider,'deterministic',c.collisdeterministic,'encoding',c.collencoding,'collate',c.collcollate,'ctype',c.collctype,'locale',c.colllocale,'rules',c.collicurules,'version',c.collversion,'comment',obj_description(c.oid,'pg_collation')) ORDER BY n.nspname,c.collname,c.collencoding) FROM pg_collation c JOIN namespaces n ON n.oid=c.collnamespace),\\n 'dependencies',(SELECT coalesce(jsonb_agg(edge ORDER BY edge::text),'[]'::jsonb) FROM dependency_rows)\\n)::text;\\n\",\"snapshot\":{\"types\":[{\"acl\":null,\"base\":\"integer\",\"kind\":\"d\",\"name\":\"positive\",\"owner\":\"postgres\",\"labels\":null,\"schema\":\"cardinality\",\"comment\":null,\"default\":null,\"notNull\":false,\"constraints\":[{\"name\":\"positive_check\",\"validated\":true,\"definition\":\"CHECK ((VALUE > 0))\"}]},{\"acl\":null,\"base\":\"integer[]\",\"kind\":\"d\",\"name\":\"vector\",\"owner\":\"postgres\",\"labels\":null,\"schema\":\"cardinality\",\"comment\":null,\"default\":null,\"notNull\":false,\"constraints\":null}],\"profile\":\"umf-postgresql-catalog-evidence-17-v3\",\"triggers\":null,\"functions\":null,\"relations\":[{\"acl\":null,\"kind\":\"r\",\"name\":\"declared\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"integer[]\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"_int4\",\"schema\":\"pg_catalog\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":1},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"domains\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"items\",\"type\":\"cardinality.positive[]\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"_positive\",\"schema\":\"cardinality\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":1},\"compression\":\"\"},{\"acl\":null,\"name\":\"vector\",\"type\":\"cardinality.vector\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":2,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"d\",\"name\":\"vector\",\"schema\":\"cardinality\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"json_values\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"json\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"json\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"jsonb_object\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"jsonb\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"jsonb\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":[{\"kind\":\"c\",\"name\":\"jsonb_object_value_check\",\"deferred\":false,\"validated\":true,\"deferrable\":false,\"definition\":\"CHECK ((jsonb_typeof(value) = 'object'::text))\"}],\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"jsonb_values\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"jsonb\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"jsonb\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"sequence\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"integer[]\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"_int4\",\"schema\":\"pg_catalog\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":1},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":[{\"kind\":\"c\",\"name\":\"sequence_value_check\",\"deferred\":false,\"validated\":true,\"deferrable\":false,\"definition\":\"CHECK (((value IS NULL) OR (cardinality(value) = 0) OR ((array_ndims(value) = 1) AND (array_lower(value, 1) = 1))))\"}],\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"vectorish\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"int2vector\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"int2vector\",\"schema\":\"pg_catalog\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false}],\"collations\":null,\"namespaces\":[{\"acl\":null,\"name\":\"cardinality\",\"owner\":\"postgres\"},{\"acl\":\"{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner}\",\"name\":\"public\",\"owner\":\"pg_database_owner\"}],\"rangeTypes\":null,\"dependencies\":[{\"kind\":\"a\",\"dependent\":{\"name\":null,\"type\":\"domain constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"positive_check on cardinality.positive\"},\"referenced\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"}},{\"kind\":\"a\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"jsonb_object_value_check on cardinality.jsonb_object\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object.value\"}},{\"kind\":\"a\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"sequence_value_check on cardinality.sequence\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence.value\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"declared\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.declared\"},\"referenced\":{\"name\":\"declared\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.declared\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_declared\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.declared[]\"},\"referenced\":{\"name\":\"declared\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.declared\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"domains\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.domains\"},\"referenced\":{\"name\":\"domains\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_domains\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.domains[]\"},\"referenced\":{\"name\":\"domains\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.domains\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"jsonb_object\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_object\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_jsonb_object\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_object[]\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_object\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"jsonb_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_values\"},\"referenced\":{\"name\":\"jsonb_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_jsonb_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_values[]\"},\"referenced\":{\"name\":\"jsonb_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"json_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.json_values\"},\"referenced\":{\"name\":\"json_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.json_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_json_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.json_values[]\"},\"referenced\":{\"name\":\"json_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.json_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive[]\"},\"referenced\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"sequence\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.sequence\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_sequence\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.sequence[]\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.sequence\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"vectorish\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vectorish\"},\"referenced\":{\"name\":\"vectorish\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.vectorish\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_vectorish\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vectorish[]\"},\"referenced\":{\"name\":\"vectorish\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vectorish\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector[]\"},\"referenced\":{\"name\":\"vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"declared\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.declared\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"domains\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains.items\"},\"referenced\":{\"name\":\"_positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive[]\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"domains\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains.vector\"},\"referenced\":{\"name\":\"vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"domains\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"jsonb_object\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"jsonb_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_values\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"json_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.json_values\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"jsonb_object_value_check on cardinality.jsonb_object\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object.value\"}},{\"kind\":\"n\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"sequence_value_check on cardinality.sequence\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence.value\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"sequence\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"vectorish\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.vectorish\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}}],\"compositeTypes\":null},\"reconstruction\":{\"format\":\"pg-dump-plain-schema-only\",\"toolVersion\":\"pg_dump (PostgreSQL) 17.4 (Debian 17.4-1.pgdg120+2)\",\"sql\":\"--\\n-- PostgreSQL database dump\\n--\\n\\n-- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)\\n-- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)\\n\\nSET statement_timeout = 0;\\nSET lock_timeout = 0;\\nSET idle_in_transaction_session_timeout = 0;\\nSET transaction_timeout = 0;\\nSET client_encoding = 'UTF8';\\nSET standard_conforming_strings = on;\\nSELECT pg_catalog.set_config('search_path', '', false);\\nSET check_function_bodies = false;\\nSET xmloption = content;\\nSET client_min_messages = warning;\\nSET row_security = off;\\n\\n--\\n-- Name: cardinality; Type: SCHEMA; Schema: -; Owner: postgres\\n--\\n\\nCREATE SCHEMA cardinality;\\n\\n\\nALTER SCHEMA cardinality OWNER TO postgres;\\n\\n--\\n-- Name: positive; Type: DOMAIN; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE DOMAIN cardinality.positive AS integer\\n\\tCONSTRAINT positive_check CHECK ((VALUE > 0));\\n\\n\\nALTER DOMAIN cardinality.positive OWNER TO postgres;\\n\\n--\\n-- Name: vector; Type: DOMAIN; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE DOMAIN cardinality.vector AS integer[];\\n\\n\\nALTER DOMAIN cardinality.vector OWNER TO postgres;\\n\\nSET default_tablespace = '';\\n\\nSET default_table_access_method = heap;\\n\\n--\\n-- Name: declared; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.declared (\\n    value integer[]\\n);\\n\\n\\nALTER TABLE cardinality.declared OWNER TO postgres;\\n\\n--\\n-- Name: domains; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.domains (\\n    items cardinality.positive[],\\n    vector cardinality.vector\\n);\\n\\n\\nALTER TABLE cardinality.domains OWNER TO postgres;\\n\\n--\\n-- Name: json_values; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.json_values (\\n    value json\\n);\\n\\n\\nALTER TABLE cardinality.json_values OWNER TO postgres;\\n\\n--\\n-- Name: jsonb_object; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.jsonb_object (\\n    value jsonb,\\n    CONSTRAINT jsonb_object_value_check CHECK ((jsonb_typeof(value) = 'object'::text))\\n);\\n\\n\\nALTER TABLE cardinality.jsonb_object OWNER TO postgres;\\n\\n--\\n-- Name: jsonb_values; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.jsonb_values (\\n    value jsonb\\n);\\n\\n\\nALTER TABLE cardinality.jsonb_values OWNER TO postgres;\\n\\n--\\n-- Name: sequence; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.sequence (\\n    value integer[],\\n    CONSTRAINT sequence_value_check CHECK (((value IS NULL) OR (cardinality(value) = 0) OR ((array_ndims(value) = 1) AND (array_lower(value, 1) = 1))))\\n);\\n\\n\\nALTER TABLE cardinality.sequence OWNER TO postgres;\\n\\n--\\n-- Name: vectorish; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.vectorish (\\n    value int2vector\\n);\\n\\n\\nALTER TABLE cardinality.vectorish OWNER TO postgres;\\n\\n--\\n-- PostgreSQL database dump complete\\n--\\n\\n\"}}",
+  "captureSource": "{\"profile\":\"postgresql-catalog-capture-v1\",\"state\":\"captured\",\"serverVersion\":170004,\"query\":\"-- Test evidence query for PostgreSQL 17. This is an explicitly bounded catalog view,\\n-- not a full catalog interchange vocabulary. OIDs and physical file identifiers are\\n-- replaced by qualified names; exact sequence bounds are strings.\\nWITH namespaces AS (\\n SELECT oid,nspname,pg_get_userbyid(nspowner) AS owner,nspacl::text AS acl\\n FROM pg_namespace WHERE nspname !~ '^pg_' AND nspname <> 'information_schema'\\n), relations AS (\\n SELECT c.*,n.nspname FROM pg_class c JOIN namespaces n ON n.oid=c.relnamespace\\n WHERE c.relkind IN ('r','p','v','m','S','f')\\n), dependency_objects AS (\\n SELECT 'pg_class'::regclass AS classid,c.oid AS objid FROM pg_class c JOIN namespaces n ON n.oid=c.relnamespace\\n UNION SELECT 'pg_type'::regclass,t.oid FROM pg_type t JOIN namespaces n ON n.oid=t.typnamespace\\n UNION SELECT 'pg_proc'::regclass,p.oid FROM pg_proc p JOIN namespaces n ON n.oid=p.pronamespace\\n UNION SELECT 'pg_constraint'::regclass,c.oid FROM pg_constraint c JOIN namespaces n ON n.oid=c.connamespace\\n UNION SELECT 'pg_attrdef'::regclass,d.oid FROM pg_attrdef d JOIN relations r ON r.oid=d.adrelid\\n UNION SELECT 'pg_trigger'::regclass,t.oid FROM pg_trigger t JOIN relations r ON r.oid=t.tgrelid WHERE NOT t.tgisinternal\\n UNION SELECT 'pg_rewrite'::regclass,w.oid FROM pg_rewrite w JOIN relations r ON r.oid=w.ev_class\\n UNION SELECT 'pg_collation'::regclass,c.oid FROM pg_collation c JOIN namespaces n ON n.oid=c.collnamespace\\n UNION SELECT 'pg_policy'::regclass,p.oid FROM pg_policy p JOIN relations r ON r.oid=p.polrelid\\n), dependency_rows AS (\\n SELECT jsonb_build_object('dependent',jsonb_build_object('catalog',d.classid::regclass::text,'type',a.type,'schema',a.schema,'name',a.name,'identity',a.identity),\\n  'referenced',jsonb_build_object('catalog',d.refclassid::regclass::text,'type',b.type,'schema',b.schema,'name',b.name,'identity',b.identity),'kind',d.deptype) AS edge\\n FROM pg_depend d JOIN dependency_objects o ON o.classid=d.classid AND o.objid=d.objid\\n CROSS JOIN LATERAL pg_identify_object(d.classid,d.objid,d.objsubid) a\\n CROSS JOIN LATERAL pg_identify_object(d.refclassid,d.refobjid,d.refobjsubid) b\\n)\\nSELECT jsonb_build_object(\\n 'profile','umf-postgresql-catalog-evidence-17-v3',\\n 'namespaces',(SELECT jsonb_agg(jsonb_build_object('name',nspname,'owner',owner,'acl',acl) ORDER BY nspname) FROM namespaces),\\n 'relations',(SELECT jsonb_agg(jsonb_build_object(\\n  'schema',r.nspname,'name',r.relname,'kind',r.relkind,'persistence',r.relpersistence,\\n  'owner',pg_get_userbyid(r.relowner),'acl',r.relacl::text,'options',r.reloptions,\\n  'rowSecurity',r.relrowsecurity,'forceRowSecurity',r.relforcerowsecurity,\\n  'comment',obj_description(r.oid,'pg_class'),\\n  'partitionKey',pg_get_partkeydef(r.oid),'partitionBound',pg_get_expr(r.relpartbound,r.oid),\\n  'parents',(SELECT jsonb_agg(p.inhparent::regclass::text ORDER BY p.inhseqno) FROM pg_inherits p WHERE p.inhrelid=r.oid),\\n  'view',CASE WHEN r.relkind IN ('v','m') THEN pg_get_viewdef(r.oid,false) END,\\n  'columns',(SELECT jsonb_agg(jsonb_build_object(\\n   'name',a.attname,'position',a.attnum,'type',format_type(a.atttypid,a.atttypmod),\\n   'nativeType',(SELECT jsonb_build_object('schema',n.nspname,'name',t.typname,'kind',t.typtype,'category',t.typcategory,'dimensions',a.attndims,'modifier',a.atttypmod) FROM pg_type t JOIN pg_namespace n ON n.oid=t.typnamespace WHERE t.oid=a.atttypid),\\n   'notNull',a.attnotnull,'identity',a.attidentity,'generated',a.attgenerated,\\n   'collation',CASE WHEN a.attcollation<>0 THEN a.attcollation::regcollation::text END,\\n   'default',pg_get_expr(d.adbin,d.adrelid),'comment',col_description(r.oid,a.attnum),\\n   'storage',a.attstorage,'compression',a.attcompression,'acl',a.attacl::text\\n  ) ORDER BY a.attnum) FROM pg_attribute a LEFT JOIN pg_attrdef d ON d.adrelid=a.attrelid AND d.adnum=a.attnum WHERE a.attrelid=r.oid AND a.attnum>0 AND NOT a.attisdropped),\\n  'constraints',(SELECT jsonb_agg(jsonb_build_object('name',c.conname,'kind',c.contype,'definition',pg_get_constraintdef(c.oid,false),'deferrable',c.condeferrable,'deferred',c.condeferred,'validated',c.convalidated) ORDER BY c.conname) FROM pg_constraint c WHERE c.conrelid=r.oid),\\n  'indexes',(SELECT jsonb_agg(jsonb_build_object('definition',pg_get_indexdef(i.indexrelid),'valid',i.indisvalid,'ready',i.indisready,'replicaIdentity',i.indisreplident) ORDER BY pg_get_indexdef(i.indexrelid)) FROM pg_index i WHERE i.indrelid=r.oid),\\n  'policies',(SELECT jsonb_agg(jsonb_build_object('name',p.polname,'command',p.polcmd,'permissive',p.polpermissive,'roles',(SELECT jsonb_agg(CASE WHEN role=0 THEN 'PUBLIC' ELSE pg_get_userbyid(role) END ORDER BY role) FROM unnest(p.polroles) role),'using',pg_get_expr(p.polqual,p.polrelid),'check',pg_get_expr(p.polwithcheck,p.polrelid)) ORDER BY p.polname) FROM pg_policy p WHERE p.polrelid=r.oid),\\n  'sequence',(SELECT jsonb_build_object('type',format_type(s.seqtypid,NULL),'start',s.seqstart::text,'increment',s.seqincrement::text,'min',s.seqmin::text,'max',s.seqmax::text,'cache',s.seqcache::text,'cycle',s.seqcycle) FROM pg_sequence s WHERE s.seqrelid=r.oid)\\n ) ORDER BY r.nspname,r.relname) FROM relations r),\\n 'types',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',t.typname,'kind',t.typtype,'owner',pg_get_userbyid(t.typowner),'acl',t.typacl::text,'base',format_type(t.typbasetype,t.typtypmod),'notNull',t.typnotnull,'default',t.typdefault,'comment',obj_description(t.oid,'pg_type'),\\n  'labels',(SELECT jsonb_agg(e.enumlabel ORDER BY e.enumsortorder) FROM pg_enum e WHERE e.enumtypid=t.oid),\\n  'constraints',(SELECT jsonb_agg(jsonb_build_object('name',c.conname,'definition',pg_get_constraintdef(c.oid,false),'validated',c.convalidated) ORDER BY c.conname) FROM pg_constraint c WHERE c.contypid=t.oid)\\n ) ORDER BY n.nspname,t.typname) FROM pg_type t JOIN namespaces n ON n.oid=t.typnamespace WHERE t.typtype IN ('d','e')),\\n 'functions',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',p.proname,'identity',pg_get_function_identity_arguments(p.oid),'definition',pg_get_functiondef(p.oid),'owner',pg_get_userbyid(p.proowner),'acl',p.proacl::text,'comment',obj_description(p.oid,'pg_proc')) ORDER BY n.nspname,p.proname,pg_get_function_identity_arguments(p.oid)) FROM pg_proc p JOIN namespaces n ON n.oid=p.pronamespace WHERE p.prokind IN ('f','p')),\\n 'triggers',(SELECT jsonb_agg(jsonb_build_object('schema',r.nspname,'relation',r.relname,'name',t.tgname,'enabled',t.tgenabled,'definition',pg_get_triggerdef(t.oid,false),'function',t.tgfoid::regprocedure::text,'deferrable',t.tgdeferrable,'deferred',t.tginitdeferred,'comment',obj_description(t.oid,'pg_trigger')) ORDER BY r.nspname,r.relname,t.tgname) FROM pg_trigger t JOIN relations r ON r.oid=t.tgrelid WHERE NOT t.tgisinternal),\\n 'compositeTypes',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',t.typname,'owner',pg_get_userbyid(t.typowner),'acl',t.typacl::text,'comment',obj_description(t.oid,'pg_type'),'attributes',(SELECT jsonb_agg(jsonb_build_object('name',a.attname,'position',a.attnum,'type',format_type(a.atttypid,a.atttypmod),'collation',CASE WHEN a.attcollation<>0 THEN a.attcollation::regcollation::text END) ORDER BY a.attnum) FROM pg_attribute a WHERE a.attrelid=t.typrelid AND a.attnum>0 AND NOT a.attisdropped)) ORDER BY n.nspname,t.typname) FROM pg_type t JOIN namespaces n ON n.oid=t.typnamespace JOIN pg_class c ON c.oid=t.typrelid WHERE t.typtype='c' AND c.relkind='c'),\\n 'rangeTypes',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',t.typname,'owner',pg_get_userbyid(t.typowner),'acl',t.typacl::text,'comment',obj_description(t.oid,'pg_type'),'subtype',format_type(r.rngsubtype,NULL),'multirange',format_type(r.rngmultitypid,NULL),'collation',CASE WHEN r.rngcollation<>0 THEN r.rngcollation::regcollation::text END,'operatorClass',(SELECT format('%I.%I',ns.nspname,o.opcname) FROM pg_opclass o JOIN pg_namespace ns ON ns.oid=o.opcnamespace WHERE o.oid=r.rngsubopc),'canonical',r.rngcanonical::regprocedure::text,'subtypeDifference',r.rngsubdiff::regprocedure::text) ORDER BY n.nspname,t.typname) FROM pg_range r JOIN pg_type t ON t.oid=r.rngtypid JOIN namespaces n ON n.oid=t.typnamespace),\\n 'collations',(SELECT jsonb_agg(jsonb_build_object('schema',n.nspname,'name',c.collname,'owner',pg_get_userbyid(c.collowner),'provider',c.collprovider,'deterministic',c.collisdeterministic,'encoding',c.collencoding,'collate',c.collcollate,'ctype',c.collctype,'locale',c.colllocale,'rules',c.collicurules,'version',c.collversion,'comment',obj_description(c.oid,'pg_collation')) ORDER BY n.nspname,c.collname,c.collencoding) FROM pg_collation c JOIN namespaces n ON n.oid=c.collnamespace),\\n 'dependencies',(SELECT coalesce(jsonb_agg(edge ORDER BY edge::text),'[]'::jsonb) FROM dependency_rows)\\n)::text;\\n\",\"snapshot\":{\"types\":[{\"acl\":null,\"base\":\"integer\",\"kind\":\"d\",\"name\":\"positive\",\"owner\":\"postgres\",\"labels\":null,\"schema\":\"cardinality\",\"comment\":null,\"default\":null,\"notNull\":false,\"constraints\":[{\"name\":\"positive_check\",\"validated\":true,\"definition\":\"CHECK ((VALUE > 0))\"}]},{\"acl\":null,\"base\":\"integer[]\",\"kind\":\"d\",\"name\":\"vector\",\"owner\":\"postgres\",\"labels\":null,\"schema\":\"cardinality\",\"comment\":null,\"default\":null,\"notNull\":false,\"constraints\":null}],\"profile\":\"umf-postgresql-catalog-evidence-17-v3\",\"triggers\":null,\"functions\":null,\"relations\":[{\"acl\":null,\"kind\":\"r\",\"name\":\"declared\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"integer[]\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"_int4\",\"schema\":\"pg_catalog\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":1},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"domains\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"items\",\"type\":\"cardinality.positive[]\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"_positive\",\"schema\":\"cardinality\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":1},\"compression\":\"\"},{\"acl\":null,\"name\":\"vector\",\"type\":\"cardinality.vector\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":2,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"d\",\"name\":\"vector\",\"schema\":\"cardinality\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"json_values\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"json\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"json\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"jsonb_object\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"jsonb\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"jsonb\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":[{\"kind\":\"c\",\"name\":\"jsonb_object_value_check\",\"deferred\":false,\"validated\":true,\"deferrable\":false,\"definition\":\"CHECK ((jsonb_typeof(value) = 'object'::text))\"}],\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"jsonb_values\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"jsonb\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"jsonb\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"scalars\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"flag\",\"type\":\"boolean\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"bool\",\"schema\":\"pg_catalog\",\"category\":\"B\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"i16\",\"type\":\"smallint\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":2,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"int2\",\"schema\":\"pg_catalog\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"i32\",\"type\":\"integer\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":3,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"int4\",\"schema\":\"pg_catalog\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"i64\",\"type\":\"bigint\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":4,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"int8\",\"schema\":\"pg_catalog\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"amount\",\"type\":\"numeric\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"m\",\"identity\":\"\",\"position\":5,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"numeric\",\"schema\":\"pg_catalog\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"f32\",\"type\":\"real\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":6,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"float4\",\"schema\":\"pg_catalog\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"f64\",\"type\":\"double precision\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":7,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"float8\",\"schema\":\"pg_catalog\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"label\",\"type\":\"text\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":8,\"collation\":\"\\\"default\\\"\",\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"text\",\"schema\":\"pg_catalog\",\"category\":\"S\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"bounded\",\"type\":\"character varying(8)\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":9,\"collation\":\"\\\"default\\\"\",\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"varchar\",\"schema\":\"pg_catalog\",\"category\":\"S\",\"modifier\":12,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"fixed\",\"type\":\"character(3)\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":10,\"collation\":\"\\\"default\\\"\",\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"bpchar\",\"schema\":\"pg_catalog\",\"category\":\"S\",\"modifier\":7,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"bytes\",\"type\":\"bytea\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":11,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"bytea\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"day\",\"type\":\"date\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":12,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"date\",\"schema\":\"pg_catalog\",\"category\":\"D\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"clock\",\"type\":\"time without time zone\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":13,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"time\",\"schema\":\"pg_catalog\",\"category\":\"D\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"zoned_clock\",\"type\":\"time with time zone\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":14,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"timetz\",\"schema\":\"pg_catalog\",\"category\":\"D\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"moment\",\"type\":\"timestamp without time zone\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":15,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"timestamp\",\"schema\":\"pg_catalog\",\"category\":\"D\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"instant\",\"type\":\"timestamp with time zone\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":16,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"timestamptz\",\"schema\":\"pg_catalog\",\"category\":\"D\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"identifier\",\"type\":\"uuid\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":17,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"uuid\",\"schema\":\"pg_catalog\",\"category\":\"U\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"},{\"acl\":null,\"name\":\"positive\",\"type\":\"cardinality.positive\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":18,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"d\",\"name\":\"positive\",\"schema\":\"cardinality\",\"category\":\"N\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"sequence\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"integer[]\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"x\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"_int4\",\"schema\":\"pg_catalog\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":1},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":[{\"kind\":\"c\",\"name\":\"sequence_value_check\",\"deferred\":false,\"validated\":true,\"deferrable\":false,\"definition\":\"CHECK (((value IS NULL) OR (cardinality(value) = 0) OR ((array_ndims(value) = 1) AND (array_lower(value, 1) = 1))))\"}],\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false},{\"acl\":null,\"kind\":\"r\",\"name\":\"vectorish\",\"view\":null,\"owner\":\"postgres\",\"schema\":\"cardinality\",\"columns\":[{\"acl\":null,\"name\":\"value\",\"type\":\"int2vector\",\"comment\":null,\"default\":null,\"notNull\":false,\"storage\":\"p\",\"identity\":\"\",\"position\":1,\"collation\":null,\"generated\":\"\",\"nativeType\":{\"kind\":\"b\",\"name\":\"int2vector\",\"schema\":\"pg_catalog\",\"category\":\"A\",\"modifier\":-1,\"dimensions\":0},\"compression\":\"\"}],\"comment\":null,\"indexes\":null,\"options\":null,\"parents\":null,\"policies\":null,\"sequence\":null,\"constraints\":null,\"persistence\":\"p\",\"rowSecurity\":false,\"partitionKey\":null,\"partitionBound\":null,\"forceRowSecurity\":false}],\"collations\":null,\"namespaces\":[{\"acl\":null,\"name\":\"cardinality\",\"owner\":\"postgres\"},{\"acl\":\"{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner}\",\"name\":\"public\",\"owner\":\"pg_database_owner\"}],\"rangeTypes\":null,\"dependencies\":[{\"kind\":\"a\",\"dependent\":{\"name\":null,\"type\":\"domain constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"positive_check on cardinality.positive\"},\"referenced\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"}},{\"kind\":\"a\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"jsonb_object_value_check on cardinality.jsonb_object\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object.value\"}},{\"kind\":\"a\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"sequence_value_check on cardinality.sequence\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence.value\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"declared\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.declared\"},\"referenced\":{\"name\":\"declared\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.declared\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_declared\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.declared[]\"},\"referenced\":{\"name\":\"declared\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.declared\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"domains\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.domains\"},\"referenced\":{\"name\":\"domains\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_domains\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.domains[]\"},\"referenced\":{\"name\":\"domains\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.domains\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"jsonb_object\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_object\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_jsonb_object\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_object[]\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_object\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"jsonb_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_values\"},\"referenced\":{\"name\":\"jsonb_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_jsonb_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_values[]\"},\"referenced\":{\"name\":\"jsonb_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.jsonb_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"json_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.json_values\"},\"referenced\":{\"name\":\"json_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.json_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_json_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.json_values[]\"},\"referenced\":{\"name\":\"json_values\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.json_values\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive[]\"},\"referenced\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"scalars\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.scalars\"},\"referenced\":{\"name\":\"scalars\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.scalars\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_scalars\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.scalars[]\"},\"referenced\":{\"name\":\"scalars\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.scalars\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"sequence\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.sequence\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_sequence\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.sequence[]\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.sequence\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"vectorish\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vectorish\"},\"referenced\":{\"name\":\"vectorish\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.vectorish\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_vectorish\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vectorish[]\"},\"referenced\":{\"name\":\"vectorish\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vectorish\"}},{\"kind\":\"i\",\"dependent\":{\"name\":\"_vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector[]\"},\"referenced\":{\"name\":\"vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"declared\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.declared\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"domains\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains.items\"},\"referenced\":{\"name\":\"_positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive[]\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"domains\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains.vector\"},\"referenced\":{\"name\":\"vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"domains\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.domains\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"jsonb_object\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"jsonb_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_values\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"json_values\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.json_values\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"jsonb_object_value_check on cardinality.jsonb_object\"},\"referenced\":{\"name\":\"jsonb_object\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.jsonb_object.value\"}},{\"kind\":\"n\",\"dependent\":{\"name\":null,\"type\":\"table constraint\",\"schema\":\"cardinality\",\"catalog\":\"pg_constraint\",\"identity\":\"sequence_value_check on cardinality.sequence\"},\"referenced\":{\"name\":\"sequence\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence.value\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"scalars\",\"type\":\"table column\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.scalars.positive\"},\"referenced\":{\"name\":\"positive\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.positive\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"scalars\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.scalars\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"sequence\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.sequence\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"vectorish\",\"type\":\"table\",\"schema\":\"cardinality\",\"catalog\":\"pg_class\",\"identity\":\"cardinality.vectorish\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}},{\"kind\":\"n\",\"dependent\":{\"name\":\"vector\",\"type\":\"type\",\"schema\":\"cardinality\",\"catalog\":\"pg_type\",\"identity\":\"cardinality.vector\"},\"referenced\":{\"name\":\"cardinality\",\"type\":\"schema\",\"schema\":null,\"catalog\":\"pg_namespace\",\"identity\":\"cardinality\"}}],\"compositeTypes\":null},\"reconstruction\":{\"format\":\"pg-dump-plain-schema-only\",\"toolVersion\":\"pg_dump (PostgreSQL) 17.4 (Debian 17.4-1.pgdg120+2)\",\"sql\":\"--\\n-- PostgreSQL database dump\\n--\\n\\n-- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)\\n-- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)\\n\\nSET statement_timeout = 0;\\nSET lock_timeout = 0;\\nSET idle_in_transaction_session_timeout = 0;\\nSET transaction_timeout = 0;\\nSET client_encoding = 'UTF8';\\nSET standard_conforming_strings = on;\\nSELECT pg_catalog.set_config('search_path', '', false);\\nSET check_function_bodies = false;\\nSET xmloption = content;\\nSET client_min_messages = warning;\\nSET row_security = off;\\n\\n--\\n-- Name: cardinality; Type: SCHEMA; Schema: -; Owner: postgres\\n--\\n\\nCREATE SCHEMA cardinality;\\n\\n\\nALTER SCHEMA cardinality OWNER TO postgres;\\n\\n--\\n-- Name: positive; Type: DOMAIN; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE DOMAIN cardinality.positive AS integer\\n\\tCONSTRAINT positive_check CHECK ((VALUE > 0));\\n\\n\\nALTER DOMAIN cardinality.positive OWNER TO postgres;\\n\\n--\\n-- Name: vector; Type: DOMAIN; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE DOMAIN cardinality.vector AS integer[];\\n\\n\\nALTER DOMAIN cardinality.vector OWNER TO postgres;\\n\\nSET default_tablespace = '';\\n\\nSET default_table_access_method = heap;\\n\\n--\\n-- Name: declared; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.declared (\\n    value integer[]\\n);\\n\\n\\nALTER TABLE cardinality.declared OWNER TO postgres;\\n\\n--\\n-- Name: domains; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.domains (\\n    items cardinality.positive[],\\n    vector cardinality.vector\\n);\\n\\n\\nALTER TABLE cardinality.domains OWNER TO postgres;\\n\\n--\\n-- Name: json_values; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.json_values (\\n    value json\\n);\\n\\n\\nALTER TABLE cardinality.json_values OWNER TO postgres;\\n\\n--\\n-- Name: jsonb_object; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.jsonb_object (\\n    value jsonb,\\n    CONSTRAINT jsonb_object_value_check CHECK ((jsonb_typeof(value) = 'object'::text))\\n);\\n\\n\\nALTER TABLE cardinality.jsonb_object OWNER TO postgres;\\n\\n--\\n-- Name: jsonb_values; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.jsonb_values (\\n    value jsonb\\n);\\n\\n\\nALTER TABLE cardinality.jsonb_values OWNER TO postgres;\\n\\n--\\n-- Name: scalars; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.scalars (\\n    flag boolean,\\n    i16 smallint,\\n    i32 integer,\\n    i64 bigint,\\n    amount numeric,\\n    f32 real,\\n    f64 double precision,\\n    label text,\\n    bounded character varying(8),\\n    fixed character(3),\\n    bytes bytea,\\n    day date,\\n    clock time without time zone,\\n    zoned_clock time with time zone,\\n    moment timestamp without time zone,\\n    instant timestamp with time zone,\\n    identifier uuid,\\n    positive cardinality.positive\\n);\\n\\n\\nALTER TABLE cardinality.scalars OWNER TO postgres;\\n\\n--\\n-- Name: sequence; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.sequence (\\n    value integer[],\\n    CONSTRAINT sequence_value_check CHECK (((value IS NULL) OR (cardinality(value) = 0) OR ((array_ndims(value) = 1) AND (array_lower(value, 1) = 1))))\\n);\\n\\n\\nALTER TABLE cardinality.sequence OWNER TO postgres;\\n\\n--\\n-- Name: vectorish; Type: TABLE; Schema: cardinality; Owner: postgres\\n--\\n\\nCREATE TABLE cardinality.vectorish (\\n    value int2vector\\n);\\n\\n\\nALTER TABLE cardinality.vectorish OWNER TO postgres;\\n\\n--\\n-- PostgreSQL database dump complete\\n--\\n\\n\"}}",
   "captureProvenance": {
     "isolation": "repeatable read",
     "readOnly": true,
@@ -305,6 +668,240 @@
         "path": "/snapshot/relations/5/columns/0",
         "identity": {
           "schema": "cardinality",
+          "relation": "scalars",
+          "name": "flag"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "bool"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/1",
+        "path": "/snapshot/relations/5/columns/1",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "i16"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "int2"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/2",
+        "path": "/snapshot/relations/5/columns/2",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "i32"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "int4"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/3",
+        "path": "/snapshot/relations/5/columns/3",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "i64"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "int8"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/4",
+        "path": "/snapshot/relations/5/columns/4",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "amount"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "numeric"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/5",
+        "path": "/snapshot/relations/5/columns/5",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "f32"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "float4"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/6",
+        "path": "/snapshot/relations/5/columns/6",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "f64"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "float8"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/7",
+        "path": "/snapshot/relations/5/columns/7",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "label"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "text"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/8",
+        "path": "/snapshot/relations/5/columns/8",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "bounded"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "varchar"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/9",
+        "path": "/snapshot/relations/5/columns/9",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "fixed"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "bpchar"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/10",
+        "path": "/snapshot/relations/5/columns/10",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "bytes"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "bytea"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/11",
+        "path": "/snapshot/relations/5/columns/11",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "day"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "date"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/12",
+        "path": "/snapshot/relations/5/columns/12",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "clock"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "time"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/13",
+        "path": "/snapshot/relations/5/columns/13",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "zoned_clock"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "timetz"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/14",
+        "path": "/snapshot/relations/5/columns/14",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "moment"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "timestamp"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/15",
+        "path": "/snapshot/relations/5/columns/15",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "instant"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "timestamptz"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/16",
+        "path": "/snapshot/relations/5/columns/16",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "identifier"
+        },
+        "type": {
+          "schema": "pg_catalog",
+          "name": "uuid"
+        }
+      },
+      {
+        "column": "/snapshot/relations/5/columns/17",
+        "path": "/snapshot/relations/5/columns/17",
+        "identity": {
+          "schema": "cardinality",
+          "relation": "scalars",
+          "name": "positive"
+        },
+        "type": {
+          "schema": "cardinality",
+          "name": "positive"
+        }
+      },
+      {
+        "column": "/snapshot/relations/6/columns/0",
+        "path": "/snapshot/relations/6/columns/0",
+        "identity": {
+          "schema": "cardinality",
           "relation": "sequence",
           "name": "value"
         },
@@ -314,8 +911,8 @@
         }
       },
       {
-        "column": "/snapshot/relations/6/columns/0",
-        "path": "/snapshot/relations/6/columns/0",
+        "column": "/snapshot/relations/7/columns/0",
+        "path": "/snapshot/relations/7/columns/0",
         "identity": {
           "schema": "cardinality",
           "relation": "vectorish",
@@ -329,20 +926,119 @@
     ],
     "qualifiedVersion": true,
     "sameSnapshotVerified": false,
-    "nativeSupplement": "{\"types\":[{\"base\":null,\"kind\":\"b\",\"element\":{\"name\":\"positive\",\"schema\":\"cardinality\"},\"category\":\"A\",\"identity\":{\"name\":\"_positive\",\"schema\":\"cardinality\"},\"standardArray\":true},{\"base\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"kind\":\"d\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"positive\",\"schema\":\"cardinality\"},\"standardArray\":false},{\"base\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"kind\":\"d\",\"element\":null,\"category\":\"A\",\"identity\":{\"name\":\"vector\",\"schema\":\"cardinality\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"category\":\"A\",\"identity\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"standardArray\":true},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"int2\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":{\"name\":\"int2\",\"schema\":\"pg_catalog\"},\"category\":\"A\",\"identity\":{\"name\":\"int2vector\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"U\",\"identity\":{\"name\":\"json\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"U\",\"identity\":{\"name\":\"jsonb\",\"schema\":\"pg_catalog\"},\"standardArray\":false}],\"columns\":[{\"name\":\"value\",\"type\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"declared\",\"declaredDimensions\":1},{\"name\":\"items\",\"type\":{\"name\":\"_positive\",\"schema\":\"cardinality\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"domains\",\"declaredDimensions\":1},{\"name\":\"vector\",\"type\":{\"name\":\"vector\",\"schema\":\"cardinality\"},\"schema\":\"cardinality\",\"ordinal\":2,\"relation\":\"domains\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"json\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"json_values\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"jsonb\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"jsonb_object\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"jsonb\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"jsonb_values\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"sequence\",\"declaredDimensions\":1},{\"name\":\"value\",\"type\":{\"name\":\"int2vector\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"vectorish\",\"declaredDimensions\":0}],\"profile\":\"postgresql-cardinality-catalog\",\"version\":\"1.0.0\",\"serverVersion\":170004}"
+    "nativeSupplement": "{\"types\":[{\"base\":null,\"kind\":\"b\",\"element\":{\"name\":\"positive\",\"schema\":\"cardinality\"},\"category\":\"A\",\"identity\":{\"name\":\"_positive\",\"schema\":\"cardinality\"},\"standardArray\":true},{\"base\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"kind\":\"d\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"positive\",\"schema\":\"cardinality\"},\"standardArray\":false},{\"base\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"kind\":\"d\",\"element\":null,\"category\":\"A\",\"identity\":{\"name\":\"vector\",\"schema\":\"cardinality\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"category\":\"A\",\"identity\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"standardArray\":true},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"B\",\"identity\":{\"name\":\"bool\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"S\",\"identity\":{\"name\":\"bpchar\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"U\",\"identity\":{\"name\":\"bytea\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"D\",\"identity\":{\"name\":\"date\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"float4\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"float8\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"int2\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":{\"name\":\"int2\",\"schema\":\"pg_catalog\"},\"category\":\"A\",\"identity\":{\"name\":\"int2vector\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"int8\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"U\",\"identity\":{\"name\":\"json\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"U\",\"identity\":{\"name\":\"jsonb\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"N\",\"identity\":{\"name\":\"numeric\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"S\",\"identity\":{\"name\":\"text\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"D\",\"identity\":{\"name\":\"time\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"D\",\"identity\":{\"name\":\"timestamp\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"D\",\"identity\":{\"name\":\"timestamptz\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"D\",\"identity\":{\"name\":\"timetz\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"U\",\"identity\":{\"name\":\"uuid\",\"schema\":\"pg_catalog\"},\"standardArray\":false},{\"base\":null,\"kind\":\"b\",\"element\":null,\"category\":\"S\",\"identity\":{\"name\":\"varchar\",\"schema\":\"pg_catalog\"},\"standardArray\":false}],\"columns\":[{\"name\":\"value\",\"type\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"declared\",\"declaredDimensions\":1},{\"name\":\"items\",\"type\":{\"name\":\"_positive\",\"schema\":\"cardinality\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"domains\",\"declaredDimensions\":1},{\"name\":\"vector\",\"type\":{\"name\":\"vector\",\"schema\":\"cardinality\"},\"schema\":\"cardinality\",\"ordinal\":2,\"relation\":\"domains\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"json\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"json_values\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"jsonb\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"jsonb_object\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"jsonb\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"jsonb_values\",\"declaredDimensions\":0},{\"name\":\"flag\",\"type\":{\"name\":\"bool\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"i16\",\"type\":{\"name\":\"int2\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":2,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"i32\",\"type\":{\"name\":\"int4\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":3,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"i64\",\"type\":{\"name\":\"int8\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":4,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"amount\",\"type\":{\"name\":\"numeric\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":5,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"f32\",\"type\":{\"name\":\"float4\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":6,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"f64\",\"type\":{\"name\":\"float8\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":7,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"label\",\"type\":{\"name\":\"text\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":8,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"bounded\",\"type\":{\"name\":\"varchar\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":9,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"fixed\",\"type\":{\"name\":\"bpchar\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":10,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"bytes\",\"type\":{\"name\":\"bytea\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":11,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"day\",\"type\":{\"name\":\"date\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":12,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"clock\",\"type\":{\"name\":\"time\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":13,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"zoned_clock\",\"type\":{\"name\":\"timetz\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":14,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"moment\",\"type\":{\"name\":\"timestamp\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":15,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"instant\",\"type\":{\"name\":\"timestamptz\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":16,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"identifier\",\"type\":{\"name\":\"uuid\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":17,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"positive\",\"type\":{\"name\":\"positive\",\"schema\":\"cardinality\"},\"schema\":\"cardinality\",\"ordinal\":18,\"relation\":\"scalars\",\"declaredDimensions\":0},{\"name\":\"value\",\"type\":{\"name\":\"_int4\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"sequence\",\"declaredDimensions\":1},{\"name\":\"value\",\"type\":{\"name\":\"int2vector\",\"schema\":\"pg_catalog\"},\"schema\":\"cardinality\",\"ordinal\":1,\"relation\":\"vectorish\",\"declaredDimensions\":0}],\"profile\":\"postgresql-cardinality-catalog\",\"version\":\"1.0.0\",\"serverVersion\":170004}"
   },
   "nativeCases": 37,
+  "scalarBehavior": {
+    "f64": "1.0000000000000002",
+    "i64": "9223372036854775807",
+    "rows": 1
+  },
+  "classifications": [
+    {
+      "column": "flag",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "i16",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "i32",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "i64",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "amount",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "f32",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "f64",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "label",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "bounded",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "fixed",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "bytes",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "day",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "clock",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "zoned_clock",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "moment",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "instant",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "identifier",
+      "cardinality": "one",
+      "outcome": "exact"
+    },
+    {
+      "column": "positive",
+      "cardinality": "one",
+      "outcome": "exact"
+    }
+  ],
   "sha256": {
     "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
     "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
-    "scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts": "95c68a62d415d850c99afa56d6674de9fe1ca65df6a24aa4877e2a50b26aa848",
+    "scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts": "d40f1d22f514638907b8f5865b4ee1d1498893a080af18357c0c6e044e6df212",
     "native/postgresql/catalog/cardinality-v1.sql": "534e8996085e600c697a5d1e799e4ab4816ee0663290a44283b46a1195952344",
     "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6",
     "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
-    "src/adapters/postgresql/cardinality-catalog.ts": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+    "src/adapters/postgresql/cardinality-catalog.ts": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9",
+    "fixtures/postgresql/cardinality-scalars.sql": "c0d311d5fdf922491b1edd52869d51fc608aaf1efd119af178c0f33afd139957",
+    "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608"
   },
   "limits": [
-    "Relationships are observations; no core classification or equivalence claim.",
+    "Scalar classification covers stored-value shape only; no range, availability, identity, exact-value projection or equivalence claim.",
     "Constraints, availability and physical representation remain in the original catalog/archive.",
     "Snapshot and supplement queries executed in one repeatable-read read-only transaction; the schema-only archive was captured separately against this isolated fixture with no concurrent DDL.",
     "Browser correlation checks overlapping observations only; it cannot authenticate transaction provenance."

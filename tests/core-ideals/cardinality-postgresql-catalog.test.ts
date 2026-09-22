@@ -45,7 +45,7 @@ test('does not return rounded unknown metadata in interpreted views',()=>{
 test('correlates capture observations and refuses mismatches without asserting transaction provenance',()=>{
  const capture=()=>importPostgresqlCatalogCapture(evidence.captureSource,{id:'pair'});
  const r=correlatePostgresqlCardinalityCatalog(capture(),source);
- expect(r.matches).toHaveLength(8);expect(r.sameSnapshotVerified).toBe(false);expect(r.nativeSupplement).toBe(source);
+ expect(r.matches).toHaveLength(26);expect(r.sameSnapshotVerified).toBe(false);expect(r.nativeSupplement).toBe(source);
  for(const mutate of [
   (v:any)=>v.serverVersion=170005,
   (v:any)=>v.columns.pop(),

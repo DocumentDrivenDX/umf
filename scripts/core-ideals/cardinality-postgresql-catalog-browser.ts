@@ -26,18 +26,19 @@ try{
    (v:any)=>{const t=v.types.find((t:any)=>t.identity.name==='vector');t.base=t.identity;},
   ]){const v=structuredClone(supplement);mutation(v);let caught=false;try{u.inspectPostgresqlCardinalityCatalog(JSON.stringify(v));}catch{caught=true;}require(caught);refused++;}
   const capture=u.importPostgresqlCatalogCapture(captureSource,{id:'browser-pair'});
-  const pair=u.correlatePostgresqlCardinalityCatalog(capture,text);require(pair.matches.length===8);require(pair.sameSnapshotVerified===false);
+  const pair=u.correlatePostgresqlCardinalityCatalog(capture,text);require(pair.matches.length===26);require(pair.sameSnapshotVerified===false);
   const changed=structuredClone(supplement);changed.columns[0].declaredDimensions=8;
   let mismatch=false;try{u.correlatePostgresqlCardinalityCatalog(capture,JSON.stringify(changed));}catch{mismatch=true;}require(mismatch);refused++;
   const model=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(capture).target).target).target;
   for(const e of model.modules.find((m:any)=>m.id==='postgresql.columns').elements)e.kind='field';
-  let classified=0,recovered=0;
+  let classified=0,recovered=0,strictScalars=0;
   for(const c of u.getPostgresqlColumnMetadata(model)){
    const receipt=u.classifyPostgresqlCardinality(model,{column:c.path,nativeSource:captureSource,supplement:text,mode:'report',profile:'stored-value'});
-   require(receipt.status==='classified');require(receipt.residuals.length>0);classified++;
+   require(receipt.status==='classified');require(c.relation.name==='scalars'?receipt.residuals.length===0:receipt.residuals.length>0);classified++;
+   if(c.relation.name==='scalars'){const strict=u.classifyPostgresqlCardinality(model,{column:c.path,nativeSource:captureSource,supplement:text,mode:'strict',profile:'stored-value'});require(strict.status==='classified');require(strict.mapping.cardinality==='one');strictScalars++;}
    const archive=u.recoverPostgresqlCardinalitySource(receipt,receipt.target);require(archive.nativeSource===captureSource);require(archive.supplement===text);recovered++;
   }
-  require(!('Bun'in globalThis));require(!('process'in globalThis));return {resolved,refused,classified,recovered,exactUnknownToken:true};
+  require(!('Bun'in globalThis));require(!('process'in globalThis));return {resolved,refused,classified,recovered,strictScalars,exactUnknownToken:true};
  },{supplement:fixture.supplement,captureSource:fixture.captureSource});
  assert.equal(external.length,0);
  const paths=['src/adapters/postgresql/cardinality-catalog.ts','src/core-ideals/cardinality-postgresql.ts','spec/core/postgresql-cardinality-classification.schema.json','spec/extensions/postgresql-cardinality/package.json','src/index.ts','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','scripts/core-ideals/cardinality-postgresql-catalog-browser.ts','fixtures/validation/cardinality-postgresql-catalog-native.json','dist/umf.js'];

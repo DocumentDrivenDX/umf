@@ -1,6 +1,8 @@
 /** Native discovery: array layout, domain and JSON boundaries; no binding claim. */
 import assert from 'node:assert/strict';
 import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
+import {classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource} from '../../src/core-ideals/cardinality-postgresql';
+import {upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,getPostgresqlColumnMetadata} from '../../src';
 import {correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
 import {createValidator} from '../../src/validation/schema';
 import supplementSchema from '../../spec/extensions/postgresql-catalog/cardinality-v1.schema.json';
@@ -13,7 +15,7 @@ async function run(args:string[],input?:string){
 }
 const exec=(args:string[],input?:string)=>run(['docker','exec',...(input===undefined?[]:['-i']),name,...args],input);
 const sql=(text:string)=>exec(['psql','-X','-q','-U','postgres','-d','postgres','-At','-v','ON_ERROR_STOP=1'],text);
-const paths=['native/postgresql/catalog/image.json','fixtures/postgresql/cardinality.sql','scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts','native/postgresql/catalog/cardinality-v1.sql','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','native/postgresql/catalog/snapshot.sql','src/adapters/postgresql/cardinality-catalog.ts'];
+const paths=['native/postgresql/catalog/image.json','fixtures/postgresql/cardinality.sql','scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts','native/postgresql/catalog/cardinality-v1.sql','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','native/postgresql/catalog/snapshot.sql','src/adapters/postgresql/cardinality-catalog.ts','fixtures/postgresql/cardinality-scalars.sql','src/core-ideals/cardinality-postgresql.ts'];
 const manifest=await Bun.file(paths[0]!).json();
 const helper=`CREATE FUNCTION pg_temp.probe(statement text) RETURNS jsonb LANGUAGE plpgsql AS $$ DECLARE value jsonb; BEGIN EXECUTE statement INTO STRICT value; RETURN jsonb_build_object('sqlstate','00000','value',value); EXCEPTION WHEN OTHERS THEN RETURN jsonb_build_object('sqlstate',SQLSTATE,'value',NULL); END $$;`;
 const arrays:[string,string,number|null,string|null,unknown,number][]=[
@@ -51,7 +53,7 @@ const cases:[string,string,string,unknown][]=[
 try{
  assert.match(manifest.reference,/^postgres@sha256:[0-9a-f]{64}$/);
  await run(['docker','run','-d','--name',name,'--network','none','--tmpfs','/var/lib/postgresql/data:rw','-e','POSTGRES_HOST_AUTH_METHOD=trust',manifest.reference]);created=true;
- let ready=false;for(let i=0;i<120;i++){try{if((await exec(['cat','/proc/1/comm'])).trim()!=='postgres')throw Error('initializing');await exec(['pg_isready','-U','postgres']);ready=true;break;}catch{await Bun.sleep(250);}}assert.ok(ready);assert.equal((await sql('SHOW server_version_num')).trim(),'170004');await sql(await Bun.file(paths[1]!).text());
+ let ready=false;for(let i=0;i<120;i++){try{if((await exec(['cat','/proc/1/comm'])).trim()!=='postgres')throw Error('initializing');await exec(['pg_isready','-U','postgres']);ready=true;break;}catch{await Bun.sleep(250);}}assert.ok(ready);assert.equal((await sql('SHOW server_version_num')).trim(),'170004');await sql(await Bun.file(paths[1]!).text());await sql(await Bun.file('fixtures/postgresql/cardinality-scalars.sql').text());
  const rows=[];
  for(const [id,expr,rank,bounds,value,size] of arrays)for(const table of ['declared','sequence']){
   const statement=`WITH x AS (INSERT INTO cardinality.${table} VALUES(${expr}) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x`;
@@ -76,7 +78,7 @@ try{
  const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query:snapshotQuery,snapshot,reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
  const captureSource=JSON.stringify(capture);
  const correlation=correlatePostgresqlCardinalityCatalog(importPostgresqlCatalogCapture(captureSource,{id:'cardinality-capture'}),JSON.stringify(supplement));
- assert.equal(correlation.matches.length,8);assert.equal(correlation.sameSnapshotVerified,false);
+ assert.equal(correlation.matches.length,26);assert.equal(correlation.sameSnapshotVerified,false);
  const check=createValidator(false).compile<any>(supplementSchema);assert.ok(check(supplement),JSON.stringify(check.errors));
  const identity=(x:any)=>JSON.stringify(x);
  const byType=new Map(supplement.types.map((t:any)=>[identity(t.identity),t]));
@@ -95,7 +97,22 @@ try{
  const item=type(column('domains','items')).element;
  assert.deepEqual(item,{schema:'cardinality',name:'positive'});
  assert.equal((byType.get(identity(item)) as any).kind,'d');
+ const scalarBehavior=JSON.parse(await sql(`WITH inserted AS (
+ INSERT INTO cardinality.scalars VALUES(true,-32768,2147483647,9223372036854775807,1.234567890123456789,1.5,1.0000000000000002,'text','bounded','xy',decode('00ff','hex'),'2026-09-22','12:30','12:30+03','2026-09-22 12:30','2026-09-22 12:30+03','00000000-0000-0000-0000-000000000001',1)
+ RETURNING *) SELECT jsonb_build_object('rows',count(*),'i64',max(i64)::text,'f64',max(f64)::text) FROM inserted`));
+ assert.equal(scalarBehavior.rows,1);assert.equal(scalarBehavior.i64,'9223372036854775807');assert.equal(scalarBehavior.f64,'1.0000000000000002');
+ await sql('INSERT INTO cardinality.scalars DEFAULT VALUES');
+ const model=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(captureSource,{id:'native-scalar-shapes'})).target).target).target;
+ for(const e of model.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
+ const classifications=[];
+ for(const c of getPostgresqlColumnMetadata(model).filter(c=>c.relation.name==='scalars')){
+  const r=classifyPostgresqlCardinality(model,{column:c.path,nativeSource:captureSource,supplement:JSON.stringify(supplement),mode:'strict',profile:'stored-value'});
+  assert.equal(r.status,'classified');assert.equal(r.mapping.cardinality,'one');assert.equal(r.residuals.length,0);
+  assert.deepEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource:captureSource,supplement:JSON.stringify(supplement)});
+  classifications.push({column:c.element.name,cardinality:r.mapping.cardinality,outcome:r.mapping.outcome});
+ }
+ assert.equal(classifications.length,18);
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
- const evidence={scope:'PostgreSQL 17.4 versioned Cardinality catalog supplement and native boundary checks; no binding acceptance',image:manifest.reference,serverVersion:170004,supplement,captureSource,captureProvenance:{isolation:'repeatable read',readOnly:true,queriesInOneTransaction:true,reconstructionInSameSnapshot:false},correlation,nativeCases:rows.length,sha256,limits:['Relationships are observations; no core classification or equivalence claim.','Constraints, availability and physical representation remain in the original catalog/archive.','Snapshot and supplement queries executed in one repeatable-read read-only transaction; the schema-only archive was captured separately against this isolated fixture with no concurrent DDL.','Browser correlation checks overlapping observations only; it cannot authenticate transaction provenance.']};
+ const evidence={scope:'PostgreSQL 17.4 versioned Cardinality catalog supplement and native boundary checks; no binding acceptance',image:manifest.reference,serverVersion:170004,supplement,captureSource,captureProvenance:{isolation:'repeatable read',readOnly:true,queriesInOneTransaction:true,reconstructionInSameSnapshot:false},correlation,nativeCases:rows.length,scalarBehavior,classifications,sha256,limits:['Scalar classification covers stored-value shape only; no range, availability, identity, exact-value projection or equivalence claim.','Constraints, availability and physical representation remain in the original catalog/archive.','Snapshot and supplement queries executed in one repeatable-read read-only transaction; the schema-only archive was captured separately against this isolated fixture with no concurrent DDL.','Browser correlation checks overlapping observations only; it cannot authenticate transaction provenance.']};
  await Bun.write('fixtures/validation/cardinality-postgresql-catalog-native.json',JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({cases:rows.length,columns:supplement.columns.length,types:supplement.types.length}));
 }finally{if(created)await run(['docker','rm','-f',name]);}

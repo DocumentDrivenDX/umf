@@ -7,8 +7,8 @@ test('all observed native shapes retain paired archives through report classific
  for(const c of getPostgresqlColumnMetadata(input())){
   const source=input(),request={column:c.path,nativeSource:fixture.captureSource,supplement:JSON.stringify(fixture.supplement),mode:'report' as const,profile:'stored-value' as const};
   const before=structuredClone(source),r=classifyPostgresqlCardinality(source,request);expect(source).toEqual(before);expect(r.status).toBe('classified');
-  const array=['declared','sequence','domains'].includes(c.relation.name);expect(r.mapping.cardinality).toBe(array?'array':'unspecified');expect(r.residuals.length).toBeGreaterThan(0);
-  expect(classifyPostgresqlCardinality(source,{...request,mode:'strict'}).status).toBe('blocked');
+  const array=['declared','sequence','domains'].includes(c.relation.name);expect(r.mapping.cardinality).toBe(array?'array':c.relation.name==='scalars'?'one':'unspecified');expect(r.residuals.length===0).toBe(c.relation.name==='scalars');
+  expect(classifyPostgresqlCardinality(source,{...request,mode:'strict'}).status).toBe(c.relation.name==='scalars'?'classified':'blocked');
   for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(copyJson(r),format),format) as unknown as typeof r;expect(recoverPostgresqlCardinalitySource(saved,saved.target!)).toEqual({nativeSource:request.nativeSource,supplement:request.supplement});}
  }
 },120000);
