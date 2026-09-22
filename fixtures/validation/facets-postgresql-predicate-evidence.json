@@ -1,0 +1,19 @@
+{
+  "scope": "Internal PostgreSQL predicate syntax inspection only; no resolved enforcement, core classification, authored projection or binding acceptance",
+  "bun": {
+    "tests": 7,
+    "assertions": 201,
+    "failures": 0
+  },
+  "typecheck": "passed",
+  "browser": "fixtures/validation/facets-postgresql-predicate-browser.json",
+  "sha256": {
+    "src/adapters/postgresql/facet-predicate.ts": "76e113ec5cb1e93fc4239f22095c981280984b9392a8f93be84f1d66e617d523",
+    "tests/core-ideals/facets-postgresql-predicate.test.ts": "fd9ed85eb49b92150502a25603f693974672159e08b33a43087c4b6a78f4e5e5",
+    "scripts/core-ideals/facets-postgresql-predicate-browser.ts": "3bedda1a13484bfcc553c17a85bd156227fa1e980d1fb6400756c6ae1de163b6",
+    "fixtures/validation/facets-postgresql-predicate-browser.json": "0f0ef9bed317ad46ac85ac0c29e26a0643eec2b7745cc6b3f5b04ec43f28dfba",
+    "fixtures/validation/facets-postgresql-predicate-tests.log": "02929274aa7f004d9bb53b6db2742432a9a80162e23f3aa687927a4c778876c5",
+    "fixtures/validation/facets-postgresql-predicate-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "docs/helix/04-build/evidence/postgresql-facet-discovery.md": "6d43f1f0246f8a597a575d1ea124d23355bc3ab4cc668fbdf3e7198d224d2e6f"
+  }
+}

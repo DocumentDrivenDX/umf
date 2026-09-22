@@ -58,3 +58,30 @@ provides the bounded source review; runtime results are in
 Implement source-bound core classification and authored projection under TD-043.
 Qualify predicate meaning and stored/write-input scope before inferring facets;
 retain unsupported scales, NUL restrictions and unknown constraints as residuals.
+
+## Predicate syntax checkpoint
+
+The internal `facet-predicate.ts` inspector recognizes closed PostgreSQL parser
+AST forms for numeric bounds, character/octet length limits and truncation-equality
+scale checks. Numeric literal strings remain exact, including bounds beyond the
+JavaScript safe-integer range. The complete copied AST remains attached. Unknown
+syntax rejects the entire expression; recognized conjuncts are not extracted from
+an otherwise unsupported CHECK. Tests cover custom-function/operator names,
+casts, additional query clauses, aggregates/windows, unknown AST members and
+accessors. The inspector is not exported from the public library.
+
+These are syntax candidates only. Every result explicitly requires catalog
+resolution and enforcement evidence. A name such as `trunc` does not prove which
+function PostgreSQL resolved, and a parsed expression does not establish CHECK
+validation or stored/write-input scope. The catalog supplement and those semantic
+checks remain unfinished; no core facets or enforcement claims are produced.
+
+The combined discovery/predicate Bun run passes seven tests and 201 assertions;
+typechecking passes. Chromium 148 passes twelve syntax-inspection cases (six
+candidates and six refusals), preserves the ASTs and invokes no getters. No host
+globals or external requests are used. SQL parsing occurs in the host with
+`@libpg-query/parser@17.6.10`; this browser check qualifies inspection of supplied
+ASTs, not browser SQL parsing. Source fingerprints, logs and the browser corpus
+are recorded in
+[the predicate checkpoint](../../../../fixtures/validation/facets-postgresql-predicate-evidence.json).
+No new PostgreSQL engine run or full binding acceptance is claimed here.
