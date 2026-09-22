@@ -728,3 +728,48 @@ native type and selected availability carrier; schema/family agreement does not
 prove arbitrary value conversion or native equivalence. Recursive record lowering,
 default execution and unknown refinements are not silently inferred. Parquet and
 the separate Cardinality admission/delivery gate remain unfinished.
+
+### Parquet representation prerequisite and native discovery
+
+The Parquet binding will publish separate logical Fields for checked container
+and item/value roles. Existing physical `parquet.fields` identities, scalar
+families, indexes, wrapper paths, annotations, field IDs and source bytes remain
+unchanged. The accepted primitive-leaf Field classifier does not authorize
+classifying an arbitrary group as a Field. A logical container Field therefore
+needs its own source-qualified Cardinality receipt and complete operation/extension
+schemas before a public API is exported. An interpreted struct item can point to
+separate record meaning; it must not acquire a scalar family from one of its leaves.
+
+Use checked `inspectParquetContainers` results for LIST/MAP descent. Container
+availability and member availability remain separate observations. A physical
+wrapper is not an extra ideal array dimension. Legacy unannotated repetition,
+key-only maps and malformed layouts require explicit interpretation or a residual;
+do not silently treat them as the modern three-level layout. Preserve embedded
+Arrow declarations independently, including large offsets and fixed list lengths.
+
+The [Parquet logical type specification](https://github.com/apache/parquet-format/blob/master/LogicalTypes.md)
+allows non-string MAP keys and specifies last-value handling for duplicate keys.
+This does not make every native MAP an exact ideal map. Classifying schema-level
+map shape must report unproved unique exact string keys; a unique sample is not
+an enforcement proof. Retain ordered native pairs and duplicates. Strict mode
+must block on those unresolved obligations. Report mode may expose map intent
+with the residual and original bytes, without pretending that an object conversion
+preserved all native values.
+
+Reproducible discovery now runs with
+`.venv/bin/python scripts/core-ideals/cardinality-parquet-native.py` and
+`UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/cardinality-parquet-profile-browser.ts`.
+PyArrow 21.0.0 generates 30 Parquet 2.6 files, covering scalar, nested LIST/MAP,
+record members, independent empty/null states, duplicate/non-string/special string
+keys, large/fixed lists and binary32 narrowing. Two invalid native constructions
+refuse. `keys_sorted=True` accepts unsorted pairs; readback has the flag false even
+when `ARROW:schema` is retained. Two float cases narrow 1.0000000000000002 to 1.0.
+Chromium checks 44 physical columns, 34 containers, 15 embedded schemas and 60
+JSON/YAML native-byte recoveries. See
+[native evidence](../../../../fixtures/validation/cardinality-parquet-profile-native.json)
+and [browser evidence](../../../../fixtures/validation/cardinality-parquet-profile-browser.json).
+
+These are discovery and existing-adapter checks, not Cardinality binding acceptance.
+Public classification, authored projection, schema packages, retained ideal receipts,
+legacy/malformed corpus integration and the full acceptance refresh remain required.
+The preceding acceptance records remain historical checkpoints as this design evolves.
