@@ -1,0 +1,90 @@
+{
+  "bead": "umf-97221618-f316ff75",
+  "scope": "TableSpec Nullability up-classification and native-source recovery under explicit profile/context/carrier, with retained binding-scope extension; authored down-projection and row execution remain pending",
+  "commands": [
+    "bun scripts/core-ideals/nullability-tablespec-schema.ts",
+    "bun scripts/core-ideals/nullability-tablespec-package.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "bun test ./tests/core-ideals/nullability-tablespec.test.ts ./tests/core-ideals/field-tablespec.test.ts ./tests/core/nullability-ideals.test.ts ./tests/core/nullability-authoring.test.ts ./tests/core/nullability-transition.test.ts",
+    "bun scripts/core-ideals/nullability-tablespec-corpus.ts",
+    "/home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/nullability-tablespec-classification-oracle.py",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+  ],
+  "results": {
+    "tests": 25,
+    "assertions": 4777,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 216,
+    "packages": 33,
+    "browserBuildBytes": 10189144,
+    "native": {
+      "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "pydantic": "2.11.10",
+      "cases": 504,
+      "declared": 40,
+      "nativeRecoveries": 544
+    },
+    "browser": {
+      "scope": "Selected-context classification and exact native recovery; no down-projection or row enforcement claim",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "cases": 504,
+        "recoveries": 544,
+        "blocks": 232,
+        "tampered": 272
+      },
+      "externalRequests": []
+    }
+  },
+  "reviewCorrection": "Retain profile/context/carrier on the returned target in a separately schema-described extension, so saving the target does not erase binding scope. Existing scope markers and incompatible vocabulary versions block replacement.",
+  "priorFieldGate": {
+    "status": "stale",
+    "firstMismatch": "src/index.ts",
+    "log": "fixtures/validation/nullability-tablespec-prior-field-gate.log",
+    "requiredAction": "Rerun affected native/browser checks before refreshing fingerprints at binding acceptance."
+  },
+  "limits": [
+    "This is declared metadata classification, not full native-document validation or row constraint enforcement.",
+    "Explicit null-value policy does not equate omitted members, present null, native defaults or reader resolution.",
+    "Context-qualified results apply only to the retained chosen context, never every native context.",
+    "Authored down-projection and ideal-to-native-to-ideal recovery remain unimplemented for this binding.",
+    "TableSpec bead stays in progress; no Nullability admission or native-equivalence claim."
+  ],
+  "sha256": {
+    "fixtures/validation/nullability-tablespec-classification-browser.json": "ba55f6f340186fd8227abb57c3284d0731b9027deaec50c87bb9944d3924cab6",
+    "fixtures/validation/nullability-tablespec-classification-native.json": "4311389c103b2938c50260936b9d2b8bee8815cd8e7a330c427c6d3e4c1c28f9",
+    "fixtures/validation/nullability-tablespec-classification-tests.log": "42b24713f1258b88f8a63567177ddda14317e7028dbec6497a8f063a61777e98",
+    "fixtures/validation/nullability-tablespec-classification.json": "0ea253630dc06294eba8339a6a4bf6a5e003092fc9628bce0e6cf9d59c2a631e",
+    "fixtures/validation/nullability-tablespec-prior-field-gate.log": "c26788d15b55ad48c642ff3fee6769289517e4f1f08d4d066bd6eda5f9c86da2",
+    "scripts/core-ideals/nullability-tablespec-cases.ts": "20c1955abb3157a9593be8d1b871f7886f236df2652867d04fd79ac3ec59eaf7",
+    "scripts/core-ideals/nullability-tablespec-classification-browser.ts": "cedba5e53f3d057c75792e4e9232300036a97e118663a161ab067251b85ebb82",
+    "scripts/core-ideals/nullability-tablespec-classification-oracle.py": "432428e2be1024e48f8a0ff61ff43a1b815976e0e3b2df0893ddafd42e62a2ad",
+    "scripts/core-ideals/nullability-tablespec-corpus.ts": "eb7aa861a0e7702a5d95c668e50cd8ac9072a88ab65c89c9cb5d9273276e0697",
+    "scripts/core-ideals/nullability-tablespec-package.ts": "4dd8b1a2e6b8bc7ad18ec13e473fb0d1f831690c67dbf19e9178ea5c20862b0d",
+    "scripts/core-ideals/nullability-tablespec-profile-browser.ts": "0b725a70e15834788eb7c13dad6885e32d05f38f862c803ca6f70355d4910529",
+    "scripts/core-ideals/nullability-tablespec-profile-oracle.py": "397fd775821360510139aa2626e0bc8a2bac19f6b63e40bcab46f746e6b8cf4e",
+    "scripts/core-ideals/nullability-tablespec-profile.ts": "4d08642ec71c04cf5c84ec618b956f6cd2a8779675752ce2899f4eee5fa89d10",
+    "scripts/core-ideals/nullability-tablespec-schema.ts": "aead3d0cf01442c70d460152cc42799776819129ab1fe1da4d9bf50b519a3230",
+    "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
+    "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
+    "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
+    "spec/extensions/tablespec-nullability/package.json": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
+    "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
+    "src/adapters/tablespec/index.ts": "fd0ffa134d31306303713f111b0eb2230e559bf84f5bc8038e75ffe1565342b8",
+    "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
+    "src/index.ts": "bdd14ec8815d2686422e3cce83e35fc56815432edf22a8264cf09ff62693dc43",
+    "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/types.ts": "68ab29ccfcd07c4add8fec8506184452ce97fafe53e125c4b575b9fdb65aedfd",
+    "src/validation/document.ts": "a2c7e7992f2365ab60e5651ab797a2a2a7c5e140745d2ab95564c6e3967e9b7c",
+    "src/validation/schema.ts": "1bcf83123ddec50c3df5704aed3bc144718c0f8f4250288141a3ae4f4d49ade6",
+    "tests/core-ideals/nullability-tablespec.test.ts": "85d8c062500fa8d19f0694b40e0c18801e6146c94157593d084284894be0a306"
+  }
+}

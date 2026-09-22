@@ -82,11 +82,12 @@ Use `ddx bead list --label plan:core-ideals`, `ddx bead ready` and
 `ddx bead status` to inspect execution state. Nullability core implementation
 has passed acceptance with the experimental 0.3.0 envelope, typed authoring,
 migration/rollback, selection and versioned Field kind/record-type receipts.
-Prior Field native/browser evidence has been rerun and its current gate passes.
+Prior Field native/browser evidence passed at core acceptance; the new TableSpec
+binding exports require another source-evidence refresh before binding acceptance.
 The TableSpec native Nullability binding is in progress: pinned schema/runtime
-coercion and contextual boundaries now have native and browser preservation
-evidence in TD-041. Its classification/projection and absence-carrier tests remain
-pending. The other four native bindings are ready; every later concept remains
+coercion and contextual boundaries have native/browser evidence, and selected
+profile/context classification now preserves its scope in a published extension.
+Authored down-projection and absence-carrier execution tests remain pending. The other four native bindings are ready; every later concept remains
 behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

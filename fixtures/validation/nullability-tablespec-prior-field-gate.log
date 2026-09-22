@@ -1,0 +1,23 @@
+39 |   for(const file of ['src/validation/document.ts','fixtures/validation/field-gate-refresh-evidence.json',...requiredProofs[name]!])assert.ok(Object.hasOwn(record.sha256,file),`${name}: missing required proof ${file}`);
+40 |   for(const [file,expected] of Object.entries(record.sha256)){
+41 |    assert.ok(!file.startsWith('/')&&!file.split('/').includes('..'),'Evidence path must be relative');
+42 |    assert.match(String(expected),/^[0-9a-f]{64}$/);
+43 |    const actual=createHash('sha256').update(await reader(file)).digest('hex');
+44 |    assert.equal(actual,expected,`${name}: stale ${file}`);fingerprints++;
+               ^
+AssertionError: field-core-acceptance-evidence: stale src/index.ts
++ actual - expected
+
++ 'bdd14ec8815d2686422e3cce83e35fc56815432edf22a8264cf09ff62693dc43'
+- 'bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2'
+
+ generatedMessage: false,
+     actual: "bdd14ec8815d2686422e3cce83e35fc56815432edf22a8264cf09ff62693dc43",
+   expected: "bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2",
+   operator: "strictEqual",
+       code: "ERR_ASSERTION"
+
+      at verifyFieldEvidence (/home/erik/Projects/umf/scripts/core-ideals/field-conformance.ts:44:11)
+      at processTicksAndRejections (native:7:39)
+
+Bun v1.3.14 (Linux arm64)

@@ -348,3 +348,85 @@ These are discovery and preservation results. They do not close the TableSpec
 binding bead, establish either Nullability round-trip direction, or provide native
 Nullability admission. Classification, strict/report projection, selected-context
 and absence-carrier execution tests remain required.
+
+### TableSpec up-classification result contract
+
+The first binding operation is `classifyTableSpecNullability(source, request)` on
+an explicitly migrated core 0.3.0 TableSpec document. The selected native column
+must already be an explicit Field; this operation does not migrate versions or
+reinterpret a record/group. Its request requires a column index, strict/report
+mode, profile (`runtime-model`, `checked-schema`, or `unresolved`), context (a
+nonempty exact key or null), and carrier (`null-value` or `unresolved`).
+`null-value` is the caller's explicit mapping of the native declared nullable value
+to ideal absence; it does not establish omitted-member or row-execution behavior.
+
+Only exact native booleans establish declared availability: false → required,
+true → absent-allowed. Scalar booleans require the selected runtime-model profile;
+the checked-schema profile rejects them. A map requires an explicitly selected key
+with an exact boolean value. Missing/null inputs, missing/null keys, coercible
+scalars, nonboolean context entries, unresolved profile or unresolved carrier
+produce unspecified plus a path-qualified residual. Strict mode blocks those
+unresolved mappings; report mode may return a complete target with unspecified.
+The original native map, unselected contexts and extension content remain attached.
+
+Classification is scoped to the requested context and carrier, retained in the
+receipt's mapping and request. A context-specific result is a semantic view for
+that context, never an unconditional statement about the other contexts. Whole
+native-document validation and executable enforcement are separate evidence.
+
+An existing nullability assertion requires a verified current author receipt for
+that exact member and an equal observed ideal value. Missing/stale provenance or
+a different assertion blocks in both modes. A classified result retains its entire
+source, request, native column fragment, binding version, diagnostics and residuals.
+Receipt verification recomputes the operation and compares the entire current
+target. Recovery returns the original monolithic text or complete split-file map;
+unknown and rejected native content is retained, not normalized.
+
+Publish a separate `urn:umf:core:tablespec-nullability-classification:1.0.0` schema
+for this operation. It must distinguish blocked receipts without targets from
+classified results, preserve declared/unknown/unsupported interpretation and
+require zero residuals for strict success. This is a partial binding implementation:
+authored down-projection and native absence-carrier execution tests remain required
+before the TableSpec bead can close.
+
+The classified target must also retain the chosen scope when serialized without
+its outer receipt. Attach `umf.tablespec.nullability` version 1.0.0 metadata to the
+selected element, with profile, context, carrier, interpretation, native path and
+binding identity. Publish that extension's schema/package and preserve all existing
+extension content. An existing marker or incompatible vocabulary version blocks;
+classification cannot silently replace its scope. This extension describes the
+binding, not a new core concept or proof of native execution. The full receipt is
+still required to verify provenance or recover an archived source after edits.
+
+
+### TableSpec up-classification implementation evidence
+
+`classifyTableSpecNullability`, `verifyTableSpecNullabilityClassification` and
+`recoverTableSpecNullabilitySource` now implement the result contract above.
+`tableSpecNullabilityClassificationSchema` describes the operation;
+`tableSpecNullabilityPackage` describes the retained element-level scope extension.
+Neither profile selection nor a declared core label claims native row enforcement.
+The new extension preserves unknown refinements and refuses scope replacement.
+
+The matrix covers 21 native cases in both native formats, three profiles, selected
+or missing context, and both policies: 504 operations, 272 classified targets,
+232 strict blocks and 544 JSON/YAML receipt/native recoveries. Forty operations
+observe exact declared booleans; the others retain unresolved meaning rather than
+using runtime coercion or defaults. Pinned Pydantic/schema checks reproduce the
+native declaration and recovery observations. Chromium reproduces all operations,
+544 recoveries, 232 blocks and 272 forged-scope refusals, retaining scope metadata
+on detached targets without external requests or host globals.
+
+Focused tests also cover author/provenance conflicts, unresolved carriers, role
+conflicts, getters, native precision, escaped context keys, unknown extensions,
+malformed scope payloads and split sidecars. TypeScript, 216 JSON Schemas and 33
+extension packages pass their checks. The browser build is 10,189,144 bytes.
+`fixtures/validation/nullability-tablespec-classification-evidence.json` records
+commands, counts, source hashes and limits.
+
+The prior Field gate intentionally fails its source fingerprint check at
+`src/index.ts` after these exports. Its old native/browser acceptance remains
+historical; no all-five regression claim is made for this change. Revalidation is
+required before binding acceptance. Authored TableSpec down-projection, the other
+round-trip direction and native absence-carrier execution tests remain pending;
+this up-classification work does not close the TableSpec bead or admit Nullability.
