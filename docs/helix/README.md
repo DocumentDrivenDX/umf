@@ -21,9 +21,11 @@ TableSpec and PostgreSQL Nullability bindings have passed qualified acceptance,
 including explicit scope/carrier metadata, strict/report projection and both
 recovery directions. Native checks preserve the differences between domain and
 column constraints, omission and NULL, and authored and observed availability.
-The prior five-system Field native/browser checks and current fingerprints pass
-after the PostgreSQL changes. SQL Server native availability discovery is in
-progress; its ideal binding, Avro and Parquet Nullability remain;
+The prior five-system Field native/browser checks and their fingerprints passed
+at the PostgreSQL checkpoint. SQL Server now has native discovery and scoped
+classification with exact source recovery. Its authored projection remains open,
+and Field gate fingerprints need revalidation after the API addition. Avro and
+Parquet Nullability remain;
 the experimental Nullability concept has not passed its five-system delivery gate.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).

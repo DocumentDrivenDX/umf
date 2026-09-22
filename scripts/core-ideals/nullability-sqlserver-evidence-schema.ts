@@ -1,0 +1,5 @@
+const text={type:'string'},bool={type:'boolean'},integer={type:'integer',minimum:0,maximum:2147483647};
+const object=(properties:Record<string,unknown>)=>({type:'object',required:Object.keys(properties),properties,additionalProperties:true});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:sqlserver:nullability-evidence:1.0.0',title:'Native SQL Server availability evidence supplement',...object({profile:{const:'umf-sqlserver-nullability-evidence-v2'},query:{type:'string',minLength:1},sourceSql:text,database_view_definition:{type:['boolean','null']},triggers:{type:'array',items:object({schema:text,table:text,name:text,is_disabled:bool,is_instead_of_trigger:bool,definition:{type:['string','null']}})},alias_types:{type:'array',items:object({schema:text,name:text,is_nullable:bool,default_object_id:integer,rule_object_id:integer})},column_refinements:{type:'array',items:object({schema:text,table:text,name:text,is_sparse:bool,generated_always_type:integer,is_hidden:bool,rule_object_id:integer})}})};
+await Bun.write('spec/extensions/sqlserver-nullability/native.schema.json',JSON.stringify(schema,null,2)+'\n');
+export {};

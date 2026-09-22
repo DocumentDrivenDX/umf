@@ -725,3 +725,54 @@ each preserve the complete native capture tree through JSON and YAML, including
 its additional metadata and original DDL string. Typechecking passes. Source and
 browser-bundle fingerprints are retained. These results qualify discovery only;
 they do not close the SQL Server binding bead or change the core schema.
+
+
+### SQL Server up-classification checkpoint
+
+`classifySqlServerNullability` now requires a core 0.3.0 Field and a captured
+SQL Server `16.0.4295.3` catalog-v3 source. The caller selects stored-relation
+scope and the SQL-NULL carrier explicitly. Query-result, write-input and unresolved
+scope/carrier produce unspecified plus residuals; strict mode blocks loss.
+Computed columns and assembly types require further interpretation. A noncomputed
+column's declared non-nullability is not interpreted as an input-omission rule.
+
+For absence permission, the binding requires a valid native availability
+supplement with database metadata visibility, exact selected-column refinements,
+and no unresolved enforcement. Enabled checks, foreign-key interactions, triggers,
+other computed columns, generated values, bound rules and unknown column
+refinements prevent that claim. Disabled checks remain attached; they do not
+assert current NULL enforcement. Alias nullability can be overridden at a column,
+but a bound alias rule remains unresolved. Unique nullable columns can permit
+absence while preserving uniqueness as a separate native constraint; no core
+identity is inferred.
+
+Review found that the discovery supplement also needed `sys.columns.rule_object_id`.
+The query now emits native profile `umf-sqlserver-nullability-evidence-v2`, and its
+published native JSON Schema describes all captured fields. Earlier v1 supplements
+remain recoverable but cannot establish absence permission. Integer tokens are
+checked before host conversion, including underflow values that could otherwise
+look like zero. Original DDL, source queries, unknown fields and unhandled native
+rules remain attached.
+
+The `umf.sqlserver.nullability` extension retains scope, carrier, interpretation
+and native path on the target Field. The classification operation schema describes
+source, request, observation, target, diagnostics and residuals. Existing author
+intent requires a matching current receipt; conflicting or stale provenance blocks
+both modes. Recovery recomputes the complete receipt, checks the current target
+and returns the exact retained capture text. It does not authenticate the capture
+or verify a live server.
+
+Native discovery still passes all 24 probes with ten expected native rejections.
+The classification matrix covers all 18 captured columns in 288 policy cases:
+156 targets, 132 strict blocks and 312 JSON/YAML capture-text recoveries. Chromium
+reproduces those results and refuses 156 altered receipts. Five focused Bun tests
+pass with 1,962 assertions. Typechecking, browser build and audits of 223 JSON
+Schemas / 35 packages pass. These results do not complete authored projection,
+ideal recovery or binding acceptance. The public library changed, so prior Field
+gate fingerprints require a native/browser rerun before SQL Server acceptance.
+
+The [classification checkpoint evidence](../../../../fixtures/validation/nullability-sqlserver-classification-evidence.json)
+also records 34 existing SQL Server/core Nullability regression tests with 687
+assertions, alongside the five focused tests. Both suites pass. Evidence hashes
+bind the native version, new supplement schema, public API, browser bundle and
+recovery checks; they do not close the broader delivery gate.

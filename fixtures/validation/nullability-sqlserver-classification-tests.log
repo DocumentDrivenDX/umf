@@ -1,0 +1,13 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/nullability-sqlserver.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [65996.10ms]
+(pass) CHECK UNKNOWN and untrusted constraints do not become unconditional permission [540.60ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1137.31ms]
+(pass) unknown native fields, legacy evidence and rules retain residuals with exact source recovery [2825.38ms]
+(pass) modified captures, incorrect envelope versions and unsafe numeric refinements refuse interpretation [600.04ms]
+
+ 5 pass
+ 0 fail
+ 1962 expect() calls
+Ran 5 tests across 1 file. [72.67s]

@@ -1,15 +1,26 @@
 {
-  "scope": "Browser import and JSON/YAML recovery of native SQL Server catalog and availability sidecar; native behavior runs separately; no ideal binding claim",
+  "scope": "Browser scoped SQL Server availability classification and native source recovery through JSON/YAML; native behavior runs separately; authored projection remains unfinished",
   "browser": "148.0.7778.0",
   "checks": {
     "nativeCasesRetained": 24,
     "catalogTreeRecoveries": 2,
-    "sidecarPreserved": true
+    "sidecarPreserved": true,
+    "classificationCases": 288,
+    "classified": 156,
+    "blocked": 132,
+    "exactSourceRecoveries": 312,
+    "forgedRefusals": 156
   },
   "externalRequests": [],
   "fingerprints": {
-    "fixtures/validation/nullability-sqlserver-native.json": "9ce4c7dd7cb98417b5e525a709955661453fc2a01530ab9d264dcc9e0ba1a8e7",
-    "dist/umf.js": "f1ddf2700d02e045dc3ff0782780e35141bfc3f3a1a53784a203d61c03644990",
-    "scripts/core-ideals/nullability-sqlserver-browser.ts": "9c19e3df7f46edba1b9f0b8a67a8928a76e0949710108fd64c29dc34c7d0eb69"
+    "fixtures/validation/nullability-sqlserver-native.json": "4bfa19b0ae74915095a9f46a16f5faa9364cf338c5fda5dfd07af000ef6e6e05",
+    "dist/umf.js": "0a2df8ad5aaba39cdcb0b2c35538335aa0f022dc50c10a3d6b23f78afd2e1fac",
+    "scripts/core-ideals/nullability-sqlserver-browser.ts": "0bd6f08756b8e06bb601d8b5e695b3e93dd2171ce2bd35ee4c0c7cb8c68c007d",
+    "scripts/core-ideals/nullability-sqlserver-cases.ts": "2ae939311ac05eb064c84a2b6107677ca9f415c00a6e2d3db3d36d7b8c92c37a",
+    "src/core-ideals/nullability-sqlserver.ts": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1",
+    "spec/core/sqlserver-nullability-classification.schema.json": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
+    "spec/extensions/sqlserver-nullability/native.schema.json": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0",
+    "spec/extensions/sqlserver-nullability/schema.json": "e05d7cad7550802d9014958dd0664c75571de8f71554779ed3ca6a65a1bf65a7",
+    "spec/extensions/sqlserver-nullability/package.json": "302cbd60ba8cb4704cd1c35d433720e391e6e5cb97d31939e58f245bf0a8b3fa"
   }
 }

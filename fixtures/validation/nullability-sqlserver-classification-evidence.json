@@ -1,0 +1,72 @@
+{
+  "phase": "SQL Server Nullability up-classification checkpoint",
+  "bindingAcceptance": false,
+  "nativeEquivalence": false,
+  "scope": "Captured SQL Server 16.0.4295.3 catalog-v3 stored-column declarations; explicit SQL-NULL carrier, versioned availability evidence for absence permission; exact native source recovery, not authored projection or live server verification",
+  "native": {
+    "cases": 24,
+    "expectedRejections": 10,
+    "profile": "umf-sqlserver-nullability-evidence-v2"
+  },
+  "browser": {
+    "nativeCasesRetained": 24,
+    "catalogTreeRecoveries": 2,
+    "sidecarPreserved": true,
+    "classificationCases": 288,
+    "classified": 156,
+    "blocked": 132,
+    "exactSourceRecoveries": 312,
+    "forgedRefusals": 156
+  },
+  "tests": {
+    "classification": {
+      "tests": 5,
+      "assertions": 1962,
+      "failures": 0
+    },
+    "existingSqlServerAndCoreNullability": {
+      "tests": 34,
+      "assertions": 687,
+      "files": 10,
+      "failures": 0
+    }
+  },
+  "checks": {
+    "typecheck": "passed",
+    "browserBuildBytes": 10264786,
+    "jsonSchemas": 223,
+    "extensionPackages": 35
+  },
+  "remaining": [
+    "Authored SQL Server projection in strict/report modes",
+    "Ideal-to-native-to-ideal recovery with explicit residuals",
+    "Refresh five-system Field native/browser evidence after library changes",
+    "Full SQL Server Nullability binding acceptance"
+  ],
+  "fingerprints": {
+    "src/index.ts": "ed253eeb52fd685ea3dae60d1da65593c80ddda29e44fdce65bd5fccd8a9e672",
+    "src/core-ideals/nullability-sqlserver.ts": "cb07ab3f85f848133f987fa407d4279139468701f678b6d07da041201c1b97d1",
+    "src/adapters/sqlserver/index.ts": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40",
+    "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/validation/catalog-integers.ts": "123154d1bd113d31bb4d0fe6521bbeb04a24c4852c20d4e3e74777822531686c",
+    "native/sqlserver/nullability.sql": "a1e9588871c9ac0f31c837ad54aa3fa063c3e6c1cab6d1e793980bfe42894fd9",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
+    "spec/core/sqlserver-nullability-classification.schema.json": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
+    "spec/extensions/sqlserver-nullability/package.json": "302cbd60ba8cb4704cd1c35d433720e391e6e5cb97d31939e58f245bf0a8b3fa",
+    "spec/extensions/sqlserver-nullability/schema.json": "e05d7cad7550802d9014958dd0664c75571de8f71554779ed3ca6a65a1bf65a7",
+    "spec/extensions/sqlserver-nullability/native.schema.json": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0",
+    "scripts/core-ideals/nullability-sqlserver-schema.ts": "f1227f226debdd911a2e29af6078b10b5655c982d6d63c120d3139ffb1a2f6d3",
+    "scripts/core-ideals/nullability-sqlserver-package.ts": "418ffa9f434119c320b61207c31ccaefd86b0ef3ae4ef048d2d6a276f4ce0cf2",
+    "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts": "70bd67294d855397aedf3101c0bd7280d3e17910f9d51e3e5d7d4053ab5e62a6",
+    "scripts/core-ideals/nullability-sqlserver-cases.ts": "2ae939311ac05eb064c84a2b6107677ca9f415c00a6e2d3db3d36d7b8c92c37a",
+    "scripts/core-ideals/nullability-sqlserver-browser.ts": "0bd6f08756b8e06bb601d8b5e695b3e93dd2171ce2bd35ee4c0c7cb8c68c007d",
+    "scripts/core-ideals/nullability-sqlserver-oracle.ts": "a7f93267615ebfb240b151b2e9e21e247c617c9004f085782c9638cb37b5a202",
+    "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3",
+    "fixtures/validation/nullability-sqlserver-native.json": "4bfa19b0ae74915095a9f46a16f5faa9364cf338c5fda5dfd07af000ef6e6e05",
+    "fixtures/validation/nullability-sqlserver-browser.json": "1860cb2b0fd826446ee57ef3c61d8d6c1e345d8fb718ffeb578f060bffd14ac5",
+    "fixtures/validation/nullability-sqlserver-classification-tests.log": "d1fcf8f8489603a8e9ae1bda45d577d9f894e5cd39b7d250ca46e95b14f1dda9",
+    "fixtures/validation/nullability-sqlserver-regression-tests.log": "77702454b1856c5b1ab20bb856e5f8b29b298f48372e9eb759a9eeff813547bb",
+    "dist/umf.js": "0a2df8ad5aaba39cdcb0b2c35538335aa0f022dc50c10a3d6b23f78afd2e1fac"
+  }
+}
