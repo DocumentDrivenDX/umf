@@ -46,3 +46,16 @@ test('dependency changes and large uninterpreted native tokens cannot be hidden 
  expect(unknown.nativeBundle!.schema).toContain('9007199254740993');expect(unknown.residuals.some(x=>x.path==='/request/nativeType')).toBe(true);
  expect(projectCardinalityToAvro(author('one'),{...base,nativeType:'{"type":"long","future":9007199254740993}'}).status).toBe('blocked');
 });
+
+test('fresh native ingestion composes with retained ideal recovery without inventing original author intent',async()=>{
+ const {avroCardinalityProjectionCases}=await import('../../scripts/core-ideals/cardinality-avro-projection-cases');
+ const {verifyAvroCardinalityComposition}=await import('../../scripts/core-ideals/cardinality-avro-composition');
+ let emitted=0,differentNativeShape=0;
+ for(const c of avroCardinalityProjectionCases()){
+  const r=projectCardinalityToAvro(c.author,c.request);if(!r.nativeBundle)continue;
+  const checked=verifyAvroCardinalityComposition(r);emitted++;
+  expect(checked.nativeRecoveries).toBe(2);expect(checked.idealRecoveries).toBe(2);
+  if(checked.nativeCardinality!==checked.authoredCardinality){differentNativeShape++;expect(r.mapping.outcome).not.toBe('exact');}
+ }
+ expect(emitted).toBe(52);expect(differentNativeShape).toBeGreaterThan(0);
+},120000);

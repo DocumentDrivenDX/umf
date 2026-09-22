@@ -1,16 +1,22 @@
 {
   "scope": "Explicit Avro carrier projection and retained ideal recovery; binding acceptance remains pending",
-  "cases": 66,
-  "blocked": 22,
-  "recoveries": 88,
+  "cases": 78,
+  "blocked": 26,
+  "recoveries": 104,
+  "nativeRecoveries": 104,
   "sha256": {
-    "scripts/core-ideals/cardinality-avro-projection-oracle.ts": "904f131a2eed0ed9bcf87d3f7dea2c14cb6133239f58f3877a9a4a779935b127",
+    "scripts/core-ideals/cardinality-avro-composition.ts": "736c487f415c0127b0be4efc07dba9b46c81247330ecffe603f98bfff0d791ac",
+    "scripts/core-ideals/nullability-avro-cases.ts": "2d8cab7209f85499b4d71d6d81456cbae4a6f13b6650dedaa2688c604995b4e6",
+    "src/core-ideals/cardinality-avro.ts": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "spec/core/avro-cardinality-classification.schema.json": "da852a89ce4a640463260e538c2578ddde8faa7df6f7ac0215ac906b6b84f5b2",
+    "scripts/core-ideals/cardinality-avro-projection-oracle.ts": "e58653aa840d451a082a5980c608305823d217f4ccfa37a620b90c92e0c5efce",
     "scripts/core-ideals/cardinality-avro-projection-native.py": "7e2398e3250019af4bd08d2a676e8ea48b6bbf31184bf333392b57b29b063457",
-    "scripts/core-ideals/cardinality-avro-projection-cases.ts": "7b0085bd6e03205dda2d3b321de8fe7384b42b8aa3fe5beb378288944597f6e7",
+    "scripts/core-ideals/cardinality-avro-projection-cases.ts": "014a5deddd435b8605693003c26163f9f959291fce960fedd0ad9e8be6350f70",
     "src/core-ideals/cardinality-avro-projection.ts": "940e86a30c5bbabaf6fb2b70ff129c4cc6cd67a382dd18a199b46138d161c3ed",
     "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
     "spec/core/cardinality-avro-projection.schema.json": "7c98751948cf60dba920fb786fda3ed66d787e1405bf51b7383dba297592b194",
-    "fixtures/validation/cardinality-avro-projection-candidates.json": "f2c7bac8afe359d6b599d1e10f1a83e89429cadf11ec23f5fa8746d1c6f972ca",
-    "fixtures/validation/cardinality-avro-projection-native.json": "90ef2aa46c440b0bc2507535785bbd8e1a5a2e0fdf412fad8937ca49744e999e"
+    "fixtures/validation/cardinality-avro-projection-candidates.json": "eaf85242ca74228390ae87969810bec0d3e672a144cb3ac767e017129b0bb4bc",
+    "fixtures/validation/cardinality-avro-projection-native.json": "4671521ca86c13d4c7afad1ad9d810f7aabc19a18ca3352bfd153c051e16e124"
   }
 }

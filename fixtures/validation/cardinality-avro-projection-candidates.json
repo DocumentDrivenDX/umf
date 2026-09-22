@@ -7,6 +7,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 7
       },
@@ -20,6 +27,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": 7
@@ -38,6 +52,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "one",
+        "nativeNodes": 2
       },
       "sample": {
         "value": [
@@ -65,6 +86,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "one",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": {
           "a": 2
@@ -87,6 +115,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "array",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 7
       },
@@ -104,6 +139,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "array",
+        "nativeNodes": 2
       },
       "sample": {
         "value": [
@@ -131,6 +173,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "array",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": {
           "a": 2
@@ -153,6 +202,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "map",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 7
       },
@@ -170,6 +226,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "map",
+        "nativeNodes": 2
       },
       "sample": {
         "value": [
@@ -197,6 +260,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "map",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": {
           "a": 2
@@ -219,6 +289,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "unspecified",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 7
       },
@@ -236,6 +313,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "unspecified",
+        "nativeNodes": 2
       },
       "sample": {
         "value": [
@@ -263,6 +347,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"map\",\"values\":\"long\"}}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "unspecified",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": {
           "a": 2
@@ -281,6 +372,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": true
       },
@@ -294,6 +392,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": true
@@ -313,6 +418,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"boolean\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": true
       },
@@ -327,6 +439,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 2147483647
       },
@@ -340,6 +459,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": 2147483647
@@ -359,6 +485,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 2147483647
       },
@@ -372,6 +505,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": {
@@ -390,6 +530,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": {
@@ -413,6 +560,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"long\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": {
           "$integer": "9223372036854775807"
@@ -431,6 +585,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"float\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 1.0000000000000002
       },
@@ -444,6 +605,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"float\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": 1.0000000000000002
@@ -463,6 +631,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"float\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 1.0000000000000002
       },
@@ -477,6 +652,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 1.0000000000000002
       },
@@ -490,6 +672,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": 1.0000000000000002
@@ -509,6 +698,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"double\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": 1.0000000000000002
       },
@@ -522,6 +718,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": {
@@ -540,6 +743,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": {
@@ -563,6 +773,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"bytes\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": {
           "$bytes": "00ff"
@@ -581,6 +798,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"string\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": "snow-雪"
       },
@@ -594,6 +818,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"string\"}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": "snow-雪"
@@ -613,6 +844,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"string\"}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": "snow-雪"
       },
@@ -626,6 +864,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"long\"}}]}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "array",
+        "nativeNodes": 4
       },
       "sample": {
         "value": [
@@ -658,6 +903,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"long\"}}]}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "array",
+        "nativeNodes": 4
       },
       "sample": {
         "value": [
@@ -695,6 +947,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"long\"}}]}}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "array",
+        "nativeNodes": 4
+      },
       "sample": {
         "value": [
           null,
@@ -731,6 +990,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "map",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": {
           "__proto__": "own",
@@ -751,6 +1017,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "map",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": {
           "__proto__": "own",
@@ -770,6 +1043,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "map",
+        "authoredCardinality": "map",
+        "nativeNodes": 2
       },
       "sample": {
         "value": {
@@ -796,6 +1076,13 @@
           }
         ]
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": "A"
       },
@@ -815,6 +1102,13 @@
           }
         ]
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
       "sample": {
         "value": "A"
       },
@@ -832,6 +1126,13 @@
       "bundle": {
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"future\":\"retained\"}}]}\n",
         "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
       },
       "sample": {
         "value": 7
@@ -851,6 +1152,13 @@
         "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"long\"}}]}\n",
         "dependencies": []
       },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "array",
+        "nativeNodes": 2
+      },
       "sample": {
         "value": [
           2,
@@ -865,8 +1173,251 @@
           2
         ]
       }
+    },
+    {
+      "id": "avro-cardinality-66",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-67",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":\"null\"}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "unspecified",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": null
+      },
+      "expectedValue": {
+        "value": null
+      }
+    },
+    {
+      "id": "avro-cardinality-68",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-69",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[{\"type\":\"array\",\"items\":\"long\"},{\"type\":\"map\",\"values\":\"long\"}]}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "unspecified",
+        "authoredCardinality": "array",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "avro-cardinality-70",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-71",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":[{\"type\":\"array\",\"items\":\"long\"},{\"type\":\"map\",\"values\":\"long\"}]}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "unspecified",
+        "authoredCardinality": "map",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": {
+          "a": 2
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "a": 2
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-72",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"Bytes2\",\"size\":2}}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-73",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"Bytes2\",\"size\":2}}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "$bytes": "00ff"
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-74",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"record\",\"name\":\"Node\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"children\",\"type\":{\"type\":\"array\",\"items\":\"Node\"}}]}}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": {
+          "id": 1,
+          "children": [
+            {
+              "id": 2,
+              "children": []
+            }
+          ]
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "id": 1,
+          "children": [
+            {
+              "id": 2,
+              "children": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-75",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"record\",\"name\":\"Node\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"children\",\"type\":{\"type\":\"array\",\"items\":\"Node\"}}]}}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "one",
+        "authoredCardinality": "one",
+        "nativeNodes": 1
+      },
+      "sample": {
+        "value": {
+          "id": 1,
+          "children": [
+            {
+              "id": 2,
+              "children": []
+            }
+          ]
+        }
+      },
+      "expectedValue": {
+        "value": {
+          "id": 1,
+          "children": [
+            {
+              "id": 2,
+              "children": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "avro-cardinality-76",
+      "status": "blocked"
+    },
+    {
+      "id": "avro-cardinality-77",
+      "status": "projected",
+      "bundle": {
+        "schema": "{\"type\":\"record\",\"name\":\"Example\",\"namespace\":\"\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"array\",\"items\":\"null\"}}]}\n",
+        "dependencies": []
+      },
+      "composed": {
+        "nativeRecoveries": 2,
+        "idealRecoveries": 2,
+        "nativeCardinality": "array",
+        "authoredCardinality": "array",
+        "nativeNodes": 2
+      },
+      "sample": {
+        "value": [
+          null,
+          null
+        ]
+      },
+      "expectedValue": {
+        "value": [
+          null,
+          null
+        ]
+      }
     }
   ],
-  "blocked": 22,
-  "recoveries": 88
+  "blocked": 26,
+  "recoveries": 104,
+  "nativeRecoveries": 104
 }

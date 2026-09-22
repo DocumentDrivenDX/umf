@@ -36,5 +36,19 @@ export function avroCardinalityProjectionCases():AvroCardinalityProjectionCase[]
  {
   const d=doc();add(declareCoreCardinality(d,{module:'m',element:'f'},{cardinality:'array',itemType:{module:'m',element:'f'}}),{type:'array',items:'long'},{value:[2,1,2]});
  }
+ // Native shapes that cannot be recovered by assuming every valid field is singular.
+ add(declareCoreCardinality(doc(),{module:'m',element:'f'},{cardinality:'one'}),'null',{value:null});
+ const mixed=[{type:'array',items:'long'},{type:'map',values:'long'}];
+ add(declareCoreCardinality(doc(),{module:'m',element:'f'},{cardinality:'array'}),mixed,{value:[2,1,2]});
+ add(declareCoreCardinality(doc(),{module:'m',element:'f'},{cardinality:'map'}),mixed,{value:{a:2}});
+ {
+  const d=doc();d.modules[0]!.elements[0]!.scalarType='binary';
+  add(declareCoreCardinality(d,{module:'m',element:'f'},{cardinality:'one'}),{type:'fixed',name:'Bytes2',size:2},{value:{$bytes:'00ff'}});
+ }
+ add(declareCoreCardinality(doc(),{module:'m',element:'f'},{cardinality:'one'}),{type:'record',name:'Node',fields:[{name:'id',type:'long'},{name:'children',type:{type:'array',items:'Node'}}]},{value:{id:1,children:[{id:2,children:[]}]}});
+ {
+  const d=doc();d.modules[0]!.elements.push({id:'item',kind:'field',cardinality:'one',scalarType:'integer',nullability:'absent-allowed',extensions:{}});
+  add(declareCoreCardinality(d,{module:'m',element:'f'},{cardinality:'array',itemType:{module:'m',element:'item'}}),{type:'array',items:'null'},{value:[null,null]});
+ }
  return rows;
 }

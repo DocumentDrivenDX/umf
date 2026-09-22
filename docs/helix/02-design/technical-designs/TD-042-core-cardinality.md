@@ -697,3 +697,21 @@ pass. Proofs are `fixtures/validation/cardinality-avro-projection-{oracle,native
 This is an implementation checkpoint. Composed fresh-native classification/recovery,
 expanded edge coverage, review and the full acceptance refresh remain required;
 the Avro binding and separate Cardinality admission/delivery gate remain open.
+
+### Avro composed recovery checkpoint
+
+Fresh ingestion of each emitted candidate now classifies its native schema without
+the original author receipt. For exact mappings, every mapped Field's shape, scalar
+family and selected availability observation agrees. Report-mode native shapes may
+differ from the original ideal; only the retained projection receipt recovers that
+intent. Both fresh native and retained ideal receipts pass JSON/YAML recovery.
+
+The expanded matrix covers null-only types/items, mixed array/map branches, fixed
+values and recursive records: 78 cases, 52 candidates, 26 strict blocks, 104 ideal
+recoveries and 104 fresh-native recoveries. Both pinned Python codecs pass 208
+cross-codec reads with 12 explicit float narrowings. Chromium reproduces all results
+and refuses 52 forged projection receipts. Five projection tests pass (207 assertions).
+The combined `cardinality-avro-oracle.ts` and `cardinality-avro-browser.ts` entrypoints
+validate their child-proof fingerprints. The full shared-library acceptance refresh
+and separate conformance gates remain pending; this checkpoint does not close the
+Avro binding or admit Cardinality.

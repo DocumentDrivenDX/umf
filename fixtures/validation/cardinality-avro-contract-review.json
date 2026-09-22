@@ -1,0 +1,31 @@
+{
+  "method": "Focused local contract review; not an independent-agent review or binding acceptance",
+  "checks": [
+    "Ideal/native equivalence remain separate; no source extension is removed",
+    "Field kind and explicit schema/value scope precede classification; null-only and mixed branches retain residuals",
+    "Nested item and definition locations remain qualified; invalid/default/metadata locations do not become type syntax",
+    "Projection uses explicit native types; missing item meaning, native diagnostics, unknown metadata and exact-value obligations are reported",
+    "Container/member availability uses a selected null-value carrier, never writer omission or reader defaults",
+    "Composed fresh ingestion checks exact shape/family/availability and preserves both receipt directions",
+    "Permanent float narrowing, raw duplicate keys and browser __proto__ discrepancy remain explicit",
+    "All candidate identities, dependency bundles, stale targets and forged receipts have refusal checks"
+  ],
+  "findings": [],
+  "remaining": [
+    "Full five-system native/browser refresh and priority regression",
+    "Existing Field and Nullability conformance gates",
+    "Acceptance fingerprint audit and queue closure"
+  ],
+  "sha256": {
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "95334608300541cad7f135fb3f381783e403da21dcc155a7b50800c834a019df",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "c80fda4ce1f05f0fec06119d6c3dc581963e5b68b7559e9526550a85f69ed4b3",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
+    "src/core-ideals/cardinality-avro.ts": "0e257e02e095a5807d7fc67e74bdeb2e6fccd721f0d30176635aab58866f470f",
+    "src/core-ideals/cardinality-avro-projection.ts": "940e86a30c5bbabaf6fb2b70ff129c4cc6cd67a382dd18a199b46138d161c3ed",
+    "tests/core-ideals/cardinality-avro.test.ts": "4c0d77d0e291d145b06bcbae9b7f372f8ffa093d7bdad2c85fe52d7980ef1c6f",
+    "tests/core-ideals/cardinality-avro-projection.test.ts": "bcef8b46f5b666337c62062343ad4600474f268ad7684070e08748a30b6ce260",
+    "tests/core-ideals/avro-cardinality-type.test.ts": "3b889213ad8f65ffe3cd39bbbb839f2c8aa5829b84fe2320b1b79a897b30b42a",
+    "fixtures/validation/cardinality-avro-native.json": "40df56f3cbead976fa1373d5e1361c6d46b739a7e72d7e117268435592af7d3e",
+    "fixtures/validation/cardinality-avro-browser.json": "418e073e16f6c4766c3553ef9a536315cc9f69eabc1a2864996aa15658c1652c"
+  }
+}
