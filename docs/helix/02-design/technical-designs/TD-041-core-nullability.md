@@ -1079,3 +1079,56 @@ schemas, strict/report losses and final binding acceptance remain unfinished.
 The [discovery checkpoint](../../../../fixtures/validation/nullability-parquet-discovery-evidence.json)
 records Chromium parity for all 100 files / 200 recoveries without host globals or
 external requests, typechecking, and 6 focused tests / 1,125 assertions.
+
+
+### Parquet scoped Nullability classification
+
+`classifyParquetNullability` now consumes a valid core 0.3.0 Field and its retained
+Parquet capture. Physical schema topology and container structure must be checked.
+The request selects a physical leaf by schema index, an explicit
+`definition-level` absence carrier and one of two supported contexts:
+
+- `row-leaf-value` includes optional ancestors from the root through the leaf.
+  Any optional node permits absence. Repeated paths refuse this scalar row claim.
+- `repeated-element-value` assumes the selected innermost repeated entry exists.
+  Optional nodes after that entry boundary permit absence; earlier optional
+  parents and empty containers do not establish nullability within that entry.
+  A repeated primitive itself is required per existing entry. A path without a
+  repeated boundary refuses this context.
+
+Writer-input or unresolved scopes remain unspecified with residuals in report
+mode and block in strict mode. Groups are not projected as physical leaf values.
+The result retains the entire ancestry, the context index, native fragment and
+source paths contributing optionality. `umf.parquet.nullability` keeps scope,
+carrier and repetition level next to the core label. Repetition remains native
+metadata; this operation neither assigns scalar cardinality nor promotes it.
+
+Physical declarations do not validate writer inputs, pages or logical annotations.
+Embedded Arrow schemas, source masks that were actually stored, unknown metadata
+and physical encodings remain in the captured bytes. The classifier does not
+replace physical declarations with Arrow metadata or infer portable defaults
+from the native writer's masked-buffer behavior.
+
+Existing ideal labels require matching verified author receipts; conflicts,
+altered scope payloads and incompatible vocabulary versions block. The verifier
+recomputes the complete classification and checks the unchanged target.
+`recoverParquetNullabilityBytes` then exports the original capture, including all
+unclaimed pages and metadata. These checks establish consistency, not authenticity.
+
+Operation/result and retained-scope JSON Schemas accompany the package. The native
+oracle now verifies classification against independent PyArrow schema observations
+for all 132 physical leaves, followed by 264 exact byte recoveries and native
+schema/value rechecks. The original 120 writer cases remain separate evidence of
+input behavior. Both row and entry contexts are tested through JSON/YAML, with
+conflict, getter, malformed-request and stale-receipt refusals. Legacy one- and
+two-level repeated primitives also retain exact source bytes.
+
+Authored projection and final Parquet binding acceptance remain unfinished. The
+Field gate requires its normal evidence refresh after this public API addition;
+the five-system Nullability delivery gate remains open.
+
+The [classification checkpoint](../../../../fixtures/validation/nullability-parquet-classification-evidence.json)
+records four tests across two runs / 3,678 assertions, typechecking, 229 schema
+audits / 37 packages and the browser build. Chromium passes 640 classification
+cases, 720 exact byte recoveries and 360 altered-receipt refusals, alongside
+the 100-file discovery corpus. This supersedes its discovery-only status above.

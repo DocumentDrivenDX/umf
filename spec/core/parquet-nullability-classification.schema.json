@@ -1,0 +1,350 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:parquet-nullability-classification:1.0.0",
+  "title": "Parquet scoped physical availability classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-parquet-nullability"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index",
+        "mode",
+        "scope",
+        "carrier"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "row-leaf-value",
+            "repeated-element-value",
+            "write-input",
+            "unresolved"
+          ]
+        },
+        "carrier": {
+          "enum": [
+            "definition-level",
+            "unresolved"
+          ]
+        },
+        "author": {
+          "$ref": "urn:umf:core:nullability-operation:1.0.0#/$defs/declaration"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.parquet.nullability",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "nativeFragment",
+        "nullability",
+        "interpretation",
+        "outcome",
+        "scope",
+        "carrier",
+        "basis",
+        "ancestry",
+        "contextIndex",
+        "absencePaths"
+      ],
+      "properties": {
+        "origin": {
+          "const": "classified"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativeFragment": {},
+        "nullability": {
+          "enum": [
+            "required",
+            "absent-allowed",
+            "unspecified"
+          ]
+        },
+        "interpretation": {
+          "enum": [
+            "declared",
+            "unknown",
+            "unsupported"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "unknown",
+            "not-expressible"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "row-leaf-value",
+            "repeated-element-value",
+            "write-input",
+            "unresolved"
+          ]
+        },
+        "carrier": {
+          "enum": [
+            "definition-level",
+            "unresolved"
+          ]
+        },
+        "basis": {
+          "const": "Physical definition-level availability in the selected context; repeated cardinality, writer inputs, Arrow metadata and logical refinements remain separate"
+        },
+        "ancestry": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "index",
+              "repetition",
+              "definitionLevel",
+              "repetitionLevel"
+            ],
+            "properties": {
+              "index": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "repetition": {
+                "enum": [
+                  "required",
+                  "optional",
+                  "repeated"
+                ]
+              },
+              "definitionLevel": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "repetitionLevel": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "contextIndex": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "absencePaths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Retain the complete source and native archive; unknown native meaning is not replaced by the core label"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              },
+              "interpretation": {
+                "const": "declared"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

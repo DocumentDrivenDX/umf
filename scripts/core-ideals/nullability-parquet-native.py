@@ -6,6 +6,18 @@ assert pa.__version__=='21.0.0'
 root=Path('fixtures/parquet/nullability');root.mkdir(parents=True,exist_ok=True)
 cases=[]
 metadata={b'future.meaning':b'unclassified',b'future.exact':b'9007199254740993'}
+def native_availability(schema):
+ result=[]
+ def visit(field,ancestor=False,repeated=False):
+  optional=ancestor or field.nullable
+  if pa.types.is_struct(field.type):
+   for child in field.type:visit(child,optional,repeated)
+  elif pa.types.is_list(field.type):visit(field.type.value_field,False,True)
+  elif pa.types.is_map(field.type):
+   visit(field.type.key_field,False,True);visit(field.type.item_field,False,True)
+  else:result.append({'row':'unspecified' if repeated else 'absent-allowed' if optional else 'required','element':('absent-allowed' if optional else 'required') if repeated else 'unspecified'})
+ for field in schema:visit(field)
+ return result
 def add(kind,parent,member,label,input,field,expected,rejected=False,array=None,hidden=None):
  expected=json.loads(json.dumps(expected))
  for embedded in [False,True]:
@@ -20,6 +32,8 @@ def add(kind,parent,member,label,input,field,expected,rejected=False,array=None,
    # JSON normalizes map pair tuples solely in the evidence representation.
    assert not rejected,(id,'Unexpected native acceptance');assert json.loads(json.dumps(back))==[expected],(id,back,expected)
    payload=path.read_bytes();record.update({'outcome':'accepted','path':str(path),'bytes':len(payload),'sha256':hashlib.sha256(payload).hexdigest(),'output':back,'physicalSchema':'\n'.join(str(file.schema).splitlines()[1:]),'columns':[{'name':file.schema.column(i).name,'path':file.schema.column(i).path,'definitionLevel':file.schema.column(i).max_definition_level,'repetitionLevel':file.schema.column(i).max_repetition_level} for i in range(len(file.schema))],'footerMetadata':{k.decode():v.decode() for k,v in (file.metadata.metadata or {}).items() if k!=b'ARROW:schema'},'embeddedArrow':b'ARROW:schema' in (file.metadata.metadata or {})})
+   record['leafAvailability']=native_availability(file.schema_arrow)
+   assert len(record['leafAvailability'])==len(record['columns'])
    assert record['embeddedArrow']==embedded
    assert record['footerMetadata']==({k.decode():v.decode() for k,v in metadata.items()} if embedded else {})
   except AssertionError:raise

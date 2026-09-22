@@ -1,18 +1,28 @@
 {
-  "scope": "Discovery corpus physical field-level parity and exact native byte recovery; core Nullability classification/projection remain unfinished",
+  "scope": "Scoped physical Nullability classification, native level parity and exact byte recovery; authored projection is checked separately",
   "browser": "148.0.7778.0",
   "checks": {
     "files": 100,
     "columns": 132,
-    "recoveries": 200
+    "recoveries": 200,
+    "classificationCases": 640,
+    "classified": 360,
+    "blocked": 280,
+    "classificationRecoveries": 720,
+    "forgedRefusals": 360
   },
   "externalRequests": [],
   "fingerprints": {
-    "fixtures/validation/nullability-parquet-native.json": "5bbe96e91baa74f17520b79af5a9d9b7cebf0bde7cd3f45c6cae24eab434e5be",
-    "dist/umf.js": "2a5ef707295f68dff2675e4fb3428575fb0dd410e960889852215dec8b490ffd",
-    "scripts/core-ideals/nullability-parquet-browser.ts": "072a3f7f26917f9d8809404459d635ec45d57bbcceb10623b0a0a7d8094d10b1",
+    "fixtures/validation/nullability-parquet-native.json": "e59c49b0777358e53ede72436479d3ed2be779b33f9c1fce6940ba37945e467c",
+    "dist/umf.js": "0bad731876e46d3179343f9cbac3bfd80cbb6110d4643117616a98ceb2f7b5cf",
+    "scripts/core-ideals/nullability-parquet-browser.ts": "aa2244e4915a685e6af505d8e9ee6b9a6acba9bc15718a008def8097a2f04134",
     "src/adapters/parquet/field-metadata.ts": "fcc4301f5862fd6d12f215f1514d18c09918805d94402959bc52ffe2652028af",
     "src/adapters/parquet/index.ts": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5",
+    "scripts/core-ideals/nullability-parquet-cases.ts": "a8db9f0cf20560febe0eacac993a1617b043cb49f2b13a570c364bc0e561162c",
+    "src/core-ideals/nullability-parquet.ts": "e81a1e5978a648be9998e516e5efdbd6112950e12eb2b19bc6ee7866a2aa06cc",
+    "spec/core/parquet-nullability-classification.schema.json": "809dfbb4d0a51cb3347e23cedcd70e18519f345df3b2376ce2ca292f096131cf",
+    "spec/extensions/parquet-nullability/schema.json": "62224ce5cd5dc29b9f4b38120ec47ba1b8b36d5dd7e78be53dad77e9642224ff",
+    "spec/extensions/parquet-nullability/package.json": "25162b0220094da8e5199e502dfb70158aff5c434391005cef9024c7f0d7fd81",
     "fixtures/parquet/nullability/scalar-0-0-present-0.parquet": "655e52fb5c0f8b101803f9270c06a2c0a9acbeb28c44403dafb063eaaff5ef7a",
     "fixtures/parquet/nullability/scalar-0-0-present-1.parquet": "aa885843309228f4abfc5d3a0f9447174c93d0031970b2a647cf172ee815bbda",
     "fixtures/parquet/nullability/struct-0-0-parent-null-0.parquet": "17535e7ddadcfd451fdad2f87df414ab33711eb5ceb27b3a68973e50cf6d7d0a",

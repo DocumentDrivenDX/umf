@@ -21,11 +21,13 @@ TableSpec, PostgreSQL, SQL Server and Avro Nullability bindings have passed
 qualified acceptance, including explicit scope/carrier metadata, strict/report
 projection and both retained recovery directions. Native checks preserve the
 differences between stored values, writer inputs, reader resolution and query
-results. All five prior Field bindings have fresh native/browser evidence and
-the Field conformance gate passes. See the
+results. All five Field bindings passed native/browser checks and the Field
+conformance gate at the Avro acceptance checkpoint. See the
 [Avro acceptance record](../../fixtures/validation/avro-nullability-acceptance-evidence.json).
-Parquet Nullability is in progress with native discovery and exact source
-recovery evidence; classification and authored projection remain. The
+Parquet Nullability now has scoped physical classification and exact byte
+recovery, including optional ancestors and repeated-entry context. Authored
+projection and final acceptance remain. The Field gate needs its evidence
+refresh after this public API addition. The
 experimental 0.3.0 concept has not passed its
 five-system delivery gate. No native equivalence is claimed.
 Cardinality, facets and key follow Nullability. See the

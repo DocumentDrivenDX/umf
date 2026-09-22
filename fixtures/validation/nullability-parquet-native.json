@@ -141,7 +141,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "scalar-0-0-present-1",
@@ -185,7 +191,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-0-parent-null-0",
@@ -230,7 +242,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-0-parent-null-1",
@@ -278,7 +296,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-0-child-null-0",
@@ -447,7 +471,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-0-present-1",
@@ -499,7 +529,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "list-0-0-null-0",
@@ -540,7 +576,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-0-0-null-1",
@@ -584,7 +626,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-0-0-empty-0",
@@ -625,7 +673,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-0-0-empty-1",
@@ -669,7 +723,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-0-0-null-member-0",
@@ -780,7 +840,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-0-0-present-1",
@@ -832,7 +898,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-0-0-null-0",
@@ -879,7 +951,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-0-0-null-1",
@@ -929,7 +1011,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-0-0-empty-0",
@@ -976,7 +1068,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-0-0-empty-1",
@@ -1026,7 +1128,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-0-0-null-member-0",
@@ -1173,7 +1285,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-0-0-present-1",
@@ -1243,7 +1365,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "struct-0-1-parent-null-0",
@@ -1288,7 +1420,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-parent-null-1",
@@ -1336,7 +1474,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-child-null-0",
@@ -1385,7 +1529,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-child-null-1",
@@ -1437,7 +1587,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-child-omitted-0",
@@ -1484,7 +1640,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-child-omitted-1",
@@ -1534,7 +1696,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-present-0",
@@ -1583,7 +1751,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-1-present-1",
@@ -1635,7 +1809,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "list-0-1-null-0",
@@ -1676,7 +1856,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-null-1",
@@ -1720,7 +1906,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-empty-0",
@@ -1761,7 +1953,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-empty-1",
@@ -1805,7 +2003,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-null-member-0",
@@ -1854,7 +2058,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-null-member-1",
@@ -1906,7 +2116,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-present-0",
@@ -1955,7 +2171,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-1-present-1",
@@ -2007,7 +2229,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-null-0",
@@ -2054,7 +2282,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-null-1",
@@ -2104,7 +2342,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-empty-0",
@@ -2151,7 +2399,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-empty-1",
@@ -2201,7 +2459,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-null-member-0",
@@ -2268,7 +2536,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-null-member-1",
@@ -2338,7 +2616,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-present-0",
@@ -2405,7 +2693,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-1-present-1",
@@ -2475,7 +2773,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "scalar-1-0-null-0",
@@ -2516,7 +2824,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "scalar-1-0-null-1",
@@ -2560,7 +2874,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "scalar-1-0-omitted-0",
@@ -2599,7 +2919,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "scalar-1-0-omitted-1",
@@ -2641,7 +2967,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "scalar-1-0-present-0",
@@ -2682,7 +3014,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "scalar-1-0-present-1",
@@ -2726,7 +3064,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-0-parent-null-0",
@@ -2767,7 +3111,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-0-parent-null-1",
@@ -2811,7 +3161,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-0-child-null-0",
@@ -2980,7 +3336,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-0-present-1",
@@ -3032,7 +3394,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "list-1-0-null-0",
@@ -3073,7 +3441,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-1-0-null-1",
@@ -3117,7 +3491,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-1-0-empty-0",
@@ -3158,7 +3538,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-1-0-empty-1",
@@ -3202,7 +3588,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-1-0-null-member-0",
@@ -3313,7 +3705,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "list-1-0-present-1",
@@ -3365,7 +3763,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-1-0-null-0",
@@ -3412,7 +3816,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-1-0-null-1",
@@ -3462,7 +3876,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-1-0-empty-0",
@@ -3509,7 +3933,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-1-0-empty-1",
@@ -3559,7 +3993,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-1-0-null-member-0",
@@ -3706,7 +4150,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "map-1-0-present-1",
@@ -3776,7 +4230,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "required"
+        }
+      ]
     },
     {
       "id": "struct-1-1-parent-null-0",
@@ -3817,7 +4281,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-parent-null-1",
@@ -3861,7 +4331,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-child-null-0",
@@ -3910,7 +4386,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-child-null-1",
@@ -3962,7 +4444,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-child-omitted-0",
@@ -4009,7 +4497,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-child-omitted-1",
@@ -4059,7 +4553,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-present-0",
@@ -4108,7 +4608,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-1-present-1",
@@ -4160,7 +4666,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "list-1-1-null-0",
@@ -4201,7 +4713,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-null-1",
@@ -4245,7 +4763,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-empty-0",
@@ -4286,7 +4810,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-empty-1",
@@ -4330,7 +4860,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-null-member-0",
@@ -4379,7 +4915,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-null-member-1",
@@ -4431,7 +4973,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-present-0",
@@ -4480,7 +5028,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-1-present-1",
@@ -4532,7 +5086,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-null-0",
@@ -4579,7 +5139,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-null-1",
@@ -4629,7 +5199,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-empty-0",
@@ -4676,7 +5256,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-empty-1",
@@ -4726,7 +5316,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-null-member-0",
@@ -4793,7 +5393,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-null-member-1",
@@ -4863,7 +5473,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-present-0",
@@ -4930,7 +5550,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-1-present-1",
@@ -5000,7 +5630,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "struct-0-0-masked-buffers-0",
@@ -5048,7 +5688,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-0-0-masked-buffers-1",
@@ -5099,7 +5745,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "required",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-0-masked-buffers-0",
@@ -5143,7 +5795,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "struct-1-0-masked-buffers-1",
@@ -5190,7 +5848,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "absent-allowed",
+          "element": "unspecified"
+        }
+      ]
     },
     {
       "id": "list-0-0-masked-buffers-0",
@@ -5241,7 +5905,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-0-0-masked-buffers-1",
@@ -5295,7 +5965,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-0-masked-buffers-0",
@@ -5340,7 +6016,13 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "list-1-0-masked-buffers-1",
@@ -5388,7 +6070,13 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-0-masked-buffers-0",
@@ -5451,7 +6139,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-0-0-masked-buffers-1",
@@ -5517,7 +6215,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-0-masked-buffers-0",
@@ -5570,7 +6278,17 @@
         }
       ],
       "footerMetadata": {},
-      "embeddedArrow": false
+      "embeddedArrow": false,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     },
     {
       "id": "map-1-0-masked-buffers-1",
@@ -5626,7 +6344,17 @@
         "future.exact": "9007199254740993",
         "future.meaning": "unclassified"
       },
-      "embeddedArrow": true
+      "embeddedArrow": true,
+      "leafAvailability": [
+        {
+          "row": "unspecified",
+          "element": "required"
+        },
+        {
+          "row": "unspecified",
+          "element": "absent-allowed"
+        }
+      ]
     }
   ],
   "summary": {
@@ -5646,6 +6374,6 @@
     "Physical definition/repetition levels, Arrow parent masks and core ideals remain distinct."
   ],
   "fingerprints": {
-    "scripts/core-ideals/nullability-parquet-native.py": "4f37a5c5a4b8359192f638626372171ff8ac4702f3de02ed5e0025858a529dd6"
+    "scripts/core-ideals/nullability-parquet-native.py": "5eea413a0cc23373a94620689b704449ccec28e37099e792c35dea264cdc2a75"
   }
 }

@@ -1,0 +1,11 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/nullability-parquet.test.ts:
+(pass) native-backed row/entry context matrix preserves exact bytes, metadata and both serializations [160031.21ms]
+(pass) optional ancestors contribute absence while repeated paths require an explicit entry context [487.15ms]
+(pass) author conflicts, altered scope/ancestry, changed targets and unsafe requests refuse [1504.72ms]
+
+ 3 pass
+ 0 fail
+ 3666 expect() calls
+Ran 3 tests across 1 file. [163.69s]

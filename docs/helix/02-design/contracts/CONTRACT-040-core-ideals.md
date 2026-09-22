@@ -462,3 +462,20 @@ includes fresh five-system Field and four-binding Nullability evidence. It
 supersedes the in-progress Avro status above. Parquet and the Nullability delivery
 gate remain open. This qualification never deletes native payloads or constitutes
 native-equivalence graduation.
+
+
+### Parquet physical availability contexts
+
+The in-progress Parquet binding distinguishes a non-repeated row leaf from a leaf
+inside an existing repeated entry. Row scope includes optional ancestors. Entry
+scope begins after the innermost repeated boundary; it includes optional descendants
+without treating missing/empty containers as a null entry. Repeated paths must not
+receive a scalar row-nullability claim, and repetition is not promoted to core
+cardinality by this operation.
+
+The `umf.parquet.nullability` extension retains the physical definition-level
+carrier, context and repetition metadata. Full original file bytes remain attached.
+Writer input masks, embedded Arrow meanings, logical annotations and observed row
+values do not silently replace these declarations. Unresolved scopes/types require
+explicit residuals or refusals. TD-041 records the tested profiles; authored
+projection and final binding acceptance remain open, with no native equivalence.
