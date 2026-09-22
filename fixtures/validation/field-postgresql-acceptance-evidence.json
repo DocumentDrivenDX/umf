@@ -95,7 +95,7 @@
   "sha256": {
     "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
     "fixtures/postgresql/scalar-types.sql": "095130d4c2ef15b1e8c3e7851cd271a205964a8d13c252b02352b063939cbf6f",
-    "fixtures/validation/field-gate-refresh-evidence.json": "360cee6bca8ae9adb0a42e6f401f9697a5c37787b0eec6f1631e4ee38521e43f",
+    "fixtures/validation/field-gate-refresh-evidence.json": "6fcba41e59e9b1884f5a05ed2e1193ff078cfcf4a15f99ccbaf03d4656bd0e90",
     "fixtures/validation/field-postgresql-acceptance.log": "79b61c6f6915c682dd84f2dd657e76c15e190ca8d800b3977dc059e29228c3de",
     "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
     "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
@@ -222,6 +222,7 @@
     "spec/core/native-json.schema.json": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839",
     "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
     "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
+    "spec/core/nullability-postgresql-projection.schema.json": "073104796361bc965b6b51655d0d27dad59b90094d1c6d8f8279286f2f684570",
     "spec/core/nullability-selection.schema.json": "0d00b993d9f205326bf8879d9d659aac7d9bb4c34d886c5c966a86a1f7e3d47f",
     "spec/core/nullability-tablespec-projection.schema.json": "990b20a054b0ef643ad1b4c0deeb0760bf64c4ca9a093747a31c346c227135a2",
     "spec/core/nullability-transition.schema.json": "7c2cd58a09f38503e14d69977c68fc9748b595aed7ec1761867b337ed3aaa68b",
@@ -231,6 +232,7 @@
     "spec/core/postgresql-composite-classification.schema.json": "a3530d6324f27ff9370f357b7dc60f0919d039ff584b26b054de234f725c1006",
     "spec/core/postgresql-ddl-kinds.schema.json": "4ba3786e32c08c3c60e631e06e8ec394a5533b7ef04f468b639000fef2cc1c10",
     "spec/core/postgresql-field-classification.schema.json": "2a10dcf781f719b58f214aa26ccbb89c0bcfb19e0cd29eef88fbfd91be3182ac",
+    "spec/core/postgresql-nullability-classification.schema.json": "d665d8c558d77682a649caaf9765ef1230e89075fa97dbaf5232736e1e9d2872",
     "spec/core/postgresql-record-classification.schema.json": "f94ca19d6154d983aea5f122e1c22fd318b798c6c939ef759fd0c8a5ac3d0640",
     "spec/core/record-avro-projection.schema.json": "232bf15e88580495e253735f12a30de5556c7a56884062f26e8da227325cc566",
     "spec/core/record-parquet-projection.schema.json": "f828aa923392a3d2ae0c65c28d9ceab9ff61d00c104c12f909ea871837ead3e3",
@@ -404,6 +406,8 @@
     "spec/extensions/postgresql-catalog/column-metadata.schema.json": "f1010a39739cd3fbd99446910712f6230ede634bd620b07a08e48f6b993f501f",
     "spec/extensions/postgresql-catalog/package.json": "cebb03eede287e67c62b1ea0355376e6983805c36ee6299390ea92aff3593ad5",
     "spec/extensions/postgresql-catalog/schema.json": "686c850eb46b369285e02865c4d59567d541278df6946be93b44d952b1029137",
+    "spec/extensions/postgresql-nullability/package.json": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b",
+    "spec/extensions/postgresql-nullability/schema.json": "2bc17a61ba27967d199bd3dc2dd175170841bd897b62f88dfb604e6b4426eea1",
     "spec/extensions/postgresql/ddl-declarations.schema.json": "9faea63c73c254fa77514d2d524a8e87ed75220cac8db0f4e3e497506477f21a",
     "spec/extensions/postgresql/native-ast.schema.json": "aa3d3b50bc04edbc3ab3430e113ee8710edb1c10ff5cee15d4bcc7b16d9a9039",
     "spec/extensions/postgresql/package.json": "acfa56e1c8ce44e6b6a2ff1fb2a739c2b5ad6c1dbe558aa7ab6622d17c2ce994",
@@ -618,6 +622,8 @@
     "src/core-ideals/field-report.ts": "4b353b00df4be2cafe2ad01ccbcf63df300d519fdd279c69ef9764cfefc83e16",
     "src/core-ideals/field-sqlserver-projection.ts": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37",
     "src/core-ideals/field-tablespec-projection.ts": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae",
+    "src/core-ideals/nullability-postgresql-projection.ts": "76baf46987fed262226d3a023584da6a581fe45cb4c4c0bc9510088f7480e954",
+    "src/core-ideals/nullability-postgresql.ts": "547177da72c5a4c28af7e3cdf1cacd3a199800bdd840d26b20ec24a5daee7259",
     "src/core-ideals/nullability-tablespec-projection.ts": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97",
     "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
@@ -642,7 +648,7 @@
     "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/index.ts": "0daa4b5674d29dbed96ec031af94fceb743de9d772481bc1ffc1ba2e09096863",
+    "src/index.ts": "b01825233a3e3b54d7f59dc52a1d8cd09e4f2d3cfec7b956cb4e082977d014aa",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
     "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
     "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
@@ -714,11 +720,11 @@
     "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9"
   },
   "revalidation": {
-    "reason": "Revalidate prior Field behavior after TableSpec Nullability classification, retained binding scope and authored down-projection. TableSpec Nullability metadata and separately qualified native row execution have evidence; other native Nullability bindings remain pending.",
+    "reason": "Revalidate Field and core behavior after PostgreSQL Nullability classification and authored projection; both PostgreSQL directions have native/browser evidence, while SQL Server, Avro and Parquet Nullability remain pending.",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "fixtures/validation/field-gate-refresh-evidence.json": "8fa88af311c918ec65af3557f7e26ab88c5f2958e6e0b3ba051e8608d5bd7f9e",
-      "src/index.ts": "bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2"
+      "fixtures/validation/field-gate-refresh-evidence.json": "360cee6bca8ae9adb0a42e6f401f9697a5c37787b0eec6f1631e4ee38521e43f",
+      "src/index.ts": "0daa4b5674d29dbed96ec031af94fceb743de9d772481bc1ffc1ba2e09096863"
     },
     "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
   },
@@ -743,6 +749,15 @@
         "src/validation/document.ts": "0296fff8f0ed2c6c74d1b198b2f67f5990efb844d4e6a5907088502c4f1b8e3f",
         "src/validation/schema.ts": "02279bbb844d5e2b001d3286c88c79b1ab61a3b40265fc08432e5516cda475e7",
         "fixtures/validation/field-gate-refresh-evidence.json": "8d6b040d8cbc587e2b28b8317462f4e705d7db69adafb8585770445c7e24b5a8"
+      },
+      "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
+    },
+    {
+      "reason": "Revalidate prior Field behavior after TableSpec Nullability classification, retained binding scope and authored down-projection. TableSpec Nullability metadata and separately qualified native row execution have evidence; other native Nullability bindings remain pending.",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "fixtures/validation/field-gate-refresh-evidence.json": "8fa88af311c918ec65af3557f7e26ab88c5f2958e6e0b3ba051e8608d5bd7f9e",
+        "src/index.ts": "bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2"
       },
       "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
     }

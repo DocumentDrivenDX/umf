@@ -16,16 +16,14 @@ Experimental Field authoring and validation are implemented in core 0.2.0.
 Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
 has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
-migration/rollback, selection and versioned Field APIs are implemented. The prior
-Field native/browser evidence has now been rerun after TableSpec binding work,
-and fingerprints passed at that checkpoint. TableSpec Nullability classification, authored
-projection, both recovery directions and qualified native row checks have passed
-binding acceptance. The other four native bindings and Nullability admission
-remain unfinished. PostgreSQL discovery now has 18 passing native probes and
-scoped classification with retained provenance and capture-text recovery.
-Authored PostgreSQL projection now has native execution and browser recovery
-evidence. Binding acceptance and the earlier Field gate fingerprints still
-need revalidation after this library change.
+migration/rollback, selection and versioned Field APIs are implemented.
+TableSpec and PostgreSQL Nullability bindings have passed qualified acceptance,
+including explicit scope/carrier metadata, strict/report projection and both
+recovery directions. Native checks preserve the differences between domain and
+column constraints, omission and NULL, and authored and observed availability.
+The prior five-system Field native/browser checks and current fingerprints pass
+after the PostgreSQL changes. SQL Server, Avro and Parquet Nullability remain;
+the experimental Nullability concept has not passed its five-system delivery gate.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

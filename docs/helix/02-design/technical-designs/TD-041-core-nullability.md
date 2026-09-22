@@ -642,3 +642,32 @@ classification browser rerun still passes 176 cases / 182 source recoveries.
 Twelve focused Bun tests / 674 assertions, typecheck, browser builds and audits of
 220 JSON Schemas / 34 packages pass. The PostgreSQL bead remains in progress until
 the broader evidence refresh and acceptance review complete.
+
+
+### PostgreSQL binding acceptance after the evidence refresh
+
+The [PostgreSQL acceptance record](../../../../fixtures/validation/postgresql-nullability-acceptance-evidence.json)
+qualifies both implemented directions. The expanded bead criteria include both
+binding test files, native discovery/projection oracles, both Chromium probes,
+current type/schema/build checks and the broader Field evidence gate. All 50
+refresh commands pass. The combined core/core-ideals/PostgreSQL regression passes
+206 tests / 13,404 assertions across 59 files; the separate Field
+gate passes three tests / 24 assertions. All 220 schemas and 34 packages pass.
+
+The rerun includes TableSpec's native profile and row checks, the previous
+five-system Field native/browser commands, three core Nullability browser probes,
+and both PostgreSQL native/browser directions. Fingerprints were refreshed only
+after those commands passed. Earlier checkpoint counts and warnings that the
+Field gate was stale remain historical; current linked evidence supersedes them.
+
+PostgreSQL's qualified subset is captured 17.4 stored-column availability plus
+authored single-column DDL using the existing 14 scalar carriers. Raw DDL alone,
+query results, arbitrary constraints/domains, input omission and value-domain
+equivalence are not inferred. Descriptions, qualified type identities, unknown
+content and both receipt recovery directions have explicit checks. Unspecified
+author intent remains distinct from native permission to store NULL.
+
+TableSpec and PostgreSQL now have qualified Nullability bindings. SQL Server,
+Avro and Parquet remain ready, and the experimental concept's delivery gate stays
+open. This acceptance neither replaces native concepts nor completes US-041 or
+the overall extension goal.

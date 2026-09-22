@@ -378,3 +378,24 @@ quoted-context counterexamples prevent any general pipeline or omission/null
 claim. One binding does not meet the two-system admission gate; the other four
 priority bindings and Nullability delivery remain open. No native concept is
 replaced or removed by this qualification.
+
+
+### PostgreSQL Nullability binding qualification
+
+TD-041 now records a second qualified binding: PostgreSQL 17.4 catalog
+classification and authored single-column DDL under explicit stored-relation and
+SQL-NULL policies. Column `NOT NULL`, domain constraints, omission/defaults,
+CHECK UNKNOWN, NOT VALID historical rows and query-produced NULL remain distinct.
+Unknown refinements remain native; a false flag alone is not absence permission.
+
+Required projects to `NOT NULL`, absent-allowed to explicit `NULL`, and
+unspecified to no availability clause. Native-only reclassification does not
+reconstruct unspecified authorship. The retained receipt recovers the original
+ideal, including report-mode residuals, while native classification retains and
+recovers the source capture. Modified targets or mismatched receipts refuse.
+
+Both TableSpec and PostgreSQL binding evidence have been rerun with the current
+library. This provides two qualified systems for the ideal's admission review;
+it does not by itself close the five-system Nullability delivery gate or graduate
+native equivalence. SQL Server, Avro and Parquet remain outstanding. The earlier
+one-binding status above is historical.

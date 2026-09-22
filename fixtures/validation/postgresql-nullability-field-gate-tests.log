@@ -1,0 +1,11 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-conformance.test.ts:
+(pass) all five binding contracts enforce policy and recover ideal/native representations [3879.75ms]
+(pass) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [285.95ms]
+(pass) group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable [5.36ms]
+
+ 3 pass
+ 0 fail
+ 24 expect() calls
+Ran 3 tests across 1 file. [5.73s]
