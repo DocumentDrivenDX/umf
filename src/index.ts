@@ -291,3 +291,5 @@ export * from './core-ideals/cardinality-avro-projection';
 export {default as coreFacetSchema} from '../spec/core/facet-document.schema.json';
 export * from './model/facet-transition';
 export * from './model/facets';
+
+export * from './core-ideals/facets-tablespec';

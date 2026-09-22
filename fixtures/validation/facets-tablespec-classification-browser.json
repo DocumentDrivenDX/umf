@@ -1,0 +1,25 @@
+{
+  "scope": "Experimental facet classification, retained native archive recovery and receipt verification only; authored down-projection and binding acceptance pending",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 1216,
+    "classified": 721,
+    "blocked": 495,
+    "recoveries": 1442,
+    "tampered": 6,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/facets-tablespec-classification-browser.ts": "d7c65a8b34887c1bf028de666083281223da5d10c106c9a8815d2f2a7dad0cc5",
+    "scripts/core-ideals/facets-tablespec-cases.ts": "83bec4481d9ed047461da151c80e474233c3c77525449cd2dccde3d5c4b33f26",
+    "fixtures/validation/facets-tablespec-classification.json": "0ef5c6aef6e357cf255d2104f7cf016e35b2bb9a2718c19bdd0fbc9820cd0014",
+    "fixtures/validation/facets-tablespec-classification-native.json": "5c76e6e925a91932e2657a8318628a62e9b1d5744ff51890e8a70784e4a64abb",
+    "dist/umf.js": "dca60a25172a2489b60db08c78ed95ed47fc007bd9dbae03c559a69e8b8a34be",
+    "src/core-ideals/facets-tablespec.ts": "5add4ac2196fbac52c6f94a5465f8a9bed885f8390049321366748f3e3ea32c5",
+    "src/model/facets.ts": "173c51307b3117919a765f724ca3901db2bd3f6f884864e081819469acd5ed84",
+    "spec/core/tablespec-facet-classification.schema.json": "9ce5b2af45fd61d80f0c5c88a3764164be9076f7454ce2085265384309741b35",
+    "spec/extensions/tablespec-facets/package.json": "ee5c6176541cd86b97f43034c855dec4c66204748cdb752dd7bc29eb5a18e16b",
+    "spec/extensions/tablespec-facets/schema.json": "d24949285e3b26b85e38ffbda39b0555cc2905925ae4ddd91562522084c8d14b"
+  }
+}

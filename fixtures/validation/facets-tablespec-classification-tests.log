@@ -1,0 +1,15 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-tablespec.test.ts:
+(pass) profile-qualified classification keeps exact source and native tokens through both receipt formats [53672.59ms]
+(pass) length meaning depends on raw/normalized input and consumer, with ignored conflicts retained [427.68ms]
+(pass) decimal declarations, enforced domains, defaults and exact conversion are independent [476.72ms]
+(pass) authored facets, unknown qualifiers and shape conflicts cannot be overwritten [255.19ms]
+(pass) forged/stale receipts, invalid requests and accessors refuse; independent reads do not mutate source [136.74ms]
+(pass) published facet extension validates its profile and preserves unknown future payload members [63.27ms]
+(pass) exact lexical checks and split archives retain unclaimed content [330.25ms]
+
+ 7 pass
+ 0 fail
+ 4663 expect() calls
+Ran 7 tests across 1 file. [58.06s]

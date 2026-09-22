@@ -66,11 +66,16 @@ five-system native/Chromium evidence. See the
 No native equivalence is claimed.
 Experimental core 0.5.0 facets now pass core-task acceptance: public validation,
 explicit migration/rollback, typed authoring/inspection, versioned existing
-operations and item/value selection have Bun and Chromium evidence. All three
-existing concept gates pass after the five-system native/browser refresh.
+operations and item/value selection have Bun and Chromium evidence. At that
+core-task checkpoint, all three existing concept gates passed after the
+five-system native/browser refresh.
 [Facet core acceptance](../../fixtures/validation/facet-core-acceptance-evidence.json)
-does not admit native facet bindings or equivalence. TableSpec facet integration
-is next; key follows the five-system facet gate. See the
+does not admit native facet bindings or equivalence. Experimental TableSpec facet
+classification now has a versioned extension/operation schema and native/Chromium
+evidence; authored down-projection and the full compatibility refresh remain
+pending. Prior acceptance records qualify their recorded source snapshots, not
+this new API/bundle. See the [classification checkpoint](04-build/evidence/tablespec-facet-classification.md).
+Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038

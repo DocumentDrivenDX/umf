@@ -269,3 +269,57 @@ admission, the facet delivery gate and key remain required. No native facet
 enforcement, general row conversion or native equivalence is claimed. The next
 binding is TableSpec under the declared schema/runtime profiles; native refinements
 and unknown numeric tokens must stay attached to any classification/projection.
+
+### TableSpec facet binding decisions
+
+The native discovery supplement at
+[TableSpec facet discovery](../../04-build/evidence/tablespec-facet-discovery.md)
+requires explicit consumer profiles. The classifier accepts `declared-metadata`,
+`json-schema`, `pyspark-schema`, `gx-spark`, `ingest-cast` or `unresolved`, plus
+`raw` or `model-normalized` input and `value-domain` or `exact-input` obligation.
+These describe the interpretation requested of the retained native source;
+classification does not run a model validator, pipeline, or caller-supplied code.
+
+Only uncoerced safe integer facet tokens can enter core. Model coercion, oversized
+counts, invalid native combinations and unknown qualifiers remain residuals.
+Raw and normalized inputs never share an implicit normalization step: normalized
+profiles account for the demonstrated removal of `max_length`, while originals
+remain in the archive. General native validation outside the selected member and
+facet subset is not claimed. Both profiles retain the original source text/bytes.
+
+Explicit valid decimal pairs may describe declared bounds under the metadata
+profile. General PySpark generation ignores those pairs; its default decimal(10,0)
+stays an observation/residual, not a replacement core assertion. Ingest casts can
+classify explicit pairs only within the proven Spark domain (precision <= 38),
+with rounding/ANSI behavior retained. Missing decimal facets never become authored
+bounds merely because a consumer supplies a default. An explicit INTEGER type
+can supply inferred signed-32-bit domain evidence under the PySpark/ingest profile;
+it does not prove identity or an authored width. Unknown native `integerWidth`
+content never supplies that evidence.
+
+Length requires the selected consumer's proven Unicode-scalar interpretation:
+raw JSON Schema uses `max_length`; GX uses raw `max_length` or `length`, and
+normalized input retains only `length`. General PySpark and ingest casts do not
+establish that bound. Conflicting, ignored and malformed declarations remain
+visible. Other scalar families and byte-length requests require their own mapping
+or an explicit residual. Neither a native count nor a successful import implies
+Unicode normalization, grapheme, padding or collation behavior.
+
+`exact-input` additionally requires evidence about conversion, not just output
+domains. Decimal rounding, float narrowing, coercing casts and unqualified input
+validation block strict classification of that obligation; report mode retains
+an explicit residual. Unknown core facet qualifiers remain attached, even when
+known bounds match. Existing author facets require a verified source-bound receipt;
+conflicting known bounds block both modes. No unverified label is author provenance.
+
+The classifier needs a complete operation schema and a versioned element-scoped
+extension package. Results retain copied source, native fragments/paths, interpreted
+facets, per-concept provenance, loss diagnostics and residuals. Verification
+recomputes the complete receipt and checks the current target before recovery.
+A blocked result has no partial target. Report mode may retain a valid UMF candidate
+without asserting unclassified facets. Native source recovery must remain exact,
+including split-file archives, unknown fields and unsafe numeric tokens.
+
+Down-projection and the combined binding acceptance remain separate work within
+`umf-97221618-1c44db4c`. A classification checkpoint does not refresh the existing
+core/concept gates, complete both binding directions, or admit native equivalence.

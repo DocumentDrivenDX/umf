@@ -1,0 +1,60 @@
+{
+  "scope": "Experimental facet classification and retained native recovery only; authored down-projection and binding acceptance unfinished",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-profile-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-capture.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/facets-tablespec-classification-oracle.py"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-classification-oracle.py": "0aef55b62b9afcc485b72a33f5a76c0076351e25f78ed478bfe3d27f91c9a52e",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-tablespec-profile-oracle.py": "9b3738b8744977ff7f5d55e2e190ca05bd091d64740d76f759d0250a538214de",
+    "fixtures/validation/facets-tablespec-classification-native.json": "5c76e6e925a91932e2657a8318628a62e9b1d5744ff51890e8a70784e4a64abb",
+    "fixtures/validation/facets-tablespec-classification.json": "0ef5c6aef6e357cf255d2104f7cf016e35b2bb9a2718c19bdd0fbc9820cd0014",
+    "fixtures/validation/facets-tablespec-profile-native.json": "0ed2e93c5627a3e168e031cefc947e9b62203de5095255f70dc1969843092a38",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "native/tablespec/facets-runtime/casting_utils.py": "f59d1fb080bea24705152f2b4b04f3e7f1398c5d2d00bf856f8ae4900dbce114",
+    "native/tablespec/facets-runtime/date_formats.py": "c03014ddc92938c090d82ef9f99ee237046613e5ebe0f3846e1b42aa45599253",
+    "native/tablespec/facets-runtime/dialects.py": "7c5b34d4dbd433e1b85e8a972bb9a529bd406198287adf5854f86d9172f41f4a",
+    "native/tablespec/facets-runtime/ingest_generator.py": "bd1a3dce57e58211202b00d2d231092a46dc88e80abaef6500ecb60e9049c9f0",
+    "native/tablespec/facets-runtime/sources.json": "06287939fe1506dd0efb77230baf2c5c5f9ffd8527a71c879e67858c75178944",
+    "native/tablespec/nullability-runtime/format_utils.py": "a50f9ed9f7292434b04cec57863b02b67f47ab8bd3bd781c3900ef60dc584fa2",
+    "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c",
+    "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/sources/examples/providers.yaml": "d88a5076031afd12a1d953c0107dac339859c8e88d66de53d4dd7f34f5cdb3f8",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+    "scripts/core-ideals/facets-tablespec-capture.ts": "fb60a4b0ae9199998fe1bac1fe0295563201c622534fdaae192bdbd96f51cc1f",
+    "scripts/core-ideals/facets-tablespec-cases.ts": "83bec4481d9ed047461da151c80e474233c3c77525449cd2dccde3d5c4b33f26",
+    "scripts/core-ideals/facets-tablespec-oracle.ts": "c1c1f4c9dc508a14c9c8ca1c51a275fba503df544cfdd5d4dc3da1d92624f025",
+    "scripts/core-ideals/facets-tablespec-profile-oracle.ts": "6245585de86671a7ff0cd94cb5cd2795bfec0840cb55bc4017d32774d0dfe6fb",
+    "spec/core/tablespec-facet-classification.schema.json": "9ce5b2af45fd61d80f0c5c88a3764164be9076f7454ce2085265384309741b35",
+    "spec/extensions/tablespec-facets/package.json": "ee5c6176541cd86b97f43034c855dec4c66204748cdb752dd7bc29eb5a18e16b",
+    "spec/extensions/tablespec-facets/schema.json": "d24949285e3b26b85e38ffbda39b0555cc2905925ae4ddd91562522084c8d14b",
+    "src/core-ideals/facets-tablespec.ts": "5add4ac2196fbac52c6f94a5465f8a9bed885f8390049321366748f3e3ea32c5"
+  }
+}

@@ -1,0 +1,24 @@
+import core from '../../spec/core/facet-document.schema.json';
+const text={type:'string',minLength:1};
+const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
+const binding={id:'umf.tablespec.facets',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence'};
+const profile={enum:['declared-metadata','json-schema','pyspark-schema','gx-spark','ingest-cast','unresolved']},input={enum:['raw','model-normalized']},obligation={enum:['value-domain','exact-input']};
+const outcome={enum:['exact','approximated','not-expressible','unknown']},interpretation={enum:['declared','inferred','unknown','unsupported']};
+const facets={...structuredClone(core.$defs.facets),additionalProperties:false};
+facets.properties.length={...facets.properties.length,additionalProperties:false,properties:{...facets.properties.length.properties,unit:{enum:['unicode-scalar','byte']}}} as never;
+facets.properties.integerWidth={...facets.properties.integerWidth,additionalProperties:false} as never;
+const observation=object({concept:{enum:['length','decimal','integerWidth','conversion','native']},idealPath:text,nativePath:text,interpretation,outcome,basis:text});
+const recovery='Retain original native archive and authored facets; interpretation does not replace native meaning';
+const residual=object({path:text,targetPath:{type:['string','null']},value:{},reason:text,outcome:{enum:['approximated','not-expressible','unknown']},binding:{const:binding},recovery:{const:recovery}});
+const request=object({column:{type:'integer',minimum:0},mode:{enum:['strict','report']},profile,input,obligation,author:{$ref:'urn:umf:core:facet-operation:1.0.0#/$defs/declaration'}},['column','mode','profile','input','obligation']);
+const mapping=object({origin:{const:'classified'},idealPath:text,nativePath:text,nativeFragment:{$ref:'urn:umf:native-json:0.1.0'},facets,observations:{type:'array',items:observation}});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:tablespec-facet-classification:1.0.0',title:'TableSpec profile-qualified facet classification',...object({operation:{const:'classify-tablespec-facets'},version:{const:'1.0.0'},status:{enum:['classified','blocked']},outcome,source:{$ref:'urn:umf:core:0.5.0'},target:{$ref:'urn:umf:core:0.5.0'},request,binding:{const:binding},mapping,residuals:{type:'array',items:residual},diagnostics:{type:'array',items:object({code:text,path:text,message:text,severity:{enum:['warning','error']}})}},['operation','version','status','outcome','source','request','binding','mapping','residuals','diagnostics']),allOf:[
+ {if:{properties:{status:{const:'classified'}}},then:{required:['target'],properties:{target:true,diagnostics:{type:'array',items:{type:'object',properties:{severity:{const:'warning'}}}}}},else:{properties:{target:false,residuals:{type:'array',minItems:1},diagnostics:{type:'array',minItems:1,items:{type:'object',properties:{severity:{const:'error'}}}}}}},
+ {if:{properties:{outcome:{const:'exact'}}},then:{properties:{residuals:{type:'array',maxItems:0}}},else:{properties:{residuals:{type:'array',minItems:1}}}},
+ {if:{properties:{status:{const:'classified'},request:{type:'object',properties:{mode:{const:'strict'}}}}},then:{properties:{outcome:{const:'exact'},residuals:{type:'array',maxItems:0}}}},
+]};
+await Bun.write('spec/core/tablespec-facet-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
+const payload={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:tablespec:facet-binding:1.0.0',title:'Retained TableSpec facet interpretation profile',...object({origin:{const:'classified'},binding:{const:{id:binding.id,version:binding.version}},profile,input,obligation,outcome,observations:{type:'array',items:observation}}),additionalProperties:true};
+await Bun.write('spec/extensions/tablespec-facets/schema.json',JSON.stringify(payload,null,2)+'\n');
+await Bun.write('spec/extensions/tablespec-facets/package.json',JSON.stringify({id:binding.id,version:binding.version,coreVersion:'0.1.0',description:'Experimental profile-qualified TableSpec facet observations with original native content retained',schema:payload,semantics:'CONTRACT-040 and TD-043; experimental core 0.5.0 facet classification only; native down-projection and binding acceptance pending',scopes:['element'],capabilities:{validation:'structural',directions:['import'],native:{system:'TableSpec',version:binding.nativeVersion,subset:binding.subset},evidence:['tests/core-ideals/facets-tablespec.test.ts','fixtures/validation/facets-tablespec-profile-native.json']}},null,2)+'\n');
+export {};
