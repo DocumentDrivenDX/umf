@@ -1,0 +1,19 @@
+{
+  "scope": "Internal Avro facet type selection in Chromium; no public binding acceptance or enforcement",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 10,
+    "resolved": 8,
+    "refused": 2,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
+    "scripts/core-ideals/facets-avro-selection-browser.ts": "31c2cc16ba6c10d0f24b390f889c7fe92fdcc7ca24db3511c337c0d9c7bf4df4",
+    "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
+    "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
+    "src/adapters/avro/facet-type.ts": "26db0fcce82230f65a14e0284c2cc6c84c03747c06858dcb5ed68cd04ab67a5b",
+    "dist/avro-facet-selection.js": "9d971f1af431274db9a6a4446448705c77dc35117294fc0fca9b22d7662d6945"
+  }
+}

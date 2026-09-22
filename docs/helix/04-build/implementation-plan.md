@@ -4336,3 +4336,14 @@ browser bundle has no host globals or external requests. Public exports and
 packages are unchanged; selected name/union resolution and public binding schemas,
 classification/projection, both recovery directions and full acceptance remain
 unfinished. See the [interpreter evidence](evidence/avro-facet-discovery.md#internal-declaration-interpreter).
+
+Avro facet selection now retains named definitions/dependencies, ordered union
+branches, explicit item paths and recursive reference locations. The separate
+facet structural profile adds exact size-zero support without widening previous
+Cardinality behavior. Sixteen Bun tests / 613 assertions, typechecking and ten
+Chromium fixtures pass. Native verification records 20 parser outcomes, 32 sample
+recoveries and 20 retained schema-tree recoveries. Duplicate-union disagreement
+is preserved, not described as native parser consensus. See the
+[selection checkpoint](evidence/avro-facet-discovery.md#native-selection-checkpoint).
+Public schemas/classification/projection, both retained recovery directions and
+full binding acceptance remain next; the Avro facet bead stays in progress.

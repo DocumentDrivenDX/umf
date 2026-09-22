@@ -1,0 +1,29 @@
+{
+  "scope": "Internal type selection with pinned native parser/sample evidence and retained schema trees; no public facet binding or original-text recovery",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "checks": {
+    "resolved": 8,
+    "refused": 2,
+    "schemaRecoveries": 20
+  },
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-selection-native.py": "38d5bbab7d5f85bc1254a5840b5bd5a4456ca8d20b1343206df29e718cceafe6",
+    "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
+    "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
+    "fixtures/validation/facets-avro-selection-native.json": "1d8e58c8f2d40bd947e3d8682b1e958a8c64f310293f34c53131c3da9375fe34",
+    "scripts/core-ideals/facets-avro-selection-oracle.ts": "e7e96b09581195bc66ebc6286e3e25be4ba2193d31f21ff1eb17422f4a8ff04c",
+    "spec/core/native-json.schema.json": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839",
+    "src/adapters/avro/facet-type.ts": "26db0fcce82230f65a14e0284c2cc6c84c03747c06858dcb5ed68cd04ab67a5b",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "src/adapters/avro/metadata.ts": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775",
+    "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
+    "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/validation/schema.ts": "89a3a613cf5ba6ed2ced1dc242fc9d947ac8c373b7bef7dfcba72336570ffc08"
+  }
+}

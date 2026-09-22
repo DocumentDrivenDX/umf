@@ -1,0 +1,228 @@
+{
+  "cases": [
+    {
+      "id": "empty-fixed",
+      "schema": "{\"type\":\"fixed\",\"name\":\"Empty\",\"size\":0}",
+      "location": {
+        "path": ""
+      },
+      "shape": "one",
+      "allowsNull": false,
+      "families": [
+        "binary"
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "bytes",
+        "hex": ""
+      }
+    },
+    {
+      "id": "named-decimal-union",
+      "dependencies": [
+        {
+          "id": "money",
+          "schema": "{\"type\":\"fixed\",\"name\":\"sales.Money\",\"aliases\":[\"OldMoney\"],\"size\":2,\"logicalType\":\"decimal\",\"precision\":4,\"scale\":2,\"future\":{\"id\":9007199254740993}}"
+        }
+      ],
+      "schema": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"amount\",\"type\":[\"null\",\"Money\"],\"default\":null,\"future\":true}]}",
+      "location": {
+        "path": "/fields/0/type"
+      },
+      "shape": "one",
+      "allowsNull": true,
+      "families": [
+        null,
+        "decimal"
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "record",
+        "fields": {
+          "amount": {
+            "kind": "decimal",
+            "text": "12.34"
+          }
+        }
+      }
+    },
+    {
+      "id": "integer-union",
+      "schema": "[\"int\",\"long\"]",
+      "location": {
+        "path": ""
+      },
+      "shape": "one",
+      "allowsNull": false,
+      "families": [
+        "integer",
+        "integer"
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "integer",
+        "text": "2"
+      }
+    },
+    {
+      "id": "array-container",
+      "schema": "{\"type\":\"array\",\"items\":{\"type\":\"fixed\",\"name\":\"Empty\",\"size\":0}}",
+      "location": {
+        "path": ""
+      },
+      "shape": "array",
+      "allowsNull": false,
+      "families": [
+        null
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "array",
+        "items": []
+      }
+    },
+    {
+      "id": "array-item",
+      "schema": "{\"type\":\"array\",\"items\":{\"type\":\"fixed\",\"name\":\"Empty\",\"size\":0}}",
+      "location": {
+        "path": "/items"
+      },
+      "shape": "one",
+      "allowsNull": false,
+      "families": [
+        "binary"
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "bytes",
+            "hex": ""
+          }
+        ]
+      }
+    },
+    {
+      "id": "map-value",
+      "schema": "{\"type\":\"map\",\"values\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":4,\"scale\":2}}",
+      "location": {
+        "path": "/values"
+      },
+      "shape": "one",
+      "allowsNull": false,
+      "families": [
+        "decimal"
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "record",
+        "fields": {
+          "a": {
+            "kind": "decimal",
+            "text": "12.34"
+          }
+        }
+      }
+    },
+    {
+      "id": "recursive-record",
+      "schema": "{\"type\":\"record\",\"name\":\"Node\",\"fields\":[{\"name\":\"next\",\"type\":[\"null\",\"Node\"],\"default\":null}]}",
+      "location": {
+        "path": "/fields/0/type"
+      },
+      "shape": "one",
+      "allowsNull": true,
+      "families": [
+        null,
+        null
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "record",
+        "fields": {
+          "next": {
+            "kind": "record",
+            "fields": {
+              "next": {
+                "kind": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "null-only",
+      "schema": "\"null\"",
+      "location": {
+        "path": ""
+      },
+      "shape": "unspecified",
+      "allowsNull": true,
+      "families": [
+        null
+      ],
+      "selectionResolves": true,
+      "nativeParses": {
+        "apache": true,
+        "fastavro": true
+      },
+      "sample": {
+        "kind": "null"
+      }
+    },
+    {
+      "id": "duplicate-union",
+      "schema": "[\"int\",\"int\"]",
+      "location": {
+        "path": ""
+      },
+      "selectionResolves": false,
+      "nativeParses": {
+        "apache": false,
+        "fastavro": true
+      }
+    },
+    {
+      "id": "forward-reference",
+      "schema": "{\"type\":\"record\",\"name\":\"Order\",\"fields\":[{\"name\":\"first\",\"type\":\"Later\"},{\"name\":\"definition\",\"type\":{\"type\":\"fixed\",\"name\":\"Later\",\"size\":1}}]}",
+      "location": {
+        "path": "/fields/0/type"
+      },
+      "selectionResolves": false,
+      "nativeParses": {
+        "apache": false,
+        "fastavro": false
+      }
+    }
+  ]
+}

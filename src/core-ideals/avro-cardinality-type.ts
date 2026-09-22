@@ -34,7 +34,12 @@ export function inspectAvroFieldShape(input:Roots,recordName:string,fieldName:st
 export function inspectAvroTypeShape(input:Roots,location:AvroTypeLocation):AvroTypeShape {
  const {field,...shape}=resolve(input,{location});return shape;
 }
-function resolve(input:Roots,selector:{recordName:string;fieldName:string}|{location:AvroTypeLocation}):AvroTypeShape&{field?:AvroTypeLocation} {
+/** Facet-specific structural profile. Earlier shape bindings retain their own
+ * positive-size profile; this adds exact integer tokens and fixed size zero. */
+export function inspectAvroFacetTypeShape(input:Roots,location:AvroTypeLocation):AvroTypeShape {
+ const {field,...shape}=resolve(input,{location},true);return shape;
+}
+function resolve(input:Roots,selector:{recordName:string;fieldName:string}|{location:AvroTypeLocation},facetProfile=false):AvroTypeShape&{field?:AvroTypeLocation} {
  const roots=copyJson(input) as unknown as typeof input;
  const names=new Map<string,Entry>(),fields=new Map<string,Map<string,Entry>>(),types=new Map<string,Entry>();
  const key=(location:AvroTypeLocation)=>JSON.stringify([location.dependencyId??null,location.path]);
@@ -70,8 +75,10 @@ function resolve(input:Roots,selector:{recordName:string;fieldName:string}|{loca
   }else if(type==='enum'){
    if(m.symbols?.kind!=='array')throw Error('Expected enum symbols');out.symbols=m.symbols.items.map(string);
   }else if(type==='fixed'){
-   if(m.size?.kind!=='number')throw Error('Expected fixed size');const size=readJsonValue(m.size.value,'json');
-   if(typeof size!=='number'||!Number.isSafeInteger(size)||size<1)throw Error('Unresolved fixed size');out.size=size;
+   if(m.size?.kind!=='number')throw Error('Expected fixed size');
+   if(facetProfile&&!/^(0|[1-9][0-9]*)(?![\s\S])/.test(m.size.value))throw Error('Facet fixed size requires an exact integer token');
+   const size=readJsonValue(m.size.value,'json');
+   if(typeof size!=='number'||!Number.isSafeInteger(size)||size<(facetProfile?0:1))throw Error('Unresolved fixed size');out.size=size;
   }
   return out;
  }

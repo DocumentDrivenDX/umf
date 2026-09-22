@@ -793,3 +793,14 @@ integer lexical tokens; unsafe, fractional and exponent spellings are retained
 but uninterpreted. This avoids parser-specific normalization. Whole-schema name
 resolution, field selection and public receipts remain separate pending work.
 See the [interpreter checkpoint](../../04-build/evidence/avro-facet-discovery.md#internal-declaration-interpreter).
+
+An internal facet-specific selection profile now reuses structural name/union
+validation with exact fixed-size tokens and size-zero support. Earlier Cardinality
+entrypoints retain their positive-size profile. Selection returns each original
+branch and the separate resolved declaration location; it does not merge widths
+or logical meanings across branches. Array/map item paths must be selected
+explicitly. Defaults and custom metadata are never registered as type syntax.
+Named recursion terminates at the definition location rather than expanding it.
+The [selection evidence](../../04-build/evidence/avro-facet-discovery.md#native-selection-checkpoint)
+records a duplicate-union parser disagreement, so structural selection is not
+described as universal native parser agreement or full schema validity.

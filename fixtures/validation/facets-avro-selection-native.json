@@ -1,0 +1,402 @@
+{
+  "scope": "Native parser outcomes and sample datum recovery for selected structural fixtures; no core facet enforcement or arbitrary byte reconstruction",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "parses": [
+    {
+      "id": "empty-fixed",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "empty-fixed",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "named-decimal-union",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "named-decimal-union",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "integer-union",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "integer-union",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "array-container",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "array-container",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "array-item",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "array-item",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "map-value",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "map-value",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "recursive-record",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "recursive-record",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "engine": "apache",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "null-only",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "duplicate-union",
+      "engine": "apache",
+      "accepted": false,
+      "error": "SchemaParseException",
+      "message": "int type already in Union",
+      "warnings": []
+    },
+    {
+      "id": "duplicate-union",
+      "engine": "fastavro",
+      "accepted": true,
+      "warnings": []
+    },
+    {
+      "id": "forward-reference",
+      "engine": "apache",
+      "accepted": false,
+      "error": "SchemaParseException",
+      "message": "Type property \"Later\" not a valid Avro schema: Could not make an Avro Schema object from Later",
+      "warnings": []
+    },
+    {
+      "id": "forward-reference",
+      "engine": "fastavro",
+      "accepted": false,
+      "error": "UnknownType",
+      "message": "Later",
+      "warnings": []
+    }
+  ],
+  "sampleRecoveries": [
+    {
+      "id": "empty-fixed",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "",
+      "value": "b''",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "empty-fixed",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "",
+      "value": "b''",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "empty-fixed",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "",
+      "value": "b''",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "empty-fixed",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "",
+      "value": "b''",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "named-decimal-union",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0204d2",
+      "value": "{'amount': Decimal('12.34')}",
+      "bytesConsumed": 3
+    },
+    {
+      "id": "named-decimal-union",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0204d2",
+      "value": "{'amount': Decimal('12.34')}",
+      "bytesConsumed": 3
+    },
+    {
+      "id": "named-decimal-union",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0204d2",
+      "value": "{'amount': Decimal('12.34')}",
+      "bytesConsumed": 3
+    },
+    {
+      "id": "named-decimal-union",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0204d2",
+      "value": "{'amount': Decimal('12.34')}",
+      "bytesConsumed": 3
+    },
+    {
+      "id": "integer-union",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0204",
+      "value": "2",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "integer-union",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0204",
+      "value": "2",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "integer-union",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0004",
+      "value": "2",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "integer-union",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0004",
+      "value": "2",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "array-container",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "00",
+      "value": "[]",
+      "bytesConsumed": 1
+    },
+    {
+      "id": "array-container",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": "[]",
+      "bytesConsumed": 1
+    },
+    {
+      "id": "array-container",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "00",
+      "value": "[]",
+      "bytesConsumed": 1
+    },
+    {
+      "id": "array-container",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "00",
+      "value": "[]",
+      "bytesConsumed": 1
+    },
+    {
+      "id": "array-item",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0200",
+      "value": "[b'']",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "array-item",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0200",
+      "value": "[b'']",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "array-item",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0200",
+      "value": "[b'']",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "array-item",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0200",
+      "value": "[b'']",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "map-value",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0202610404d200",
+      "value": "{'a': Decimal('12.34')}",
+      "bytesConsumed": 7
+    },
+    {
+      "id": "map-value",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0202610404d200",
+      "value": "{'a': Decimal('12.34')}",
+      "bytesConsumed": 7
+    },
+    {
+      "id": "map-value",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0202610404d200",
+      "value": "{'a': Decimal('12.34')}",
+      "bytesConsumed": 7
+    },
+    {
+      "id": "map-value",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0202610404d200",
+      "value": "{'a': Decimal('12.34')}",
+      "bytesConsumed": 7
+    },
+    {
+      "id": "recursive-record",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "0200",
+      "value": "{'next': {'next': None}}",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "recursive-record",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "0200",
+      "value": "{'next': {'next': None}}",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "recursive-record",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "0200",
+      "value": "{'next': {'next': None}}",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "recursive-record",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "0200",
+      "value": "{'next': {'next': None}}",
+      "bytesConsumed": 2
+    },
+    {
+      "id": "null-only",
+      "writer": "apache",
+      "reader": "apache",
+      "hex": "",
+      "value": "None",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "null-only",
+      "writer": "apache",
+      "reader": "fastavro",
+      "hex": "",
+      "value": "None",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "null-only",
+      "writer": "fastavro",
+      "reader": "apache",
+      "hex": "",
+      "value": "None",
+      "bytesConsumed": 0
+    },
+    {
+      "id": "null-only",
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "hex": "",
+      "value": "None",
+      "bytesConsumed": 0
+    }
+  ],
+  "limits": [
+    "Duplicate union branches are refused by Apache and UMF selection but accepted by fastavro; no universal parser agreement claimed.",
+    "Integer union branch choice may differ while decoded value agrees; original branch tags are native representation.",
+    "Declared defaults and unknown metadata are not executed or interpreted as constraints."
+  ],
+  "sha256": {
+    "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-selection-native.py": "38d5bbab7d5f85bc1254a5840b5bd5a4456ca8d20b1343206df29e718cceafe6"
+  }
+}

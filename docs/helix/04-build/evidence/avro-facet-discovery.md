@@ -84,3 +84,39 @@ The Avro bead remains in progress. Next resolve selected named/union/Field synta
 then author complete public operation and extension schemas before exporting
 classification/projection. Retained ideal/native recovery, composed native target
 tests, final browser parity and binding acceptance remain required.
+
+## Native selection checkpoint
+
+`inspectAvroFacetSelection` is internal. It selects only registered native type
+paths, retains branch order and use-site fragments, and resolves named references
+to separate declaration locations, including dependency identity. A decimal
+definition's unknown 9007199254740993 token survives without numeric conversion.
+Nullable branches do not become Field omission/default semantics. Distinct integer
+widths remain separate observations; arrays/maps retain their explicit item paths.
+Recursive records retain a definition link rather than being expanded as scalars.
+
+Facet structural selection explicitly accepts fixed size zero and exact integer
+size tokens. The existing Cardinality resolver keeps its earlier positive-size
+profile. Tests verify that the new entrypoint does not widen the old one. Missing
+references, forward references, duplicate names, default/metadata paths and
+malformed numeric tokens refuse; getters never execute.
+
+The ten-fixture corpus produces 20 pinned parser outcomes and 32 cross-codec
+sample recoveries. Apache rejects duplicate int union branches while fastavro
+accepts them; both reject the forward-reference fixture. UMF selection refuses
+both fixtures. The integer-union writers may choose different branch tags despite
+equal decoded values, so this is not a wire-byte equivalence claim. All ten native
+schema trees, including refused semantic inputs, pass JSON/YAML recovery (20
+recoveries). Named dependency trees and defaults remain intact.
+
+Sixteen Bun tests pass with 613 assertions, including prior Cardinality resolver
+regressions. Chromium 148 resolves eight fixtures and refuses two, matching Bun,
+with no external requests or host globals. Typechecking passes. Evidence:
+[native parsers and samples](../../../../fixtures/validation/facets-avro-selection-native.json),
+[selection and tree recovery](../../../../fixtures/validation/facets-avro-selection-oracle.json),
+[Chromium parity](../../../../fixtures/validation/facets-avro-selection-browser.json).
+
+Next author complete public operation/extension schemas, then implement core
+0.5.0 classification and authored projection with provenance, strict/report
+residuals and retained original-text/ideal recovery. This checkpoint does not
+close the Avro facet binding or qualify native enforcement.
