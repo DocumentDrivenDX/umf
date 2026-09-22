@@ -12,7 +12,11 @@ nullability, cardinality, author-stated facets and key. See
 [FEAT-005](01-frame/features/FEAT-005-core-ideals.md),
 [CONTRACT-040](02-design/contracts/CONTRACT-040-core-ideals.md), and the
 [ordered implementation plan](04-build/implementation-plan.md).
-This changes governing specifications and queued work, not the current runtime/schema.
+Experimental Field authoring and validation are implemented in core 0.2.0.
+The authoring bead has passed its acceptance checks; native-binding verification
+and the separate Field admission/delivery gate remain open. Nullability,
+cardinality, facets and key follow that gate. See the
+[Field acceptance evidence](../../fixtures/validation/field-core-acceptance-evidence.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038
 assertions, zero failures. The [verification record](../../fixtures/validation/bun-full-suite.json)
