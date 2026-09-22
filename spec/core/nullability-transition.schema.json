@@ -1,0 +1,527 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:nullability-transition:1.0.0",
+  "title": "Explicit experimental Nullability envelope transition receipts",
+  "$defs": {
+    "legacy": {
+      "title": "UMF 0.2.0 experimental field envelope",
+      "type": "object",
+      "required": [
+        "umf",
+        "id",
+        "vocabularies",
+        "modules"
+      ],
+      "properties": {
+        "umf": {
+          "const": "0.2.0"
+        },
+        "id": {
+          "$ref": "#/$defs/legacy/$defs/id"
+        },
+        "vocabularies": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/legacy/$defs/id"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "version"
+            ],
+            "properties": {
+              "version": {
+                "$ref": "#/$defs/legacy/$defs/version"
+              }
+            }
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/legacy/$defs/module"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/legacy/$defs/extensions"
+        }
+      },
+      "$defs": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "knownScalarType": {
+          "enum": [
+            "boolean",
+            "integer",
+            "decimal",
+            "float",
+            "string",
+            "binary",
+            "date",
+            "time",
+            "timestamp"
+          ],
+          "description": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+        },
+        "scalarType": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/legacy/$defs/knownScalarType"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "$ref": "#/$defs/legacy/$defs/knownScalarType"
+              },
+              "description": "Unknown family retained with incomplete semantic validation."
+            }
+          ]
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/legacy/$defs/id"
+          },
+          "additionalProperties": true
+        },
+        "reference": {
+          "type": "object",
+          "required": [
+            "role",
+            "module",
+            "element"
+          ],
+          "properties": {
+            "role": {
+              "$ref": "#/$defs/legacy/$defs/id"
+            },
+            "module": {
+              "$ref": "#/$defs/legacy/$defs/id"
+            },
+            "element": {
+              "$ref": "#/$defs/legacy/$defs/id"
+            }
+          }
+        },
+        "element": {
+          "type": "object",
+          "required": [
+            "id",
+            "extensions"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/legacy/$defs/id"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "scalarType": {
+              "$ref": "#/$defs/legacy/$defs/scalarType"
+            },
+            "extensions": {
+              "$ref": "#/$defs/legacy/$defs/extensions"
+            },
+            "references": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/legacy/$defs/reference"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "minLength": 1,
+              "description": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "record",
+                      "group"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "scalarType": false
+                }
+              }
+            }
+          ]
+        },
+        "module": {
+          "type": "object",
+          "required": [
+            "id",
+            "namespace",
+            "elements"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/legacy/$defs/id"
+            },
+            "namespace": {
+              "type": "string"
+            },
+            "elements": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/legacy/$defs/element"
+              }
+            },
+            "extensions": {
+              "$ref": "#/$defs/legacy/$defs/extensions"
+            }
+          }
+        },
+        "knownElementKind": {
+          "enum": [
+            "field",
+            "record",
+            "group"
+          ]
+        }
+      },
+      "description": "Opt-in field/record/group roles. No implicit upgrade from 0.1.0. Provenance, migration and binding evidence remain required."
+    },
+    "field": {
+      "title": "UMF 0.3.0 experimental nullability envelope",
+      "type": "object",
+      "required": [
+        "umf",
+        "id",
+        "vocabularies",
+        "modules"
+      ],
+      "properties": {
+        "umf": {
+          "const": "0.3.0"
+        },
+        "id": {
+          "$ref": "#/$defs/field/$defs/id"
+        },
+        "vocabularies": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/field/$defs/id"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "version"
+            ],
+            "properties": {
+              "version": {
+                "$ref": "#/$defs/field/$defs/version"
+              }
+            }
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field/$defs/module"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/field/$defs/extensions"
+        }
+      },
+      "$defs": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "knownScalarType": {
+          "enum": [
+            "boolean",
+            "integer",
+            "decimal",
+            "float",
+            "string",
+            "binary",
+            "date",
+            "time",
+            "timestamp"
+          ],
+          "description": "Basic value families; native refinements remain authoritative for ranges, precision, encoding and temporal behavior."
+        },
+        "scalarType": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/field/$defs/knownScalarType"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "$ref": "#/$defs/field/$defs/knownScalarType"
+              },
+              "description": "Unknown family retained with incomplete semantic validation."
+            }
+          ]
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/field/$defs/id"
+          },
+          "additionalProperties": true
+        },
+        "reference": {
+          "type": "object",
+          "required": [
+            "role",
+            "module",
+            "element"
+          ],
+          "properties": {
+            "role": {
+              "$ref": "#/$defs/field/$defs/id"
+            },
+            "module": {
+              "$ref": "#/$defs/field/$defs/id"
+            },
+            "element": {
+              "$ref": "#/$defs/field/$defs/id"
+            }
+          }
+        },
+        "element": {
+          "type": "object",
+          "required": [
+            "id",
+            "extensions"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/field/$defs/id"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "scalarType": {
+              "$ref": "#/$defs/field/$defs/scalarType"
+            },
+            "extensions": {
+              "$ref": "#/$defs/field/$defs/extensions"
+            },
+            "references": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/field/$defs/reference"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "minLength": 1,
+              "description": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+            },
+            "nullability": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings."
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "record",
+                      "group"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "scalarType": false
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "nullability"
+                ],
+                "properties": {
+                  "nullability": {}
+                }
+              },
+              "then": {
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "field"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "module": {
+          "type": "object",
+          "required": [
+            "id",
+            "namespace",
+            "elements"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/field/$defs/id"
+            },
+            "namespace": {
+              "type": "string"
+            },
+            "elements": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/field/$defs/element"
+              }
+            },
+            "extensions": {
+              "$ref": "#/$defs/field/$defs/extensions"
+            }
+          }
+        },
+        "knownElementKind": {
+          "enum": [
+            "field",
+            "record",
+            "group"
+          ]
+        },
+        "knownNullability": {
+          "enum": [
+            "required",
+            "absent-allowed",
+            "unspecified"
+          ]
+        }
+      },
+      "description": "Explicit ideal value availability on Fields. No implicit upgrade from older envelopes, native NULL mapping, or default execution."
+    },
+    "residual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "value",
+        "reason"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/modules/[0-9]+/elements/[0-9]+/nullability$"
+        },
+        "value": {},
+        "reason": {
+          "const": "Legacy nullability is opaque; no availability assertion inferred"
+        }
+      }
+    },
+    "upgrade": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "residuals"
+      ],
+      "properties": {
+        "operation": {
+          "const": "upgrade-nullability-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/legacy"
+        },
+        "target": {
+          "$ref": "#/$defs/field"
+        },
+        "residuals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/residual"
+          }
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "receipt",
+        "reason"
+      ],
+      "properties": {
+        "operation": {
+          "const": "rollback-nullability-envelope"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/field"
+        },
+        "target": {
+          "$ref": "#/$defs/legacy"
+        },
+        "receipt": {
+          "$ref": "#/$defs/upgrade"
+        },
+        "reason": {
+          "const": "Original envelope restored; all subsequent content retained in source, not applied to legacy target"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/upgrade"
+    },
+    {
+      "$ref": "#/$defs/rollback"
+    }
+  ]
+}

@@ -185,3 +185,35 @@ fails its current-source fingerprint check after these changes (first mismatch:
 `src/index.ts`). Its accepted 0.2.0 evidence remains historical; do not refresh
 hashes alone or claim a current full regression. Reverify the affected Field
 behavior before closing the Nullability core integration.
+
+### Typed authoring and explicit transition evidence
+
+`upgradeNullabilityEnvelope` now explicitly moves 0.2.0 to 0.3.0. Every old
+nullability member becomes a residual, including known-looking labels and values
+attached to records/groups. Field roles, references and native payloads remain
+unchanged. `rollbackNullabilityEnvelope` recomputes the receipt, restores the old
+model, and retains the complete later 0.3.0 model separately. Altered receipts,
+wrong document identity, wrong versions and malformed current models refuse. A
+0.1.0 source must first use the Field transition; the inverse chain preserves
+both opaque kind and availability collisions.
+
+`inspectCoreNullability` distinguishes legacy, missing, inapplicable, known and
+unknown states. Missing refers to the metadata assertion, not absence of a data
+value. Explicit unspecified is a known label imposing no availability constraint.
+Inspection always reports unverified provenance. `declareCoreNullability` requires
+a 0.3.0 Field and records explicit author provenance/source/target; it refuses
+unknown-label overwrites. `verifyCoreNullabilityDeclaration` recomputes the receipt
+and rejects any subsequent model change. These are consistency checks, not
+cryptographic authorship or native availability inference.
+
+Complete JSON Schemas describe transition and operation receipts. The current
+record is `fixtures/validation/core-nullability-operations-evidence.json`: 55 core
+tests, 840 assertions, typecheck, 211 schemas and 32 packages pass. Chromium 148
+checks 150 validation decisions, 218 document recoveries, 90 legacy collisions,
+41 refusals, 100 transition recoveries, 100 forged-receipt refusals, 109 typed
+inspections and 60 author declarations, with no external requests or host globals.
+
+This supersedes the foundation's pending authoring/migration items, not its native
+support limits. Existing version-qualified Field/selection APIs still need 0.3.0
+integration, and prior Field source fingerprints need revalidation before the
+Nullability core bead closes. All five native Nullability bindings remain pending.

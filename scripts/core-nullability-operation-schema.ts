@@ -1,0 +1,11 @@
+export {};
+const original=await Bun.file('spec/core/kind-operation.schema.json').text();
+const schema=JSON.parse(original.replaceAll('kind','nullability').replaceAll('Kind','Nullability'));
+schema.title='Core nullability inspection and explicit author declaration results';
+schema.$defs.nullability.enum=['required','absent-allowed','unspecified'];
+schema.$defs.source.oneOf.push({$ref:'urn:umf:core:0.3.0'});
+schema.$defs.declaration.properties.source={$ref:'urn:umf:core:0.3.0'};
+schema.$defs.declaration.properties.target={$ref:'urn:umf:core:0.3.0'};
+schema.$defs.lookup.properties.meaning.oneOf[1].properties.state.const='missing';
+schema.$defs.lookup.properties.meaning.oneOf.push({type:'object',additionalProperties:false,required:['state'],properties:{state:{const:'inapplicable'}}});
+await Bun.write('spec/core/nullability-operation.schema.json',JSON.stringify(schema,null,2)+'\n');

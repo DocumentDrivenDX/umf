@@ -1,11 +1,15 @@
 {
-  "scope": "Experimental nullability envelope validation and JSON/YAML preservation only; authoring receipts, migration and bindings remain pending",
+  "scope": "Experimental nullability envelope, typed inspection/authoring, explicit migration/rollback and JSON/YAML preservation; native bindings remain pending",
   "browser": "148.0.7778.0",
   "checks": {
     "decisions": 150,
     "recoveries": 218,
     "legacyCollisions": 90,
-    "refusals": 41
+    "refusals": 41,
+    "transitions": 100,
+    "tamperedReceipts": 100,
+    "inspections": 109,
+    "authorDeclarations": 60
   },
   "externalRequests": []
 }

@@ -1,0 +1,61 @@
+{
+  "scope": "Experimental Nullability inspection/authoring and explicit 0.2.0-to-0.3.0 migration/rollback; no native binding or admission claim",
+  "supersedesForCurrentOperations": "fixtures/validation/core-nullability-envelope-evidence.json",
+  "results": {
+    "tests": 55,
+    "assertions": 840,
+    "files": 10,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 211,
+    "packages": 32,
+    "browserBuildBytes": 10155371,
+    "browser": {
+      "scope": "Experimental nullability envelope, typed inspection/authoring, explicit migration/rollback and JSON/YAML preservation; native bindings remain pending",
+      "browser": "148.0.7778.0",
+      "checks": {
+        "decisions": 150,
+        "recoveries": 218,
+        "legacyCollisions": 90,
+        "refusals": 41,
+        "transitions": 100,
+        "tamperedReceipts": 100,
+        "inspections": 109,
+        "authorDeclarations": 60
+      },
+      "externalRequests": []
+    }
+  },
+  "commands": [
+    "bun scripts/core-nullability-transition-schema.ts",
+    "bun scripts/core-nullability-operation-schema.ts",
+    "bun test tests/core/core.test.ts tests/core/field-ideals.test.ts tests/core/field-kind.test.ts tests/core/field-transition.test.ts tests/core/native-json.test.ts tests/core/nullability-authoring.test.ts tests/core/nullability-ideals.test.ts tests/core/nullability-transition.test.ts tests/core/scalar.test.ts tests/core/selection.test.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-nullability-browser.ts"
+  ],
+  "limits": [
+    "Inspection provenance is unverified; reading a label does not infer author intent or a native absence representation.",
+    "Migration strips every old nullability member from interpretation and retains exact JSON values in residuals; rollback restores original model and retains later edits separately.",
+    "0.1.0 migration requires the existing Field transition first.",
+    "Unknown 0.3.0 availability labels cannot be overwritten by this authoring API.",
+    "0.3.0 integration with existing version-qualified Field/selection operations remains pending.",
+    "Prior Field conformance fingerprints remain stale during this experimental integration; full core bead closure requires affected evidence revalidation."
+  ],
+  "sha256": {
+    "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/index.ts": "bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2",
+    "scripts/core-nullability-operation-schema.ts": "8b047701de3cf49523234cd6bec88239be826a113c0446ba5739861cd4070e70",
+    "scripts/core-nullability-transition-schema.ts": "56ef28b06860eb45d17004e5a286a870dfc37d494bd0a413ef496671db4a600c",
+    "scripts/core-nullability-browser.ts": "fff5bc8c166344924a7e68dff5d21990bc76129eb5269563f0cddca19fd8625e",
+    "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
+    "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
+    "spec/core/nullability-transition.schema.json": "7c2cd58a09f38503e14d69977c68fc9748b595aed7ec1761867b337ed3aaa68b",
+    "tests/core/nullability-authoring.test.ts": "8a6c0e45c37593d0e4e62387bbda954af10d2bbab3a88711fdc04aea74137936",
+    "tests/core/nullability-transition.test.ts": "8833c37f4b50d037dfb666c780ab3e22c7a67d1a93115902401332b500db8cb1",
+    "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
+    "fixtures/validation/core-nullability-operations-tests.log": "a49395facf1b427a4340532fec78d555498fafdcc1cbd9fbab86a4a3d341bfcb"
+  }
+}

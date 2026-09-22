@@ -333,6 +333,17 @@ retains unknown nonempty labels with an incomplete-semantics diagnostic and reje
 non-string values and non-Field use. Missing availability asserts nothing.
 
 TD-041 records this version choice and the initial validation/preservation evidence.
-Typed operations and migration/rollback remain required before the core task can
-close. This envelope publication does not establish any native absence binding,
+Typed inspection/authoring and migration/rollback now have schema, Bun and browser
+evidence in TD-041. Integration with existing core APIs and prior Field evidence
+revalidation remain required before the core task can close. This does not
+establish any native absence binding,
 Nullability admission, or equivalence with SQL NULL or Avro reader defaults.
+
+
+Nullability inspection's `missing` state means no metadata assertion; it does not
+mean a missing data value is allowed. `known` with `unspecified` preserves an
+explicit no-constraint declaration. `inapplicable` identifies a non-Field under
+0.3.0, while `legacy` and `unknown` preserve uninterpreted values. Reading these
+states does not establish authored or classified provenance. An author declaration
+retains its entire source and records only ideal availability, with no native path.
+Any later model change invalidates that receipt for current-provenance purposes.

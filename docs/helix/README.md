@@ -16,7 +16,8 @@ Experimental Field authoring and validation are implemented in core 0.2.0.
 Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
 is in progress: experimental core 0.3.0 validation and preservation are implemented;
-authoring receipts, migration and native bindings remain pending. Prior Field
+typed authoring and migration/rollback are implemented; integration with existing
+core APIs and native bindings remain pending. Prior Field
 fingerprints require refresh before this new integration can be qualified.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).

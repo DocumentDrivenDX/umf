@@ -1,4 +1,6 @@
 export * from './model/types';
+export * from './model/nullability-transition';
+export * from './model/nullability';
 export * from './adapters/tablespec';
 export * from './adapters/sqlserver';
 export * from './projections/sqlserver-avro';
