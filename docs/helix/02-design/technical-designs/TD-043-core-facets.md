@@ -411,3 +411,52 @@ remain explicit. This does not qualify whole-pipeline execution or write policy.
 This closes the TableSpec facet binding only. PostgreSQL, SQL Server, Avro and
 Parquet facet bindings, the distinct facet ideal admission/five-system delivery
 gate, and Key remain required. Native-equivalence graduation is not claimed.
+
+### PostgreSQL native discovery and binding rules
+
+The native discovery checkpoint uses PostgreSQL 17.4, UTF8, 28 scalar/domain/array
+catalog examples and 74 value/type probes. See
+[the discovery evidence](../../04-build/evidence/postgresql-facet-discovery.md).
+This is an internal native decoder and evidence foundation, not a public facet
+classifier, authored projector or accepted binding.
+
+Read native type modifiers only under the pinned qualified base-type identity and
+zero-dimensional scalar context. PostgreSQL 17.4 exposes `2045` as the
+information_schema scale of `numeric(2,-3)`. Decode the signed native modifier;
+do not promote that information_schema integer. Negative scale and scale greater
+than precision remain native refinements outside the current core facet pair.
+Reject unknown/reserved modifier layouts rather than masking them into a meaning.
+Catalog-resolved defaults are observed native facts, never author declarations.
+
+`numeric(p,s)` accepts NaN and rounds inputs before checking overflow. A finite
+range CHECK excludes NaN but does not undo earlier rounding. The demonstrated
+candidate for exact decimal input uses unconstrained numeric with finite range
+and `value = pg_catalog.trunc(value, scale)` predicates. Core decimal bounds are
+mathematical values: an input such as `1.2300` must not be rejected merely for
+having extra textual zeroes. Native constraints, type conversion and requested
+value/exact-input obligations must be reported separately.
+
+Generated native predicates and up-classified predicates need their own bounded
+qualification. Do not infer semantics from a constraint name or a matching SQL
+substring. Verify the supported expression, qualified functions/operators,
+referenced columns, validation state and correspondence with the retained native
+capture. Unknown/custom/multi-column constraints remain native residuals. A NOT
+VALID constraint can enforce new writes while historical violating rows remain;
+any support claim must distinguish those scopes. The discovery fixture retains
+an existing NaN and rejects a new NaN under the same unvalidated constraint.
+
+Native varchar/char bounds differ from exact input preservation: trailing spaces
+and explicit casts can truncate, and char pads/trims values. Text plus an explicit
+character-length predicate demonstrates zero length and rejection of over-length
+spaces. Bytea plus an octet-length predicate demonstrates binary bounds including
+NUL bytes. Native character types reject NUL. The binding must state encoding,
+length unit, value scope and NUL/padding restrictions explicitly; it must not
+silently equate native characters or implementation capacity with an unqualified
+Unicode-scalar ideal.
+
+Integer carrier widths remain signed 16/32/64 even when an additional CHECK
+narrows values to signed or unsigned eight-bit domains. Domain and array types
+are not decoded as direct scalar base types. Keep their definitions, type
+modifiers, constraints, collation and unknown metadata attached. Predicate-based
+core classification and authored projection remain the next implementation work;
+strict/report behavior and both retained round trips still gate acceptance.

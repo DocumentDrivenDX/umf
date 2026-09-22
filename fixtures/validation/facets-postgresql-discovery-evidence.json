@@ -1,0 +1,60 @@
+{
+  "scope": "PostgreSQL 17.4 native facet discovery, internal native modifier decoding and existing catalog-tree recovery",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "native": {
+    "version": 170004,
+    "encoding": "UTF8",
+    "cases": 74,
+    "expectedRejections": 32,
+    "catalogRecoveries": 2
+  },
+  "browser": {
+    "version": "148.0.7778.0",
+    "checks": {
+      "cases": 28,
+      "observed": 26,
+      "unsupported": 2,
+      "catalogRecoveries": 2,
+      "unsafeRefusals": 1,
+      "getterCalls": 0
+    },
+    "externalRequests": []
+  },
+  "tests": {
+    "passed": 4,
+    "assertions": 94,
+    "failures": 0
+  },
+  "typecheck": "passed",
+  "publicBundleUnchangedFromTableSpecAcceptance": true,
+  "limits": [
+    "Public core facet classification and authored projection remain unimplemented.",
+    "Native type facts do not prove CHECK predicate semantics, full value domains, author intent or exact input conversion.",
+    "Catalog serialization recovers the native tree, not original capture whitespace.",
+    "Prior acceptance records retain their recorded source/document snapshots; the new PostgreSQL work is not silently rebound into them."
+  ],
+  "sha256": {
+    "dist/postgresql-facet-type.js": "e6f884192e45c2131cc2862933e64ba58b5edc54dc1a71b954e55302915ef3ed",
+    "dist/umf.js": "862bb0007afded90f13afb7b0692d8ec91c5f14b1b759ae8d0cb26c9013fdf5c",
+    "docs/helix/02-design/technical-designs/TD-043-core-facets.md": "fabfcd067557914b27d1ae0af96f7555f376bb82e52c0568ccd53f54375f9d81",
+    "docs/helix/04-build/evidence/postgresql-facet-discovery.md": "68f181690f32f4855bba6427c305be67ff0b4a18c0b89fe47c8e384338819cec",
+    "fixtures/postgresql/facets.sql": "719ebfc4fab0a3f98073cd0cb3b798f40977950b64166d04be1d4b8c5087f14d",
+    "fixtures/validation/facets-postgresql-discovery-browser.json": "56f9c8b286c4d5fe962579aa7a0d6dc39149c1c3fc4cfd72d33db1e5ebcc27f9",
+    "fixtures/validation/facets-postgresql-discovery-native.json": "c2ae5bb2f369362bb00692dcebc3b0fc2b913dff6c7bd22c108d36b24d639f17",
+    "fixtures/validation/facets-postgresql-discovery-tests.log": "87e464c233a34478a62542430a2d3210f3ac12961d24b0bec105403a6a05ec81",
+    "fixtures/validation/facets-postgresql-discovery-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
+    "scripts/core-ideals/facets-postgresql-discovery-browser.ts": "0c642a28e7fa2cb3689144ecb83b75bec11774f2ef4df1d9f65980d4bbfcc5f2",
+    "scripts/core-ideals/facets-postgresql-discovery.ts": "389bfa9382d88f371b64c30a173f11048fe990a2dfb90d36f767013a7bdff141",
+    "src/adapters/postgresql/catalog.ts": "8ab83b4f377d53e39a293175d7d221a74de930b81f262d6b3093e25d80f7fd5e",
+    "src/adapters/postgresql/column-metadata.ts": "1381e4c69b0b6f31d8a7fb988ef951ca9624fff68d4852a8bdc565a5ae16e81a",
+    "src/adapters/postgresql/facet-typmod.ts": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "tests/core-ideals/facets-postgresql-discovery.test.ts": "646c1a22ec261aa26eb1a8fe1c0e9abdc56c3a6f35719ff09108b1240ca02fbb"
+  }
+}

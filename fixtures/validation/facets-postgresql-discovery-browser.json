@@ -1,0 +1,20 @@
+{
+  "scope": "Internal native type decoding and existing catalog-tree serialization in Chromium; no public facet classifier, projection or binding qualification",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 28,
+    "observed": 26,
+    "unsupported": 2,
+    "catalogRecoveries": 2,
+    "unsafeRefusals": 1,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/facets-postgresql-discovery-browser.ts": "0c642a28e7fa2cb3689144ecb83b75bec11774f2ef4df1d9f65980d4bbfcc5f2",
+    "src/adapters/postgresql/facet-typmod.ts": "641f3b6f6d4569ada260173af65eadb621fe24ef493cd33ab87a3389b6ba00a9",
+    "fixtures/validation/facets-postgresql-discovery-native.json": "c2ae5bb2f369362bb00692dcebc3b0fc2b913dff6c7bd22c108d36b24d639f17",
+    "dist/umf.js": "862bb0007afded90f13afb7b0692d8ec91c5f14b1b759ae8d0cb26c9013fdf5c",
+    "dist/postgresql-facet-type.js": "e6f884192e45c2131cc2862933e64ba58b5edc54dc1a71b954e55302915ef3ed"
+  }
+}
