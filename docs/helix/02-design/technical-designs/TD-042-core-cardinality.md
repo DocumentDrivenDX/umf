@@ -570,3 +570,35 @@ implied. Both exact native text and unknown metadata remain recoverable.
 These are implementation decisions, not SQL Server binding acceptance. The native
 82-case discovery record is `cardinality-sqlserver-profile-native.json`; schemas,
 classification/projection APIs and their qualified acceptance remain in progress.
+
+### SQL Server implementation checkpoint (acceptance pending)
+
+SQL Server 16.0.4295.3 now has complete operation schemas and browser-safe
+classification/projection APIs. Classification creates a distinct logical Field
+and retains the original native column's scalar family. It requires explicit
+representation and constraint selection, preserving trust, disabled state and
+replication exemptions. Existing Field identities block instead of being
+reconciled implicitly. Logical arrays have no scalar family; their source text
+column remains unchanged and exportable.
+
+Projection emits an explicitly chosen scalar or nvarchar(max) JSON carrier.
+ISJSON ARRAY/OBJECT checks enforce outer shape, not member type or unique object
+keys. Native NULL is explicit and stays separate from authored/member availability.
+Exact-value requests, JSON value/text restrictions, duplicate keys, nested/cyclic
+item definitions and unknown metadata produce retained residuals. The native
+oracle confirms that binary64 `1.0000000000000002` narrows to `real` value `1.0`.
+Strict mode blocks every unrepresented obligation; report mode does not claim a
+row decoder, child-table layout or recursive value conversion.
+
+Focused evidence covers 104 projection cases and all 14 declared scalar carriers,
+68 emitted candidates, 36 strict blocks, 68 authored-model recoveries and 68 fresh
+native-capture/logical-classification recoveries. Browser projection checks include
+136 JSON/YAML ideal recoveries and 68 forged-receipt refusals. Classification has
+56 representation/policy cases with 72 exact native-text recoveries; its tests also
+refuse wrong column associations, replication exemptions and bypass expressions.
+
+The combined commands are `bun scripts/core-ideals/cardinality-sqlserver-oracle.ts`
+and `bun scripts/core-ideals/cardinality-sqlserver-browser.ts`. Full acceptance
+requires their fresh results, the five-system refresh and the separate existing
+Field/Nullability conformance gates. SQL Server qualification does not complete
+Avro, Parquet, or the separate Cardinality admission/delivery gate.

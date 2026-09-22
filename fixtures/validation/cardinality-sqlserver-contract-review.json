@@ -1,0 +1,26 @@
+{
+  "scope": "Focused SQL Server Cardinality contract review before acceptance refresh",
+  "status": "acceptance-pending",
+  "findings": [],
+  "verifiedObligations": [
+    "Copied source, complete candidate or block, path-qualified mappings and explicit basis",
+    "Separate authored/classified origin and conflict refusal; logical Fields do not erase native column scalar metadata",
+    "Strict blocks residuals; report preserves unrepresented item/value/availability and duplicate-key obligations",
+    "Native source text and unknown tokens recover from checked receipts; authored intent recovers only with retained receipt",
+    "Pinned native engine checks, real browser checks, nested/cyclic items, trust/replication/constraint-association refusals and scalar narrowing evidence exist"
+  ],
+  "limits": [
+    "Review does not establish full binding acceptance; combined commands and five-system refresh/gates must pass",
+    "No row decoder, recursive item conversion, child-table layout or native equivalence claim"
+  ],
+  "sha256": {
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "5492f0d1ad5975f300681824896df645f354ac6dba05987fdb0c0615403f2276",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "886efe68d7c5d35d58807857a858061f11ea2e7a4c0727ef6149059c5c1e498d",
+    "src/core-ideals/cardinality-sqlserver.ts": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756",
+    "src/core-ideals/cardinality-sqlserver-projection.ts": "474b1bcbbc8c7d8f5e6c0268d6ad360dfd342b88fe801c2d53218e2b668c9c8e",
+    "spec/core/sqlserver-cardinality-classification.schema.json": "669c52050ee28c8754923ea4ddd3487c5a568bc745a63dd7e4fa4015c7964a46",
+    "spec/core/cardinality-sqlserver-projection.schema.json": "2078f923149696c5c8917e25de2287398a38fdc968a200d9b972e1446ab66024",
+    "tests/core-ideals/cardinality-sqlserver.test.ts": "0269226e76ef9af890bf90e86eb9bafc7b1b40aaf36d1226549e8d8c75a89fdc",
+    "tests/core-ideals/cardinality-sqlserver-projection.test.ts": "4c552f1c0e214d0ee46393339bc90b8d3dc4369ae17b78de56fd32f4bf3d4de6"
+  }
+}
