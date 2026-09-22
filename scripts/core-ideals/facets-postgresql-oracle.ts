@@ -7,7 +7,7 @@ const runs=[];
 for(const stage of stages){const command=['bun',`scripts/core-ideals/facets-postgresql-${stage}.ts`];const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit'});const exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,`Native facet stage failed: ${stage}`);}
 const paths=['scripts/core-ideals/facets-postgresql-oracle.ts'];
 for(const name of proofs){
- const path=`fixtures/validation/facets-postgresql-${name}.json`,proof=await Bun.file(path).json();assert.equal(proof.serverVersion,170004);
+ const path=`fixtures/validation/facets-postgresql-${name}.json`,proof=await Bun.file(path).json();assert.equal(name==='constraints-native'?proof.capture.serverVersion:proof.serverVersion,170004);
  for(const [p,h] of Object.entries(proof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex'),h,`Stale native proof: ${p}`);
  paths.push(path,...Object.keys(proof.sha256));
 }

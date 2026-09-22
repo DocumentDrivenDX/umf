@@ -1,0 +1,10 @@
+{
+  "reason": "Aggregate metadata reader incorrectly expected a top-level serverVersion on the constraints proof. That proof records the version at capture.serverVersion; all five native behavior stages had passed before this reporting assertion failed.",
+  "changedInput": "scripts/core-ideals/facets-postgresql-oracle.ts",
+  "beforeSha256": "b696ed43fde5f64fa6db747d8b86c9ec36ce134bbae2a2e5b01480c7316c8af5",
+  "afterSha256": "9df6f4118aaaab3773579fd7c465e921be45a80eb8bc3f1d4753253518fbc3b6",
+  "retainedChecks": "The first 79 successful compatibility commands are retained. The sole source change is the PostgreSQL aggregate metadata reader, which those commands do not execute apart from typechecking, rerun here. Child evidence fingerprints are verified before publication. The corrected native aggregate is rerun, then browser aggregate and priority regression continue.",
+  "librarySchemaTestChanges": false,
+  "failedAttempt": "fixtures/validation/postgresql-facets-refresh-failed-attempt.json",
+  "failedLog": "fixtures/validation/postgresql-facets-refresh-failed-attempt.log"
+}

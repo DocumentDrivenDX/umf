@@ -1,0 +1,122 @@
+PASS bun run typecheck
+PASS bun run test:schemas
+PASS bun run build
+PASS bun run build:postgresql
+PASS bun scripts/core-field-browser.ts
+PASS bun scripts/core-ideals/field-tablespec-browser.ts
+PASS bun scripts/core-ideals/field-tablespec-projection-browser.ts
+PASS /home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/field-tablespec-oracle.py
+PASS /home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/field-tablespec-projection-oracle.py
+PASS bun scripts/core-ideals/field-avro-corpus.ts
+PASS .venv/bin/python scripts/core-ideals/field-avro-oracle.py
+PASS bun scripts/core-ideals/field-avro-browser.ts
+PASS bun scripts/core-ideals/field-avro-projection-corpus.ts
+PASS .venv/bin/python scripts/core-ideals/field-avro-projection-oracle.py
+PASS bun scripts/core-ideals/field-avro-projection-browser.ts
+PASS bun scripts/core-ideals/avro-record-type-corpus.ts
+PASS .venv/bin/python scripts/core-ideals/avro-record-type-oracle.py
+PASS bun scripts/core-ideals/avro-record-type-browser.ts
+PASS bun scripts/core-ideals/field-parquet-corpus.ts
+PASS .venv/bin/python scripts/core-ideals/field-parquet-oracle.py
+PASS bun scripts/core-ideals/field-parquet-browser.ts
+PASS bun scripts/core-ideals/field-parquet-projection-corpus.ts
+PASS .venv/bin/python scripts/core-ideals/field-parquet-projection-oracle.py
+PASS bun scripts/core-ideals/field-parquet-projection-browser.ts
+PASS .venv/bin/python scripts/core-ideals/field-avro-fastavro-oracle.py
+PASS bun scripts/core-ideals/field-postgresql-oracle.ts
+PASS bun scripts/core-ideals/field-postgresql-browser.ts
+PASS bun scripts/core-ideals/field-postgresql-projection-oracle.ts
+PASS bun scripts/core-ideals/field-postgresql-projection-browser.ts
+PASS bun scripts/core-ideals/postgresql-ddl-kinds-oracle.ts
+PASS bun scripts/core-ideals/postgresql-ddl-kinds-browser.ts
+PASS bun scripts/core-ideals/field-sqlserver-oracle.ts
+PASS bun scripts/core-ideals/field-sqlserver-browser.ts
+PASS bun scripts/core-ideals/field-sqlserver-projection-oracle.ts
+PASS bun scripts/core-ideals/field-sqlserver-projection-browser.ts
+PASS bun scripts/core-nullability-browser.ts
+PASS bun scripts/core-ideals/nullability-selection-browser.ts
+PASS bun scripts/core-ideals/nullability-field-operations-browser.ts
+PASS bun scripts/core-ideals/nullability-tablespec-corpus.ts
+PASS /home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/nullability-tablespec-classification-oracle.py
+PASS bun scripts/core-ideals/nullability-tablespec-classification-browser.ts
+PASS bun scripts/core-ideals/nullability-tablespec-projection-corpus.ts
+PASS /home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/nullability-tablespec-projection-oracle.py
+PASS bun scripts/core-ideals/nullability-tablespec-projection-browser.ts
+PASS /home/erik/Projects/tablespec/.venv/bin/python scripts/core-ideals/nullability-tablespec-execution-oracle.py
+PASS bun scripts/core-ideals/nullability-postgresql-oracle.ts
+PASS bun scripts/core-ideals/nullability-postgresql-browser.ts
+PASS bun scripts/core-ideals/nullability-postgresql-projection-oracle.ts
+PASS bun scripts/core-ideals/nullability-postgresql-projection-browser.ts
+PASS bun scripts/core-ideals/nullability-sqlserver-oracle.ts
+PASS bun scripts/core-ideals/nullability-sqlserver-browser.ts
+PASS bun scripts/core-ideals/nullability-sqlserver-projection-oracle.ts
+PASS bun scripts/core-ideals/nullability-sqlserver-projection-browser.ts
+PASS bun scripts/core-ideals/nullability-avro-oracle.ts
+PASS bun scripts/core-ideals/nullability-avro-browser.ts
+PASS bun scripts/core-ideals/nullability-avro-projection-oracle.ts
+PASS bun scripts/core-ideals/nullability-avro-projection-browser.ts
+PASS bun scripts/core-ideals/nullability-parquet-oracle.ts
+PASS bun scripts/core-ideals/nullability-parquet-browser.ts
+PASS bun scripts/core-ideals/nullability-parquet-projection-oracle.ts
+PASS bun scripts/core-ideals/nullability-parquet-projection-browser.ts
+PASS bun scripts/core-cardinality-browser.ts
+PASS bun scripts/core-cardinality-operations-browser.ts
+PASS bun scripts/core-ideals/cardinality-field-operations-browser.ts
+PASS bun scripts/core-ideals/cardinality-selection-browser.ts
+PASS bun scripts/core-ideals/cardinality-tablespec-oracle.ts
+PASS bun scripts/core-ideals/cardinality-tablespec-browser.ts
+PASS bun scripts/core-ideals/cardinality-postgresql-oracle.ts
+PASS bun scripts/core-ideals/cardinality-postgresql-browser.ts
+PASS bun scripts/core-ideals/cardinality-sqlserver-oracle.ts
+PASS bun scripts/core-ideals/cardinality-sqlserver-browser.ts
+PASS bun scripts/core-ideals/cardinality-avro-oracle.ts
+PASS bun scripts/core-ideals/cardinality-avro-browser.ts
+PASS bun scripts/core-ideals/cardinality-parquet-oracle.ts
+PASS bun scripts/core-ideals/cardinality-parquet-browser.ts
+PASS bun scripts/core-facet-browser.ts
+PASS bun scripts/core-facet-operations-browser.ts
+PASS bun scripts/core-ideals/facets-tablespec-oracle.ts
+PASS bun scripts/core-ideals/facets-tablespec-browser.ts
+FAIL bun scripts/core-ideals/facets-postgresql-oracle.ts
+Traceback (most recent call last):
+  File "/home/erik/Projects/umf/.cache/postgresql-facets-refresh.py", line 34, in <module>
+    if result.returncode:raise RuntimeError((result.stderr or '')+(result.stdout or ''))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError:  5 | const proofs=['discovery-native','constraints-native','resolved-native','projection-native','composition'];
+ 6 | const runs=[];
+ 7 | for(const stage of stages){const command=['bun',`scripts/core-ideals/facets-postgresql-${stage}.ts`];const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit'});const exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,`Native facet stage failed: ${stage}`);}
+ 8 | const paths=['scripts/core-ideals/facets-postgresql-oracle.ts'];
+ 9 | for(const name of proofs){
+10 |  const path=`fixtures/validation/facets-postgresql-${name}.json`,proof=await Bun.file(path).json();assert.equal(proof.serverVersion,170004);
+                                                                                                               ^
+AssertionError: Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- 170004
+
+ generatedMessage: true,
+     actual: undefined,
+   expected: 170004,
+   operator: "strictEqual",
+       code: "ERR_ASSERTION"
+
+      at /home/erik/Projects/umf/scripts/core-ideals/facets-postgresql-oracle.ts:10:107
+
+Bun v1.3.14 (Linux arm64)
+{"serverVersion":170004,"cases":74,"rejections":32,"serializationRecoveries":2}
+{"constraints":12,"candidates":8,"unsupported":4,"probes":4}
+{"cases":13,"decoded":10,"refused":3}
+{"cases":232,"emitted":145,"blocked":87,"probes":479,"rejections":166,"catalogRecoveries":2}
+{"case":0,"total":232}
+{"case":24,"total":232}
+{"case":48,"total":232}
+{"case":72,"total":232}
+{"case":96,"total":232}
+{"case":120,"total":232}
+{"case":144,"total":232}
+{"case":168,"total":232}
+{"case":192,"total":232}
+{"case":216,"total":232}
+{"cases":145,"idealRecoveries":145,"nativeRecoveries":145,"exactFacetRecoveries":66,"explicitResiduals":79}
+

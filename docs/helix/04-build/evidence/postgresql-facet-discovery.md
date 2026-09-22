@@ -294,3 +294,51 @@ The aggregate native runner is prepared but has not yet run as a whole. Full
 compatibility refresh and prior Field/Nullability/Cardinality gates remain required
 before PostgreSQL facet binding acceptance. See
 [composition evidence](../../../../fixtures/validation/facets-postgresql-composition-evidence.json).
+
+
+### Qualified PostgreSQL facet binding
+
+The [acceptance record](../../../../fixtures/validation/postgresql-facets-acceptance-evidence.json) qualifies experimental core 0.5.0 PostgreSQL
+facet classification, authored projection, strict/report residuals and retained
+native/ideal recovery. It supersedes the earlier checkpoints' full-refresh
+limitation; their original counts and fingerprints remain historical.
+
+All 82 compatibility-refresh steps pass, including 466 priority tests,
+49,198 assertions across 148 files, type checks,
+268 schemas, 44 extension packages, browser builds and existing five-system
+Field/Nullability/Cardinality native/browser workflows. Accepted TableSpec facets
+are revalidated. The three prior concept gates pass after evidence refresh.
+The initial PostgreSQL aggregate failed after its native stages passed because
+its metadata reader expected the constraint proof's server version at the wrong
+path. The reader was corrected; typechecking and the affected aggregate were
+rerun. Earlier successful commands were retained because their implementation
+inputs were unchanged. The failed attempt and adjustment are archived in the
+acceptance record. This is the core and five-priority-system scope, not a
+full-repository baseline.
+
+Five native workflow stages use PostgreSQL 17.4/UTF8 and the qualified
+little-endian Datum64 layout. The projector matrix has 232 cases: 145 emitted
+schemas and 87 blocks. Emitted schemas pass 479 independent native value probes
+with 166 expected rejections under an adversarial operator search path. All 145
+schemas undergo composed classification and both retained recoveries; 66 recover
+the authored facets and 79 retain explicit residuals. Inferred native refinements
+remain separate from author intent.
+
+All six Chromium 148 workflows pass against the public bundle and optional pinned
+PostgreSQL WASM runtime. Public classification covers 231 cases with 157 exact
+native recoveries and 74 blocks; projection covers 232 cases with 290 ideal
+recoveries plus comment controls. Browser execution has no host globals or
+external requests. Typed operation and extension schemas cover both directions.
+
+Qualification is limited to supported direct scalar carriers and verified CHECK
+expressions with explicit stored/new non-null scope. NOT VALID, unknown/custom
+predicates, scalar-family conversion, character NUL/padding and input rounding
+remain native refinements or residuals. Binding ceilings are length 10485760,
+checked integer width 1024 and decimal precision 1000. Arbitrary SQL expression
+conversion, source authentication and composition with earlier nullability or
+cardinality operations are not claimed. The float-narrowing case remains an
+exact-input failure. Native payloads are never removed by core labels.
+
+This closes the PostgreSQL facet binding only. SQL Server, Avro and Parquet facet
+bindings, the separate facet ideal admission/five-system delivery gate, and Key
+remain required. No native-equivalence graduation is claimed.

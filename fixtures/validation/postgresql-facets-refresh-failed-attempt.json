@@ -1,0 +1,726 @@
+[
+  {
+    "command": [
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json\n"
+  },
+  {
+    "command": [
+      "bun",
+      "run",
+      "test:schemas"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"packages\": 44,\n  \"passed\": 44,\n  \"failures\": []\n}\n{\n  \"schemas\": 268,\n  \"passed\": 268,\n  \"failures\": []\n}\n",
+    "stderr": "$ bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts\n"
+  },
+  {
+    "command": [
+      "bun",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "stdout": "Browser ESM built: 10877876 bytes; declarations emitted.\n",
+    "stderr": "$ bun scripts/build.ts\n"
+  },
+  {
+    "command": [
+      "bun",
+      "run",
+      "build:postgresql"
+    ],
+    "exitCode": 0,
+    "stdout": "Optional PostgreSQL parser/deparser browser runtime built\n",
+    "stderr": "$ bun scripts/build-postgresql.ts\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-field-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"scope\":\"Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; authored provenance and typed lookup; no native classification or binding claim\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":40,\"recoveries\":56,\"transitions\":40,\"kindLookups\":28,\"authorDeclarations\":40,\"hostGlobalsAbsent\":true},\"externalRequests\":[]}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-tablespec-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"browser\":\"148.0.7778.0\",\"checks\":{\"classifications\":32,\"recoveries\":64,\"conflicts\":2,\"records\":32}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-tablespec-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"fieldBlocks\":10,\"projections\":40,\"idealRecoveries\":60,\"lossPolicies\":2,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/field-tablespec-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{'comparisons': 64, 'nativeAccepted': 64}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/field-tablespec-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{'nativeAccepted': 30, 'nativeRecordsAccepted': 4}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"schemas\": 4, \"fields\": 13, \"records\": 7}\n",
+    "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown future-meaning, using bytes.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"fields\":13,\"recoveries\":26,\"conflicts\":2,\"records\":7,\"recordRecoveries\":14}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-projection-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"schemas\": 15, \"sampleRoundTrips\": 15, \"floatNarrowingConfirmed\": true, \"recordCases\": 9, \"recordsAccepted\": 5}\n",
+    "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown local-timestamp-micros, using long.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"recordCases\":9,\"recordRecoveries\":10,\"recordBlocks\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":4,\"identifierRefusals\":4}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/avro-record-type-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/avro-record-type-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{'runtime': 'Apache Avro 1.12.0', 'bundles': 5, 'directRecords': 5, 'nonDirectTypes': 12, 'scope': 'Qualified native record-type resolution and ordered members; no value-domain equivalence'}\n",
+    "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown future-meaning, using bytes.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/avro-record-type-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"fields\":5,\"recoveries\":10,\"blocked\":12}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-parquet-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"files\": 16, \"fields\": 26, \"recordTypes\": 5, \"records\": 21, \"blockedRecords\": 22}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"fields\":26,\"recoveries\":52,\"blocked\":27,\"records\":21,\"recordRecoveries\":42,\"blockedRecords\":22,\"recordTypes\":5,\"typeRecoveries\":10,\"blockedTypes\":22}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-projection-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-parquet-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{'runtime': 'PyArrow 21.0.0', 'schemas': 36, 'records': 5, 'blockedRecords': 4, 'scope': 'Native empty-file reading, physical types and repetition levels; no row-value encoding claim'}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"fields\":36,\"recoveries\":72,\"records\":5,\"blockedRecords\":4,\"recordRecoveries\":10}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-fastavro-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"membershipBundles\": 4, \"directRecords\": 5, \"nonDirectTypes\": 12, \"fieldSamples\": 15, \"recordSamples\": 5}\n",
+    "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown local-timestamp-micros, using long.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"columns\":20,\"recoveries\":40,\"records\":4,\"recordRecoveries\":8,\"composites\":4,\"compositeRecoveries\":8,\"version\":\"170004\"}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"composites\":4,\"compositeRecoveries\":8,\"columns\":20,\"recoveries\":40,\"conflicts\":2,\"records\":4,\"recordRecoveries\":8,\"viewBlocked\":true,\"staleReceiptBlocked\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"executed\":15,\"classified\":24,\"comments\":15,\"recordCases\":7,\"executedRecords\":4}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"namespaceChecks\":4,\"namespaceRecoveries\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":2,\"identifierRefusals\":4,\"recordCases\":7,\"recordRecoveries\":8,\"recordBlocks\":3}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":12,\"classifications\":14,\"blocked\":10}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":24,\"recoveries\":28,\"blocked\":10}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"columns\":34,\"recoveries\":68,\"records\":3,\"recordRecoveries\":6,\"version\":\"16.0.4295.3\"}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"records\":3,\"recordRecoveries\":6,\"columns\":34,\"recoveries\":68,\"conflicts\":2,\"staleReceiptBlocked\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"projections\":14,\"idealRecoveries\":28,\"nativeClassifications\":14,\"recordCases\":8,\"recordEmitted\":4,\"guardChecked\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"namespaceChecks\":4,\"namespaceRecoveries\":4,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4,\"projections\":14,\"recoveries\":28,\"lossPolicies\":2,\"identifierRefusals\":4}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-nullability-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"scope\":\"Experimental nullability envelope, typed inspection/authoring, explicit migration/rollback and JSON/YAML preservation; native bindings remain pending\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":150,\"recoveries\":218,\"legacyCollisions\":90,\"refusals\":41,\"transitions\":100,\"tamperedReceipts\":100,\"inspections\":109,\"authorDeclarations\":60},\"externalRequests\":[]}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-selection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":5,\"recoveries\":10,\"refusals\":5,\"legacyVerified\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-field-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":18,\"recoveries\":36,\"refusals\":72,\"versionedReceipts\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":504,\"classified\":272,\"blocked\":232,\"recoveries\":544}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\": 504, \"declared\": 40, \"recoveries\": 544}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":504,\"recoveries\":544,\"blocks\":232,\"tampered\":272}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":204,\"targets\":146,\"blocks\":58,\"recoveries\":292}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\": 204, \"nativeTargets\": 146, \"idealRecoveries\": 292, \"scalarBooleanDisagreements\": 26}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":204,\"recoveries\":292,\"blocks\":58,\"tampered\":146}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\": 10, \"executed\": 5, \"noConstraint\": 4, \"nativeRefusals\": 1}\n",
+    "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 15:21:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"serverVersion\":170004,\"cases\":18,\"rejections\":6,\"serializationRecoveries\":2}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"nativeCasesRetained\":18,\"catalogTreeRecoveries\":2,\"classificationCases\":176,\"classified\":91,\"blocked\":85,\"exactSourceRecoveries\":182,\"forgedRefusals\":91}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":73,\"executed\":60,\"blocked\":13,\"idealRecoveries\":60,\"classified\":60,\"nativeRecoveries\":60}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":73,\"blocked\":13,\"recoveries\":120,\"forgedRefusals\":60,\"identifierRefusals\":4}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":24,\"rejections\":10,\"columns\":18,\"serializationRecoveries\":2}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"nativeCasesRetained\":24,\"catalogTreeRecoveries\":2,\"sidecarPreserved\":true,\"classificationCases\":288,\"classified\":156,\"blocked\":132,\"exactSourceRecoveries\":312,\"forgedRefusals\":156}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":79,\"executed\":126,\"blocked\":16,\"idealRecoveries\":63,\"classified\":63,\"nativeRecoveries\":63,\"ambientControls\":2}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":79,\"blocked\":16,\"recoveries\":126,\"forgedRefusals\":63,\"identifierRefusals\":6}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"schemas\": 19, \"nativeChecks\": 171, \"recoveredNativeChecks\": 342, \"unionResolution\": 8, \"floatNarrowing\": 2}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":304,\"classified\":171,\"blocked\":133,\"recoveries\":342,\"forgedRefusals\":171}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"nativeSchemas\": 136, \"outcomes\": 612}\n{\"cases\":88,\"blocked\":20,\"classified\":68,\"idealRecoveries\":136,\"nativeRecoveries\":136}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":88,\"blocked\":20,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":5}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{'cases': 120, 'accepted': 100, 'rejected': 20}\n{\"nativeRecoveredFiles\": 264, \"exactSchemaAndValues\": true}\n{\"files\":100,\"columns\":132,\"recoveries\":264}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"files\":100,\"columns\":132,\"recoveries\":200,\"classificationCases\":640,\"classified\":360,\"blocked\":280,\"classificationRecoveries\":720,\"forgedRefusals\":360}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{'runtime': 'PyArrow 21.0.0', 'scope': 'Native generated empty-file schemas; separate PyArrow row writes under those schemas. UMF projects schemas, not row values.', 'files': 66, 'outcomes': 198, 'rejected': 40, 'floatNarrowings': 32}\n{\"cases\":91,\"blocked\":25,\"classified\":66,\"idealRecoveries\":132,\"nativeRecoveries\":132}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":91,\"blocked\":25,\"recoveries\":132,\"forgedRefusals\":66,\"identifierRefusals\":3}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-cardinality-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"recoveries\":18,\"transitions\":16,\"refusals\":14,\"getterCalls\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-cardinality-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"recoveries\":18,\"transitions\":16,\"refusals\":14,\"getterCalls\":0,\"authorRecoveries\":8,\"authorRefusals\":5}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-field-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":45,\"recoveries\":90,\"availabilityRecoveries\":24,\"itemRecordRecoveries\":2,\"refusals\":253,\"versionedReceipts\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-selection-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":12,\"recoveries\":24,\"refusals\":16,\"legacyVerified\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-tablespec-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"declarations\": 28, \"profileDisagreements\": 5, \"rawGeneratorControls\": 4, \"valueCases\": 13, \"valueDisagreements\": 6, \"floatNarrowings\": 1}\n{\"scope\":\"TableSpec Cardinality native discovery only\",\"declarations\":28,\"valueCases\":13,\"checkedFingerprints\":7,\"bindingImplemented\":false}\n{\"cases\":336,\"recoveries\":452}\n{\"cases\": 336, \"declared\": 116, \"nativeRecoveries\": 452}\n{\"cases\":78,\"projected\":44,\"recoveries\":88}\n{\"cases\": 78, \"emitted\": 44, \"idealRecoveries\": 88, \"vectorValueChecks\": 105, \"floatNarrowings\": 15}\n{\"nativeCommands\":5,\"proofs\":3}\n",
+    "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 15:33:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\nWARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 15:34:11 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-tablespec-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":336,\"recoveries\":452,\"blocks\":110,\"tampered\":226}\n{\"cases\":78,\"recoveries\":88,\"blocks\":34,\"tampered\":44}\n{\"classification\":{\"cases\":336,\"recoveries\":452,\"blocks\":110,\"tampered\":226},\"projection\":{\"cases\":78,\"recoveries\":88,\"blocks\":34,\"tampered\":44}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":37,\"columns\":26,\"types\":24}\n{\"cases\":48,\"executed\":26,\"blocked\":22,\"idealRecoveries\":26,\"nativeRecoveries\":26}\n{\"nativeCommands\":2,\"proofs\":2}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"resolved\":26,\"refused\":5,\"classified\":26,\"recovered\":26,\"strictScalars\":18,\"exactUnknownToken\":true}\n{\"cases\":48,\"blocked\":22,\"recoveries\":52,\"forgedRefusals\":26,\"identifierRefusals\":4}\n{\"catalog\":{\"resolved\":26,\"refused\":5,\"classified\":26,\"recovered\":26,\"strictScalars\":18,\"exactUnknownToken\":true},\"projection\":{\"cases\":48,\"blocked\":22,\"recoveries\":52,\"forgedRefusals\":26,\"identifierRefusals\":4}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":82,\"rejections\":27,\"columns\":7,\"serializationRecoveries\":2}\n{\"cases\":104,\"executed\":68,\"blocked\":36,\"idealRecoveries\":68,\"nativeRecoveries\":68}\n{\"nativeCommands\":2,\"proofs\":2}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"classified\":36,\"blocked\":20,\"recoveries\":72,\"forgedRefusals\":36}\n{\"cases\":104,\"blocked\":36,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":6}\n{\"classification\":{\"classified\":36,\"blocked\":20,\"recoveries\":72,\"forgedRefusals\":36},\"projection\":{\"cases\":104,\"blocked\":36,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":6}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-avro-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"schemas\": 20, \"crossCodecChecks\": 80, \"duplicateKeyStreams\": 4, \"refusals\": 10, \"unionResolution\": 24, \"floatNarrowings\": 4}\n{\"nativeCrossCodecChecks\": 208, \"floatNarrowings\": 12}\n{\"cases\":78,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104}\n{\"nativeCommands\":2,\"proofs\":3}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":20,\"duplicateStreams\":2,\"valueDisagreements\":1,\"floatNarrowings\":1,\"externalRequests\":0}\n{\"cases\":80,\"classified\":58,\"blocked\":22,\"recoveries\":116,\"forgedRefusals\":58}\n{\"cases\":78,\"projected\":52,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104,\"forgedRefusals\":52}\n{\"profile\":{\"rows\":[{\"id\":\"empty-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":[]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"ordered-duplicates\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"060002040000\",\"decoded\":{\"value\":[null,2,null]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nested-arrays\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"0400060402040000\",\"decoded\":{\"value\":[[],[2,1,2]]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-of-maps\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"0400020261020000\",\"decoded\":{\"value\":[{},{\"a\":1}]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"map-of-arrays\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"040261060402040002620000\",\"decoded\":{\"value\":{\"a\":[2,1,2],\"b\":[]}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"empty-map\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":{}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"exact-string-keys\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604c3a9020665cc8104000600\",\"decoded\":{\"value\":{\"\u00e9\":1,\"e\u0301\":2,\"\":3}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"special-property-keys\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600\",\"decoded\":{\"value\":{\"constructor\":2,\"toString\":3}},\"keys\":[\"value\"],\"exactInputRecovery\":false,\"nativeValueAgreement\":false},{\"id\":\"nullable-map-values\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"040261000262020400\",\"decoded\":{\"value\":{\"a\":null,\"b\":2}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nested-maps\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"040261000262020263040000\",\"decoded\":{\"value\":{\"a\":{},\"b\":{\"c\":2}}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-present\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"020604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-null\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":null},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-null-last\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"000604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-map-union-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"unspecified\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"000604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-map-union-map\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"unspecified\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"020202610400\",\"decoded\":{\"value\":{\"a\":2}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"recursive-record-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"record\"},\"name\":{\"kind\":\"string\",\"value\":\"Item\"},\"fields\":{\"kind\":\"array\",\"items\":[{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"id\"},\"type\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"children\"},\"type\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"Item\"}}}}}]}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"record\"},\"name\":{\"kind\":\"string\",\"value\":\"Item\"},\"fields\":{\"kind\":\"array\",\"items\":[{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"id\"},\"type\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"children\"},\"type\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"Item\"}}}}}]}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"02020204000000\",\"decoded\":{\"value\":[{\"id\":1,\"children\":[{\"id\":2,\"children\":[]}]}]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"enum-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"enum\"},\"name\":{\"kind\":\"string\",\"value\":\"Choice\"},\"symbols\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"A\"},{\"kind\":\"string\",\"value\":\"B\"}]}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"enum\"},\"name\":{\"kind\":\"string\",\"value\":\"Choice\"},\"symbols\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"A\"},{\"kind\":\"string\",\"value\":\"B\"}]}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0602000200\",\"decoded\":{\"value\":[\"B\",\"A\",\"B\"]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"unknown-logical-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"},\"logicalType\":{\"kind\":\"string\",\"value\":\"future-sequence\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"float-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"float\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"float\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"020000803f00\",\"decoded\":{\"value\":[1]},\"keys\":[\"value\"],\"exactInputRecovery\":false,\"nativeValueAgreement\":true}],\"streams\":[{\"id\":\"positive-block\",\"sourceHex\":\"0402610202610400\",\"rewrittenHex\":\"0202610400\",\"decoded\":{\"a\":2},\"exactByteRecovery\":false},{\"id\":\"negative-block\",\"sourceHex\":\"030c02610202610400\",\"rewrittenHex\":\"0202610400\",\"decoded\":{\"a\":2},\"exactByteRecovery\":false}]},\"classification\":{\"cases\":80,\"classified\":58,\"blocked\":22,\"recoveries\":116,\"forgedRefusals\":58},\"projection\":{\"cases\":78,\"projected\":52,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104,\"forgedRefusals\":52}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\": 30, \"refusals\": 2, \"floatNarrowings\": 2}\n{\"runtime\": \"PyArrow 21.0.0\", \"files\": 80, \"rows\": 176, \"floatNarrowings\": 6}\n{\"runtime\": \"PyArrow 21.0.0\", \"files\": 132, \"rows\": 282, \"floatNarrowings\": 10}\n{\"cases\":160,\"projected\":132,\"blocked\":28,\"idealRecoveries\":264,\"nativeRecoveries\":264}\n{\"nativeCommands\":3,\"proofs\":3}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"files\":30,\"columns\":44,\"containers\":34,\"embeddedSchemas\":15,\"recoveries\":60}\n{\"files\":80,\"recoveries\":160}\n{\"cases\":120,\"classified\":76,\"blocked\":44,\"recoveries\":152,\"forgedRefusals\":76}\n{\"cases\":160,\"projected\":132,\"blocked\":28,\"recoveries\":264,\"nativeRecoveries\":264,\"forgedRefusals\":132}\n{\"browserCommands\":4,\"checks\":{\"profile\":{\"files\":30,\"columns\":44,\"containers\":34,\"embeddedSchemas\":15,\"recoveries\":60},\"carrier\":{\"files\":80,\"recoveries\":160},\"classification\":{\"cases\":120,\"classified\":76,\"blocked\":44,\"recoveries\":152,\"forgedRefusals\":76},\"projection\":{\"cases\":160,\"projected\":132,\"blocked\":28,\"recoveries\":264,\"nativeRecoveries\":264,\"forgedRefusals\":132}}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-facet-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":99,\"accepted\":31,\"rejected\":68,\"recoveries\":198,\"tokenChecks\":18,\"accessorRefused\":true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-facet-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":99,\"documentRecoveries\":62,\"transitionRecoveries\":18,\"authorRecoveries\":8,\"priorRecoveries\":8,\"selectionRecoveries\":4,\"refusals\":15,\"getterCalls\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-tablespec-oracle.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"declarations\": 44, \"values\": 23, \"nativeTypes\": 6, \"ingestCasts\": 10, \"gxLengthChecks\": 18, \"bindingImplemented\": false}\n{\"scope\":\"TableSpec facet discovery only\",\"declarations\":44,\"values\":23,\"nativeTypes\":6,\"ingestCasts\":10,\"gxLengthChecks\":18,\"checkedFingerprints\":16,\"bindingImplemented\":false}\n{\"cases\":1216,\"classified\":721,\"recoveries\":1442}\n{\"cases\": 1216, \"facetClaims\": 118, \"nativeRecoveries\": 1442}\n{\"suiteCases\": 10, \"valueChecks\": 61, \"toleranceControls\": 2}\n{\"cases\":540,\"projected\":331,\"recoveries\":662}\n{\"cases\": 540, \"projected\": 331, \"idealRecoveries\": 662, \"facetClaims\": 104, \"uniqueSuiteRules\": 11}\n{\"suiteCases\": 11, \"valueChecks\": 63, \"toleranceControls\": 2}\n{\"nativeCommands\":7,\"bindingAccepted\":false}\n",
+    "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 15:44:18 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n26/09/22 15:44:25 ERROR Executor: Exception in task 0.0 in stage 24.0 (TID 24)\norg.apache.spark.SparkArithmeticException: [NUMERIC_VALUE_OUT_OF_RANGE.WITH_SUGGESTION]  1000 cannot be represented as Decimal(5, 2). If necessary set \"spark.sql.ansi.enabled\" to \"false\" to bypass this error, and return NULL instead. SQLSTATE: 22003\n== SQL (line 1, position 1) ==\ncast(nullif(trim(regexp_replace(value, '^\\\\$', '')), '') as DECIMAL(5,2)) AS result\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\tat org.apache.spark.sql.errors.QueryExecutionErrors$.cannotChangeDecimalPrecisionError(QueryExecutionErrors.scala:116)\n\tat org.apache.spark.sql.errors.QueryExecutionErrors.cannotChangeDecimalPrecisionError(QueryExecutionErrors.scala)\n\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIteratorForCodegenStage1.project_doConsume_0$(Unknown Source)\n\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIteratorForCodegenStage1.processNext(Unknown Source)\n\tat org.apache.spark.sql.execution.BufferedRowIterator.hasNext(BufferedRowIterator.java:43)\n\tat org.apache.spark.sql.execution.WholeStageCodegenEvaluatorFactory$WholeStageCodegenPartitionEvaluator$$anon$1.hasNext(WholeStageCodegenEvaluatorFactory.scala:50)\n\tat org.apache.spark.sql.execution.SparkPlan.$anonfun$getByteArrayRdd$1(SparkPlan.scala:402)\n\tat org.apache.spark.rdd.RDD.$anonfun$mapPartitionsInternal$2(RDD.scala:901)\n\tat org.apache.spark.rdd.RDD.$anonfun$mapPartitionsInternal$2$adapted(RDD.scala:901)\n\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:374)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:338)\n\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)\n\tat org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:171)\n\tat org.apache.spark.scheduler.Task.run(Task.scala:147)\n\tat org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$5(Executor.scala:647)\n\tat org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:80)\n\tat org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:77)\n\tat org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:99)\n\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:650)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n26/09/22 15:44:25 ERROR TaskSetManager: Task 0 in stage 24.0 failed 1 times; aborting job\n{\"ts\": \"2026-09-22 15:44:25.303\", \"level\": \"ERROR\", \"logger\": \"SQLQueryContextLogger\", \"msg\": \"[NUMERIC_VALUE_OUT_OF_RANGE.WITH_SUGGESTION]  1000 cannot be represented as Decimal(5, 2). If necessary set \\\"spark.sql.ansi.enabled\\\" to \\\"false\\\" to bypass this error, and return NULL instead. SQLSTATE: 22003\", \"context\": {\"errorClass\": \"NUMERIC_VALUE_OUT_OF_RANGE.WITH_SUGGESTION\"}, \"exception\": {\"class\": \"Py4JJavaError\", \"msg\": \"An error occurred while calling o441.collectToPython.\\n: org.apache.spark.SparkArithmeticException: [NUMERIC_VALUE_OUT_OF_RANGE.WITH_SUGGESTION]  1000 cannot be represented as Decimal(5, 2). If necessary set \\\"spark.sql.ansi.enabled\\\" to \\\"false\\\" to bypass this error, and return NULL instead. SQLSTATE: 22003\\n== SQL (line 1, position 1) ==\\ncast(nullif(trim(regexp_replace(value, '^\\\\\\\\$', '')), '') as DECIMAL(5,2)) AS result\\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n\\n\\tat org.apache.spark.sql.errors.QueryExecutionErrors$.cannotChangeDecimalPrecisionError(QueryExecutionErrors.scala:116)\\n\\tat org.apache.spark.sql.errors.QueryExecutionErrors.cannotChangeDecimalPrecisionError(QueryExecutionErrors.scala)\\n\\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIteratorForCodegenStage1.project_doConsume_0$(Unknown Source)\\n\\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIteratorForCodegenStage1.processNext(Unknown Source)\\n\\tat org.apache.spark.sql.execution.BufferedRowIterator.hasNext(BufferedRowIterator.java:43)\\n\\tat org.apache.spark.sql.execution.WholeStageCodegenEvaluatorFactory$WholeStageCodegenPartitionEvaluator$$anon$1.hasNext(WholeStageCodegenEvaluatorFactory.scala:50)\\n\\tat org.apache.spark.sql.execution.SparkPlan.$anonfun$getByteArrayRdd$1(SparkPlan.scala:402)\\n\\tat org.apache.spark.rdd.RDD.$anonfun$mapPartitionsInternal$2(RDD.scala:901)\\n\\tat org.apache.spark.rdd.RDD.$anonfun$mapPartitionsInternal$2$adapted(RDD.scala:901)\\n\\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)\\n\\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:374)\\n\\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:338)\\n\\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:93)\\n\\tat org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:171)\\n\\tat org.apache.spark.scheduler.Task.run(Task.scala:147)\\n\\tat org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$5(Executor.scala:647)\\n\\tat org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:80)\\n\\tat org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:77)\\n\\tat org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:99)\\n\\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:650)\\n\\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\\n\\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\\n\\tat java.base/java.lang.Thread.run(Thread.java:1583)\\n\\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:1009)\\n\\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:2484)\\n\\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:2505)\\n\\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:2524)\\n\\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:2549)\\n\\tat org.apache.spark.rdd.RDD.$anonfun$collect$1(RDD.scala:1057)\\n\\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\\n\\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)\\n\\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:417)\\n\\tat org.apache.spark.rdd.RDD.collect(RDD.scala:1056)\\n\\tat org.apache.spark.sql.execution.SparkPlan.executeCollect(SparkPlan.scala:462)\\n\\tat org.apache.spark.sql.classic.Dataset.$anonfun$collectToPython$1(Dataset.scala:2057)\\n\\tat org.apache.spark.sql.classic.Dataset.$anonfun$withAction$2(Dataset.scala:2234)\\n\\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:654)\\n\\tat org.apache.spark.sql.classic.Dataset.$anonfun$withAction$1(Dataset.scala:2232)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId0$8(SQLExecution.scala:163)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.withSessionTagsApplied(SQLExecution.scala:272)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId0$7(SQLExecution.scala:125)\\n\\tat org.apache.spark.JobArtifactSet$.withActiveJobArtifactState(JobArtifactSet.scala:94)\\n\\tat org.apache.spark.sql.artifact.ArtifactManager.$anonfun$withResources$1(ArtifactManager.scala:112)\\n\\tat org.apache.spark.sql.artifact.ArtifactManager.withClassLoaderIfNeeded(ArtifactManager.scala:106)\\n\\tat org.apache.spark.sql.artifact.ArtifactManager.withResources(ArtifactManager.scala:111)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId0$6(SQLExecution.scala:125)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:295)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId0$1(SQLExecution.scala:124)\\n\\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:804)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId0(SQLExecution.scala:78)\\n\\tat org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:237)\\n\\tat org.apache.spark.sql.classic.Dataset.withAction(Dataset.scala:2232)\\n\\tat org.apache.spark.sql.classic.Dataset.collectToPython(Dataset.scala:2054)\\n\\tat jdk.internal.reflect.GeneratedMethodAccessor49.invoke(Unknown Source)\\n\\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:52)\\n\\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\\n\\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\\n\\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\\n\\tat py4j.Gateway.invoke(Gateway.java:282)\\n\\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\\n\\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\\n\\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\\n\\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\\n\\tat java.base/java.lang.Thread.run(Thread.java:1583)\\n\", \"stacktrace\": [{\"class\": null, \"method\": \"deco\", \"file\": \"/home/erik/Projects/tablespec/.venv/lib/python3.12/site-packages/pyspark/errors/exceptions/captured.py\", \"line\": \"282\"}, {\"class\": null, \"method\": \"get_return_value\", \"file\": \"/home/erik/Projects/tablespec/.venv/lib/python3.12/site-packages/py4j/protocol.py\", \"line\": \"327\"}]}}\nWARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 15:45:34 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\nWARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n26/09/22 15:46:25 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-tablespec-browser.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"cases\":1216,\"classified\":721,\"blocked\":495,\"recoveries\":1442,\"tampered\":6,\"getterCalls\":0}\n{\"cases\":80,\"classified\":60,\"blocked\":20,\"recoveries\":120,\"tampered\":60}\n{\"cases\":540,\"classified\":331,\"blocked\":209,\"recoveries\":662,\"tampered\":331}\n{\"classification\":{\"cases\":1216,\"classified\":721,\"blocked\":495,\"recoveries\":1442,\"tampered\":6,\"getterCalls\":0},\"suite\":{\"cases\":80,\"classified\":60,\"blocked\":20,\"recoveries\":120,\"tampered\":60},\"projection\":{\"cases\":540,\"classified\":331,\"blocked\":209,\"recoveries\":662,\"tampered\":331}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-postgresql-oracle.ts"
+    ],
+    "exitCode": 1,
+    "stdout": "{\"serverVersion\":170004,\"cases\":74,\"rejections\":32,\"serializationRecoveries\":2}\n{\"constraints\":12,\"candidates\":8,\"unsupported\":4,\"probes\":4}\n{\"cases\":13,\"decoded\":10,\"refused\":3}\n{\"cases\":232,\"emitted\":145,\"blocked\":87,\"probes\":479,\"rejections\":166,\"catalogRecoveries\":2}\n{\"case\":0,\"total\":232}\n{\"case\":24,\"total\":232}\n{\"case\":48,\"total\":232}\n{\"case\":72,\"total\":232}\n{\"case\":96,\"total\":232}\n{\"case\":120,\"total\":232}\n{\"case\":144,\"total\":232}\n{\"case\":168,\"total\":232}\n{\"case\":192,\"total\":232}\n{\"case\":216,\"total\":232}\n{\"cases\":145,\"idealRecoveries\":145,\"nativeRecoveries\":145,\"exactFacetRecoveries\":66,\"explicitResiduals\":79}\n",
+    "stderr": " 5 | const proofs=['discovery-native','constraints-native','resolved-native','projection-native','composition'];\n 6 | const runs=[];\n 7 | for(const stage of stages){const command=['bun',`scripts/core-ideals/facets-postgresql-${stage}.ts`];const child=Bun.spawn(command,{stdout:'inherit',stderr:'inherit'});const exitCode=await child.exited;runs.push({command,exitCode});assert.equal(exitCode,0,`Native facet stage failed: ${stage}`);}\n 8 | const paths=['scripts/core-ideals/facets-postgresql-oracle.ts'];\n 9 | for(const name of proofs){\n10 |  const path=`fixtures/validation/facets-postgresql-${name}.json`,proof=await Bun.file(path).json();assert.equal(proof.serverVersion,170004);\n                                                                                                               ^\nAssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- 170004\n\n generatedMessage: true,\n     actual: undefined,\n   expected: 170004,\n   operator: \"strictEqual\",\n       code: \"ERR_ASSERTION\"\n\n      at /home/erik/Projects/umf/scripts/core-ideals/facets-postgresql-oracle.ts:10:107\n\nBun v1.3.14 (Linux arm64)\n"
+  }
+]

@@ -76,15 +76,13 @@ the full compatibility refresh and the prior three concept gates. Profiles keep
 metadata declarations, generated schemas, explicit GX suites and ingest casts
 distinct; both native and ideal recovery retain unclaimed meaning. See the
 [TableSpec facet acceptance record](../../fixtures/validation/tablespec-facets-acceptance-evidence.json).
-PostgreSQL, SQL Server, Avro and Parquet facet bindings remain required before
-the separate five-system facet admission/delivery gate. No native equivalence is claimed.
-Experimental PostgreSQL facet classification and authored projection now have
-scoped native, recovery and Chromium/WASM evidence. Full compatibility acceptance
-remains open. See the [projection checkpoint](../../fixtures/validation/facets-postgresql-projection-evidence.json).
-Composed PostgreSQL qualification now covers all 145 emitted schemas with both
-retained recovery directions; all six aggregate browser workflows pass. Full
-compatibility acceptance remains open. See the
-[composition checkpoint](../../fixtures/validation/facets-postgresql-composition-evidence.json).
+Experimental PostgreSQL facets also pass qualified binding acceptance after the
+full compatibility refresh and prior concept gates. The binding preserves native
+value scopes, unknown refinements and explicit projection losses; all 145 emitted
+schemas have composed native/ideal recovery evidence. See the
+[PostgreSQL facet acceptance record](../../fixtures/validation/postgresql-facets-acceptance-evidence.json).
+SQL Server, Avro and Parquet facet bindings remain required before the separate
+five-system facet admission/delivery gate. No native equivalence is claimed.
 Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
