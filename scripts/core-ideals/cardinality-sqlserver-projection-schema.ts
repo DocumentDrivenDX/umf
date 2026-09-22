@@ -1,0 +1,14 @@
+import base from '../../spec/core/field-sqlserver-projection.schema.json';
+const schema:any=structuredClone(base);
+schema.$id='urn:umf:core:cardinality-sqlserver-projection:1.0.0';schema.title='Authored Cardinality projection to SQL Server stored columns';
+schema.properties.operation.const='project-cardinality-sqlserver';schema.properties.source.$ref='urn:umf:core:0.4.0';
+schema.properties.author.$ref='urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration';
+schema.properties.binding.const={id:'umf.core.cardinality.sqlserver',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Single authored Field Cardinality with explicit builtin carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence'};
+const req=schema.properties.request;
+Object.assign(req.properties,{storage:{enum:['scalar','json-array','json-object']},requireExactValues:{type:'boolean'}});req.required.push('storage','requireExactValues');
+req.allOf=[{if:{properties:{storage:{enum:['json-array','json-object']}}},then:{properties:{nativeType:{const:'nvarchar(max)'}}}}];
+const mapping=schema.properties.mapping;
+Object.assign(mapping.properties,{basis:{const:'Explicit author declaration and selected native carrier; residuals qualify unrepresented obligations'},cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','json-array','json-object','carrier-only']}});mapping.required.push('basis','cardinality','encoding');
+mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
+schema.properties.binding.const.subset='Single authored Field and explicit scalar/checked JSON text carrier; item/value conversion and native equivalence are not implied';
+await Bun.write('spec/core/cardinality-sqlserver-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
