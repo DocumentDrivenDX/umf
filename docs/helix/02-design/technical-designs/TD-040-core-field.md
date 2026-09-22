@@ -1061,3 +1061,31 @@ passing typecheck. See [Field projection evidence](../../../../fixtures/validati
 Authored multi-field/nested records, additional carriers/facets, row writing,
 structured references and full common residual metadata remain required. The
 existing Field work item and overall implementation goal remain open.
+
+## Authored flat Parquet records
+
+`projectRecordToParquet` now writes an empty native schema file from an authored
+record and explicit carrier/repetition bindings for every member. Native field
+order follows the record's member references, independently of request order.
+The encoder also supports a zero-member record. Required, optional and repeated
+native fields remain explicit representation choices; no ideal nullability or
+cardinality assertion is inferred from them.
+
+Missing, duplicate, colliding, unrelated or non-field bindings block atomically;
+stale author receipts are rejected. Namespace, descriptions, unimplemented metadata
+and scalar-family disagreements remain residuals. Strict mode blocks those losses;
+report mode may emit the complete record. Retained-report recovery checks both
+recomputation and exact native bytes before returning the original authored model.
+
+Four combined Field/record tests pass 200 assertions. PyArrow 21.0.0 opens and reads
+five emitted record files across nine policy cases, checking field order, physical
+types and repetition levels; four cases block. The empty-record case is accepted.
+Chromium 148 matches the nine cases with ten JSON/YAML record recoveries, alongside
+36 single-field files and 72 recoveries. No external requests or host globals
+appear. Typechecking, browser build and all 200 schema / 32 package audits pass.
+See [record projection evidence](../../../../fixtures/validation/record-parquet-projection-evidence.json).
+
+Nested type references/projections, organizational-group bindings and complete
+common provenance/residual metadata remain required for Field. This flat-schema
+writer does not encode row values, establish facet exactness or close the overall
+goal. The existing queue scope remains applicable.
