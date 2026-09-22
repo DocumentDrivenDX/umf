@@ -3,12 +3,23 @@ import {createValidator} from '../../src/validation/schema';
 import legacy from '../../spec/core/schema.json';
 import fields from '../../spec/core/field-document.schema.json';
 import kinds from '../../spec/core/kind-operation.schema.json';
+import {recordCase} from '../../scripts/core-ideals/record-tablespec-cases';
+import {declareCoreElementKind} from '../../src/model/field-kind';
+import {projectRecordToTableSpec} from '../../src/core-ideals/record-tablespec-projection';
 const table=await Bun.file('fixtures/validation/field-tablespec-projection.json').json(),postgres=await Bun.file('fixtures/validation/field-postgresql-projection-native.json').json();
-const suites=[{file:'field-tablespec',rows:table.rows},{file:'record-tablespec',rows:table.records},{file:'field-postgresql',rows:postgres.rows},{file:'record-postgresql',rows:postgres.recordRows}];
+// Namespaced records intentionally have residuals. Generate a separate honest
+// no-loss control rather than removing the residuals from a retained receipt.
+const control=recordCase();
+control.source.modules.forEach(module=>module.namespace='');
+control.request.fields=control.request.fields.map(field=>({...field,author:declareCoreElementKind(control.source,field.author.identity,'field')}));
+const cleanRecord=projectRecordToTableSpec(declareCoreElementKind(control.source,control.author.identity,'record'),control.request);
+const suites=[{file:'field-tablespec',rows:table.rows},{file:'record-tablespec',rows:[...table.records,{result:cleanRecord}]},{file:'field-postgresql',rows:postgres.rows},{file:'record-postgresql',rows:postgres.recordRows}];
 for(const suite of suites){const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(await Bun.file('spec/core/'+suite.file+'-projection.schema.json').json());
  test(suite.file+' schema enforces strict/report loss and atomic candidate rules',()=>{
   for(const row of suite.rows)expect(check(row.result)).toBe(true);
-  const clean=suite.rows.find((r:any)=>r.result.status==='projected'&&!r.result.residuals.length).result;
+  const cleanRow=suite.rows.find((r:any)=>r.result.status==='projected'&&!r.result.residuals.length);
+  expect(cleanRow).toBeDefined();
+  const clean=cleanRow.result;
   const copy=()=>JSON.parse(JSON.stringify(clean));
   const residual={path:'/modules/0',value:{meaning:'retained'},reason:'Not expressed',outcome:'unknown',recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'};
   let value=copy();value.request.mode='strict';value.residuals=[residual];expect(check(value)).toBe(false);

@@ -1368,3 +1368,29 @@ The common inspection profile now covers all currently implemented Field/record
 projection and classification operation families. This does not establish that the
 underlying native/reference/nested-projection coverage is complete; those gaps and
 the Field admission/delivery audit remain open.
+
+### Field core authoring acceptance audit
+
+The acceptance criteria of `umf-97221618-994aef58` cover the experimental
+representation and validation; native adapter execution and admission belong to
+separate binding and gate beads. Reverification passes the declared Field ideal
+tests (5 tests, 140 assertions), typecheck, all 208 schemas and 32 extension
+packages, and the browser build. Chromium 148 verifies 40 validation decisions,
+56 serialization recoveries, 40 migration/rollback cycles, 28 kind lookups and
+40 author declarations, with no external requests or Bun/Node globals.
+
+The broader regression exposed a stale TableSpec schema-policy test: the retained
+namespaced record corpus correctly has namespace residuals, so it cannot supply
+a no-loss mutation baseline. The test now generates a separate empty-namespace
+record through the real authoring/projector APIs. It preserves the namespaced
+corpus and all strict/report schema assertions. The targeted four policy tests
+pass with 117 assertions. Detailed final regression results and fingerprints are
+recorded in `fixtures/validation/field-core-acceptance-evidence.json`.
+
+The five binding beads now name the actual Python/TypeScript oracle programs and
+require both native classification and authored projection, structured records,
+qualified common reports, namespace-loss cases and current browser/native evidence.
+Their previous classification-only commands were insufficient for their scope.
+Core authoring acceptance does not admit Field, complete any native binding, or
+establish equivalence. The envelope remains experimental until the separate
+`umf-97221618-c4baf8f1` gate passes. Nullability remains behind that gate.
