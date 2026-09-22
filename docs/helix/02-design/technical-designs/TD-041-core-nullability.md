@@ -671,3 +671,57 @@ TableSpec and PostgreSQL now have qualified Nullability bindings. SQL Server,
 Avro and Parquet remain ready, and the experimental concept's delivery gate stays
 open. This acceptance neither replaces native concepts nor completes US-041 or
 the overall extension goal.
+
+### SQL Server availability discovery
+
+The SQL Server binding is in progress. Its pinned SQL Server 2022
+`16.0.4295.3` discovery corpus distinguishes stored-column metadata from accepted
+inputs and query results before any ideal classification is added.
+
+The harness uses the existing `catalog-v3.sql` profile, retaining checks, keys and
+indexes. `native/sqlserver/nullability.sql` adds a discovery section for database
+metadata visibility, table triggers, alias-type nullability/bound-object IDs,
+sparse/generated/hidden column flags and the original fixture DDL. These remain
+native content; the new section is not yet a qualified ideal binding profile.
+The v1 column-only capture does not establish that no additional constraint exists.
+
+The native corpus covers these boundaries:
+
+- `NOT NULL` with a default accepts omission and rejects explicit NULL. Identity
+  omission generates a value; explicit NULL produces native error 339.
+- An enabled but untrusted check rejects new NULLs while an existing NULL remains.
+  A disabled check permits NULL. `CHECK(value > 0)` accepts UNKNOWN, whereas
+  `CHECK(value IS NOT NULL)` rejects NULL despite a nullable column flag.
+- `ISNULL(input,7)` and `COALESCE(input,7)` return the same value in the fixture but
+  have different computed-column nullable flags. Explicit computed-column writes
+  are rejected independently of result availability.
+- Explicit NULL in a rowversion column generates a distinct stored value;
+  explicit bytes are rejected. A required stored value therefore does not imply
+  the same restrictions on every input representation.
+- An alias type's inherited NOT NULL can be overridden by an explicit nullable
+  column declaration. Sparse NULL remains a separate storage refinement.
+- A unique nullable column accepts its first NULL and rejects its second. This
+  neither establishes core identity nor makes its availability unconditional.
+  An outer join produces NULL from a required base column.
+
+Microsoft documents the [CHECK/UNIQUE NULL behavior](https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints?view=sql-server-ver16)
+and [computed nullability differences](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/coalesce-transact-sql?view=sql-server-ver17).
+The pinned native engine, rather than the documentation version alone, qualifies
+the fixture observations.
+
+The discovery commands are `bun scripts/core-ideals/nullability-sqlserver-oracle.ts`
+and `bun scripts/core-ideals/nullability-sqlserver-browser.ts`. Browser recovery
+uses the existing catalog adapter and preserves the captured tree, including the
+new native section and its DDL string. It does not execute SQL or establish ideal
+classification, authored projection, exact outer capture formatting, or binding
+acceptance. Those remain work for the SQL Server bead. Its future classifier must
+use explicit carrier/scope and retain generated/computed/constraint semantics;
+it cannot negate `is_nullable` into the entire core availability contract.
+
+The [native discovery evidence](../../../../fixtures/validation/nullability-sqlserver-native.json)
+records 24 probes, ten expected native rejections and 18 captured columns. Bun and
+[Chromium 148](../../../../fixtures/validation/nullability-sqlserver-browser.json)
+each preserve the complete native capture tree through JSON and YAML, including
+its additional metadata and original DDL string. Typechecking passes. Source and
+browser-bundle fingerprints are retained. These results qualify discovery only;
+they do not close the SQL Server binding bead or change the core schema.

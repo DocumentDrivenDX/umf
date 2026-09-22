@@ -93,7 +93,9 @@ Nullability bindings. The broader regression passes 206 tests / 13,404
 assertions across 59 files; the separate Field gate passes. Current
 fingerprints replace the prior stale-gate status. See the
 [PostgreSQL acceptance record](../../../fixtures/validation/postgresql-nullability-acceptance-evidence.json).
-SQL Server, Avro and Parquet are the three remaining ready bindings;
+SQL Server is in progress with native availability discovery covering defaults,
+computed/generated values, checks and alias nullability. Its ideal classification
+and authored projection remain unfinished. Avro and Parquet are ready;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

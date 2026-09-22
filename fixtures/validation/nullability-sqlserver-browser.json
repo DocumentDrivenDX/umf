@@ -1,0 +1,15 @@
+{
+  "scope": "Browser import and JSON/YAML recovery of native SQL Server catalog and availability sidecar; native behavior runs separately; no ideal binding claim",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "nativeCasesRetained": 24,
+    "catalogTreeRecoveries": 2,
+    "sidecarPreserved": true
+  },
+  "externalRequests": [],
+  "fingerprints": {
+    "fixtures/validation/nullability-sqlserver-native.json": "9ce4c7dd7cb98417b5e525a709955661453fc2a01530ab9d264dcc9e0ba1a8e7",
+    "dist/umf.js": "f1ddf2700d02e045dc3ff0782780e35141bfc3f3a1a53784a203d61c03644990",
+    "scripts/core-ideals/nullability-sqlserver-browser.ts": "9c19e3df7f46edba1b9f0b8a67a8928a76e0949710108fd64c29dc34c7d0eb69"
+  }
+}

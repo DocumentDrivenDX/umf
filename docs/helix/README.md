@@ -22,7 +22,8 @@ including explicit scope/carrier metadata, strict/report projection and both
 recovery directions. Native checks preserve the differences between domain and
 column constraints, omission and NULL, and authored and observed availability.
 The prior five-system Field native/browser checks and current fingerprints pass
-after the PostgreSQL changes. SQL Server, Avro and Parquet Nullability remain;
+after the PostgreSQL changes. SQL Server native availability discovery is in
+progress; its ideal binding, Avro and Parquet Nullability remain;
 the experimental Nullability concept has not passed its five-system delivery gate.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
