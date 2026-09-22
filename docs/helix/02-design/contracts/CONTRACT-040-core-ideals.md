@@ -212,3 +212,21 @@ two UTF-16 code units. A native length annotation alone cannot satisfy the ideal
 - [ ] Envelope/version transition and complete result schemas implemented.
 - [ ] Five concept stories pass native, Bun and Chromium acceptance across five systems.
 - [ ] Any later native replacement passes its separate migration/rollback gate.
+
+### Explicit record-type reference authoring
+
+The experimental Field authoring API may append a `record-type` reference to a
+Field, identifying a separate record definition by module/element identity. This
+operation requires verified Field and record kind declarations over the same
+current document. A scalarType-bearing Field cannot also assert a record type.
+One operation asserts one record type; pre-existing `record-type` references block
+rather than being adopted, overwritten or silently assigned provenance. Other
+reference roles and unknown extension content remain unchanged.
+
+The operation receipt supplies the interpretation and authored provenance. A bare
+role string in an older or imported document does not establish this assertion.
+The receipt retains the source, target, both declarations, reference path and
+record-definition path; verification recomputes it against the unchanged current
+model. It asserts neither nullability/cardinality nor native equivalence. Recursive
+record membership and same-named records in different modules are permitted;
+identity resolution must terminate without expanding recursive definitions.

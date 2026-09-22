@@ -1,0 +1,5 @@
+export {};
+const object=(properties:Record<string,unknown>)=>({type:'object',additionalProperties:false,required:Object.keys(properties),properties});
+const string={type:'string'},identity={type:'string',minLength:1};
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:record-type-operation:1.0.0',title:'Explicit authored Field to record-definition reference',...object({operation:{const:'declare-core-record-type'},version:{const:'1.0.0'},source:{$ref:'urn:umf:core:0.2.0'},target:{$ref:'urn:umf:core:0.2.0'},fieldAuthor:{$ref:'urn:umf:core:kind-operation:1.0.0#/$defs/declaration'},recordAuthor:{$ref:'urn:umf:core:kind-operation:1.0.0#/$defs/declaration'},reference:object({role:{const:'record-type'},module:identity,element:identity}),provenance:object({origin:{const:'authored'},idealPath:string,recordPath:string,nativePath:{type:'null'},basis:{const:'explicit-record-type-declaration'},binding:{const:{id:'umf.core.record-type.authoring',version:'1.0.0'}}})})};
+await Bun.write('spec/core/record-type-operation.schema.json',JSON.stringify(schema,null,2)+'\n');

@@ -1089,3 +1089,29 @@ Nested type references/projections, organizational-group bindings and complete
 common provenance/residual metadata remain required for Field. This flat-schema
 writer does not encode row values, establish facet exactness or close the overall
 goal. The existing queue scope remains applicable.
+
+## Authored record-type references
+
+`declareCoreRecordType` now links an authored Field to a separate authored record
+definition by exact module/element identity. Both kind receipts must describe the
+same current document. Scalar-bearing Fields and pre-existing `record-type` roles
+are rejected; other roles and unknown extension content are retained. The new
+operation/report schema follows the explicit authoring profile in CONTRACT-040.
+`verifyCoreRecordTypeDeclaration` recomputes the receipt and checks the unchanged
+current target. It establishes receipt consistency, not cryptographic authorship.
+
+Two Bun tests pass 27 assertions for nested and recursive relationships, duplicate
+display names across modules, unknown native content, scalar conflicts, existing
+role refusal and stale/tampered receipts. Chromium 148 matches three declarations,
+six JSON/YAML recoveries and terminating transitive identity traversal. Typechecking,
+browser build and all 201 schema / 32 package audits pass. The first test run
+rejected a fixture's non-semver extension version; it was corrected to 1.0.0.
+The schema generator also received its required TypeScript module marker.
+See [record-type evidence](../../../../fixtures/validation/record-type-evidence.json).
+
+This is authored relationship support, not native classification or nested
+projection. Those remain required. The existing selector resolves 0.2 documents
+at runtime, but its published selection-result schema still restricts source to
+0.1; update/version that schema before claiming complete 0.2 consumer contracts.
+Common provenance/residual metadata and the other Field exit requirements remain
+open. No native payload is deleted or reinterpreted by this authoring operation.

@@ -1,0 +1,32 @@
+{
+  "scope": "Explicit authored Field-to-record reference receipts, qualified/recursive identity and preservation; not native classification or nested projection",
+  "commands": [
+    "bun test tests/core-ideals/record-type.test.ts",
+    "bun scripts/core-ideals/record-type-corpus.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/record-type-browser.ts"
+  ],
+  "results": {
+    "tests": 2,
+    "assertions": 27,
+    "browserDeclarations": 3,
+    "browserRecoveries": 6,
+    "typecheck": "passed",
+    "schemasPassed": 201,
+    "packagesPassed": 32,
+    "browserBuildBytes": 10042690
+  },
+  "sha256": {
+    "src/model/record-type.ts": "dda7dcc2f0ebb1202d7abf69a5a3f7d734b2a08e2a11a6d3ed3dbc52f241e0d5",
+    "spec/core/record-type-operation.schema.json": "8389b3f1580beec91e039efe181bb9eb5c9ecd234bdf4ae1692a25658e3eabe2",
+    "scripts/core-ideals/record-type-schema.ts": "d640fa190299b6fc40ceee45d4dd27cb03b3576d67314a21aabf24dbac28553b",
+    "scripts/core-ideals/record-type-cases.ts": "ac1ceb84b9f1b417a657f555afd3ff71d60861da72f5754085b0f5bbaaa54ce2",
+    "scripts/core-ideals/record-type-corpus.ts": "2093b862b41a9eea8e4bf1c8d31eb9298d7de8ce672381351d3d1bc52d4af6b9",
+    "scripts/core-ideals/record-type-browser.ts": "ce2cca7576209bca9ddb58a8e63aa80621aa0a9ac2326df328775c9ef87595b6",
+    "tests/core-ideals/record-type.test.ts": "b76e2aeaeebf60aa15c5574e17b67807cc8e5fae4026819456dc392e2b928a96",
+    "fixtures/validation/record-type-corpus.json": "e36e10d9b75752079cc1de91e3bdb45d580ace044c041ed5792b119250bfb5a8",
+    "fixtures/validation/record-type-browser.json": "d9e96c2f6527c083a4c751877a3f95608335ffab7859babf2456fd77f60bff76"
+  }
+}

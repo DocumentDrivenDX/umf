@@ -1,0 +1,2593 @@
+{
+  "rows": [
+    {
+      "variant": "nested",
+      "source": {
+        "umf": "0.2.0",
+        "id": "nested",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "sales",
+            "namespace": "sales",
+            "elements": [
+              {
+                "id": "parent",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "member",
+                    "module": "sales",
+                    "element": "slot"
+                  }
+                ]
+              },
+              {
+                "id": "slot",
+                "kind": "field",
+                "name": "customer",
+                "extensions": {
+                  "future.native": {
+                    "opaque": [
+                      "retain",
+                      null
+                    ]
+                  }
+                },
+                "references": [
+                  {
+                    "role": "annotation",
+                    "module": "sales",
+                    "element": "parent",
+                    "future": true
+                  }
+                ]
+              },
+              {
+                "id": "child",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {}
+              }
+            ]
+          },
+          {
+            "id": "support",
+            "namespace": "support",
+            "elements": [
+              {
+                "id": "child",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldAuthor": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "nested",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "nested",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "slot"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/1/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "recordAuthor": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "nested",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "nested",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "child"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/2/kind",
+          "kind": "record",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "result": {
+        "operation": "declare-core-record-type",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "nested",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "nested",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    },
+                    {
+                      "role": "record-type",
+                      "module": "sales",
+                      "element": "child"
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "fieldAuthor": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "nested",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "nested",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "slot"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/1/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "recordAuthor": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "nested",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "nested",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "child"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/2/kind",
+            "kind": "record",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "reference": {
+          "role": "record-type",
+          "module": "sales",
+          "element": "child"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/1/references/1",
+          "recordPath": "/modules/0/elements/2",
+          "nativePath": null,
+          "basis": "explicit-record-type-declaration",
+          "binding": {
+            "id": "umf.core.record-type.authoring",
+            "version": "1.0.0"
+          }
+        }
+      }
+    },
+    {
+      "variant": "recursive",
+      "source": {
+        "umf": "0.2.0",
+        "id": "recursive",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "sales",
+            "namespace": "sales",
+            "elements": [
+              {
+                "id": "parent",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "member",
+                    "module": "sales",
+                    "element": "slot"
+                  }
+                ]
+              },
+              {
+                "id": "slot",
+                "kind": "field",
+                "name": "customer",
+                "extensions": {
+                  "future.native": {
+                    "opaque": [
+                      "retain",
+                      null
+                    ]
+                  }
+                },
+                "references": [
+                  {
+                    "role": "annotation",
+                    "module": "sales",
+                    "element": "parent",
+                    "future": true
+                  }
+                ]
+              },
+              {
+                "id": "child",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {}
+              }
+            ]
+          },
+          {
+            "id": "support",
+            "namespace": "support",
+            "elements": [
+              {
+                "id": "child",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldAuthor": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "recursive",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "recursive",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "slot"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/1/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "recordAuthor": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "recursive",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "recursive",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "parent"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/0/kind",
+          "kind": "record",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "result": {
+        "operation": "declare-core-record-type",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "recursive",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "recursive",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    },
+                    {
+                      "role": "record-type",
+                      "module": "sales",
+                      "element": "parent"
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "fieldAuthor": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "recursive",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "recursive",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "slot"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/1/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "recordAuthor": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "recursive",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "recursive",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "parent"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/kind",
+            "kind": "record",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "reference": {
+          "role": "record-type",
+          "module": "sales",
+          "element": "parent"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/1/references/1",
+          "recordPath": "/modules/0/elements/0",
+          "nativePath": null,
+          "basis": "explicit-record-type-declaration",
+          "binding": {
+            "id": "umf.core.record-type.authoring",
+            "version": "1.0.0"
+          }
+        }
+      }
+    },
+    {
+      "variant": "qualified",
+      "source": {
+        "umf": "0.2.0",
+        "id": "qualified",
+        "vocabularies": {
+          "future.native": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "sales",
+            "namespace": "sales",
+            "elements": [
+              {
+                "id": "parent",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "member",
+                    "module": "sales",
+                    "element": "slot"
+                  }
+                ]
+              },
+              {
+                "id": "slot",
+                "kind": "field",
+                "name": "customer",
+                "extensions": {
+                  "future.native": {
+                    "opaque": [
+                      "retain",
+                      null
+                    ]
+                  }
+                },
+                "references": [
+                  {
+                    "role": "annotation",
+                    "module": "sales",
+                    "element": "parent",
+                    "future": true
+                  }
+                ]
+              },
+              {
+                "id": "child",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {}
+              }
+            ]
+          },
+          {
+            "id": "support",
+            "namespace": "support",
+            "elements": [
+              {
+                "id": "child",
+                "kind": "record",
+                "name": "Customer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "fieldAuthor": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "qualified",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "qualified",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "sales",
+          "element": "slot"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/1/kind",
+          "kind": "field",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "recordAuthor": {
+        "operation": "declare-core-kind",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "qualified",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "qualified",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "support",
+          "element": "child"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/1/elements/0/kind",
+          "kind": "record",
+          "binding": {
+            "id": "umf.core.kind.authoring",
+            "version": "1.0.0"
+          },
+          "basis": "explicit-author-declaration",
+          "nativePath": null
+        }
+      },
+      "result": {
+        "operation": "declare-core-record-type",
+        "version": "1.0.0",
+        "source": {
+          "umf": "0.2.0",
+          "id": "qualified",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "umf": "0.2.0",
+          "id": "qualified",
+          "vocabularies": {
+            "future.native": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "parent",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "member",
+                      "module": "sales",
+                      "element": "slot"
+                    }
+                  ]
+                },
+                {
+                  "id": "slot",
+                  "kind": "field",
+                  "name": "customer",
+                  "extensions": {
+                    "future.native": {
+                      "opaque": [
+                        "retain",
+                        null
+                      ]
+                    }
+                  },
+                  "references": [
+                    {
+                      "role": "annotation",
+                      "module": "sales",
+                      "element": "parent",
+                      "future": true
+                    },
+                    {
+                      "role": "record-type",
+                      "module": "support",
+                      "element": "child"
+                    }
+                  ]
+                },
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            },
+            {
+              "id": "support",
+              "namespace": "support",
+              "elements": [
+                {
+                  "id": "child",
+                  "kind": "record",
+                  "name": "Customer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "fieldAuthor": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "qualified",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "qualified",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "sales",
+            "element": "slot"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/1/kind",
+            "kind": "field",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "recordAuthor": {
+          "operation": "declare-core-kind",
+          "version": "1.0.0",
+          "source": {
+            "umf": "0.2.0",
+            "id": "qualified",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.2.0",
+            "id": "qualified",
+            "vocabularies": {
+              "future.native": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "parent",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "member",
+                        "module": "sales",
+                        "element": "slot"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "slot",
+                    "kind": "field",
+                    "name": "customer",
+                    "extensions": {
+                      "future.native": {
+                        "opaque": [
+                          "retain",
+                          null
+                        ]
+                      }
+                    },
+                    "references": [
+                      {
+                        "role": "annotation",
+                        "module": "sales",
+                        "element": "parent",
+                        "future": true
+                      }
+                    ]
+                  },
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              },
+              {
+                "id": "support",
+                "namespace": "support",
+                "elements": [
+                  {
+                    "id": "child",
+                    "kind": "record",
+                    "name": "Customer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "support",
+            "element": "child"
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/1/elements/0/kind",
+            "kind": "record",
+            "binding": {
+              "id": "umf.core.kind.authoring",
+              "version": "1.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        "reference": {
+          "role": "record-type",
+          "module": "support",
+          "element": "child"
+        },
+        "provenance": {
+          "origin": "authored",
+          "idealPath": "/modules/0/elements/1/references/1",
+          "recordPath": "/modules/1/elements/0",
+          "nativePath": null,
+          "basis": "explicit-record-type-declaration",
+          "binding": {
+            "id": "umf.core.record-type.authoring",
+            "version": "1.0.0"
+          }
+        }
+      }
+    }
+  ]
+}

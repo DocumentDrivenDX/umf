@@ -248,3 +248,4 @@ export * from './core-ideals/parquet-field';
 export * from './core-ideals/parquet-record';
 export * from './core-ideals/field-parquet-projection';
 export * from './core-ideals/record-parquet-projection';
+export * from './model/record-type';
