@@ -1,0 +1,151 @@
+{
+  "fastavro": "1.12.2",
+  "apacheAvro": "1.12.0",
+  "membership": [
+    {
+      "id": "nested",
+      "fields": 7,
+      "records": 2
+    },
+    {
+      "id": "dependencies",
+      "fields": 4,
+      "records": 3
+    },
+    {
+      "id": "error",
+      "fields": 2,
+      "records": 1
+    },
+    {
+      "id": "empty",
+      "fields": 0,
+      "records": 1
+    }
+  ],
+  "directRecords": 5,
+  "nonDirectTypes": 12,
+  "fieldSamples": [
+    {
+      "nativeType": "null",
+      "binaryBytes": 0,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "boolean",
+      "binaryBytes": 1,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "int",
+      "binaryBytes": 5,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "long",
+      "binaryBytes": 8,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "float",
+      "binaryBytes": 4,
+      "floatNarrowing": true,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "double",
+      "binaryBytes": 8,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "bytes",
+      "binaryBytes": 3,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "string",
+      "binaryBytes": 12,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "date",
+      "binaryBytes": 3,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "time-millis",
+      "binaryBytes": 4,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "time-micros",
+      "binaryBytes": 6,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "timestamp-millis",
+      "binaryBytes": 6,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "timestamp-micros",
+      "binaryBytes": 8,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    },
+    {
+      "nativeType": "local-timestamp-micros",
+      "binaryBytes": 4,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": true
+    },
+    {
+      "nativeType": "decimal(38,9)",
+      "binaryBytes": 6,
+      "floatNarrowing": false,
+      "readerRepresentationDiffers": false
+    }
+  ],
+  "recordSamples": [
+    {
+      "variant": "clean",
+      "mode": "strict",
+      "binaryBytes": 14
+    },
+    {
+      "variant": "clean",
+      "mode": "report",
+      "binaryBytes": 14
+    },
+    {
+      "variant": "mismatch",
+      "mode": "report",
+      "binaryBytes": 14
+    },
+    {
+      "variant": "empty",
+      "mode": "strict",
+      "binaryBytes": 0
+    },
+    {
+      "variant": "namespace",
+      "mode": "report",
+      "binaryBytes": 14
+    }
+  ],
+  "limitations": [
+    "Samples establish cross-codec wire compatibility, not full value-domain equivalence.",
+    "local-timestamp-micros reads as datetime in fastavro and plain long in Apache Python; equal bytes do not imply equal logical interpretation."
+  ]
+}

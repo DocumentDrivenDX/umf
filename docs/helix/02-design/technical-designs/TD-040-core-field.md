@@ -1457,3 +1457,42 @@ other metadata losses reported. No row-domain, native coercion, default executio
 nullability, cardinality, facet or key equivalence follows from Field kind. This
 closes the qualified PostgreSQL binding task only; admission and all-five delivery
 remain separate Field-gate work.
+
+### SQL Server, Avro and Parquet Field binding acceptance
+
+The remaining three binding beads have refreshed native/browser acceptance in
+`fixtures/validation/remaining-field-bindings-acceptance-evidence.json`. Its source
+fingerprints, commands and per-system limitations accompany the complete test log:
+102 tests and 4,098 assertions pass across 34 core-ideal files. Typecheck, 208
+schemas, 32 packages and the browser build also pass. This is not a full repository
+regression or the separate Field admission decision.
+
+- SQL Server `umf-97221618-65b6ef36`: fresh isolated engine runs at build
+  16.0.4295.3 verify 34 column and three table roles, 74 exact capture recoveries,
+  14 executed Field projections and four emitted records from eight cases. The
+  wrong database identifier collation is rejected natively. Chromium agrees on
+  classification, 28 Field and eight record ideal recoveries, four namespace
+  recoveries, loss policies and unsafe identifier refusals. Computed values,
+  rowversion, aliases, native identity and filtered/disabled indexes stay native
+  metadata. This supplies neither an arbitrary T-SQL parser nor core key intent.
+- Avro `umf-97221618-2198e14e`: Apache Avro 1.12.0 and fastavro 1.12.2 independently
+  verify 13 members and seven records across four bundles, plus five direct record
+  types and twelve non-direct refusals across five bundles. Fifteen Field and five
+  record sample projections produce matching wire bytes and pass cross-codec reads.
+  The binary64-to-binary32 narrowing counterexample remains detected. Equal bytes
+  for local-timestamp-micros do not imply equal interpretation: fastavro returns a
+  datetime while Apache Python retains the underlying long. Chromium verifies both
+  UMF formats, namespace loss, structured roles, refusals and retained ideal recovery.
+- Parquet `umf-97221618-7e1d4599`: PyArrow 21.0.0 verifies 16 source files, 26 primitive
+  fields, 21 records and five direct struct type references; 22 unsupported record
+  selections remain blocked. Native reading accepts 36 authored Field files and
+  five flat record files; four record projections block. Chromium reproduces 52
+  leaf, 42 record and ten type-reference source recoveries, plus 72 Field and ten
+  record ideal recoveries. Repetition, container wrappers and embedded/logical
+  refinements are not collapsed into scalar cardinality. Generated files are empty
+  schema carriers; row-value writing remains outside this Field binding.
+
+All three bindings retain native payloads and unknown refinements. These results
+satisfy the scoped binding tasks, not native equivalence. Closing them makes the
+Field admission/five-system conformance gate ready; nullability cannot begin until
+that gate independently records its acceptance evidence.
