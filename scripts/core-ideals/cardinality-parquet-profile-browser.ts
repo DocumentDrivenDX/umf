@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {importParquetSchema,inspectParquetContainers} from '../../src';
+import {inspectParquetCardinalityShape} from '../../src/core-ideals/parquet-cardinality-shape';
 
 const proof='fixtures/validation/cardinality-parquet-profile-native.json';
 const native=await Bun.file(proof).json();
@@ -12,9 +13,11 @@ const rows=await Promise.all(native.cases.map(async(row:any)=>{
  assert.equal(createHash('sha256').update(bytes).digest('hex'),row.sha256);
  const inspection=inspectParquetContainers(importParquetSchema(bytes,{id:row.id}));
  assert.equal(inspection.status,'checked');
- return {...row,sourceBytes:Array.from(bytes),containers:inspection.containers};
+ return {...row,sourceBytes:Array.from(bytes),containers:inspection.containers,shape:inspectParquetCardinalityShape(inspection.source,1)};
 }));
-const build=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
+const entry='.cache/cardinality-parquet-profile-entry.ts';
+await Bun.write(entry,"export * from '../src';\nexport {inspectParquetCardinalityShape} from '../src/core-ideals/parquet-cardinality-shape';\n");
+const build=await Bun.build({entrypoints:[entry],target:'browser',format:'esm'});
 assert.ok(build.success,JSON.stringify(build.logs));
 const bundle=await build.outputs[0]!.text();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){
@@ -40,6 +43,7 @@ try{
    const inspected=u.inspectParquetContainers(source),inventory=u.getParquetFieldMetadata(source);
    if(inspected.status!=='checked'||inventory.status!=='checked')throw Error('Unchecked source: '+row.id);
    if(JSON.stringify(inspected.containers)!==JSON.stringify(row.containers))throw Error('Container parity: '+row.id);
+   if(JSON.stringify(u.inspectParquetCardinalityShape(source,1))!==JSON.stringify(row.shape))throw Error('Logical shape parity: '+row.id);
    const outer=inspected.containers.find((c:any)=>c.index===1);
    if(row.observations.shape==='array'&&outer?.kind!=='list')throw Error('Missing outer LIST');
    if(row.observations.shape==='map'&&outer?.kind!=='map')throw Error('Missing outer MAP');
@@ -65,7 +69,7 @@ try{
   return {files:rows.length,columns,containers,embeddedSchemas,recoveries};
  });
  assert.equal(external.length,0);assert.equal(checks.files,30);assert.equal(checks.recoveries,60);assert.equal(checks.embeddedSchemas,15);
- const paths=[proof,'scripts/core-ideals/cardinality-parquet-native.py','scripts/core-ideals/cardinality-parquet-profile-browser.ts','src/adapters/parquet/containers.ts','src/adapters/parquet/field-metadata.ts','src/adapters/parquet/index.ts',...rows.map((r:any)=>r.path)];
+ const paths=[proof,'scripts/core-ideals/cardinality-parquet-native.py','scripts/core-ideals/cardinality-parquet-profile-browser.ts','src/core-ideals/parquet-cardinality-shape.ts','tests/core-ideals/parquet-cardinality-shape.test.ts','src/adapters/parquet/containers.ts','src/adapters/parquet/field-metadata.ts','src/adapters/parquet/index.ts',...rows.map((r:any)=>r.path)];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/cardinality-parquet-profile-browser.json',JSON.stringify({scope:'Native container inspection, level parity and source-byte recovery; no core Cardinality classification/projection acceptance',browser:browser.version(),checks,externalRequests:external,bundleSha256:createHash('sha256').update(bundle).digest('hex'),sha256,limits:['Browser checks schema metadata and native archive recovery; PyArrow independently checks values.','MAP inspection does not certify uniqueness or string-key compatibility.','Physical and embedded Arrow schemas remain distinct observations.']},null,2)+'\n');
  console.log(JSON.stringify(checks));

@@ -9,11 +9,13 @@
     "recoveries": 60
   },
   "externalRequests": [],
-  "bundleSha256": "972d106b3afe9425ca56135801853b7d09a55eb781ce457874e8c0c8ec802692",
+  "bundleSha256": "55cbfd5982076f378fa4cfadf3e71709493885a0f555b99ce2c0cdb53eddf420",
   "sha256": {
     "fixtures/validation/cardinality-parquet-profile-native.json": "99d2631a03970579c9a562017152305eefb7190e68d86241cde209546afa08ec",
     "scripts/core-ideals/cardinality-parquet-native.py": "620186388cd69b608162ba183c4276b8e20485fb5561181785b27698743f05d6",
-    "scripts/core-ideals/cardinality-parquet-profile-browser.ts": "cac68366a8ea7a23fbecae5fcefe09517186f768f54ddb01df4645a947aeea98",
+    "scripts/core-ideals/cardinality-parquet-profile-browser.ts": "8612f8ae20400d50314a8ec72f242d26ae0eeb8eb5d69d7d48d31d2e1ad2578d",
+    "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
+    "tests/core-ideals/parquet-cardinality-shape.test.ts": "9bc4b8c4f28e44c9301dc8ed667203679feb3204861ddf655cd66cb9516dbd88",
     "src/adapters/parquet/containers.ts": "27465b92962eae9e52ec10d7795d782394e6785d8e4d22cd99493fb4e63486aa",
     "src/adapters/parquet/field-metadata.ts": "fcc4301f5862fd6d12f215f1514d18c09918805d94402959bc52ffe2652028af",
     "src/adapters/parquet/index.ts": "c834788024b2674ed97f7bfddcdab2eddb9bf9c7107fdefe750ebcb5c774bcb5",

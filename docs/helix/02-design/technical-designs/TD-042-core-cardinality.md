@@ -773,3 +773,25 @@ These are discovery and existing-adapter checks, not Cardinality binding accepta
 Public classification, authored projection, schema packages, retained ideal receipts,
 legacy/malformed corpus integration and the full acceptance refresh remain required.
 The preceding acceptance records remain historical checkpoints as this design evolves.
+
+
+### Parquet internal shape resolver checkpoint
+
+`src/core-ideals/parquet-cardinality-shape.ts` now traverses checked logical value
+roles by physical schema index. LIST/MAP containers reference their interpreted
+item/value indexes; struct-valued items retain record-member indexes. Physical
+wrappers remain unresolved as independent values. Unannotated repeated nodes
+require an explicit legacy interpretation, while repeated two-level LIST members
+use their checked enclosing role. Key-only MAP remains unresolved. Every MAP
+retains a uniqueness residual; non-string keys add a separate carrier residual.
+No scalar family is attached to a container, and unknown native schema details
+remain copied and uninterpreted. Native availability observations are not core
+nullability assertions.
+
+Four focused Bun tests pass 264 assertions across the 30 new files, 18 existing
+legacy/malformed container cases and two unannotated repetition variants. Tests
+include malformed/index refusal and copy isolation. Typechecking passes. The
+existing Parquet Cardinality profile browser command now compares complete resolver
+results with Bun for the 30 generated files, while retaining its 60 exact-byte
+recovery checks. The resolver is internal: no public Cardinality classification
+API, operation schema or extension package is exported at this checkpoint.
