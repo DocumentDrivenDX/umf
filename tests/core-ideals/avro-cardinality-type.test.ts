@@ -1,5 +1,5 @@
 import {expect,test} from 'bun:test';
-import {inspectAvroFieldShape} from '../../src/core-ideals/avro-cardinality-type';
+import {inspectAvroFieldShape,inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
 import {parseNativeJson,renderTree} from '../../src/model/native-json';
 import fixture from '../../fixtures/avro/cardinality-cases.json';
 const inspect=(schema:unknown)=>inspectAvroFieldShape([{root:parseNativeJson(JSON.stringify(schema))}],'n.Example','value');
@@ -59,4 +59,30 @@ test('ambiguous, missing and invalid structural type syntax refuses rather than 
  expect(()=>inspectAvroFieldShape([{root,dependencyId:'x'},{root,dependencyId:'x'},{root}],'n.Example','value')).toThrow();
  expect(()=>inspectAvroFieldShape([{root}],'n.Example','missing')).toThrow();
  expect(()=>inspectAvroFieldShape([],'n.Example','value')).toThrow();
+});
+
+
+test('nested item/value traversal uses registered type locations and keeps container/member availability separate',()=>{
+ const schema=field({type:'array',items:{type:'map',values:['null',{type:'array',items:'long'}]}});
+ const roots=[{root:parseNativeJson(JSON.stringify(schema))}];
+ const container=inspectAvroFieldShape(roots,'n.Example','value');
+ expect(container.shape).toBe('array');expect(container.allowsNull).toBe(false);
+ const member=inspectAvroTypeShape(roots,container.branches[0]!.item!.location);
+ expect(member.shape).toBe('map');expect(member.allowsNull).toBe(false);
+ const value=inspectAvroTypeShape(roots,member.branches[0]!.item!.location);
+ expect(value.shape).toBe('array');expect(value.allowsNull).toBe(true);
+ expect(value.branches.map(b=>b.type)).toEqual(['null','array']);
+ const leaf=inspectAvroTypeShape(roots,value.branches[1]!.item!.location);
+ expect(leaf.shape).toBe('one');expect(leaf.allowsNull).toBe(false);
+ expect(leaf.location.path).toBe('/fields/0/type/items/values/1/items');
+ expect(inspectAvroTypeShape(roots,{path:''}).branches[0]!.type).toBe('record');
+ for(const path of ['/fields/0','/fields/0/name','/fields/0/type/type','/fields/0/type/items/values/2','/futureMeaning'])expect(()=>inspectAvroTypeShape(roots,{path})).toThrow();
+ const opaque=field('long') as unknown as {fields:Record<string,unknown>[]};opaque.fields[0]!.default={type:'array',items:'long'};
+ expect(()=>inspectAvroTypeShape([{root:parseNativeJson(JSON.stringify(opaque))}],{path:'/fields/0/default'})).toThrow();
+ const dependency=parseNativeJson(JSON.stringify({type:'record',name:'dep.Item',fields:[]}));
+ const namedRoots=[{root:dependency,dependencyId:'one'},{root:parseNativeJson(JSON.stringify(field({type:'array',items:'dep.Item'})))}];
+ const named=inspectAvroTypeShape(namedRoots,{path:'/fields/0/type/items'});
+ expect(named.branches[0]!.definition).toEqual({path:'',dependencyId:'one'});
+ const definition=inspectAvroTypeShape(namedRoots,named.branches[0]!.definition!);expect(definition.branches[0]!.type).toBe('record');
+ expect(()=>inspectAvroTypeShape(namedRoots,{path:'',dependencyId:'missing'})).toThrow();
 });

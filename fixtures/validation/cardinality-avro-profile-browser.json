@@ -7,9 +7,6 @@
       {
         "id": "empty-array",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -42,8 +39,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "00",
         "decoded": {
           "value": []
@@ -57,9 +58,6 @@
       {
         "id": "ordered-duplicates",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -92,8 +90,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "0604020400",
         "decoded": {
           "value": [
@@ -111,9 +113,6 @@
       {
         "id": "nullable-array-items",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -164,8 +163,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "060002040000",
         "decoded": {
           "value": [
@@ -183,9 +186,6 @@
       {
         "id": "nested-arrays",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -236,8 +236,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 3,
         "hex": "0400060402040000",
         "decoded": {
           "value": [
@@ -258,9 +262,6 @@
       {
         "id": "array-of-maps",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -311,8 +312,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 3,
         "hex": "0400020261020000",
         "decoded": {
           "value": [
@@ -331,9 +336,6 @@
       {
         "id": "map-of-arrays",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -384,8 +386,12 @@
             }
           ],
           "shape": "map",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 3,
         "hex": "040261060402040002620000",
         "decoded": {
           "value": {
@@ -406,9 +412,6 @@
       {
         "id": "empty-map",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -441,8 +444,12 @@
             }
           ],
           "shape": "map",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "00",
         "decoded": {
           "value": {}
@@ -456,9 +463,6 @@
       {
         "id": "exact-string-keys",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -491,8 +495,12 @@
             }
           ],
           "shape": "map",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "0604c3a9020665cc8104000600",
         "decoded": {
           "value": {
@@ -510,9 +518,6 @@
       {
         "id": "special-property-keys",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -545,8 +550,12 @@
             }
           ],
           "shape": "map",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600",
         "decoded": {
           "value": {
@@ -563,9 +572,6 @@
       {
         "id": "nullable-map-values",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -616,8 +622,12 @@
             }
           ],
           "shape": "map",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "040261000262020400",
         "decoded": {
           "value": {
@@ -634,9 +644,6 @@
       {
         "id": "nested-maps",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -687,8 +694,12 @@
             }
           ],
           "shape": "map",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 3,
         "hex": "040261000262020263040000",
         "decoded": {
           "value": {
@@ -707,9 +718,6 @@
       {
         "id": "nullable-array-present",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -753,8 +761,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": true
+          "allowsNull": true,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "020604020400",
         "decoded": {
           "value": [
@@ -772,9 +784,6 @@
       {
         "id": "nullable-array-null",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -818,8 +827,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": true
+          "allowsNull": true,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "00",
         "decoded": {
           "value": null
@@ -833,9 +846,6 @@
       {
         "id": "array-null-last",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -879,8 +889,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": true
+          "allowsNull": true,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "000604020400",
         "decoded": {
           "value": [
@@ -898,9 +912,6 @@
       {
         "id": "array-map-union-array",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -962,8 +973,12 @@
             }
           ],
           "shape": "unspecified",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 3,
         "hex": "000604020400",
         "decoded": {
           "value": [
@@ -981,9 +996,6 @@
       {
         "id": "array-map-union-map",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -1045,8 +1057,12 @@
             }
           ],
           "shape": "unspecified",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 3,
         "hex": "020202610400",
         "decoded": {
           "value": {
@@ -1062,9 +1078,6 @@
       {
         "id": "recursive-record-items",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -1195,8 +1208,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "02020204000000",
         "decoded": {
           "value": [
@@ -1220,9 +1237,6 @@
       {
         "id": "enum-items",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -1299,8 +1313,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "0602000200",
         "decoded": {
           "value": [
@@ -1318,9 +1336,6 @@
       {
         "id": "unknown-logical-array",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -1357,8 +1372,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "0604020400",
         "decoded": {
           "value": [
@@ -1376,9 +1395,6 @@
       {
         "id": "float-items",
         "shape": {
-          "field": {
-            "path": "/fields/0"
-          },
           "branches": [
             {
               "location": {
@@ -1411,8 +1427,12 @@
             }
           ],
           "shape": "array",
-          "allowsNull": false
+          "allowsNull": false,
+          "field": {
+            "path": "/fields/0"
+          }
         },
+        "typeLocationsChecked": 2,
         "hex": "020000803f00",
         "decoded": {
           "value": [
@@ -1448,15 +1468,15 @@
     ]
   },
   "externalRequests": [],
-  "bundleSha256": "c06655722b7a3410075d01e5f289d5caec3d750bbd866e80a1e342647390558a",
+  "bundleSha256": "abc995bafacc43a4d5de48d88dd65207d6e7d426a0d14a28c25906bb89ce952d",
   "sha256": {
     "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
     "fixtures/validation/cardinality-avro-profile-native.json": "fb66080187cc8e83b34662e5441e21e91d7c70e6ddd44dff1974a43e016bb39e",
-    "scripts/core-ideals/cardinality-avro-profile-browser.ts": "22e265cbf9c133e99e4652d5742ac37365f1dafa60640191b479fc7e3280bb0f",
+    "scripts/core-ideals/cardinality-avro-profile-browser.ts": "13ebd66bdcabce259aaed7b1b3bb2ce0e01377d7b2789c6c7a54e669dfa4501c",
     "node_modules/avsc/package.json": "3a61ffb74d9077b6f300d186d25f4c5460deff8b1272fc2a4e6c5a1388b06f04",
-    "src/core-ideals/avro-cardinality-type.ts": "9372e499a2458b2392c80cf5082c8281ea8a1885a0aca4f271697ea6f694ada8",
+    "src/core-ideals/avro-cardinality-type.ts": "c9abb4a8f0dd474600a6d82f5061cbeee0f5e85af088bee17e4cbe0b89f7d552",
     "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
-    "tests/core-ideals/avro-cardinality-type.test.ts": "091e3b9a59681e2b79aba51132e9f4584ada810ac55c96d68439f515f37959c4"
+    "tests/core-ideals/avro-cardinality-type.test.ts": "3b889213ad8f65ffe3cd39bbbb839f2c8aa5829b84fe2320b1b79a897b30b42a"
   },
   "limitations": [
     "avsc loses the own __proto__ map member while both Python codecs preserve it. This discrepancy is not counted as value agreement.",

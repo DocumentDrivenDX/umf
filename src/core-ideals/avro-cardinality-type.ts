@@ -8,11 +8,14 @@ export interface AvroShapeBranch {
  location:AvroTypeLocation;native:NativeJson;type:string;shape:'one'|'array'|'map'|'null';
  definition?:AvroTypeLocation;item?:{location:AvroTypeLocation;native:NativeJson};
 }
-export interface AvroFieldShape {
- field:AvroTypeLocation;branches:AvroShapeBranch[];
+interface AvroShape {
+ branches:AvroShapeBranch[];
  /** Shape of a present, non-null value only; never member omission or reader defaults. */
  shape:'one'|'array'|'map'|'unspecified';allowsNull:boolean;
 }
+export interface AvroFieldShape extends AvroShape {field:AvroTypeLocation;}
+export interface AvroTypeShape extends AvroShape {location:AvroTypeLocation;}
+type Roots={root:NativeJson;dependencyId?:string}[];
 interface Entry {node:NativeJson;location:AvroTypeLocation;namespace:string;}
 const primitives=new Set(['null','boolean','int','long','float','double','bytes','string']);
 const namedKinds=new Set(['record','error','enum','fixed']);
@@ -23,12 +26,22 @@ const child=(location:AvroTypeLocation,suffix:string):AvroTypeLocation=>({...loc
  * avsc validates declaration order, names, duplicate union branches and structural references.
  * It never receives numeric metadata or logical annotations that it could normalize.
  */
-export function inspectAvroFieldShape(input:{root:NativeJson;dependencyId?:string}[],recordName:string,fieldName:string):AvroFieldShape {
+export function inspectAvroFieldShape(input:Roots,recordName:string,fieldName:string):AvroFieldShape {
+ const {location,field,...shape}=resolve(input,{recordName,fieldName});
+ return {...shape,field:field!};
+}
+/** Resolve only paths registered as type syntax, never paths into defaults or opaque metadata. */
+export function inspectAvroTypeShape(input:Roots,location:AvroTypeLocation):AvroTypeShape {
+ const {field,...shape}=resolve(input,{location});return shape;
+}
+function resolve(input:Roots,selector:{recordName:string;fieldName:string}|{location:AvroTypeLocation}):AvroTypeShape&{field?:AvroTypeLocation} {
  const roots=copyJson(input) as unknown as typeof input;
- const names=new Map<string,Entry>(),fields=new Map<string,Map<string,Entry>>();
+ const names=new Map<string,Entry>(),fields=new Map<string,Map<string,Entry>>(),types=new Map<string,Entry>();
+ const key=(location:AvroTypeLocation)=>JSON.stringify([location.dependencyId??null,location.path]);
  const dependencyIds=new Set<string>();
  const registry:Record<string,Type>=Object.create(null);
  function structural(node:NativeJson,location:AvroTypeLocation,namespace:string):unknown {
+  types.set(key(location),{node,location,namespace});
   if(node.kind==='string')return node.value;
   if(node.kind==='array')return node.items.map((n,i)=>structural(n,child(location,'/'+i),namespace));
   if(node.kind!=='object')throw Error('Expected type syntax');
@@ -68,7 +81,10 @@ export function inspectAvroFieldShape(input:{root:NativeJson;dependencyId?:strin
   const location:AvroTypeLocation={path:'',...(root.dependencyId!==undefined?{dependencyId:root.dependencyId}:{})};
   Type.forSchema(structural(root.root,location,'') as never,{registry,wrapUnions:true});
  }
- const field=fields.get(recordName)?.get(fieldName);if(!field||field.node.kind!=='object')throw Error('Native field is unresolved');
+ const field='recordName'in selector?fields.get(selector.recordName)?.get(selector.fieldName):undefined;
+ if('recordName'in selector&&(!field||field.node.kind!=='object'))throw Error('Native field is unresolved');
+ const selected=types.get(key('location'in selector?selector.location:child(field!.location,'/type')));
+ if(!selected)throw Error('Native type location is unresolved');
  function branch(node:NativeJson,location:AvroTypeLocation,namespace:string):AvroShapeBranch {
   const type=node.kind==='string'?node.value:node.kind==='object'?string(node.members.type):undefined;
   if(type===undefined)throw Error('Unresolved union branch');
@@ -85,9 +101,9 @@ export function inspectAvroFieldShape(input:{root:NativeJson;dependencyId?:strin
   }else if(namedKinds.has(type))result.definition=location;
   return result;
  }
- const type=field.node.members.type!,location=child(field.location,'/type');
- const branches=type.kind==='array'?type.items.map((n,i)=>branch(n,child(location,'/'+i),field.namespace)):[branch(type,location,field.namespace)];
+ const type=selected.node,location=selected.location;
+ const branches=type.kind==='array'?type.items.map((n,i)=>branch(n,child(location,'/'+i),selected.namespace)):[branch(type,location,selected.namespace)];
  const nonNull=branches.filter(b=>b.shape!=='null'),shapes=new Set(nonNull.map(b=>b.shape));
  const shape=shapes.size===1?nonNull[0]!.shape:'unspecified';
- return copyJson({field:field.location,branches,shape,allowsNull:branches.some(b=>b.shape==='null')}) as unknown as AvroFieldShape;
+ return copyJson({location,...(field?{field:field.location}:{}),branches,shape,allowsNull:branches.some(b=>b.shape==='null')}) as unknown as AvroTypeShape&{field?:AvroTypeLocation};
 }

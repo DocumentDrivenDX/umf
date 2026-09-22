@@ -2,15 +2,23 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {inspectAvroFieldShape} from '../../src/core-ideals/avro-cardinality-type';
+import {inspectAvroFieldShape,inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
 import {parseNativeJson} from '../../src/model/native-json';
 const fixture='fixtures/avro/cardinality-cases.json';
 const proof='fixtures/validation/cardinality-avro-profile-native.json';
 const cases=(await Bun.file(fixture).json()).cases,native=await Bun.file(proof).json();
-for(const c of cases)c.expectedShape=inspectAvroFieldShape([{root:parseNativeJson(c.schema)}],'cardinality.Example','value');
+for(const c of cases){
+ const roots=[{root:parseNativeJson(c.schema)}];c.expectedShape=inspectAvroFieldShape(roots,'cardinality.Example','value');
+ c.expectedTypes=[];const pending=[{path:'/fields/0/type'}],seen=new Set<string>();
+ while(pending.length){const location=pending.pop()!,key=JSON.stringify(location);if(seen.has(key))continue;seen.add(key);
+  const shape=inspectAvroTypeShape(roots,location);c.expectedTypes.push(shape);
+  for(const branch of shape.branches){if(branch.item)pending.push(branch.item.location);if(branch.definition)pending.push(branch.definition);}
+ }
+}
 const entry='.cache/cardinality-avro-profile-entry.ts';
-await Bun.write(entry,`import {inspectAvroFieldShape} from '../src/core-ideals/avro-cardinality-type';
+await Bun.write(entry,`import {inspectAvroFieldShape,inspectAvroTypeShape} from '../src/core-ideals/avro-cardinality-type';
 import {parseNativeJson} from '../src/model/native-json';
+export function typeShape(schema,location){return inspectAvroTypeShape([{root:parseNativeJson(schema)}],location);}
 export function shape(schema){return inspectAvroFieldShape([{root:parseNativeJson(schema)}],'cardinality.Example','value');}
 import {Type} from 'avsc/etc/browser/avsc-types';
 export function probe(schema,value,wire){
@@ -31,18 +39,19 @@ try{
  await page.goto(`http://127.0.0.1:${server.port}/`);
  const checks=await page.evaluate(async(input:string)=>{
   const {cases,native}=JSON.parse(input);
-  const path='/codec.js',{probe,shape}=await import(path);
+  const path='/codec.js',{probe,shape,typeShape}=await import(path);
   const canonical=(v:any):string=>v!==null&&typeof v==='object'?Array.isArray(v)?'['+v.map(canonical).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);
   const rows=[];
   for(const c of cases){
    const result=probe(c.schema,c.value),observedShape=shape(c.schema);
    if(canonical(observedShape)!==canonical(c.expectedShape))throw Error('Shape parity: '+c.id);
+   for(const expectedType of c.expectedTypes){if(canonical(typeShape(c.schema,expectedType.location))!==canonical(expectedType))throw Error('Nested type parity: '+c.id);}
    const expected=structuredClone(c.expected??c.value);
    if(c.id==='special-property-keys')delete expected.value.__proto__;
    if(canonical(result.decoded)!==canonical(expected))throw Error('Unexpected codec value: '+c.id);
    const comparison=native.checks.find((n:any)=>n.id===c.id&&n.writer==='apache'&&n.reader==='fastavro');
    if(!comparison||result.hex!==comparison.hex)throw Error('Native binary mismatch: '+c.id);
-   rows.push({id:c.id,shape:observedShape,...result,exactInputRecovery:canonical(result.decoded)===canonical(c.value),nativeValueAgreement:canonical(result.decoded)===canonical(comparison.value)});
+   rows.push({id:c.id,shape:observedShape,typeLocationsChecked:c.expectedTypes.length,...result,exactInputRecovery:canonical(result.decoded)===canonical(c.value),nativeValueAgreement:canonical(result.decoded)===canonical(comparison.value)});
   }
   const streams=[];
   for(const n of native.duplicateKeyStreams.filter((n:any)=>n.codec==='apache')){
