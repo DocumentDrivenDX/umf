@@ -93,12 +93,16 @@ Nullability bindings. The broader regression passes 206 tests / 13,404
 assertions across 59 files; the separate Field gate passes. Current
 fingerprints replaced the prior stale-gate status at that checkpoint. See the
 [PostgreSQL acceptance record](../../../fixtures/validation/postgresql-nullability-acceptance-evidence.json).
-SQL Server is in progress: native availability discovery and scoped classification
-now have evidence, including both serialization formats and exact source recovery.
-Authored projection and ideal recovery now have native execution evidence under
-both SQL Server null-default settings. Binding acceptance remains open. The previous Field gate
-is historical after this public API addition and needs its required refresh.
-Avro and Parquet are ready;
+SQL Server has now passed qualified binding acceptance for captured catalog-v3
+columns and authored single-column DDL under stored-relation/SQL-NULL policy.
+Supplement v2 preserves visibility and bound-rule observations; unresolved native
+interactions remain residuals or refusals. All 54 refresh commands pass, including
+five-system Field checks and all three implemented Nullability bindings. The
+current broader regression passes 234 tests / 16,414 assertions across 68 files; the
+separate Field gate passes three tests / 24 assertions. This supersedes the older
+refresh counts above. See the
+[SQL Server acceptance record](../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
+Avro and Parquet Nullability are ready;
 every later concept remains behind the Nullability delivery gate. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this
 queue update. Queue lint verifies mechanically checkable acceptance criteria, not

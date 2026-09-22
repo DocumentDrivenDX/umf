@@ -17,16 +17,16 @@ Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
 has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
 migration/rollback, selection and versioned Field APIs are implemented.
-TableSpec and PostgreSQL Nullability bindings have passed qualified acceptance,
-including explicit scope/carrier metadata, strict/report projection and both
-recovery directions. Native checks preserve the differences between domain and
-column constraints, omission and NULL, and authored and observed availability.
-The prior five-system Field native/browser checks and their fingerprints passed
-at the PostgreSQL checkpoint. SQL Server now has native discovery and scoped
-classification and authored projection with both recovery directions. Its final
-binding acceptance and Field gate fingerprint refresh remain open. Avro and
-Parquet Nullability remain;
-the experimental Nullability concept has not passed its five-system delivery gate.
+TableSpec, PostgreSQL and SQL Server Nullability bindings have passed qualified
+acceptance, including explicit scope/carrier metadata, strict/report projection
+and both retained recovery directions. Native checks preserve distinctions
+between stored availability, accepted write inputs and query-produced NULL.
+All five prior Field bindings have fresh native/browser evidence and the Field
+conformance gate passes. SQL Server's authored DDL also passes under opposing
+session null-default settings. See the
+[SQL Server acceptance record](../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json).
+Avro and Parquet Nullability remain; the experimental 0.3.0 concept has not passed
+its five-system delivery gate. No native equivalence is claimed.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

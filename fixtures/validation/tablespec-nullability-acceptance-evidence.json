@@ -188,8 +188,8 @@
   ],
   "sha256": {
     "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
-    "fixtures/validation/field-conformance.json": "1f87651eb215742cdd85be4a5a3cf0bd141de3e716a93647d9e6b9fd604c9473",
-    "fixtures/validation/field-gate-refresh-evidence.json": "6fcba41e59e9b1884f5a05ed2e1193ff078cfcf4a15f99ccbaf03d4656bd0e90",
+    "fixtures/validation/field-conformance.json": "db8b3835a73c0ff137f9e49e2c1a5a70fdd5cf40d08fa0946a85f793694a4e12",
+    "fixtures/validation/field-gate-refresh-evidence.json": "263b482cef73ae85ad8bd75e2508a1f316bc1ebecf47e4fe17a82ca72ed40b57",
     "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
     "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
     "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
@@ -250,7 +250,7 @@
     "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
     "src/core-ideals/nullability-tablespec-projection.ts": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97",
     "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
-    "src/index.ts": "b01825233a3e3b54d7f59dc52a1d8cd09e4f2d3cfec7b956cb4e082977d014aa",
+    "src/index.ts": "85701fd942d49a15e087fde74a2e7c9e9b86664702f086babfba460e86580110",
     "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
     "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
     "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
@@ -264,13 +264,25 @@
     "tests/core-ideals/nullability-tablespec.test.ts": "85d8c062500fa8d19f0694b40e0c18801e6146c94157593d084284894be0a306"
   },
   "revalidation": {
-    "reason": "TableSpec binding/native execution commands rerun after PostgreSQL Nullability library additions",
+    "reason": "Existing binding commands rerun after SQL Server Nullability library additions",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "fixtures/validation/field-conformance.json": "3dbcfa7625a21a014abe17e46786821ce89c56e6ce3a8d03a6284523c7a4287d",
-      "fixtures/validation/field-gate-refresh-evidence.json": "360cee6bca8ae9adb0a42e6f401f9697a5c37787b0eec6f1631e4ee38521e43f",
-      "src/index.ts": "0daa4b5674d29dbed96ec031af94fceb743de9d772481bc1ffc1ba2e09096863"
+      "fixtures/validation/field-conformance.json": "1f87651eb215742cdd85be4a5a3cf0bd141de3e716a93647d9e6b9fd604c9473",
+      "fixtures/validation/field-gate-refresh-evidence.json": "6fcba41e59e9b1884f5a05ed2e1193ff078cfcf4a15f99ccbaf03d4656bd0e90",
+      "src/index.ts": "b01825233a3e3b54d7f59dc52a1d8cd09e4f2d3cfec7b956cb4e082977d014aa"
     },
-    "note": "Original result counts and one-binding status are historical; the current refresh supplies current build/regression evidence. PostgreSQL acceptance is recorded separately."
-  }
+    "note": "Original result counts and remaining-binding status are historical; the current refresh records current build/regression evidence. SQL Server acceptance is separate."
+  },
+  "revalidationHistory": [
+    {
+      "reason": "TableSpec binding/native execution commands rerun after PostgreSQL Nullability library additions",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "fixtures/validation/field-conformance.json": "3dbcfa7625a21a014abe17e46786821ce89c56e6ce3a8d03a6284523c7a4287d",
+        "fixtures/validation/field-gate-refresh-evidence.json": "360cee6bca8ae9adb0a42e6f401f9697a5c37787b0eec6f1631e4ee38521e43f",
+        "src/index.ts": "0daa4b5674d29dbed96ec031af94fceb743de9d772481bc1ffc1ba2e09096863"
+      },
+      "note": "Original result counts and one-binding status are historical; the current refresh supplies current build/regression evidence. PostgreSQL acceptance is recorded separately."
+    }
+  ]
 }

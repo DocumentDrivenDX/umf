@@ -826,3 +826,30 @@ recoveries. Ten focused/existing Bun tests pass with 765 assertions, along with
 typecheck, browser build and audits of 224 schemas / 35 packages. Source and
 runtime fingerprints qualify these results; broader binding acceptance remains
 pending.
+
+
+### SQL Server binding acceptance
+
+The [qualified acceptance record](../../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json)
+closes the SQL Server binding's implementation criteria and supersedes its pending
+acceptance status above. It covers SQL Server 2022 build 16.0.4295.3, captured
+catalog-v3 plus supplement v2, experimental core 0.3.0 Fields, and explicit
+stored-relation/SQL-NULL policy. Authored single-column projection covers 14
+existing scalar carriers. Unknown native refinements remain attached; unresolved
+constraints, rules, triggers and computed/generated interactions do not become
+unqualified absence permission.
+
+All 54 refresh commands pass, including the five-system Field native/browser
+checks and TableSpec/PostgreSQL Nullability regressions. Current Bun regression
+passes 234 tests / 16,414 assertions across 68 files, with a separate three-test,
+24-assertion Field conformance gate. Typechecking, 224 schema audits, 35 package
+audits and browser build pass. SQL Server projection executes 126 targets under
+opposing ANSI defaults; Chromium verifies 126 ideal recoveries and the scoped
+classification matrix verifies 312 source recoveries.
+
+The receipt preserves unspecified author intent even though its native SQL
+uses explicit NULL. This differs from PostgreSQL's omitted-clause projection
+and does not equate either native representation with the ideal. Stored
+availability does not claim write-input or query-result behavior. Avro and
+Parquet Nullability and the five-system delivery gate remain open; three
+qualified bindings do not graduate native equivalence.

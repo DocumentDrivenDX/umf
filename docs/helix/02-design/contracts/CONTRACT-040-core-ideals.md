@@ -399,3 +399,26 @@ library. This provides two qualified systems for the ideal's admission review;
 it does not by itself close the five-system Nullability delivery gate or graduate
 native equivalence. SQL Server, Avro and Parquet remain outstanding. The earlier
 one-binding status above is historical.
+
+
+### SQL Server Nullability binding qualification
+
+TD-041 records the third qualified Nullability binding: SQL Server 2022 build
+16.0.4295.3, captured catalog-v3 with supplement v2 and authored single-column
+DDL under explicit stored-relation/SQL-NULL policy. Unknown native content stays
+attached. Computed columns, rule/trigger/constraint interactions and incomplete
+visibility remain explicit residuals or refusals. Stored availability must not
+be interpreted as accepted input or query-result availability.
+
+Required projects to NOT NULL and absent-allowed to NULL. Unspecified also emits
+explicit NULL to avoid ambient session/database defaults, with retained
+no-authored-requirement provenance. Native reclassification cannot reconstruct
+that author intent; receipt-based recovery preserves it. Both opposing ANSI
+defaults have native execution evidence, including bare-clause controls that
+produce different results.
+
+The [acceptance record](../../../../fixtures/validation/sqlserver-nullability-acceptance-evidence.json)
+includes fresh five-system Field and three-binding Nullability evidence. It
+supersedes the outstanding SQL Server status above. Avro and Parquet Nullability
+and the delivery gate remain open. This qualification never replaces native
+payloads or constitutes equivalence graduation.
