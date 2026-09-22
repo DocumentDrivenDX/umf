@@ -2,6 +2,8 @@
   "scope": "Pinned WASM syntax/AST parity and ideal recovery; native execution evidence recorded separately",
   "browser": "148.0.7778.0",
   "checks": {
+    "namespaceChecks": 4,
+    "namespaceRecoveries": 4,
     "projections": 15,
     "recoveries": 30,
     "lossPolicies": 2,

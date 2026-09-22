@@ -33,6 +33,7 @@ export async function projectFieldToPostgresql(input:CoreKindDeclaration,options
  if(Object.keys(source.vocabularies).length)loss('/vocabularies',source.vocabularies,'Native vocabulary semantics are not projected');
  source.modules.forEach((m,i)=>{
   if(i!==mi){loss('/modules/'+i,m,'Other module is outside selected Field projection');return;}
+  if(m.namespace&&m.namespace!==request.namespace)loss(`/modules/${i}/namespace`,m.namespace,'Native schema name differs from ideal namespace','not-expressible');
   for(const [key,value] of Object.entries(m))if(!['id','namespace','elements'].includes(key))loss(`/modules/${i}/`+pointer(key),value,'Module metadata is not projected');
   m.elements.forEach((e,j)=>{if(j!==ei)loss(`/modules/${i}/elements/${j}`,e,'Other element is outside selected Field projection');});
  });

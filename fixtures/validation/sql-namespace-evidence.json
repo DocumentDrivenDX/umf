@@ -1,0 +1,30 @@
+{
+  "scope": "PostgreSQL and SQL Server namespace loss reports for authored Field/record projections; native execution not rerun, SQL emission unchanged",
+  "commands": [
+    "bun test tests/core-ideals/sql-namespace.test.ts tests/core-ideals/field-postgresql-projection.test.ts tests/core-ideals/record-postgresql-projection.test.ts tests/core-ideals/field-sqlserver-projection.test.ts tests/core-ideals/record-sqlserver-projection.test.ts",
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-postgresql-projection-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-sqlserver-projection-browser.ts"
+  ],
+  "results": {
+    "tests": 13,
+    "assertions": 350,
+    "browserNamespacePolicies": 8,
+    "browserNamespaceRecoveries": 8,
+    "typecheck": "passed",
+    "browserBuildBytes": 10087528
+  },
+  "sha256": {
+    "src/core-ideals/field-postgresql-projection.ts": "3aaefe512a44366abf601c4a6878c46f69ea0841082a70bdc88b415e6c4b2078",
+    "src/core-ideals/record-postgresql-projection.ts": "5f3b267728d5efeac2adc33002f7b7b3ee72364841ab5a4b956b3f4722bcb05a",
+    "src/core-ideals/field-sqlserver-projection.ts": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37",
+    "src/core-ideals/record-sqlserver-projection.ts": "8a9820108f7650df0651b8fefdfcbd85e92fa4374cb8cfe0b61815605e9e7657",
+    "tests/core-ideals/sql-namespace.test.ts": "248972c518af96f47cc5ced68b6c560eb0c304d7891fd6db136b0b5cd54f5a70",
+    "scripts/core-ideals/field-postgresql-projection-browser.ts": "668bcb53b05cebdd2caf2829b5c17df5735f64d01e050499e8d49917f631d5b0",
+    "scripts/core-ideals/field-sqlserver-projection-browser.ts": "3963aa4b8ff9433aaa4ccc56c783c17e96cadf6507be1ecba83e12577c6c58d1",
+    "fixtures/validation/field-postgresql-projection-browser.json": "e369a0ed2da32f30ec9ae8f3c523c0ed25e54c3d418d15b51ef2f04f97bd7863",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "97934076eb522d181412d51f529f870e5481f78c6de2843a828a807c80295756"
+  }
+}

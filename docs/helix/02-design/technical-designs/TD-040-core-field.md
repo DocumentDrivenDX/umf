@@ -1217,3 +1217,26 @@ and no failures (118.58 seconds). It began before the namespace correction and
 is not a final-source-snapshot release claim; the correction has the separate
 post-edit targeted evidence above. Commands, fingerprints and limits are recorded
 in [namespace evidence](../../../../fixtures/validation/avro-namespace-evidence.json).
+
+## PostgreSQL and SQL Server namespace loss
+
+The Field and flat-record projectors for PostgreSQL and SQL Server now compare
+selected nonempty ideal module namespaces with the requested native schema name.
+A difference produces a path-qualified residual for each affected module. Strict
+mode exposes neither a target nor partial SQL; report mode emits the explicit
+native schema choice and preserves the original ideal in the receipt. Matching
+namespaces retain the previously verified output. Namespace-label agreement does
+not assert full equivalence between a core module and a database schema.
+
+Thirteen targeted projection tests pass 350 assertions. Chromium 148 checks four
+namespace policies and four JSON/YAML namespace recoveries per system, alongside
+the existing Field/record output and recovery matrices. PostgreSQL uses the pinned
+browser WASM parser for the emitted SQL. Typechecking, browser ESM/declarations and
+the PostgreSQL browser runtime build pass. No schema files or SQL-generation rules
+changed. Native database execution was not rerun for this loss-reporting correction;
+previous native fixtures remain the execution evidence for the unchanged matching-
+namespace outputs. See [SQL namespace evidence](../../../../fixtures/validation/sql-namespace-evidence.json).
+
+The TableSpec namespace policy still needs correction/audit. Nested projections,
+reference binding coverage and full common residual metadata remain open, so this
+change does not close the Field gate.
