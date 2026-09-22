@@ -1,0 +1,41 @@
+{
+  "scope": "Avro Field/record namespace change loss accounting; other target namespace policies remain unaudited",
+  "commands": [
+    "bun test tests/core-ideals",
+    "bun test tests/core-ideals/avro-namespace.test.ts tests/core-ideals/field-avro-projection.test.ts tests/core-ideals/record-avro-projection.test.ts",
+    "bun scripts/core-ideals/field-avro-projection-corpus.ts",
+    ".venv/bin/python scripts/core-ideals/field-avro-projection-oracle.py",
+    "bun run typecheck",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/field-avro-projection-browser.ts"
+  ],
+  "results": {
+    "targetedTests": 5,
+    "targetedAssertions": 130,
+    "nativeRecordCases": 9,
+    "nativeAcceptedRecords": 5,
+    "browserRecordRecoveries": 10,
+    "typecheck": "passed",
+    "browserBuildBytes": 10086814
+  },
+  "broadRegression": {
+    "tests": 90,
+    "files": 28,
+    "assertions": 3016,
+    "failures": 0,
+    "seconds": 118.58,
+    "qualification": "Run started before the namespace edits; not a final-source-snapshot release claim. The namespace correction has separate post-edit targeted checks.",
+    "logSha256": "8330b06ae431ae9acb84e51183f6f9652e30ef00d39d1b497da6ca69e30fd4f9"
+  },
+  "sha256": {
+    "src/core-ideals/field-avro-projection.ts": "58343a9b56c27ce4e9cc6b432eb370b90fcba481c3e5ab71c7bcef7e6f3314c5",
+    "src/core-ideals/record-avro-projection.ts": "6a59d8c67a937030a1edfed507a49b6884c178096e5ddc0d848b3b90e9f9d0a6",
+    "tests/core-ideals/avro-namespace.test.ts": "ce047e34d90765b9d3f3c883147049e3abd703415d4099229157b1f6f5b1decc",
+    "scripts/core-ideals/field-avro-projection-corpus.ts": "a7d32b220a5587a163d73b6ffbb5e7c3fff57b86ae76251b7252ea604f222cc8",
+    "scripts/core-ideals/field-avro-projection-oracle.py": "8718ec43507ea38f9cae665d54ab8c1ccf774133e17eb4307d8a84468df322bb",
+    "scripts/core-ideals/field-avro-projection-browser.ts": "fa15398605a998917e90a4cdea5364cdca48d9084e1a365cb541cc50661c99f5",
+    "fixtures/validation/field-avro-projection-corpus.json": "948380b3e112dc66f0bf333de4639e74c1bec4d8bf991b55d9b600a412037b41",
+    "fixtures/validation/field-avro-projection-native.json": "d64d11443ae86cae1ca11be7909689beee67b90cbe0b3cf831d8dafac5d594f4",
+    "fixtures/validation/field-avro-projection-browser.json": "0d27a157279949dcfd3c84f0060d00eda6391a2577e5b816e4ff77a676f220f2"
+  }
+}

@@ -147,6 +147,22 @@
       "status": "accepted",
       "fields": [],
       "binaryBytes": 0
+    },
+    {
+      "variant": "namespace",
+      "mode": "strict",
+      "status": "blocked"
+    },
+    {
+      "variant": "namespace",
+      "mode": "report",
+      "status": "accepted",
+      "fields": [
+        "id",
+        "label",
+        "active"
+      ],
+      "binaryBytes": 14
     }
   ],
   "limitations": [

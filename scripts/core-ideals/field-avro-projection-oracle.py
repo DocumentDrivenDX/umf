@@ -16,7 +16,7 @@ for row in json.loads(Path('fixtures/validation/field-avro-projection-corpus.jso
  if row['result']['status']=='blocked':
   assert 'target' not in row['result'] and 'text' not in row
   record_checks.append({'variant':row['variant'],'mode':row['request']['mode'],'status':'blocked'});continue
- schema=avro.schema.parse(row['text']);expected=[] if row['variant']=='empty' else ['id','label','active'];assert [f.name for f in schema.fields]==expected
+ schema=avro.schema.parse(row['text']);assert schema.fullname==row['request']['namespace']+'.'+row['request']['recordName'];expected=[] if row['variant']=='empty' else ['id','label','active'];assert [f.name for f in schema.fields]==expected
  if row['variant']!='empty':assert schema.doc=='Order record'
  datum={} if not expected else {'id':42,'label':'Unicode 雪','active':1 if row['variant']=='mismatch' else True}
  out=io.BytesIO();avro.io.DatumWriter(schema).write(datum,avro.io.BinaryEncoder(out));back=avro.io.DatumReader(schema).read(avro.io.BinaryDecoder(io.BytesIO(out.getvalue())));assert back==datum

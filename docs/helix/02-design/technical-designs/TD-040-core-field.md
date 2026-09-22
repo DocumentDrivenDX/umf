@@ -1189,3 +1189,31 @@ See [Parquet record-type evidence](../../../../fixtures/validation/parquet-recor
 Nested authored projections, other priority-system reference bindings and complete
 common projection metadata remain required. No native repetition or storage grouping
 is promoted to ideal cardinality or organizational group semantics by this work.
+
+## Namespace-loss regression
+
+The Avro Field and flat-record projectors previously excluded module namespaces
+from residual accounting even when an explicit target namespace differed. They
+now report each changed nonempty ideal namespace at its source path. Strict mode
+blocks without a target; report mode emits the requested native namespace while
+retaining the original ideal. Matching namespaces preserve existing behavior.
+This is namespace-label preservation, not a new equivalence claim between UMF
+modules and Avro namespaces.
+
+Five targeted tests pass 130 assertions. Apache Avro 1.12.0 accepts five emitted
+records across nine cases, including the report-mode namespace move; four cases
+block. The oracle checks emitted qualified names and retains the existing fifteen
+scalar samples and float-narrowing counterexample. Chromium verifies both Field
+namespace policies and all record cases with ten record recoveries. Typechecking
+and browser build pass. No schemas changed in this correction.
+
+Static review found the same namespace exclusion pattern in the TableSpec,
+PostgreSQL and SQL Server projectors. Their native namespace capabilities and
+request policies differ; each needs a targeted loss-policy audit before the Field
+exit gate can close. Parquet already residualizes nonempty ideal namespaces.
+
+The broad core-ideals run passed 90 tests across 28 files with 3,016 assertions
+and no failures (118.58 seconds). It began before the namespace correction and
+is not a final-source-snapshot release claim; the correction has the separate
+post-edit targeted evidence above. Commands, fingerprints and limits are recorded
+in [namespace evidence](../../../../fixtures/validation/avro-namespace-evidence.json).
