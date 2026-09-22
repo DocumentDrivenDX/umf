@@ -1,0 +1,49 @@
+{
+  "scope": "Experimental SQL Server 2022 16.0.4295.3 public facet classification on core 0.5.0; explicit logical Field identity, non-null value profiles and original native text recovery",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "tests": {
+    "passed": 67,
+    "assertions": 5213,
+    "files": 20
+  },
+  "typecheck": true,
+  "schemas": 270,
+  "packages": 45,
+  "browser": {
+    "cases": 48,
+    "classified": 41,
+    "blocked": 7,
+    "nativeRecoveries": 82,
+    "forgedRejected": true,
+    "getterCalls": 0
+  },
+  "publicBundleBytes": 10921873,
+  "nativeEvidence": "Reuses pinned 86-probe discovery corpus; no new engine run at this classification checkpoint",
+  "remaining": [
+    "authored projection API and schema",
+    "independent native emitted-target and table-level CHECK qualification",
+    "ideal-to-native-to-ideal recovery with explicit residuals",
+    "full compatibility refresh and SQL Server binding acceptance"
+  ],
+  "sha256": {
+    "src/core-ideals/facets-sqlserver.ts": "17502005a734aff52b766b5d429b362a6a3f952ea83043048b8f93f131bb8b7d",
+    "src/index.ts": "fa2bab5b39ed9699e5910992305510c5cf85b58eb9dd79dbc51e8d1366880b13",
+    "spec/core/sqlserver-facet-classification.schema.json": "fe3f7f430bd8682f8ab6ad8f71a4606c1b43a469a412352e3ee4cb6684e331c2",
+    "spec/extensions/sqlserver-facets/schema.json": "b18f5b91010ae0c025c6b9dd27f1014e5fb58297eedca455363011998f7c913c",
+    "spec/extensions/sqlserver-facets/package.json": "1d15e0033769dbe74308850e0a4a66cc5d4d4f2bddad3237a11685a3ec8b5580",
+    "scripts/core-ideals/facets-sqlserver-cases.ts": "8e2334d49c0a772c4296cbd5c7248bd5f880ed216a4ce65d72da97ed7cdf5ea2",
+    "scripts/core-ideals/facets-sqlserver-classification-browser.ts": "084cfec84b0cdb6cfcea660ae01d6444df979734d4a5edaf8edd4275f45f92df",
+    "tests/core-ideals/facets-sqlserver.test.ts": "99a170ab8b489efcfabd00cfdb73ff53f73a0385d40b9ad6b62917e5583926ee",
+    "fixtures/validation/facets-sqlserver-discovery-native.json": "339625cfceac9dee7f669f9ee32ca253dd428bf51ba544741bfb7f0899fd73c7",
+    "dist/umf.js": "e78b1a92b2b0d7a7e393e20bbf51e756f01e2436857138bd6c7d06b1823910a0",
+    "src/adapters/sqlserver/facet-constraints.ts": "92281fd980bc0e6533fcb4cebad56cbef030f0cc995ee51c24a1fec5040e7f82",
+    "src/adapters/sqlserver/facet-type.ts": "8831415c9ca140be4a3d7eec773e164abd1858597f42805fa7ca67e3331706ff",
+    "src/adapters/sqlserver/facet-predicate.ts": "53edc4e5f5611c91c06170551fde20c280f5a65cbf64e857e87c7b584d08d579",
+    "fixtures/validation/facets-sqlserver-classification-browser.json": "98282454324ab6591b538bfc25b6db0f60847c855f50c0d8dccaa9437e71bd47",
+    "fixtures/validation/facets-sqlserver-classification-tests.log": "fe6a95c15983c8687bfa4bd4fff1b4e5de1d69d9c3b8b87a9aaa890f99a64943",
+    "fixtures/validation/facets-sqlserver-classification-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/facets-sqlserver-classification-schemas.log": "4e0ba7aca443dcdb47225160cadbb4048ecf3175ae9c4f62a3c08a7b81f0cf97"
+  }
+}

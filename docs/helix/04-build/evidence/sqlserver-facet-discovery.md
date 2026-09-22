@@ -130,6 +130,41 @@ Next: public classification/projection schemas and API implementation, broader
 native qualification for emitted targets and table-level CHECKs, retained recovery,
 and full binding acceptance. SQL Server facet delivery remains in progress.
 
+## Experimental public classification checkpoint
+
+The public `classifySqlServerFacets` API, operation schema and
+`umf.sqlserver.facets` package now expose profile-qualified facet observations on
+an explicitly selected logical scalar Field in core 0.5.0. Physical columns remain
+unchanged. Integer carrier/CHECK intersections must form canonical width domains;
+SQL Server decimal coefficients supply precision/scale, and binary capacities and
+supported predicates supply byte bounds. Padding, character semantics, unsupported
+constraints/types and unknown native content remain explicit residuals. Exact-input
+requests retain the float-narrowing and pre-CHECK decimal-rounding counterexamples.
+
+Strict mode blocks on residuals. Report mode preserves them beside inferred facets
+and complete native content. Author conflicts, bare facets without provenance,
+logical-shape conflicts and existing bindings block both modes. Verified receipts
+recover original native catalog text, including whitespace and exact number tokens,
+through JSON and YAML serialization. Changed targets or forged receipts refuse
+recovery. Capture authenticity and complete native inventory remain unverified.
+
+Validation passes 67 tests / 5,213 assertions across 20 files, covering catalog,
+Field, record, Nullability, Cardinality, core facet and new classification behavior.
+Typechecking passes; 270 JSON Schemas and 45 extension packages pass their audits.
+Chromium 148 checks the exported 10,921,873-byte browser bundle in 48 cases:
+41 classified, seven blocked and 82 original-native-text recoveries, with forged
+receipt/getter guards and no host globals or external requests. See the
+[classification record](../../../../fixtures/validation/facets-sqlserver-classification-evidence.json).
+The independent native discovery corpus is reused; no additional engine run is
+claimed here. Single-table case captures retain complete selected tables; a
+separate test retains unknown root data and exact large numeric tokens.
+
+Authored projection/schema, additional emitted-target and table-level CHECK native
+qualification, ideal recovery and full binding acceptance remain required. Prior
+accepted binding gates retain their historical snapshots; the changed public
+bundle has not undergone the final full compatibility refresh. This checkpoint
+does not admit the facet ideal or graduate native equivalence.
+
 ## Primary reference material
 
 The native fixture is the qualification evidence. These Microsoft references

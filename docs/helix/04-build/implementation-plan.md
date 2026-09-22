@@ -4205,3 +4205,24 @@ native qualification for emitted target schemas and table-level association, bot
 retained recovery directions, and full binding acceptance. The SQL Server facet
 bead remains in progress; Avro, Parquet, facet admission/delivery and Key remain
 required. This checkpoint does not grant native equivalence.
+
+### SQL Server public facet classification checkpoint
+
+Experimental core 0.5.0 now exports `classifySqlServerFacets`, its verification and
+native-text recovery APIs, a closed operation schema and `umf.sqlserver.facets`
+extension package. An explicit logical Field receives scoped integer-width,
+decimal coefficient and binary-byte observations. Native columns remain unchanged;
+strict/report losses, author conflicts, unknown content and exact-input failures
+are explicit. Original native text recovers through both receipt serializations.
+
+Validation: 67 tests / 5,213 assertions across 20 files, typechecking, 270 schemas,
+45 packages, and 48 Chromium cases (41 classified, seven blocked, 82 native
+recoveries) pass. The browser bundle is 10,921,873 bytes. Native discovery evidence
+is reused; earlier accepted gates remain historical snapshots pending the full
+refresh. See the [classification record](../../../fixtures/validation/facets-sqlserver-classification-evidence.json).
+
+Next: authored SQL Server projection and its operation schema; independent native
+qualification for emitted targets/table-level CHECK associations; ideal recovery
+and composition; then full binding acceptance. SQL Server facets remain in
+progress, followed by Avro, Parquet, the separate facet gate and Key. No native
+equivalence or completed five-system facet delivery is claimed.

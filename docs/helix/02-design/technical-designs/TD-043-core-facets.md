@@ -609,3 +609,37 @@ versions and modified captures yield no interpreted facts. Source authenticity a
 complete inventory remain unverified. This is implementation groundwork for the
 public receipt/schema design, not public binding acceptance; see the
 [catalog interpretation checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#catalog-check-interpretation-checkpoint).
+
+### Experimental SQL Server facet classification API
+
+`classifySqlServerFacets` consumes core 0.5.0, the original captured v3 native
+text at 16.0.4295.3, a physical column path and a separately selected logical Field
+identity. The logical Field must explicitly have cardinality `one` and the matching
+scalar family. The operation leaves `sqlserver.columns` unchanged. Profiles are
+`stored-value`, `ordinary-checked-write` and `unresolved`; obligations distinguish
+`value-domain` from `exact-input`. Scope is non-null throughout. The latter never
+follows from catalog type metadata alone.
+
+Integer carriers plus applicable bounds produce an integer-width facet only for
+a canonical signed/unsigned domain. Native SQL Server decimal types provide finite
+coefficient precision/scale; pre-CHECK rounding remains an input-conversion loss.
+Binary capacity and supported CHECKs supply byte-length bounds, with fixed padding
+retained as a residual. Character capacity supplies no Unicode-scalar facet.
+Unknown/custom predicates, computed types, unqualified table-level associations,
+unsupported types and unknown native properties produce explicit residuals.
+
+Strict mode emits no target when residuals exist. Report mode retains them alongside
+inferred facets and the complete native payload. Both modes block conflicting
+logical shape, vocabulary or author intent. Existing facets need a fresh verified
+author declaration; a bare facet label is not provenance. Receipt recomputation
+checks the retained source, request and current target. `recoverSqlServerFacetSource`
+returns the exact original catalog text after verification, including whitespace
+and numeric spellings; it does not authenticate the database or execute SQL.
+
+The operation receipt schema is `spec/core/sqlserver-facet-classification.schema.json`.
+The element extension package is `umf.sqlserver.facets` 1.0.0. Its payload includes
+physical column, profile, obligation, outcome and observations; native data remains
+in `umf.sqlserver`. Experimental classification is exported, but authored projection,
+its schema, emitted-target native qualification and full binding acceptance remain
+unfinished. Earlier binding gates retain their prior evidence snapshots until the
+scheduled full compatibility refresh.

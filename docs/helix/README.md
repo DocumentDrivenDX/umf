@@ -909,3 +909,10 @@ parsing against 166 pinned W3C cases plus authored boundaries. Chromium parity i
 established, but document-finalization and XML-literal fidelity defects prevent
 claiming a public RDF/XML adapter. The spike records the experimental correction,
 remaining discrepancies and required integration work.
+
+SQL Server facets now have an experimental public classification API, operation
+schema and extension package. Classification uses a separately selected logical
+scalar Field, explicit stored/ordinary-checked-write profiles, strict/report
+residuals and verified original native-text recovery. Physical catalog columns
+remain unchanged. Authored projection and full SQL Server facet acceptance remain
+open; see [TD-043](02-design/technical-designs/TD-043-core-facets.md#experimental-sql-server-facet-classification-api).
