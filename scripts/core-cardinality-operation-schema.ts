@@ -1,0 +1,13 @@
+export {};
+const schema=JSON.parse((await Bun.file('spec/core/nullability-operation.schema.json').text()).replaceAll('nullability','cardinality').replaceAll('Nullability','Cardinality'));
+schema.$defs.cardinality.enum=['one','array','map','unspecified'];
+schema.$defs.source.oneOf.push({$ref:'urn:umf:core:0.4.0'});
+schema.$defs.declaration.properties.source={$ref:'urn:umf:core:0.4.0'};
+schema.$defs.declaration.properties.target={$ref:'urn:umf:core:0.4.0'};
+schema.$defs.itemType={type:'object',required:['module','element'],properties:{module:{type:'string',minLength:1},element:{type:'string',minLength:1}}};
+schema.$defs.request={type:'object',additionalProperties:false,required:['cardinality'],properties:{cardinality:{$ref:'#/$defs/cardinality'},itemType:{oneOf:[{$ref:'#/$defs/itemType'},{type:'null'}]}}};
+schema.$defs.request.allOf=[{if:{required:['itemType'],properties:{itemType:{type:'object'}}},then:{properties:{cardinality:{enum:['array','map']}}}}];
+schema.$defs.declaration.required.push('request');schema.$defs.declaration.properties.request={$ref:'#/$defs/request'};
+schema.$defs.lookup.properties.meaning.oneOf[0].properties.itemType={$ref:'#/$defs/itemType'};
+schema.$defs.lookup.properties.meaning.oneOf[0].allOf=[{if:{required:['itemType'],properties:{itemType:{}}},then:{properties:{cardinality:{enum:['array','map']}}}}];
+await Bun.write('spec/core/cardinality-operation.schema.json',JSON.stringify(schema,null,2)+'\n');

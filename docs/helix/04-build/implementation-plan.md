@@ -129,7 +129,8 @@ completes this five-system slice without native-equivalence graduation. See the
 Cardinality core implementation has started with a 0.4.0 schema/transition
 foundation: container/scalar separation, item/value Field references, legacy
 collision archives and rollback. The focused suite and real Chromium pass.
-Authoring/inspection, selection and versioned API integration remain; refresh
+Authoring/inspection and verified receipts now pass; selection and versioned
+API integration remain. Refresh
 both prior gates before core acceptance. Native Cardinality bindings, facets
 and key retain their ordered dependencies. Existing untracked bootstrap implementation/evidence must
 be checkpointed before isolated-worktree dispatch; no worker is launched by this

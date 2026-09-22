@@ -543,3 +543,21 @@ restores the exact original envelope and separately retains the whole subsequent
 0.4.0 model; it never inserts newly authored assertions into legacy semantics.
 This representation decision does not admit native Cardinality bindings or
 replace any native meaning.
+
+
+### Cardinality authoring receipt semantics
+
+`declareCoreCardinality` takes an explicit identity and a request containing
+`cardinality` plus optional `itemType`. Omission of itemType preserves the existing
+reference. A supplied reference explicitly sets it; null explicitly clears it.
+Every declaration retains the complete old model, request and new model. Clearing
+or replacing a reference does not discard its old unknown metadata from that
+archive. An incompatible unchanged item reference or scalarType causes an atomic
+conflict rather than implicit removal or relocation. Unknown cardinality labels
+cannot be overwritten by this operation.
+
+`inspectCoreCardinality` returns copied known/missing/inapplicable/legacy/unknown
+meaning without inventing author provenance or native interpretation. Only 0.4.0
+labels have this core interpretation. Receipt verification recomputes the complete
+declaration and requires the unchanged current target; this is consistency checking,
+not proof of a person's identity or native equivalence.

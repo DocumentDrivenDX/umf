@@ -30,9 +30,9 @@ separate gate: 90 ideal recoveries, 60 native recoveries and current native/brow
 evidence. Core 0.3.0 remains experimental; no native equivalence is claimed. See the
 [Nullability conformance record](../../fixtures/validation/nullability-conformance.json).
 Cardinality is in progress: experimental 0.4.0 schema validation, item/value Field
-references and explicit collision-preserving migration/rollback have Bun and
-Chromium foundation evidence. Authoring, inspection, selection, versioned API
-integration and all five native Cardinality bindings remain unfinished. The Field
+references, explicit collision-preserving migration/rollback, authoring and
+inspection have Bun and Chromium evidence. Selection, versioned API integration
+and all five native Cardinality bindings remain unfinished. The Field
 and Nullability gate records above are the last accepted baseline; both need fresh
 evidence after these library additions. Facets and key follow Cardinality. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).

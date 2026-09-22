@@ -195,3 +195,27 @@ Native Cardinality bindings and the separate admission/delivery gate are unfinis
 Prior Field/Nullability evidence fingerprints are now historical until their
 required native/browser refresh follows these library changes. No native meaning
 has been replaced.
+
+
+### Explicit authoring and inspection checkpoint
+
+`inspectCoreCardinality`, `declareCoreCardinality` and
+`verifyCoreCardinalityDeclaration` now have complete versioned operation/result
+schemas. Authoring requires core 0.4.0 and an explicit Field; inspection preserves
+older lookalike content as legacy meaning. Known inspection includes a copied
+item/value reference when present, but reports provenance as unverified.
+
+The request distinguishes omitted itemType (preserve), a supplied reference (set)
+and null (explicit clear). Incompatible scalar/container or item/shape combinations
+fail atomically. The source archive retains replaced references, including unknown
+metadata, and every unrelated extension payload stays in the target. Verification
+recomputes source/request/target/provenance and refuses stale or modified receipts.
+No native classification or native enforcement follows from an author assertion.
+
+The [operation checkpoint](../../../../fixtures/validation/core-cardinality-operations-evidence.json)
+records focused authoring/refusal/recovery tests and the explicitly enumerated core
+regression. Chromium checks inspection, verified JSON/YAML author receipts, explicit
+clear and scalar conflict alongside the earlier schema/transition matrix. This
+supersedes the authoring/inspection-pending status above. Consumer selection,
+versioned Field/Nullability/record-type operations, fresh prior-gate evidence and
+full core-task acceptance remain unfinished, as do all five native bindings.
