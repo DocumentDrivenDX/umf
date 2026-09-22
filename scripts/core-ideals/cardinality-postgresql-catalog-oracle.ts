@@ -1,5 +1,7 @@
 /** Native discovery: array layout, domain and JSON boundaries; no binding claim. */
 import assert from 'node:assert/strict';
+import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
+import {correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
 import {createValidator} from '../../src/validation/schema';
 import supplementSchema from '../../spec/extensions/postgresql-catalog/cardinality-v1.schema.json';
 import {createHash,randomUUID} from 'node:crypto';
@@ -11,7 +13,7 @@ async function run(args:string[],input?:string){
 }
 const exec=(args:string[],input?:string)=>run(['docker','exec',...(input===undefined?[]:['-i']),name,...args],input);
 const sql=(text:string)=>exec(['psql','-X','-q','-U','postgres','-d','postgres','-At','-v','ON_ERROR_STOP=1'],text);
-const paths=['native/postgresql/catalog/image.json','fixtures/postgresql/cardinality.sql','scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts','native/postgresql/catalog/cardinality-v1.sql','spec/extensions/postgresql-catalog/cardinality-v1.schema.json'];
+const paths=['native/postgresql/catalog/image.json','fixtures/postgresql/cardinality.sql','scripts/core-ideals/cardinality-postgresql-catalog-oracle.ts','native/postgresql/catalog/cardinality-v1.sql','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','native/postgresql/catalog/snapshot.sql','src/adapters/postgresql/cardinality-catalog.ts'];
 const manifest=await Bun.file(paths[0]!).json();
 const helper=`CREATE FUNCTION pg_temp.probe(statement text) RETURNS jsonb LANGUAGE plpgsql AS $$ DECLARE value jsonb; BEGIN EXECUTE statement INTO STRICT value; RETURN jsonb_build_object('sqlstate','00000','value',value); EXCEPTION WHEN OTHERS THEN RETURN jsonb_build_object('sqlstate',SQLSTATE,'value',NULL); END $$;`;
 const arrays:[string,string,number|null,string|null,unknown,number][]=[
@@ -66,7 +68,15 @@ try{
  const domain=catalog.find((x:any)=>x.table==='domains'&&x.column==='vector');assert.equal(domain.kind,'d');assert.equal(domain.category,'A');assert.equal(domain.element,null);assert.equal(domain.base,'integer[]');assert.equal(domain.declaredDimensions,0);
  assert.equal(catalog.find((x:any)=>x.table==='declared').standardArray,true);assert.equal(domain.standardArray,false);
  const vector=catalog.find((x:any)=>x.table==='vectorish');assert.equal(vector.category,'A');assert.equal(vector.element,'smallint');assert.equal(vector.standardArray,false);
- const supplement=JSON.parse(await sql(await Bun.file('native/postgresql/catalog/cardinality-v1.sql').text()));
+ const snapshotQuery=await Bun.file('native/postgresql/catalog/snapshot.sql').text();
+ const supplementQuery=await Bun.file('native/postgresql/catalog/cardinality-v1.sql').text();
+ const pair=(await sql('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\n'+snapshotQuery+'\n'+supplementQuery+'\nCOMMIT;')).trim().split('\n').map(line=>JSON.parse(line));
+ assert.equal(pair.length,2);
+ const [snapshot,supplement]=pair;
+ const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query:snapshotQuery,snapshot,reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
+ const captureSource=JSON.stringify(capture);
+ const correlation=correlatePostgresqlCardinalityCatalog(importPostgresqlCatalogCapture(captureSource,{id:'cardinality-capture'}),JSON.stringify(supplement));
+ assert.equal(correlation.matches.length,8);assert.equal(correlation.sameSnapshotVerified,false);
  const check=createValidator(false).compile<any>(supplementSchema);assert.ok(check(supplement),JSON.stringify(check.errors));
  const identity=(x:any)=>JSON.stringify(x);
  const byType=new Map(supplement.types.map((t:any)=>[identity(t.identity),t]));
@@ -86,6 +96,6 @@ try{
  assert.deepEqual(item,{schema:'cardinality',name:'positive'});
  assert.equal((byType.get(identity(item)) as any).kind,'d');
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
- const evidence={scope:'PostgreSQL 17.4 versioned Cardinality catalog supplement and native boundary checks; no binding acceptance',image:manifest.reference,serverVersion:170004,supplement,nativeCases:rows.length,sha256,limits:['Relationships are observations; no core classification or equivalence claim.','Constraints, availability and physical representation remain in the original catalog/archive.','A supplement must be captured with the original catalog in the same database snapshot before binding use.']};
+ const evidence={scope:'PostgreSQL 17.4 versioned Cardinality catalog supplement and native boundary checks; no binding acceptance',image:manifest.reference,serverVersion:170004,supplement,captureSource,captureProvenance:{isolation:'repeatable read',readOnly:true,queriesInOneTransaction:true,reconstructionInSameSnapshot:false},correlation,nativeCases:rows.length,sha256,limits:['Relationships are observations; no core classification or equivalence claim.','Constraints, availability and physical representation remain in the original catalog/archive.','Snapshot and supplement queries executed in one repeatable-read read-only transaction; the schema-only archive was captured separately against this isolated fixture with no concurrent DDL.','Browser correlation checks overlapping observations only; it cannot authenticate transaction provenance.']};
  await Bun.write('fixtures/validation/cardinality-postgresql-catalog-native.json',JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({cases:rows.length,columns:supplement.columns.length,types:supplement.types.length}));
 }finally{if(created)await run(['docker','rm','-f',name]);}

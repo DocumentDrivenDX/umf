@@ -9,7 +9,8 @@ try{
  const page=await browser.newPage(),external:string[]=[];
  await page.route('**/*',route=>{if(!route.request().url().startsWith(`http://127.0.0.1:${server.port}/`)){external.push(route.request().url());return route.abort();}return route.continue();});
  await page.goto(`http://127.0.0.1:${server.port}/`);
- const checks=await page.evaluate(async(supplement:any)=>{
+ const checks=await page.evaluate(async(input:any)=>{
+  const {supplement,captureSource}=input;
   const path='/umf.js',u=await import(path),text=JSON.stringify(supplement);let resolved=0,refused=0;
   function require(value:unknown){if(!value)throw Error('Browser assertion failed');}
   for(const column of supplement.columns){const r=u.resolvePostgresqlCardinalityType(text,column);require(r.nativeSource===text);require(r.qualifiedVersion);resolved++;}
@@ -24,8 +25,12 @@ try{
    (v:any)=>v.types.splice(v.types.findIndex((t:any)=>t.identity.name==='int4'),1),
    (v:any)=>{const t=v.types.find((t:any)=>t.identity.name==='vector');t.base=t.identity;},
   ]){const v=structuredClone(supplement);mutation(v);let caught=false;try{u.inspectPostgresqlCardinalityCatalog(JSON.stringify(v));}catch{caught=true;}require(caught);refused++;}
+  const capture=u.importPostgresqlCatalogCapture(captureSource,{id:'browser-pair'});
+  const pair=u.correlatePostgresqlCardinalityCatalog(capture,text);require(pair.matches.length===8);require(pair.sameSnapshotVerified===false);
+  const changed=structuredClone(supplement);changed.columns[0].declaredDimensions=8;
+  let mismatch=false;try{u.correlatePostgresqlCardinalityCatalog(capture,JSON.stringify(changed));}catch{mismatch=true;}require(mismatch);refused++;
   require(!('Bun'in globalThis));require(!('process'in globalThis));return {resolved,refused,exactUnknownToken:true};
- },fixture.supplement);
+ },{supplement:fixture.supplement,captureSource:fixture.captureSource});
  assert.equal(external.length,0);
  const paths=['src/adapters/postgresql/cardinality-catalog.ts','src/index.ts','spec/extensions/postgresql-catalog/cardinality-v1.schema.json','scripts/core-ideals/cardinality-postgresql-catalog-browser.ts','fixtures/validation/cardinality-postgresql-catalog-native.json','dist/umf.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));

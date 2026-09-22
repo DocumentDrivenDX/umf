@@ -2,7 +2,8 @@ import schema from '../../../spec/extensions/postgresql-catalog/cardinality-v1.s
 import {createValidator} from '../../validation/schema';
 import {catalogIntegerErrors} from '../../validation/catalog-integers';
 import {parseNativeJson,renderTree,type NativeJson} from '../../model/native-json';
-import {UmfError} from '../../model/types';
+import {UmfError,type Document} from '../../model/types';
+import {exportPostgresqlCatalogCapture,getPostgresqlCatalogNode,getPostgresqlColumnMetadata} from './catalog';
 export interface PostgresqlTypeIdentity {schema:string;name:string;}
 interface ObservedType {identity:PostgresqlTypeIdentity;kind:string;category:string;element:PostgresqlTypeIdentity|null;base:PostgresqlTypeIdentity|null;standardArray:boolean;}
 interface ObservedColumn {schema:string;relation:string;name:string;ordinal:number;declaredDimensions:number;type:PostgresqlTypeIdentity;}
@@ -55,4 +56,31 @@ export function resolvePostgresqlCardinalityType(text:string,column:{schema:stri
  const domains:ObservedType[]=[];let native=types.get(key(observed.type))!;
  while(native.base){domains.push(native);native=types.get(key(native.base))!;}
  return {nativeSource:text,root:catalog.root as NativeJson,qualifiedVersion:catalog.qualifiedVersion,column:observed,domains,native,element:native.element?types.get(key(native.element))!:null,standardArray:native.standardArray};
+}
+
+/** Cross-check overlapping observations. Agreement is not proof of a shared
+ * database snapshot; capture provenance must establish that separately. */
+export function correlatePostgresqlCardinalityCatalog(document:Document,text:string){
+ const supplement=inspectPostgresqlCardinalityCatalog(text);
+ const exported=exportPostgresqlCatalogCapture(document);
+ if(exported.state!=='captured')fail('Modified catalog cannot establish capture correspondence');
+ const version=getPostgresqlCatalogNode(document,'/serverVersion');
+ if(version.kind!=='number'||Number(version.value)!==supplement.serverVersion)fail('Catalog server versions disagree');
+ const observations=getPostgresqlColumnMetadata(document).filter(c=>['r','p','v','m','f'].includes(c.relation.kind));
+ if(observations.length!==supplement.columns.length)fail('Catalog column coverage differs');
+ const names=new Set<string>();
+ const matches=observations.map(c=>{
+  const name=JSON.stringify([c.relation.schema,c.relation.name,c.element.name]);
+  if(names.has(name))fail('Ambiguous catalog column');names.add(name);
+  const other=supplement.columns.find(o=>o.schema===c.relation.schema&&o.relation===c.relation.name&&o.name===c.element.name);
+  if(!other||c.nativeColumn.kind!=='object')fail('Catalog column not in supplement');
+  const column=c.nativeColumn.members,t=column.nativeType;
+  if(t?.kind!=='object')fail('Catalog lacks explicit native type observations');
+  const type=supplement.types.find(o=>key(o.identity)===key(other.type))!;
+  const string=(n:NativeJson|undefined)=>n?.kind==='string'?n.value:undefined;
+  const number=(n:NativeJson|undefined)=>n?.kind==='number'?Number(n.value):undefined;
+  if(string(t.members.schema)!==other.type.schema||string(t.members.name)!==other.type.name||string(t.members.kind)!==type.kind||string(t.members.category)!==type.category||number(t.members.dimensions)!==other.declaredDimensions||number(column.position)!==other.ordinal)fail('Catalog column/type observations disagree');
+  return {column:c.element.id,path:c.path,identity:{schema:other.schema,relation:other.relation,name:other.name},type:other.type};
+ });
+ return {matches,qualifiedVersion:supplement.qualifiedVersion,sameSnapshotVerified:false as const,nativeSupplement:text};
 }

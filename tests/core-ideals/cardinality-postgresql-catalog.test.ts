@@ -1,5 +1,6 @@
 import {test,expect} from 'bun:test';
-import {inspectPostgresqlCardinalityCatalog,resolvePostgresqlCardinalityType} from '../../src/adapters/postgresql/cardinality-catalog';
+import {inspectPostgresqlCardinalityCatalog,resolvePostgresqlCardinalityType,correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
+import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
 const evidence=await Bun.file('fixtures/validation/cardinality-postgresql-catalog-native.json').json();
 const source=JSON.stringify(evidence.supplement);
 const resolve=(relation:string,name='value')=>resolvePostgresqlCardinalityType(source,{schema:'cardinality',relation,name});
@@ -39,4 +40,20 @@ test('does not return rounded unknown metadata in interpreted views',()=>{
  expect(r.types.some(t=>'future'in t)).toBe(false);
  expect(r.nativeSource).toBe(text);
  expect(JSON.stringify(r.root)).toContain('90071992547409931234567890');
+});
+
+test('correlates capture observations and refuses mismatches without asserting transaction provenance',()=>{
+ const capture=()=>importPostgresqlCatalogCapture(evidence.captureSource,{id:'pair'});
+ const r=correlatePostgresqlCardinalityCatalog(capture(),source);
+ expect(r.matches).toHaveLength(8);expect(r.sameSnapshotVerified).toBe(false);expect(r.nativeSupplement).toBe(source);
+ for(const mutate of [
+  (v:any)=>v.serverVersion=170005,
+  (v:any)=>v.columns.pop(),
+  (v:any)=>v.columns[0].declaredDimensions=2,
+  (v:any)=>v.columns[0].ordinal=9,
+  (v:any)=>v.columns[0].name='other',
+  (v:any)=>v.types.find((t:any)=>t.identity.name==='_int4').category='future',
+ ]){const v=structuredClone(evidence.supplement);mutate(v);expect(()=>correlatePostgresqlCardinalityCatalog(capture(),JSON.stringify(v))).toThrow();}
+ const v=JSON.parse(evidence.captureSource);v.state='modified';
+ expect(()=>correlatePostgresqlCardinalityCatalog(importPostgresqlCatalogCapture(JSON.stringify(v),{id:'modified'}),source)).toThrow();
 });
