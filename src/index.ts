@@ -274,3 +274,5 @@ export * from './core-ideals/nullability-parquet-projection';
 export {default as coreCardinalitySchema} from '../spec/core/cardinality-document.schema.json';
 export * from './model/cardinality-transition';
 export * from './model/cardinality';
+
+export * from './core-ideals/cardinality-tablespec';

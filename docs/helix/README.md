@@ -39,6 +39,10 @@ fresh native/browser checks for all five existing Field and Nullability bindings
 and both separate conformance gates. See the
 [core acceptance record](../../fixtures/validation/cardinality-core-acceptance-evidence.json).
 All five native Cardinality bindings and Cardinality ideal admission remain unfinished.
+TableSpec now has qualified declared-shape classification and exact native recovery
+with Bun/native/Chromium evidence; down-projection and binding acceptance remain
+pending. Prior Field/Nullability gate records require refresh after this library
+addition. See [TD-042](02-design/technical-designs/TD-042-core-cardinality.md).
 Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

@@ -350,3 +350,40 @@ entrypoint verifies those fingerprints after successful completion. This command
 executes no complete ingestion pipeline, GX expectations or generated SQL. The public
 classification/projection APIs, extension package, operation schemas, retained-recovery
 tests and browser evidence are the remaining TableSpec binding work.
+
+### TableSpec declared-shape classification checkpoint
+
+`classifyTableSpecCardinality` now accepts an explicitly migrated core 0.4.0
+TableSpec capture with an already classified Field. Its `runtime-model`,
+`checked-schema` and `unresolved` profiles preserve the native declaration split.
+The complete operation schema and `umf.tablespec.cardinality` extension package
+record the selected profile, native/ideal paths, source column, basis and residuals.
+This profile classifies declared column shape only, not whole-model validity.
+
+Recognized scalar columns classify as `one`; checked EMBEDDING declarations classify
+as `array` with no container scalar assertion or inferred item definition. Exact
+positive integer dimension tokens remain native, including integers beyond binary64
+precision. String/boolean coercions and noncanonical numeric lexemes remain unknown
+with residuals. Missing embedding dimensions and stray scalar dimensions distinguish
+the selected checked-schema and runtime-model profiles. Unsupported native types and
+unresolved profiles block strict mode; report mode retains an unspecified observation.
+
+Existing Cardinality requires a consistent current author receipt. Conflicts and
+existing binding collisions block in either mode. An authored item/value reference,
+including nested/cyclic references, stays unchanged and receives an explicit residual:
+this operation does not certify its meaning. Unknown native and extension content is
+retained. Verified receipts recover original monolithic text or split files exactly;
+modified source/target/provenance refuses recovery. Verification checks consistency,
+not authenticity.
+
+The [classification checkpoint](../../../../fixtures/validation/cardinality-tablespec-classification-evidence.json)
+records 336 profile/format/policy cases, 452 native source recoveries and independent
+pinned-native comparison. Chromium reproduces those cases, 110 strict blocks and 226
+tamper refusals without host globals or external requests. Bun also checks split files,
+authored conflicts, retained item references, unsafe input and exact number tokens.
+
+This supersedes the classification-pending statement in the discovery checkpoint.
+Down-projection, ideal-to-native-to-ideal recovery, item-aware projection and full
+TableSpec binding acceptance remain unfinished. The public library addition makes
+prior Field/Nullability gate fingerprints historical until their required refresh;
+this checkpoint does not re-admit either ideal or admit Cardinality.

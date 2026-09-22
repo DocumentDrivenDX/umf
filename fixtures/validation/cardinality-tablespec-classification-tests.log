@@ -1,0 +1,13 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/cardinality-tablespec.test.ts:
+(pass) native declaration profiles classify shape with explicit refusals and retain source text through both formats [14479.03ms]
+(pass) authored intent, item references and opaque assertions cannot be overwritten by native observations [126.96ms]
+(pass) tampered and stale receipts, malformed requests and legacy source versions refuse [71.12ms]
+(pass) unsafe numeric coercion stays residual while exact large integer tokens remain native [417.75ms]
+(pass) split archives preserve comments, unknown siblings and opaque files after classification [72.96ms]
+
+ 5 pass
+ 0 fail
+ 2423 expect() calls
+Ran 5 tests across 1 file. [17.03s]

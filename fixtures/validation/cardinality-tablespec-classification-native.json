@@ -1,0 +1,3375 @@
+{
+  "scope": "Selected-profile declared shape and exact native archive recovery; not item or execution equivalence",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "pydantic": "2.11.10",
+  "cases": 336,
+  "declared": 116,
+  "nativeRecoveries": 452,
+  "rows": [
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "VARCHAR",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "DECIMAL",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "INTEGER",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "DATE",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "DATETIME",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "TIMESTAMP",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "BOOLEAN",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "TEXT",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "CHAR",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "FLOAT",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "ARRAY<FLOAT>",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "MAP",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "STRUCT",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING(3)",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "EMBEDDING_FUTURE",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-missing",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-null",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-one",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-three",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-zero",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-negative",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-fraction",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-string",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "embedding-boolean",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "one",
+      "status": "classified"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "scalar-stray-dimension",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "json",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "json",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "json",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "yaml",
+      "profile": "runtime-model",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "yaml",
+      "profile": "checked-schema",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "array",
+      "status": "classified"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "strict",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "blocked"
+    },
+    {
+      "case": "future-column-content",
+      "nativeFormat": "yaml",
+      "profile": "unresolved",
+      "mode": "report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "cardinality": "unspecified",
+      "status": "classified"
+    }
+  ],
+  "sha256": {
+    "fixtures/validation/cardinality-tablespec-classification.json": "552e692b95a3313024c02e1e243ec178716f9e4863d695fa5a284d71d12492a8",
+    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-tablespec-classification-oracle.py": "299dc5cf30e5cb2d96d6e75a54f4e3eac9189e7e6633fc9d00481271900d571d",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64"
+  }
+}

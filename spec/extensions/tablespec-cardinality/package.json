@@ -1,0 +1,72 @@
+{
+  "id": "umf.tablespec.cardinality",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Qualified TableSpec column shape observations with native refinements retained",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:tablespec:cardinality-binding:1.0.0",
+    "title": "Retained TableSpec Cardinality scope",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "profile",
+      "interpretation",
+      "nativePath",
+      "basis"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.tablespec.cardinality",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "runtime-model",
+          "checked-schema",
+          "unresolved"
+        ]
+      },
+      "interpretation": {
+        "enum": [
+          "declared",
+          "unknown",
+          "unsupported"
+        ]
+      },
+      "nativePath": {
+        "type": "string",
+        "minLength": 1
+      },
+      "basis": {
+        "const": "Explicit native data_type and uncoerced dimension under selected metadata profile; item and execution semantics remain native"
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-042; experimental core 0.4.0 shape classification, not native replacement",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import"
+    ],
+    "native": {
+      "system": "TableSpec",
+      "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/cardinality-tablespec.test.ts",
+      "fixtures/validation/cardinality-tablespec-profile-native.json"
+    ]
+  }
+}
