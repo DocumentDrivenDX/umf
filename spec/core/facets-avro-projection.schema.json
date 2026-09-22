@@ -1,0 +1,495 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:facets-avro-projection:1.0.0",
+  "title": "Authored scalar facets to explicit Avro carriers",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "author",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-facets-avro"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.5.0"
+    },
+    "author": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+        },
+        {
+          "$ref": "urn:umf:core:kind-operation:4.0.0#/$defs/declaration"
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "recordName",
+        "namespace",
+        "fieldName",
+        "nativeType",
+        "mode",
+        "encoding",
+        "profile",
+        "obligation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordName": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "namespace": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)?(?![\\s\\S])"
+        },
+        "fieldName": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "nativeType": {
+          "enum": [
+            "boolean",
+            "int",
+            "long",
+            "float",
+            "double",
+            "bytes",
+            "string",
+            "fixed",
+            "decimal-bytes",
+            "decimal-fixed",
+            "date",
+            "time-millis",
+            "time-micros",
+            "timestamp-millis",
+            "timestamp-micros",
+            "local-timestamp-micros"
+          ]
+        },
+        "fixedName": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+        },
+        "fixedSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "encoding": {
+          "enum": [
+            "native-type",
+            "metadata-only",
+            "carrier-only"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "declared-schema",
+            "apache-datum-writer",
+            "fastavro-schemaless-writer"
+          ]
+        },
+        "obligation": {
+          "enum": [
+            "value-domain",
+            "exact-input"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "nativeType": {
+                "enum": [
+                  "fixed",
+                  "decimal-fixed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "fixedName",
+              "fixedSize"
+            ],
+            "properties": {
+              "fixedName": true,
+              "fixedSize": true
+            }
+          },
+          "else": {
+            "properties": {
+              "fixedName": false,
+              "fixedSize": false
+            }
+          }
+        }
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "schema"
+      ],
+      "properties": {
+        "format": {
+          "const": "avro-schema-json"
+        },
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nativeSchema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "binding": {
+      "const": {
+        "id": "umf.core.facets.avro",
+        "version": "1.0.0",
+        "nativeVersion": "1.12.0",
+        "subset": "Single authored scalar Field in a record; explicit carrier, declaration/Apache1.12.0/fastavro1.12.2 profile, encoding and obligation; fixed size and decimal precision bounded to4096; retained losses and ideal recovery; no native equivalence"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "nativePath",
+        "facets",
+        "encoding",
+        "profile",
+        "outcome"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nativePath": {
+          "const": "/fields/0/type"
+        },
+        "facets": {
+          "type": "object",
+          "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+          "properties": {
+            "length": {
+              "type": "object",
+              "required": [
+                "max",
+                "unit"
+              ],
+              "properties": {
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "unit": {
+                  "enum": [
+                    "unicode-scalar",
+                    "byte"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "precision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991,
+              "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+            },
+            "integerWidth": {
+              "type": "object",
+              "required": [
+                "bits",
+                "signed"
+              ],
+              "properties": {
+                "bits": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "signed": {
+                  "type": "boolean"
+                }
+              },
+              "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
+              "additionalProperties": false
+            }
+          },
+          "dependentRequired": {
+            "precision": [
+              "scale"
+            ],
+            "scale": [
+              "precision"
+            ]
+          },
+          "additionalProperties": false
+        },
+        "encoding": {
+          "enum": [
+            "native-type",
+            "metadata-only",
+            "carrier-only"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "declared-schema",
+            "apache-datum-writer",
+            "fastavro-schemaless-writer"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "approximated",
+            "unknown",
+            "not-expressible"
+          ]
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "approximated",
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSchema"
+        ],
+        "properties": {
+          "target": true,
+          "nativeSchema": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeSchema": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          },
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-avro-projection.test.ts:
+(pass) authored domains distinguish exact carriers from unenforced approximations [37.77ms]
+(pass) fixed bounds preserve lower-bound losses and refuse impossible or oversized carriers [8.48ms]
+(pass) all profile, encoding and mode combinations recover authored ideals with explicit losses [379.90ms]
+(pass) receipt integrity, unknown metadata, invalid names and exact-input counterexamples remain explicit [6.30ms]
+
+tests/core-ideals/facets-avro.test.ts:
+(pass) declaration and writer profiles separate native domain from enforcement counterexamples [584.12ms]
+(pass) fixed, union and explicit item selection retain native refinements [306.73ms]
+(pass) original source texts, dependency order, unknown numeric tokens and defaults recover exactly [311.37ms]
+(pass) authored bounds require fresh provenance and cannot be silently overwritten [282.88ms]
+(pass) shape conflicts, archive changes, invalid profiles and unsafe inputs refuse [173.73ms]
+(pass) closed operation and extension schemas constrain real classification output [57.94ms]
+(pass) unannotated precision metadata stays unknown and authored losses point back to the ideal [147.75ms]
+
+ 11 pass
+ 0 fail
+ 263 expect() calls
+Ran 11 tests across 2 files. [4.66s]

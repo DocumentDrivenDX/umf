@@ -841,3 +841,45 @@ archive recovery, not original-text reconstruction or source authentication.
 Authored Avro projection, emitted-target composition and final binding acceptance
 remain required. The [classification checkpoint](../../04-build/evidence/avro-facet-discovery.md#experimental-classification-checkpoint)
 records scoped tests and Chromium evidence, not facet admission or equivalence.
+
+### Authored Avro facet projection decisions
+
+The projection will accept a verified core 0.5.0 facet or Field-kind declaration,
+an explicit record/field/namespace, carrier, profile, encoding and obligation.
+Emit one non-null field in a native Avro record plus the retained author receipt.
+This scope does not execute defaults or compose authored absence/availability;
+those assertions must remain explicit residuals. A supplied cardinality one maps
+to the scalar carrier; arrays/maps/record-valued Fields cannot silently flatten.
+
+Encodings are `native-type`, `metadata-only` and `carrier-only`. Native-type
+selection can state signed 32/64-bit widths or decimal bytes/fixed precision/scale.
+Avro has no builtin bounds CHECK for smaller/unsigned integer widths or variable
+string/bytes maxima. Metadata-only may carry those author facets as custom
+metadata, but must report that the selected codecs do not enforce them. A matching
+fixed byte count still rejects shorter values allowed by a maximum-length ideal;
+only fixed zero exactly matches the empty-byte domain. Never pad or truncate data
+as an implicit consequence of projecting metadata.
+
+Use the classifier's explicit declared-schema/Apache writer/fastavro writer
+profiles. Declared decimal meaning may match while writer conversion or physical
+byte bypass remains unqualified. Exact-input requests retain these failures and
+the permanent float-narrowing counterexample. Strict mode blocks on residuals;
+report mode emits a complete valid carrier plus retained losses. Invalid names,
+stale authors or inability to construct the chosen carrier block atomically.
+
+Fixed carriers have explicit names and byte sizes. Bound emitted fixed sizes and
+decimal precision to 4096 for this first execution profile; record this as a
+projection resource limit, not an Avro limit. Requests outside the limit cannot
+silently substitute a different carrier. Preserve descriptions as Avro field docs,
+and disclose all other unprojected document/module/element meaning. Receipt
+recomputation and exact emitted-schema comparison must precede ideal recovery.
+
+The internal projection implementation and closed operation schema now exercise
+these decisions. Eleven Bun tests across classification and projection pass with
+263 assertions, including 90 profile/encoding/mode combinations, JSON/YAML ideal
+receipt recovery, fixed-capacity refusals, unknown metadata and forged receipts.
+See `fixtures/validation/facets-avro-projection-tests.log`. TypeScript checks pass.
+This checkpoint is not exported from the public entrypoint and does not change
+the extension package's import-only capability. Independent native execution of
+emitted targets, real-browser projection evidence, composition and full binding
+acceptance remain required; no native-equivalence claim is made.
