@@ -1,0 +1,941 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "scope": "Generated authored-projection schemas and independent native row writes; retained ideal recovery is checked by Bun, no row conversion or native equivalence",
+  "checks": [
+    {
+      "id": "scalar-boolean-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: bool not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-boolean-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: bool not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-boolean-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: bool not null> not null\n  child 0, element: bool not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-boolean-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: bool not null> not null\n  child 0, element: bool not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-boolean-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, bool ('value')> not null\n  child 0, value: struct<key: string not null, value: bool not null> not null\n      child 0, key: string not null\n      child 1, value: bool not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-boolean-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: bool\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-boolean-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: bool\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-boolean-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: bool>\n  child 0, element: bool\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-boolean-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: bool>\n  child 0, element: bool\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-boolean-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, bool ('value')>\n  child 0, value: struct<key: string not null, value: bool> not null\n      child 0, key: string not null\n      child 1, value: bool\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int32-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int32-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int32-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int32 not null> not null\n  child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int32-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int32 not null> not null\n  child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-int32-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, int32 ('value')> not null\n  child 0, value: struct<key: string not null, value: int32 not null> not null\n      child 0, key: string not null\n      child 1, value: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int32-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int32-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int32-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int32>\n  child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int32-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int32>\n  child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-int32-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, int32 ('value')>\n  child 0, value: struct<key: string not null, value: int32> not null\n      child 0, key: string not null\n      child 1, value: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int64-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int64 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int64-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int64 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int64-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int64 not null> not null\n  child 0, element: int64 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int64-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int64 not null> not null\n  child 0, element: int64 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-int64-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, int64 ('value')> not null\n  child 0, value: struct<key: string not null, value: int64 not null> not null\n      child 0, key: string not null\n      child 1, value: int64 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int64-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int64\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-int64-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: int64\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int64-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int64>\n  child 0, element: int64\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-int64-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: int64>\n  child 0, element: int64\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-int64-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, int64 ('value')>\n  child 0, value: struct<key: string not null, value: int64> not null\n      child 0, key: string not null\n      child 1, value: int64\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float32-0-strict",
+      "rows": 1,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: float not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float32-0-report",
+      "rows": 1,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: float not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float32-0-strict",
+      "rows": 2,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: list<element: float not null> not null\n  child 0, element: float not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float32-0-report",
+      "rows": 2,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: list<element: float not null> not null\n  child 0, element: float not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-float32-0-report",
+      "rows": 2,
+      "floatNarrowing": true,
+      "physicalColumns": 2,
+      "schema": "value: map<string, float ('value')> not null\n  child 0, value: struct<key: string not null, value: float not null> not null\n      child 0, key: string not null\n      child 1, value: float not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float32-1-strict",
+      "rows": 2,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: float\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float32-1-report",
+      "rows": 2,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: float\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float32-1-strict",
+      "rows": 3,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: list<element: float>\n  child 0, element: float\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float32-1-report",
+      "rows": 3,
+      "floatNarrowing": true,
+      "physicalColumns": 1,
+      "schema": "value: list<element: float>\n  child 0, element: float\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-float32-1-report",
+      "rows": 3,
+      "floatNarrowing": true,
+      "physicalColumns": 2,
+      "schema": "value: map<string, float ('value')>\n  child 0, value: struct<key: string not null, value: float> not null\n      child 0, key: string not null\n      child 1, value: float\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float64-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: double not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float64-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: double not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float64-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: double not null> not null\n  child 0, element: double not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float64-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: double not null> not null\n  child 0, element: double not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-float64-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, double ('value')> not null\n  child 0, value: struct<key: string not null, value: double not null> not null\n      child 0, key: string not null\n      child 1, value: double not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float64-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: double\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-float64-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: double\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float64-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: double>\n  child 0, element: double\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-float64-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: double>\n  child 0, element: double\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-float64-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, double ('value')>\n  child 0, value: struct<key: string not null, value: double> not null\n      child 0, key: string not null\n      child 1, value: double\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-binary-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: binary not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-binary-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: binary not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-binary-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: binary not null> not null\n  child 0, element: binary not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-binary-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: binary not null> not null\n  child 0, element: binary not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-binary-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, binary ('value')> not null\n  child 0, value: struct<key: string not null, value: binary not null> not null\n      child 0, key: string not null\n      child 1, value: binary not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-binary-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: binary\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-binary-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: binary\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-binary-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: binary>\n  child 0, element: binary\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-binary-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: binary>\n  child 0, element: binary\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-binary-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, binary ('value')>\n  child 0, value: struct<key: string not null, value: binary> not null\n      child 0, key: string not null\n      child 1, value: binary\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-string-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: string not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-string-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: string not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-string-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: string not null> not null\n  child 0, element: string not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-string-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: string not null> not null\n  child 0, element: string not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-string-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, string ('value')> not null\n  child 0, value: struct<key: string not null, value: string not null> not null\n      child 0, key: string not null\n      child 1, value: string not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-string-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: string\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-string-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: string\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-string-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: string>\n  child 0, element: string\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-string-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: string>\n  child 0, element: string\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-string-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, string ('value')>\n  child 0, value: struct<key: string not null, value: string> not null\n      child 0, key: string not null\n      child 1, value: string\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-date-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: date32[day] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-date-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: date32[day] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-date-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: date32[day] not null> not null\n  child 0, element: date32[day] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-date-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: date32[day] not null> not null\n  child 0, element: date32[day] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-date-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, date32[day] ('value')> not null\n  child 0, value: struct<key: string not null, value: date32[day] not null> not null\n      child 0, key: string not null\n      child 1, value: date32[day] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-date-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: date32[day]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-date-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: date32[day]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-date-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: date32[day]>\n  child 0, element: date32[day]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-date-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: date32[day]>\n  child 0, element: date32[day]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-date-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, date32[day] ('value')>\n  child 0, value: struct<key: string not null, value: date32[day]> not null\n      child 0, key: string not null\n      child 1, value: date32[day]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-millis-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time32[ms] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-millis-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time32[ms] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-millis-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time32[ms] not null> not null\n  child 0, element: time32[ms] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-millis-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time32[ms] not null> not null\n  child 0, element: time32[ms] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-time-millis-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, time32[ms] ('value')> not null\n  child 0, value: struct<key: string not null, value: time32[ms] not null> not null\n      child 0, key: string not null\n      child 1, value: time32[ms] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-millis-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time32[ms]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-millis-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time32[ms]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-millis-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time32[ms]>\n  child 0, element: time32[ms]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-millis-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time32[ms]>\n  child 0, element: time32[ms]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-time-millis-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, time32[ms] ('value')>\n  child 0, value: struct<key: string not null, value: time32[ms]> not null\n      child 0, key: string not null\n      child 1, value: time32[ms]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-micros-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time64[us] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-micros-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time64[us] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-micros-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time64[us] not null> not null\n  child 0, element: time64[us] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-micros-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time64[us] not null> not null\n  child 0, element: time64[us] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-time-micros-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, time64[us] ('value')> not null\n  child 0, value: struct<key: string not null, value: time64[us] not null> not null\n      child 0, key: string not null\n      child 1, value: time64[us] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-micros-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time64[us]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-time-micros-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: time64[us]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-micros-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time64[us]>\n  child 0, element: time64[us]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-time-micros-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: time64[us]>\n  child 0, element: time64[us]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-time-micros-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, time64[us] ('value')>\n  child 0, value: struct<key: string not null, value: time64[us]> not null\n      child 0, key: string not null\n      child 1, value: time64[us]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-millis-utc-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[ms, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-millis-utc-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[ms, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-millis-utc-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[ms, tz=UTC] not null> not null\n  child 0, element: timestamp[ms, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-millis-utc-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[ms, tz=UTC] not null> not null\n  child 0, element: timestamp[ms, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-timestamp-millis-utc-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, timestamp[ms, tz=UTC] ('value')> not null\n  child 0, value: struct<key: string not null, value: timestamp[ms, tz=UTC] not null> not null\n      child 0, key: string not null\n      child 1, value: timestamp[ms, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-millis-utc-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[ms, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-millis-utc-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[ms, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-millis-utc-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[ms, tz=UTC]>\n  child 0, element: timestamp[ms, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-millis-utc-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[ms, tz=UTC]>\n  child 0, element: timestamp[ms, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-timestamp-millis-utc-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, timestamp[ms, tz=UTC] ('value')>\n  child 0, value: struct<key: string not null, value: timestamp[ms, tz=UTC]> not null\n      child 0, key: string not null\n      child 1, value: timestamp[ms, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-micros-utc-0-strict",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[us, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-micros-utc-0-report",
+      "rows": 1,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[us, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-micros-utc-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[us, tz=UTC] not null> not null\n  child 0, element: timestamp[us, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-micros-utc-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[us, tz=UTC] not null> not null\n  child 0, element: timestamp[us, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-timestamp-micros-utc-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, timestamp[us, tz=UTC] ('value')> not null\n  child 0, value: struct<key: string not null, value: timestamp[us, tz=UTC] not null> not null\n      child 0, key: string not null\n      child 1, value: timestamp[us, tz=UTC] not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-micros-utc-1-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[us, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "scalar-timestamp-micros-utc-1-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: timestamp[us, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-micros-utc-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[us, tz=UTC]>\n  child 0, element: timestamp[us, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-timestamp-micros-utc-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: timestamp[us, tz=UTC]>\n  child 0, element: timestamp[us, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-timestamp-micros-utc-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, timestamp[us, tz=UTC] ('value')>\n  child 0, value: struct<key: string not null, value: timestamp[us, tz=UTC]> not null\n      child 0, key: string not null\n      child 1, value: timestamp[us, tz=UTC]\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "nested-array-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: list<element: int32 not null> not null> not null\n  child 0, element: list<element: int32 not null> not null\n      child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "nested-array-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: list<element: int32 not null> not null> not null\n  child 0, element: list<element: int32 not null> not null\n      child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-map-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: list<element: map<int64, int32 ('element')> not null> not null\n  child 0, element: map<int64, int32 ('element')> not null\n      child 0, element: struct<key: int64 not null, value: int32 not null> not null\n          child 0, key: int64 not null\n          child 1, value: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-array-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, list<element: int32 not null> ('value')> not null\n  child 0, value: struct<key: string not null, value: list<element: int32 not null> not null> not null\n      child 0, key: string not null\n      child 1, value: list<element: int32 not null> not null\n          child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-record-0-strict",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: list<element: struct<\u96ea: int32 not null, __proto__: list<element: int32 not null> not null> not nul (... 2 chars omitted) not null\n  child 0, element: struct<\u96ea: int32 not null, __proto__: list<element: int32 not null> not null> not null\n      child 0, \u96ea: int32 not null\n      child 1, __proto__: list<element: int32 not null> not null\n          child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-record-0-report",
+      "rows": 2,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: list<element: struct<\u96ea: int32 not null, __proto__: list<element: int32 not null> not null> not nul (... 2 chars omitted) not null\n  child 0, element: struct<\u96ea: int32 not null, __proto__: list<element: int32 not null> not null> not null\n      child 0, \u96ea: int32 not null\n      child 1, __proto__: list<element: int32 not null> not null\n          child 0, element: int32 not null\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "nested-array-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: list<element: int32>>\n  child 0, element: list<element: int32>\n      child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "nested-array-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 1,
+      "schema": "value: list<element: list<element: int32>>\n  child 0, element: list<element: int32>\n      child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-map-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: list<element: map<int64, int32 ('element')>>\n  child 0, element: map<int64, int32 ('element')>\n      child 0, element: struct<key: int64 not null, value: int32> not null\n          child 0, key: int64 not null\n          child 1, value: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "map-array-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: map<string, list<element: int32> ('value')>\n  child 0, value: struct<key: string not null, value: list<element: int32>> not null\n      child 0, key: string not null\n      child 1, value: list<element: int32>\n          child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-record-1-strict",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: list<element: struct<\u96ea: int32, __proto__: list<element: int32>>>\n  child 0, element: struct<\u96ea: int32, __proto__: list<element: int32>>\n      child 0, \u96ea: int32\n      child 1, __proto__: list<element: int32>\n          child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    },
+    {
+      "id": "array-record-1-report",
+      "rows": 3,
+      "floatNarrowing": false,
+      "physicalColumns": 2,
+      "schema": "value: list<element: struct<\u96ea: int32, __proto__: list<element: int32>>>\n  child 0, element: struct<\u96ea: int32, __proto__: list<element: int32>>\n      child 0, \u96ea: int32\n      child 1, __proto__: list<element: int32>\n          child 0, element: int32\n  -- field metadata --\n  PARQUET:field_id: '37'"
+    }
+  ],
+  "files": 132,
+  "rows": 282,
+  "floatNarrowings": 10,
+  "sha256": {
+    "fixtures/validation/cardinality-parquet-projection-corpus.json": "7634ef21510710ca22a19e0760db4b53104a633b9849b1eda7792814422301d6",
+    "/home/erik/Projects/umf/scripts/core-ideals/cardinality-parquet-projection-native.py": "f7794b19cc9ff3566d743405fa18cc337f920c1d0f41a79c77cfadc8e651bc80",
+    "src/core-ideals/parquet-cardinality-carrier.ts": "e3a0da6a828c219dbc42922c9c2f8b0f150519493b4fa49632b6f0a42837f270",
+    "scripts/core-ideals/cardinality-parquet-projection-cases.ts": "8f969a65130d51e3f01d0537759c0e05217c9378111302800dfb6d32e3f8bc33",
+    "scripts/core-ideals/cardinality-parquet-projection-oracle.ts": "9cc86c15c207f157148f7cbe0979addc5910311ce161a53ae218cdefc374d4d3",
+    "src/core-ideals/cardinality-parquet-projection.ts": "7de30da5185cd6a31aaff514c1617948571e351aeda066b48d8efa9e5ab33924"
+  }
+}

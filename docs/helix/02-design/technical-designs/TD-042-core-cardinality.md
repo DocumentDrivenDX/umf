@@ -856,3 +856,39 @@ globals or external requests. See the
 [native carrier evidence](../../../../fixtures/validation/cardinality-parquet-carrier-native.json)
 and [browser carrier evidence](../../../../fixtures/validation/cardinality-parquet-carrier-browser.json).
 This foundation is internal and does not close projection or binding acceptance.
+
+
+### Parquet authored Cardinality projection checkpoint
+
+`projectCardinalityToParquet` now takes a verified core 0.4.0 Cardinality
+declaration and an explicit native carrier tree. The complete projection JSON
+Schema includes recursive native carrier definitions. The operation matches
+referenced item/value Fields to physical value indexes, keeping container/member
+availability independent under a selected definition-level carrier. Explicit
+native scalar families are checked without claiming widths or arbitrary value
+exactness. MAP uniqueness and non-string key obligations remain residuals even
+when a sample happens to have unique keys.
+
+Strict mode blocks atomically on any residual. Report mode retains unknown
+document/module/Field/reference metadata, cycles, unspecified meaning and
+unprojected record associations in the original source and reports their loss.
+The selected native schema is emitted as an empty file; no ideal row converter,
+writer-input default, implicit record lowering or native equivalence is claimed.
+`recoverCardinalityFromParquet` recomputes the complete projection and compares
+the supplied native bytes exactly before recovering the retained author target.
+Changed bytes, stale authors and forged receipts refuse.
+
+Three focused tests pass 84 assertions. The native matrix contains 160
+carrier/policy cases: 132 candidates and 28 strict blocks, with 264 retained ideal
+recoveries. PyArrow 21.0.0 independently validates the candidate schemas and 282
+row writes, including ten explicit float narrowings. Typechecking, the
+10,631,748-byte browser build and all 253 schema / 42 package audits pass. See
+[native projection evidence](../../../../fixtures/validation/cardinality-parquet-projection-native.json).
+Composed fresh-native classification/recovery, broader edge cases and the full
+shared-library acceptance refresh remain required before closing this binding.
+
+The [projection browser evidence](../../../../fixtures/validation/cardinality-parquet-projection-browser.json)
+records Chromium parity for all 160 cases, 264 retained ideal recoveries and 132
+forged-receipt refusals, with no external requests or host globals. These checks
+verify schema projection and retained ideal recovery, not fresh-native composition
+or arbitrary row conversion.
