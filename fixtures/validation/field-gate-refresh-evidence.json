@@ -1,0 +1,299 @@
+{
+  "reason": "Replace stale missing-admission warning with experimental-status/provenance/equivalence qualification; no validation rules changed. All five native bindings and their browser evidence rerun.",
+  "regression": {
+    "tests": 142,
+    "assertions": 4685,
+    "files": 41,
+    "failures": 0,
+    "scope": "All tests/core and tests/core-ideals test files except field-conformance.test.ts, which is run separately after refreshing evidence."
+  },
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-field-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"scope\":\"Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; authored provenance and typed lookup; no native classification or binding claim\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":40,\"recoveries\":56,\"transitions\":40,\"kindLookups\":28,\"authorDeclarations\":40,\"hostGlobalsAbsent\":true},\"externalRequests\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"browser\":\"148.0.7778.0\",\"checks\":{\"classifications\":32,\"recoveries\":64,\"conflicts\":2,\"records\":32}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fieldBlocks\":10,\"projections\":40,\"idealRecoveries\":60,\"lossPolicies\":2,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/field-tablespec-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{'comparisons': 64, 'nativeAccepted': 64}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/field-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{'nativeAccepted': 30, 'nativeRecordsAccepted': 4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-corpus.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"schemas\": 4, \"fields\": 13, \"records\": 7}\n",
+      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown future-meaning, using bytes.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":13,\"recoveries\":26,\"conflicts\":2,\"records\":7,\"recordRecoveries\":14}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"schemas\": 15, \"sampleRoundTrips\": 15, \"floatNarrowingConfirmed\": true, \"recordCases\": 9, \"recordsAccepted\": 5}\n",
+      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown local-timestamp-micros, using long.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"recordCases\":9,\"recordRecoveries\":10,\"recordBlocks\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":4,\"identifierRefusals\":4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-corpus.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/avro-record-type-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{'runtime': 'Apache Avro 1.12.0', 'bundles': 5, 'directRecords': 5, 'nonDirectTypes': 12, 'scope': 'Qualified native record-type resolution and ordered members; no value-domain equivalence'}\n",
+      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown future-meaning, using bytes.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":5,\"recoveries\":10,\"blocked\":12}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-corpus.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"files\": 16, \"fields\": 26, \"recordTypes\": 5, \"records\": 21, \"blockedRecords\": 22}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":26,\"recoveries\":52,\"blocked\":27,\"records\":21,\"recordRecoveries\":42,\"blockedRecords\":22,\"recordTypes\":5,\"typeRecoveries\":10,\"blockedTypes\":22}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{'runtime': 'PyArrow 21.0.0', 'schemas': 36, 'records': 5, 'blockedRecords': 4, 'scope': 'Native empty-file reading, physical types and repetition levels; no row-value encoding claim'}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":36,\"recoveries\":72,\"records\":5,\"blockedRecords\":4,\"recordRecoveries\":10}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-fastavro-oracle.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"membershipBundles\": 4, \"directRecords\": 5, \"nonDirectTypes\": 12, \"fieldSamples\": 15, \"recordSamples\": 5}\n",
+      "stderr": "/home/erik/Projects/umf/.venv/lib/python3.12/site-packages/avro/schema.py:1233: IgnoredLogicalType: Unknown local-timestamp-micros, using long.\n  warnings.warn(avro.errors.IgnoredLogicalType(f\"Unknown {logical_type}, using {type_}.\"))\n"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-postgresql-native.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-postgresql-browser.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-postgresql-projection-native.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-postgresql-projection-browser.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/postgresql-ddl-kinds-native.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/postgresql-ddl-kinds-browser.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-sqlserver-native.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-sqlserver-browser.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-sqlserver-projection-native.json"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "evidence": "fixtures/validation/field-sqlserver-projection-browser.json"
+    }
+  ],
+  "typecheck": "passed",
+  "schemas": 208,
+  "packages": 32,
+  "browserBuildBytes": 10123948,
+  "sha256": {
+    "src/validation/document.ts": "0296fff8f0ed2c6c74d1b198b2f67f5990efb844d4e6a5907088502c4f1b8e3f",
+    "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
+    "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
+    "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
+    "fixtures/validation/field-postgresql-projection-native.json": "8a665b0b72ea9b9a320aed4ce10d84fc49289b3809f6822dae79a2b3c6953cdd",
+    "fixtures/validation/field-postgresql-projection-browser.json": "e369a0ed2da32f30ec9ae8f3c523c0ed25e54c3d418d15b51ef2f04f97bd7863",
+    "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
+    "fixtures/validation/field-sqlserver-native.json": "8527d58fb7e180e8a19dd1fbd8b3ec8db684d51030fc3f639c44aea89b7fcbc3",
+    "fixtures/validation/field-sqlserver-browser.json": "902d5e6dc609e9d203ab725072d01712bc504e7b9a495feb22350392fb96822d",
+    "fixtures/validation/field-sqlserver-projection-native.json": "767e9a5bd9b32f534e669c84f9facd9ce8e3803a172292b32abf1b00fb6c8b8b",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "97934076eb522d181412d51f529f870e5481f78c6de2843a828a807c80295756"
+  }
+}

@@ -20,7 +20,8 @@ ddx:
 # CONTRACT-040: UMF core ideals and qualified native bindings
 
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
-revision 1. **Status:** specified direction, not implemented or admission evidence.
+revision 1. **Status:** Field ideal admitted for the qualified bindings recorded
+below; nullability, cardinality, facets and key remain specified, not implemented.
 
 ## Purpose
 
@@ -282,3 +283,42 @@ DDL inspection additionally exposes `declared-only` scope and namespace-resoluti
 state. It requires the explicit pinned backend and cannot imply catalog expansion,
 execution, or resolution of an unspecified search path. Record/type coverage is
 limited to each retained binding's published version and subset.
+
+### Field admission and qualified delivery decision
+
+The Field ideal is admitted in experimental core 0.2.0. Its meaning is the
+`Element.kind` row above: a named member/value slot, a record definition, or an
+organizational group. Names, scalar families and opaque scalar-like annotations
+do not substitute for kind. Kind does not assert nullability, cardinality, facets,
+keys, DDD lifecycle, storage layout, coercion or executable defaults.
+
+This decision separates three claims:
+
+1. **Ideal admission: passed.** Five bindings provide useful native targets,
+   qualified up-classification and retained unknown/native content, exceeding the
+   two-binding admission minimum. Strict mode blocks the unknown author obligation;
+   report mode retains it and emits a complete candidate. Both receipt formats
+   recover the complete ideal or original native archive. Group/name confusion,
+   stale provenance, unknown labels and legacy-member collisions remain refusals
+   or explicit preserved content.
+2. **Five-system Field delivery: passed within published subsets.** TableSpec
+   pinned commit `647e8e566ad78b864282ec65c0b0b2237aa63084`, PostgreSQL 17.4,
+   SQL Server 16.0.4295.3, Apache Avro 1.12.0/fastavro 1.12.2 and Parquet format
+   `219e3f12a62f9476e830c21e26d030d231f7c017` with PyArrow 21.0.0 have native and
+   Chromium evidence. The acceptance records retain each binding's limits; this
+   is not complete native-language conformance or a general row transformer.
+3. **Native equivalence: not claimed.** No native concept or extension payload is
+   removed. No replacement migration is authorized. Filtered/disabled indexes do
+   not assert identity, and equal scalar families do not excuse float narrowing.
+
+`fixtures/validation/field-conformance.json` records current round-trip coverage
+and fingerprints of the four acceptance records. `bun scripts/core-ideals/field-conformance.ts`
+recomputes policy/recovery and checks those records against the current files; it
+fails on changed fingerprints or missing evidence. It does not impersonate a fresh
+native engine run. Native/browser executions are recorded in the referenced
+acceptance evidence and the Field gate refresh evidence.
+
+The envelope remains experimental: admission of one ideal does not stabilize the
+whole envelope or imply author provenance from a bare label. Nullability is the
+next ordered concept, with its own contract interpretation, schema transition,
+five binding tasks and exit gate. This decision does not admit the later concepts.

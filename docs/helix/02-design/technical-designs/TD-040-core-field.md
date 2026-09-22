@@ -1496,3 +1496,37 @@ All three bindings retain native payloads and unknown refinements. These results
 satisfy the scoped binding tasks, not native equivalence. Closing them makes the
 Field admission/five-system conformance gate ready; nullability cannot begin until
 that gate independently records its acceptance evidence.
+
+### Field admission/conformance gate result
+
+`umf-97221618-c4baf8f1` passes its executable acceptance commands. The new
+`field-conformance.ts` verifier checks 2,372 fingerprints across four acceptance
+records and their refresh proof. Required native/browser artifacts cannot be
+omitted. Changed source bytes, missing records and removed proof entries are
+negative tests. The verifier is an integrity/consistency check, not authentication
+of external evidence and not an implicit native engine rerun.
+
+The gate exercises useful clean targets, strict unknown-obligation blocks, report
+residuals and both serialized receipt formats on TableSpec, PostgreSQL, SQL Server,
+Avro and Parquet. It verifies 30 ideal recoveries and ten exact native archive
+recoveries while retaining every native extension payload. It also checks group
+versus record meaning and legacy collision rollback. Three gate tests pass with
+23 Bun assertions plus the verifier's policy/recovery assertions. The separate
+regression passes 142 tests and 4,685 assertions across 41 core/core-ideal files.
+Typecheck and all 208 schemas/32 packages pass.
+
+The old runtime warning incorrectly said admission/provenance evidence was still
+missing. Its wording now states that the envelope remains experimental and that
+kind labels alone prove neither authorship nor equivalence; validation rules are
+unchanged. All five native bindings and their browser checks were rerun after the
+change. `field-gate-refresh-evidence.json` records 31 native/browser/corpus commands,
+the regression, source fingerprints and the new 10,123,948-byte browser build.
+All retained native/browser fixture bytes match the previous runs. The acceptance
+records retain the previous source hash and original historical result counts,
+and link this refresh rather than silently replacing their history.
+
+CONTRACT-040 now records Field ideal admission and qualified five-system delivery
+as separate passed claims. Native equivalence is not claimed and no native payload
+or concept is removed. This completes the Field gate only. The experimental
+envelope is not a full core release; nullability, cardinality, facets and key each
+retain their own ordered implementation and acceptance work.

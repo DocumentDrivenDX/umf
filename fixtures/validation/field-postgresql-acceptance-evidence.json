@@ -661,7 +661,7 @@
     "src/types/jsonld-browser.d.ts": "e6c46870825dc5589df5bafa89b5046e63d7d33620210ac0bdce02b3fa91cc34",
     "src/types/n3-browser.d.ts": "6d3938b1f46a14794d2b68e9f8da60a63506dcdc41e59180137070dbda82c18b",
     "src/validation/catalog-integers.ts": "123154d1bd113d31bb4d0fe6521bbeb04a24c4852c20d4e3e74777822531686c",
-    "src/validation/document.ts": "cc38c024997affba42b2cfe3a8e2590de289439c880e6ec0765e54a3d2877885",
+    "src/validation/document.ts": "0296fff8f0ed2c6c74d1b198b2f67f5990efb844d4e6a5907088502c4f1b8e3f",
     "src/validation/schema.ts": "02279bbb844d5e2b001d3286c88c79b1ab61a3b40265fc08432e5516cda475e7",
     "tests/core-ideals/avro-namespace.test.ts": "ce047e34d90765b9d3f3c883147049e3abd703415d4099229157b1f6f5b1decc",
     "tests/core-ideals/avro-record-type.test.ts": "ad2bfb1d0da3460ae8aa5a4e123fb8e9eb16e8165c24e1331af19ef67c86ad01",
@@ -696,6 +696,15 @@
     "tests/core-ideals/record-tablespec.test.ts": "af6716b762f2fe7c4815f13586f12fc98ec88ca596f5ab0017f3566b427db835",
     "tests/core-ideals/record-type.test.ts": "b76e2aeaeebf60aa15c5574e17b67807cc8e5fae4026819456dc392e2b928a96",
     "tests/core-ideals/sql-namespace.test.ts": "248972c518af96f47cc5ced68b6c560eb0c304d7891fd6db136b0b5cd54f5a70",
-    "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9"
+    "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9",
+    "fixtures/validation/field-gate-refresh-evidence.json": "8d6b040d8cbc587e2b28b8317462f4e705d7db69adafb8585770445c7e24b5a8"
+  },
+  "revalidation": {
+    "reason": "Replace stale missing-admission warning with experimental-status/provenance/equivalence qualification; no validation rules changed. All five native bindings and their browser evidence rerun.",
+    "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+    "previousFingerprints": {
+      "src/validation/document.ts": "cc38c024997affba42b2cfe3a8e2590de289439c880e6ec0765e54a3d2877885"
+    },
+    "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results."
   }
 }

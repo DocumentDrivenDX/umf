@@ -2633,3 +2633,21 @@ syntax validation and recovery in Chromium. The independent native-schema oracle
 records both Python parser outcomes for every case and compares 176 recovered
 outcomes/warnings. Reference/default/annotation semantics remain separate from
 structural acceptance; parser disagreement is evidence, not a failed preservation test.
+
+### Field ideal conformance gate
+
+Run `bun test tests/core-ideals/field-conformance.test.ts` and
+`bun scripts/core-ideals/field-conformance.ts` after the five binding acceptance
+checks. The gate requires useful targets on all five priority bindings, strict
+refusal/report residual pairs, both JSON/YAML recovery directions, unchanged
+native extension content, group/record distinction and legacy collision rollback.
+The acceptance records' hashes must match the current files. Deliberately changed
+source bytes or missing evidence must fail verification.
+
+`fixtures/validation/field-conformance.json` separates useful ideal mappings from
+qualified five-system delivery and explicitly denies native equivalence. A stale
+fingerprint requires investigating the changed files and rerunning the affected
+native/browser and regression checks; refreshing hashes alone is not verification.
+The Field gate refresh evidence records the native/browser reruns after correcting
+the experimental-envelope diagnostic. Nullability starts only after the Field gate
+closes; each later ideal repeats its own admission and delivery audit.

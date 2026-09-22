@@ -79,3 +79,23 @@ This is the first new concept; contract publication precedes schema changes.
 
 Automatic native replacement, DDD lifecycle, OWL, physical encodings and default
 execution. No completion claim is made by authoring this story.
+
+## Field acceptance evidence
+
+US-040 passes within the binding subsets recorded in CONTRACT-040's Field
+admission decision. General native-language conformance and native replacement
+remain outside this story's claim.
+
+| Criteria | Evidence |
+| --- | --- |
+| AC1, AC7 | Typed kind access; explicit group refusal in `tests/core-ideals/field-conformance.test.ts`; source names/opaque annotations do not assert a record |
+| AC2, AC6 | Five native classification receipts, exact archive recovery and unchanged extension payload checks in the conformance suite; independent native/browser acceptance records |
+| AC3, AC4 | Five paired strict/report cases retain path-qualified unknown author obligations; blocked candidates remain absent |
+| AC5 | Thirty JSON/YAML ideal recoveries across five bindings, including report-mode residuals |
+| AC8 | All five scoped binding acceptance records pass native and Chromium checks; the gate checks their source fingerprints |
+| AC9 | CONTRACT-040 records ideal admission, qualified five-system delivery and no native equivalence as separate decisions |
+| AC10 | Explicit envelope upgrade/rollback and legacy opaque kind collision recovery; core transition tests and Chromium evidence |
+
+The gate is executable through `bun test tests/core-ideals/field-conformance.test.ts`
+and `bun scripts/core-ideals/field-conformance.ts`. Its evidence is a qualified
+Field result, not a completion claim for the other core ideals.
