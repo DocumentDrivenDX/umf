@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "bead": "umf-97221618-bdcf50d1",
+  "scope": "Separate experimental core 0.4.0 Cardinality ideal admission and qualified five-priority-system delivery",
+  "idealAdmitted": true,
+  "priorityDeliveryAccepted": true,
+  "nativeEquivalence": false,
+  "results": {
+    "tests": 7,
+    "assertions": 99,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 253,
+    "packages": 42,
+    "authoredCases": 508,
+    "nativeCases": 696,
+    "idealRecoveries": 684,
+    "nativeRecoveries": 932,
+    "compositions": 264,
+    "evidenceFingerprints": 3998
+  },
+  "commands": [
+    {
+      "command": "bun run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run test:schemas",
+      "exitCode": 0
+    },
+    {
+      "command": "bun scripts/core-ideals/field-conformance.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun scripts/core-ideals/nullability-conformance.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun scripts/core-ideals/cardinality-conformance.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun test ./tests/core-ideals/field-conformance.test.ts ./tests/core-ideals/nullability-conformance.test.ts ./tests/core-ideals/cardinality-conformance.test.ts",
+      "exitCode": 0
+    }
+  ],
+  "limits": [
+    "Evidence checks are current fingerprint consistency, not authentication or fresh native execution. The preceding Parquet acceptance 76-step refresh supplies unchanged native/browser evidence.",
+    "SQL compositions replay independent engine captures; TableSpec, Avro and Parquet compositions freshly import emitted schema text/bytes. No arbitrary row converter is claimed.",
+    "Strict/report outcomes remain binding-specific; TableSpec vector restrictions, SQL array bounds, JSON/MAP key uniqueness, availability and unknown native refinements stay explicit.",
+    "Author metadata and native payloads are retained separately; native-only classification does not reconstruct unencoded author intent.",
+    "Core 0.4.0 is experimental. Facets require their next representation/version decision; key and native equivalence remain separate work."
+  ],
+  "sha256": {
+    "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "ee84e44f55115e3e2f06da215feb02adc644ae8681916268335c0c0b03a96ba8",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "9763bdf43a8a6dc23adfcaec5bcaed2564f1847dbc572e9ca74f5c1a09715664",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "dd96d8958c0162b23bb38c2992c28146e3913f1b463e4f66063bfbb1d8cf1144",
+    "docs/helix/03-test/test-plan.md": "9e2d95acd53840433f3ae10b8e6cda0843ae96dd0765017d3e302b50a6604cc5",
+    "docs/helix/04-build/implementation-plan.md": "c7272ae1d8649058da4bddb103ecf531adf983688a5ced477ce2770d5c2dd7c2",
+    "docs/helix/README.md": "3d2f1dfd21b3e4ba679942849a64537f4d07df06dc93ca4d1e1d123c3fd98d28",
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": "b8db0aa3df1bd8ceb808bfdfcac7b9d8055cb3b445949c03e66662a01747ac13",
+    "fixtures/validation/cardinality-conformance.json": "bc747962803d518299e90223ac05b1ee7b0d2e41435d0e6c55006de5cae20d84",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "340e1f24e012b1f82de629975f1ba0f0166ddd652db31b192ffbf06e16595478",
+    "fixtures/validation/cardinality-gate-cardinality-revalidation.log": "85030892374c3cce3c9a38dcc1182afbeea5c3aac533f75ad7f179c982aacff7",
+    "fixtures/validation/cardinality-gate-field-revalidation.log": "80e1929c7499d72d17e005b1e921ef455e8fe831ca50f4510b49e17db7186809",
+    "fixtures/validation/cardinality-gate-nullability-revalidation.log": "28448924bacc3861a353a5b14681acb2af702814ff7c86ab5bd106878c201c7c",
+    "fixtures/validation/cardinality-gate-schemas.log": "49ac7c88f3161be3e7908d1f19f78c3fd79655a5d73a7d261fe0a544a8e5dad2",
+    "fixtures/validation/cardinality-gate-tests.log": "56d87ac67511eaa181b08e63e3b6cac37baa7cb984d3fdd7ab9a26c8c7aea2ab",
+    "fixtures/validation/cardinality-gate-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/field-conformance.json": "e7e1f548dc6a54528c4049485ce6fe0938f6c207c90442de578e02670fa1da6e",
+    "fixtures/validation/field-gate-refresh-evidence.json": "c71b765f45f8ba2e80d2bc2ab670ac1f175af98e04c8780ea3377864b1b8c08a",
+    "fixtures/validation/nullability-conformance.json": "300372529b222fbd0bf004d35cb09c13603d5785d6a4c328bee125b8f1eddf0a",
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json": "a50b3b6de368ffc5a1e60f0f74a769ffaaf35211d98b57f75001f4f65b438ef0",
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": "741cbe17982602747ff19bdc4b55edf232472e536cba01085145ea86cc6a05b4",
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": "163d89dd0b4cb401a8a9753498a3b71d5fbd6eb7cdebc40bf365941e0eb243e5",
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "11bf6a3f44382cf4db942324daff0577669ea0af67f6bee817dc708b23d2e483",
+    "scripts/core-ideals/cardinality-conformance.ts": "7596e4d4dd405d2d11e3d0cd402df29ef7585e7b2a13f970a1c1c4ac2373c891",
+    "tests/core-ideals/cardinality-conformance.test.ts": "0b9a9c9cd4c906f99112d3d178003c5694bb51d67bc361a45470ccf09c02c06e"
+  }
+}

@@ -3933,3 +3933,31 @@ or residualized. No native equivalence is claimed.
 
 All five qualified bindings are now implemented. The separate Cardinality
 admission/delivery conformance gate remains unfinished before facets proceed.
+
+
+### Cardinality gate checkpoint
+
+The [conformance record](../../../fixtures/validation/cardinality-conformance.json) supersedes earlier Cardinality admission/gate-pending
+notes. Ideal admission passes the two-binding minimum; qualified delivery passes
+all five priority bindings. Neither result claims native equivalence. Facets may
+now proceed under TD-043 after its representation/version decision is amended
+for the current 0.4.0 baseline; key follows the facets five-system gate.
+
+`bun scripts/core-ideals/cardinality-conformance.ts` verifies current core/binding
+acceptance and native/Chromium proof fingerprints, including every combined
+five-system oracle/browser entrypoint. `bun test ./tests/core-ideals/cardinality-conformance.test.ts`
+checks the gate's positive matrix and rejection of missing, stale, unsafe or failed
+evidence. These checks replay current captured evidence; they do not rerun native
+engines or authenticate receipts. The preceding 76-step Parquet acceptance refresh
+supplies the unchanged native/browser baseline.
+
+The gate exercises 508 authored cases and 696 native cases: 166 strict projection
+blocks, 684 ideal recoveries and 932 native recoveries across JSON/YAML. All four
+labels are covered in every binding. Unknown document/Field/reference metadata,
+nested items, independent availability and native refinements remain recoverable.
+Compositions use fresh schema imports for TableSpec, Avro and Parquet and retained
+independent engine captures for SQL. Native-only classification cannot recover
+unencoded author intent. SQL array bounds, TableSpec vector constraints, JSON and
+Parquet MAP uniqueness/key-carrier losses remain explicit; a report candidate does
+not establish enforcement. Existing float-narrowing and filtered/disabled-index
+counterexamples remain binding constraints. Core 0.4.0 stays experimental.

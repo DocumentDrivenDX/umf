@@ -1,0 +1,19 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-conformance.test.ts:
+(pass) all five binding contracts enforce policy and recover ideal/native representations [3983.78ms]
+(pass) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [358.85ms]
+(pass) group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable [5.69ms]
+
+tests/core-ideals/nullability-conformance.test.ts:
+(pass) five Nullability bindings preserve ideals, native payloads and explicit loss policy [13508.24ms]
+(pass) Nullability gate requires current core and five native/browser evidence records [304.65ms]
+
+tests/core-ideals/cardinality-conformance.test.ts:
+(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [272611.99ms]
+(pass) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [304.80ms]
+
+ 7 pass
+ 0 fail
+ 99 expect() calls
+Ran 7 tests across 3 files. [293.22s]

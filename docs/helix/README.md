@@ -59,9 +59,12 @@ Parquet Cardinality also passes qualified binding acceptance: checked logical
 Fields and explicit nested carrier projection preserve native bytes, report MAP
 key/uniqueness and other losses, and recover retained author meaning. See the
 [Parquet acceptance record](../../fixtures/validation/parquet-cardinality-acceptance-evidence.json).
-All five bindings have qualified acceptance; Cardinality ideal admission and
-all-five delivery still require their separate conformance gate.
-Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
+Cardinality ideal admission and qualified all-five delivery now pass their separate
+conformance gate: 684 ideal recoveries and 932 native recoveries, with current
+five-system native/Chromium evidence. See the
+[Cardinality conformance record](../../fixtures/validation/cardinality-conformance.json).
+No native equivalence is claimed.
+Core 0.4.0 is experimental; facets are next, followed by key. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038

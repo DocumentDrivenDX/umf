@@ -667,12 +667,12 @@
     "Regression scope is the priority core and five-system slice, not the full repository. Both evidence-dependent conformance files run separately after publication."
   ],
   "sha256": {
-    "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
-    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "933e3ac5b26d7217b85681089e6b867714204df242075bc590882dc9f603657b",
-    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "cec6f25eae5a043f86be63c1d0eb676901df9fc5c98c9da5672f74cbcc11d3a0",
-    "docs/helix/03-test/test-plan.md": "8a23762d255693e2e8f2df47c94dc4dfba808c7821f3432d1bfdb0021dec8a8d",
-    "docs/helix/04-build/implementation-plan.md": "08473aa3d86f0c20c878f917d8d8ee75f31fcaba6b86e1878825829fb977d967",
-    "docs/helix/README.md": "505c4c3cefdbec30c359d781077e01a2387b096a714aebf7d4ab05925aa8f8ca",
+    "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "ee84e44f55115e3e2f06da215feb02adc644ae8681916268335c0c0b03a96ba8",
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "9763bdf43a8a6dc23adfcaec5bcaed2564f1847dbc572e9ca74f5c1a09715664",
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "dd96d8958c0162b23bb38c2992c28146e3913f1b463e4f66063bfbb1d8cf1144",
+    "docs/helix/03-test/test-plan.md": "9e2d95acd53840433f3ae10b8e6cda0843ae96dd0765017d3e302b50a6604cc5",
+    "docs/helix/04-build/implementation-plan.md": "c7272ae1d8649058da4bddb103ecf531adf983688a5ced477ce2770d5c2dd7c2",
+    "docs/helix/README.md": "3d2f1dfd21b3e4ba679942849a64537f4d07df06dc93ca4d1e1d123c3fd98d28",
     "fixtures/avro/nullability-cases.json": "d65a4b76f7d0cfb9bf993ea9b1e597d954c78a4e00fc185c75a0e3ea1ce239ca",
     "fixtures/parquet/nullability/list-0-0-empty-0.parquet": "41c70e0c4c54cfe06d92aae02b9b68b5ce77f4caf215026d47f9b27434fd163e",
     "fixtures/parquet/nullability/list-0-0-empty-1.parquet": "68933f93347ada22ecee6363c82d897c969816120dbf4a14ea7b74260c098f0a",
@@ -830,7 +830,7 @@
     "fixtures/validation/nullability-core-acceptance-evidence.json": "d142bd2a1f39124985cf08b13bf3d96abc15bb1ecbaff745451a33231a24dcca",
     "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
     "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
-    "fixtures/validation/nullability-gate-acceptance-evidence.json": "419969f04afe59599428810eeca4e390000c41e45612de25424cb94163f8d75e",
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": "36bfc6b3b662ebe4f160877d77dedf9062565736973f0e14fba77244638d929d",
     "fixtures/validation/nullability-parquet-browser.json": "4b15c45c8d2236b4ec5f928135189e1cc5cfade88a29607f6efa2cd9a489ae9a",
     "fixtures/validation/nullability-parquet-native.json": "e59c49b0777358e53ede72436479d3ed2be779b33f9c1fce6940ba37945e467c",
     "fixtures/validation/nullability-parquet-projection-browser.json": "e79f97a89844a7598caf145ec2f1ca204e79dcad0544b472fd47b04113be2726",
@@ -1303,6 +1303,29 @@
         "src/index.ts": "ed17cd45d843a70b89f66b5b7c5582192b8173c67b2a870b09563c25001a3747"
       },
       "note": "Original counts and limits remain historical; Avro acceptance is separate, with no native equivalence or Cardinality admission claim."
+    }
+  ],
+  "documentationRevalidations": [
+    {
+      "reason": "Publish separate Cardinality ideal-admission and qualified five-system delivery gate; executable libraries, schemas and native/browser proofs unchanged. Predecessor gates rerun when their evidence references changed.",
+      "previousRecordSha256": "3791c66fd8e425c8bdcc161ace2f00746817c3b1ca0b6abd7fc0bcc0aa3bbf74",
+      "previousFingerprints": {
+        "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "933e3ac5b26d7217b85681089e6b867714204df242075bc590882dc9f603657b",
+        "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "cec6f25eae5a043f86be63c1d0eb676901df9fc5c98c9da5672f74cbcc11d3a0",
+        "docs/helix/03-test/test-plan.md": "8a23762d255693e2e8f2df47c94dc4dfba808c7821f3432d1bfdb0021dec8a8d",
+        "docs/helix/04-build/implementation-plan.md": "08473aa3d86f0c20c878f917d8d8ee75f31fcaba6b86e1878825829fb977d967",
+        "docs/helix/README.md": "505c4c3cefdbec30c359d781077e01a2387b096a714aebf7d4ab05925aa8f8ca",
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": "419969f04afe59599428810eeca4e390000c41e45612de25424cb94163f8d75e"
+      },
+      "documentationBefore": {
+        "docs/helix/README.md": "505c4c3cefdbec30c359d781077e01a2387b096a714aebf7d4ab05925aa8f8ca",
+        "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "933e3ac5b26d7217b85681089e6b867714204df242075bc590882dc9f603657b",
+        "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "cec6f25eae5a043f86be63c1d0eb676901df9fc5c98c9da5672f74cbcc11d3a0",
+        "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
+        "docs/helix/03-test/test-plan.md": "8a23762d255693e2e8f2df47c94dc4dfba808c7821f3432d1bfdb0021dec8a8d",
+        "docs/helix/04-build/implementation-plan.md": "08473aa3d86f0c20c878f917d8d8ee75f31fcaba6b86e1878825829fb977d967"
+      }
     }
   ]
 }

@@ -22,8 +22,9 @@ ddx:
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
 revision 1. **Status:** Field and Nullability ideals have passed their qualified
 five-system admission/delivery gates. Experimental Cardinality core 0.4.0 has passed
-core-task acceptance. All five priority Cardinality bindings have qualified acceptance;
-the separate ideal admission/delivery gate remains unfinished.
+core-task acceptance. All five priority Cardinality bindings have qualified acceptance; the separate
+ideal admission and five-system delivery gate passes. See the Cardinality gate
+checkpoint below. Native equivalence remains unclaimed.
 Facets, key and native-equivalence graduation remain pending.
 
 ## Purpose
@@ -585,3 +586,31 @@ A cardinalities filter tests explicit labels only and never infers one from a
 scalar family, empty container from absence, or shape from native metadata. Older
 envelopes neither follow opaque itemType members nor permit this ideal filter.
 Unknown reference metadata and full native source context remain recoverable.
+
+
+### Cardinality gate checkpoint
+
+The [conformance record](../../../../fixtures/validation/cardinality-conformance.json) supersedes earlier Cardinality admission/gate-pending
+notes. Ideal admission passes the two-binding minimum; qualified delivery passes
+all five priority bindings. Neither result claims native equivalence. Facets may
+now proceed under TD-043 after its representation/version decision is amended
+for the current 0.4.0 baseline; key follows the facets five-system gate.
+
+`bun scripts/core-ideals/cardinality-conformance.ts` verifies current core/binding
+acceptance and native/Chromium proof fingerprints, including every combined
+five-system oracle/browser entrypoint. `bun test ./tests/core-ideals/cardinality-conformance.test.ts`
+checks the gate's positive matrix and rejection of missing, stale, unsafe or failed
+evidence. These checks replay current captured evidence; they do not rerun native
+engines or authenticate receipts. The preceding 76-step Parquet acceptance refresh
+supplies the unchanged native/browser baseline.
+
+The gate exercises 508 authored cases and 696 native cases: 166 strict projection
+blocks, 684 ideal recoveries and 932 native recoveries across JSON/YAML. All four
+labels are covered in every binding. Unknown document/Field/reference metadata,
+nested items, independent availability and native refinements remain recoverable.
+Compositions use fresh schema imports for TableSpec, Avro and Parquet and retained
+independent engine captures for SQL. Native-only classification cannot recover
+unencoded author intent. SQL array bounds, TableSpec vector constraints, JSON and
+Parquet MAP uniqueness/key-carrier losses remain explicit; a report candidate does
+not establish enforcement. Existing float-narrowing and filtered/disabled-index
+counterexamples remain binding constraints. Core 0.4.0 stays experimental.
