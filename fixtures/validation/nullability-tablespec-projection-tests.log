@@ -1,0 +1,23 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/nullability-tablespec-projection.test.ts:
+(pass) authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery [11236.29ms]
+(pass) names, unknown obligations, scalar mismatches and unsafe or forged inputs cannot silently succeed [73.69ms]
+(pass) context keys are exact data and other elements/modules remain explicit residuals [111.78ms]
+
+tests/core-ideals/nullability-tablespec.test.ts:
+(pass) selected profile/context classification separates exact declarations, coercions and unknowns [26062.04ms]
+(pass) unresolved carrier blocks strict mode and retains explicit residuals in report mode [62.49ms]
+(pass) author provenance, role conflicts, stale models and forged binding metadata refuse [202.55ms]
+(pass) unknown native precision, escaped context keys and split sidecars remain exact [123.17ms]
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [1.61ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [6.07ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.56ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.81ms]
+
+ 11 pass
+ 0 fail
+ 6060 expect() calls
+Ran 11 tests across 3 files. [39.39s]

@@ -95,7 +95,7 @@
   "sha256": {
     "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
     "fixtures/postgresql/scalar-types.sql": "095130d4c2ef15b1e8c3e7851cd271a205964a8d13c252b02352b063939cbf6f",
-    "fixtures/validation/field-gate-refresh-evidence.json": "8fa88af311c918ec65af3557f7e26ab88c5f2958e6e0b3ba051e8608d5bd7f9e",
+    "fixtures/validation/field-gate-refresh-evidence.json": "360cee6bca8ae9adb0a42e6f401f9697a5c37787b0eec6f1631e4ee38521e43f",
     "fixtures/validation/field-postgresql-acceptance.log": "79b61c6f6915c682dd84f2dd657e76c15e190ca8d800b3977dc059e29228c3de",
     "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
     "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
@@ -223,6 +223,7 @@
     "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
     "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
     "spec/core/nullability-selection.schema.json": "0d00b993d9f205326bf8879d9d659aac7d9bb4c34d886c5c966a86a1f7e3d47f",
+    "spec/core/nullability-tablespec-projection.schema.json": "990b20a054b0ef643ad1b4c0deeb0760bf64c4ca9a093747a31c346c227135a2",
     "spec/core/nullability-transition.schema.json": "7c2cd58a09f38503e14d69977c68fc9748b595aed7ec1761867b337ed3aaa68b",
     "spec/core/parquet-field-classification.schema.json": "edf20b952abd2a1b1a69a079244792a2612dacd7fc718f5ada436cea041339be",
     "spec/core/parquet-record-classification.schema.json": "8f9b7bfec8f136e1ba91c9236c3e3a1deeb080fe123d4aa75ea5be70cda63882",
@@ -244,6 +245,7 @@
     "spec/core/sqlserver-record-classification.schema.json": "470252f52e8d2a31b1b5c957e2ce893567de40caed414ab9e240b8d6da46c064",
     "spec/core/structured-classification-inspection.schema.json": "b16d8d4562eeda2832f29b9f2c4e8a9fbd6c7a278864ad72a79f8feb07056dda",
     "spec/core/tablespec-field-classification.schema.json": "93fa06c201f728f7f333fd23f2731e466a68c344c4171ab770799fd77a13f22f",
+    "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
     "spec/core/tablespec-record-classification.schema.json": "57031cb3d4c6dc6bb50e757a476ceecd4bb22059dcf9c404ad5f5925ceeebb4c",
     "spec/examples/orders-consumers.schema.json": "8f2d1ffdb4b0b489ce099cc8661c3226072c123b60902bcd5ac5a5f0d4b16c62",
     "spec/extensions/arrow-flatbuffer/package.json": "d8c0a340db654d4d9974bf32d376596de9f08aba7aab79ecb671e5a0e042cd18",
@@ -435,6 +437,8 @@
     "spec/extensions/sqlserver/index-metadata.schema.json": "1b5eab1662017e640d3cccb156f17d6070bbfdda0ac4658ad84f8267aa835f50",
     "spec/extensions/sqlserver/package.json": "c35f2141af1824182fbc974cb9640fd29f8cc114e42856b3f2e4660cb01eff8e",
     "spec/extensions/sqlserver/schema.json": "e80213a90a876497f99b66d72b526fcc10efba759c53eab283ec3acc14a4c807",
+    "spec/extensions/tablespec-nullability/package.json": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
+    "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
     "spec/extensions/tablespec/native-model.schema.json": "e40eb20a6d1294d407de261762e52ad62b04a58320aee39acb8470b3ceb754b1",
     "spec/extensions/tablespec/package.json": "ebf054f19480a79b41c0b50e780af77865335f9722c45c8717284e2a94f97a5c",
     "spec/extensions/tablespec/schema.json": "3997b09d175f0a68adb1510379ef68afec0dac79d2b6ff862c59022fe2a06f7f",
@@ -614,6 +618,8 @@
     "src/core-ideals/field-report.ts": "4b353b00df4be2cafe2ad01ccbcf63df300d519fdd279c69ef9764cfefc83e16",
     "src/core-ideals/field-sqlserver-projection.ts": "82c75dfe970b7764d4168508eefa200f6383162be01522d7c63954810b25da37",
     "src/core-ideals/field-tablespec-projection.ts": "28a23e972b2946f5eadc6629798bcae028023a6119b292d9be39a5d103b105ae",
+    "src/core-ideals/nullability-tablespec-projection.ts": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97",
+    "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
     "src/core-ideals/parquet-field.ts": "67e3500e9956e761e86d03eff089e984610d01c016d9a2c172c215695843c3a3",
     "src/core-ideals/parquet-record-type.ts": "5bb556b3ca6e63ff04f7cfbf83a0396885476dcbbeb7d241f8f3f827d6dd0230",
@@ -636,7 +642,7 @@
     "src/core-ideals/tablespec-field.ts": "68f3ff5904713ee3a9b9d2af2c84763209399317970a98947b156e1424115fd0",
     "src/core-ideals/tablespec-record.ts": "6f5ab5e5550f288ae5f68db9a73759ec882a856d890b950e310e601f3662fdf3",
     "src/extensions/ddd/index.ts": "f0b39227867483d247aeb4552355ccf47396e39061305ee13c53ff81b062d209",
-    "src/index.ts": "bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2",
+    "src/index.ts": "0daa4b5674d29dbed96ec031af94fceb743de9d772481bc1ffc1ba2e09096863",
     "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
     "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
     "src/model/field-transition.ts": "41d11a22ccb68365e5cbe6f28b938cb328fb52690538e90d77ab9e3e0194e21d",
@@ -708,17 +714,11 @@
     "tests/core-ideals/structured-report.test.ts": "dee8746a1be6410af9a8df6a7709b5941356fc1fe27e783f7420969cc390c2e9"
   },
   "revalidation": {
-    "reason": "Revalidate core 0.2.0 Field behavior after opt-in 0.3.0 Nullability validation, migration, selection and versioned authoring integration. Native Field bindings remain 0.2.0; no native Nullability claim.",
+    "reason": "Revalidate prior Field behavior after TableSpec Nullability classification, retained binding scope and authored down-projection. TableSpec Nullability metadata and separately qualified native row execution have evidence; other native Nullability bindings remain pending.",
     "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
     "previousFingerprints": {
-      "src/index.ts": "6746884185c83202e5c1c0f19efdd400a50aaa257725425ba8b6179ae8d33b40",
-      "src/model/field-kind.ts": "75d94abaa0b92815800561e11c899f03d431247902e4fc36ce10fea2339264d7",
-      "src/model/record-type.ts": "dda7dcc2f0ebb1202d7abf69a5a3f7d734b2a08e2a11a6d3ed3dbc52f241e0d5",
-      "src/model/selection-verification.ts": "fc4e3096354783de9dfc17ed66f94bac9f1eaa308fdf439de5d5af10e4d1f894",
-      "src/model/types.ts": "b9f6edc17d9203b084a1067b38b02ef102cb50807e2e7ec2b22b5cb96e1b2e11",
-      "src/validation/document.ts": "0296fff8f0ed2c6c74d1b198b2f67f5990efb844d4e6a5907088502c4f1b8e3f",
-      "src/validation/schema.ts": "02279bbb844d5e2b001d3286c88c79b1ab61a3b40265fc08432e5516cda475e7",
-      "fixtures/validation/field-gate-refresh-evidence.json": "8d6b040d8cbc587e2b28b8317462f4e705d7db69adafb8585770445c7e24b5a8"
+      "fixtures/validation/field-gate-refresh-evidence.json": "8fa88af311c918ec65af3557f7e26ab88c5f2958e6e0b3ba051e8608d5bd7f9e",
+      "src/index.ts": "bc6a6a1c6940e07166f932de845640636378e58541651dddb0084fd0856495a2"
     },
     "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
   },
@@ -730,6 +730,21 @@
         "src/validation/document.ts": "cc38c024997affba42b2cfe3a8e2590de289439c880e6ec0765e54a3d2877885"
       },
       "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results."
+    },
+    {
+      "reason": "Revalidate core 0.2.0 Field behavior after opt-in 0.3.0 Nullability validation, migration, selection and versioned authoring integration. Native Field bindings remain 0.2.0; no native Nullability claim.",
+      "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
+      "previousFingerprints": {
+        "src/index.ts": "6746884185c83202e5c1c0f19efdd400a50aaa257725425ba8b6179ae8d33b40",
+        "src/model/field-kind.ts": "75d94abaa0b92815800561e11c899f03d431247902e4fc36ce10fea2339264d7",
+        "src/model/record-type.ts": "dda7dcc2f0ebb1202d7abf69a5a3f7d734b2a08e2a11a6d3ed3dbc52f241e0d5",
+        "src/model/selection-verification.ts": "fc4e3096354783de9dfc17ed66f94bac9f1eaa308fdf439de5d5af10e4d1f894",
+        "src/model/types.ts": "b9f6edc17d9203b084a1067b38b02ef102cb50807e2e7ec2b22b5cb96e1b2e11",
+        "src/validation/document.ts": "0296fff8f0ed2c6c74d1b198b2f67f5990efb844d4e6a5907088502c4f1b8e3f",
+        "src/validation/schema.ts": "02279bbb844d5e2b001d3286c88c79b1ab61a3b40265fc08432e5516cda475e7",
+        "fixtures/validation/field-gate-refresh-evidence.json": "8d6b040d8cbc587e2b28b8317462f4e705d7db69adafb8585770445c7e24b5a8"
+      },
+      "note": "Original result counts and build sizes are historical; the linked rerun records current regression/build results. New Nullability dependencies are fingerprinted without widening native Field support."
     }
   ]
 }

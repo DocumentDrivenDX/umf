@@ -1,0 +1,317 @@
+{
+  "scope": "Only native-generated not-null expectations on explicit Spark string/null rows; routing and raw/model normalization remain separate bindings; no whole pipeline equivalence",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "greatExpectations": "1.15.1",
+  "spark": "4.0.1",
+  "java": "21.0.2",
+  "rows": [
+    {
+      "LOB": "MD",
+      "value": null
+    },
+    {
+      "LOB": "MD"
+    },
+    {
+      "LOB": "MD",
+      "value": ""
+    },
+    {
+      "LOB": "MD",
+      "value": "null"
+    },
+    {
+      "LOB": "MP",
+      "value": null
+    },
+    {
+      "LOB": "MP",
+      "value": "x"
+    },
+    {
+      "value": null
+    }
+  ],
+  "sparkRows": [
+    {
+      "LOB": "MD",
+      "value": null
+    },
+    {
+      "LOB": "MD",
+      "value": null
+    },
+    {
+      "LOB": "MD",
+      "value": ""
+    },
+    {
+      "LOB": "MD",
+      "value": "null"
+    },
+    {
+      "LOB": "MP",
+      "value": null
+    },
+    {
+      "LOB": "MP",
+      "value": "x"
+    },
+    {
+      "LOB": null,
+      "value": null
+    }
+  ],
+  "observations": [
+    {
+      "name": "required-global",
+      "source": "generated-projection",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "description": "Availability example",
+        "nullable": false
+      },
+      "contextColumn": null,
+      "rules": [
+        {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "column": "value"
+          },
+          "meta": {
+            "description": "Column value is required (nullable=false)",
+            "severity": "critical",
+            "generated_from": "baseline"
+          }
+        }
+      ],
+      "outcome": "executed",
+      "unexpectedCount": 4,
+      "elementCount": 7
+    },
+    {
+      "name": "absent-allowed-global",
+      "source": "generated-projection",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "description": "Availability example",
+        "nullable": true
+      },
+      "contextColumn": null,
+      "rules": [],
+      "outcome": "no-availability-constraint"
+    },
+    {
+      "name": "unspecified-global",
+      "source": "generated-projection",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "description": "Availability example"
+      },
+      "contextColumn": null,
+      "rules": [],
+      "outcome": "no-availability-constraint"
+    },
+    {
+      "name": "required-MD",
+      "source": "generated-projection",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "description": "Availability example",
+        "nullable": {
+          "MD": false
+        }
+      },
+      "contextColumn": "LOB",
+      "rules": [
+        {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "column": "value",
+            "row_condition": "LOB='MD'",
+            "condition_parser": "spark"
+          },
+          "meta": {
+            "description": "Column value is required (nullable=false) for LOB='MD'",
+            "severity": "critical",
+            "contexts": [
+              "MD"
+            ],
+            "generated_from": "baseline"
+          }
+        }
+      ],
+      "outcome": "executed",
+      "unexpectedCount": 2,
+      "elementCount": 4
+    },
+    {
+      "name": "absent-allowed-MD",
+      "source": "generated-projection",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "description": "Availability example",
+        "nullable": {
+          "MD": true
+        }
+      },
+      "contextColumn": "LOB",
+      "rules": [],
+      "outcome": "no-availability-constraint"
+    },
+    {
+      "name": "context-without-routing",
+      "source": "native-control",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "nullable": {
+          "MD": false,
+          "MP": true
+        }
+      },
+      "contextColumn": null,
+      "rules": [
+        {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "column": "value"
+          },
+          "meta": {
+            "description": "Column value is required (nullable=false) for contexts: MD",
+            "severity": "critical",
+            "contexts": [
+              "MD"
+            ],
+            "generated_from": "baseline"
+          }
+        }
+      ],
+      "outcome": "executed",
+      "unexpectedCount": 4,
+      "elementCount": 7
+    },
+    {
+      "name": "null-context-raw",
+      "source": "native-control",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "nullable": {
+          "MD": null
+        }
+      },
+      "contextColumn": "LOB",
+      "rules": [
+        {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "column": "value",
+            "row_condition": "LOB='MD'",
+            "condition_parser": "spark"
+          },
+          "meta": {
+            "description": "Column value is required (nullable=false) for LOB='MD'",
+            "severity": "critical",
+            "contexts": [
+              "MD"
+            ],
+            "generated_from": "baseline"
+          }
+        }
+      ],
+      "outcome": "executed",
+      "unexpectedCount": 2,
+      "elementCount": 4
+    },
+    {
+      "name": "null-context-normalized",
+      "source": "native-control",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "nullable": {}
+      },
+      "contextColumn": "LOB",
+      "rules": [],
+      "outcome": "no-availability-constraint"
+    },
+    {
+      "name": "quoted-context",
+      "source": "native-control",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "nullable": {
+          "O'Reilly": false
+        }
+      },
+      "contextColumn": "LOB",
+      "rules": [
+        {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "column": "value",
+            "row_condition": "LOB='O'Reilly'",
+            "condition_parser": "spark"
+          },
+          "meta": {
+            "description": "Column value is required (nullable=false) for LOB='O'Reilly'",
+            "severity": "critical",
+            "contexts": [
+              "O'Reilly"
+            ],
+            "generated_from": "baseline"
+          }
+        }
+      ],
+      "outcome": "native-refusal",
+      "error": "PARSE_SYNTAX_ERROR"
+    },
+    {
+      "name": "required-all-present",
+      "source": "generated-projection",
+      "column": {
+        "name": "value",
+        "data_type": "VARCHAR",
+        "description": "Availability example",
+        "nullable": false
+      },
+      "contextColumn": null,
+      "rules": [
+        {
+          "type": "expect_column_values_to_not_be_null",
+          "kwargs": {
+            "column": "value"
+          },
+          "meta": {
+            "description": "Column value is required (nullable=false)",
+            "severity": "critical",
+            "generated_from": "baseline"
+          }
+        }
+      ],
+      "outcome": "executed",
+      "unexpectedCount": 0,
+      "elementCount": 3
+    }
+  ],
+  "limits": [
+    "Omitted value members become Spark null under the explicit schema; this is not a general JSON omission/null equivalence.",
+    "No availability rule is generated for absent-allowed/unspecified; this does not validate unrelated constraints.",
+    "Without a routing column, native mixed-context generation applies the most restrictive constraint globally.",
+    "Raw null context and normalized empty map produce different native rules.",
+    "The pinned generator does not escape quoted context values for Spark SQL; the native engine refuses that rule.",
+    "String row-condition API is deprecated in GX 1.15.1; later GX versions are not claimed."
+  ],
+  "sha256": {
+    "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
+    "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-tablespec-execution-oracle.py": "a75a3762870670b5bdc5b5366ac7474be148fc029466f0b488a47cdb1d349b8f"
+  }
+}

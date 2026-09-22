@@ -1,0 +1,1330 @@
+{
+  "scope": "Generated TableSpec metadata acceptance/normalization in pinned Pydantic and checked schema; no row enforcement or omitted-member equivalence",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "pydantic": "2.11.10",
+  "cases": 204,
+  "nativeTargets": 146,
+  "idealRecoveries": 292,
+  "scalarBooleanDisagreements": 26,
+  "rows": [
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "checked-schema",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "unresolved",
+      "context": "MD",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "BOOLEAN",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "INTEGER",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "INTEGER",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "INTEGER",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "INTEGER",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "INTEGER",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "INTEGER",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "DECIMAL",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "DECIMAL",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DECIMAL",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "FLOAT",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "FLOAT",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "FLOAT",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "TEXT",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "TEXT",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TEXT",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "VARCHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "CHAR",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "CHAR",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "CHAR",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "DATE",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "DATE",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATE",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "DATETIME",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "DATETIME",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "DATETIME",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "ideal": "required",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "boolean",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "ideal": "absent-allowed",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "context-map",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": null,
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "nativeType": "TIMESTAMP",
+      "ideal": "unspecified",
+      "profile": "runtime-model",
+      "context": "production",
+      "encoding": "omitted",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    }
+  ],
+  "sha256": {
+    "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
+    "/home/erik/Projects/umf/scripts/core-ideals/nullability-tablespec-projection-oracle.py": "c280b9b587fa3f9a0daaf490c5cf20deb84eee43410e2fe766521a28914a9834",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64"
+  }
+}

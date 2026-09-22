@@ -364,3 +364,17 @@ availability assertion invalid refuses. Verification checks the entire retained
 source and target, so a later availability edit requires renewed kind/type receipts.
 The API extension does not admit native 0.3.0 projections or change legacy opaque
 nullability interpretation.
+
+
+### TableSpec Nullability binding qualification
+
+TD-041 now records one implemented Nullability binding: TableSpec metadata under
+explicit profile/context/carrier, with a retained scope extension, strict/report
+losses and both recovery directions. The selected runtime model accepts scalar
+booleans that the checked schema rejects; projection receipts disclose that fact.
+Native row checks are separately qualified to the pinned generator, GX 1.15.1,
+Spark 4.0.1, Java 21.0.2 and explicit string/null rows. Routing, normalization and
+quoted-context counterexamples prevent any general pipeline or omission/null
+claim. One binding does not meet the two-system admission gate; the other four
+priority bindings and Nullability delivery remain open. No native concept is
+replaced or removed by this qualification.

@@ -430,3 +430,80 @@ historical; no all-five regression claim is made for this change. Revalidation i
 required before binding acceptance. Authored TableSpec down-projection, the other
 round-trip direction and native absence-carrier execution tests remain pending;
 this up-classification work does not close the TableSpec bead or admit Nullability.
+
+### TableSpec authored down-projection contract
+
+`projectNullabilityToTableSpec(author, request)` consumes a verified current core
+Nullability author receipt. The request supplies native names/type, strict/report
+policy, selected profile, context and absence carrier. Native table/column names
+must satisfy the pinned identifier syntax and length limit. The source remains
+archived; every unprojected source property, namespace, other member and extension
+obligation receives its own residual. Unknown refinements cannot disappear in
+report mode or be accepted silently in strict mode.
+
+Under `null-value`, required emits false and absent-allowed emits true. A selected
+context encodes the boolean at that exact map key, accepted by both native profiles.
+With no context, only `runtime-model` can emit a scalar boolean: the receipt must
+report its incompatibility with the checked-in schema as a profile note, without
+misrepresenting that separate profile as the selected target. `checked-schema`
+without a context cannot express a required/absent-allowed assertion through this
+binding. An unresolved profile or absence carrier similarly leaves the assertion
+unmapped. Strict mode blocks; report mode emits a complete column with nullable
+omitted and an explicit residual. Unspecified always omits nullable; no native
+helper default is promoted to author intent.
+
+The projected UMF document retains the native representation. It contains no new
+core availability label, so native-only import does not recreate authored
+provenance. A separate versioned projection schema covers the copied author/source,
+request, encoding choice, profile notes, diagnostics, residuals and atomic target.
+`recoverNullabilityFromTableSpec(receipt, nativeText)` recomputes the receipt and
+requires exact current native text before returning the retained original ideal.
+This recovers either an exactly encoded ideal or its explicitly residualized
+assertion; it does not claim that omitted members and present null are equivalent,
+or that the native metadata itself executes row validation.
+
+
+### TableSpec down-projection and binding acceptance
+
+`projectNullabilityToTableSpec` and `recoverNullabilityFromTableSpec` implement the
+authored projection contract with its published operation schema. The 204-case
+matrix produces 146 complete native targets, 58 strict blocks and 292 JSON/YAML
+ideal recoveries. The pinned model accepts every emitted target. Exactly 26
+scalar-boolean outputs are incompatible with the checked schema; their selected
+runtime profile and structured profile notes disclose that boundary. The matrix
+covers all ten declared native type carriers and all three ideal labels. Native
+re-import confirms the observed label independently of receipt-based author recovery.
+Chromium reproduces all cases, recoveries, blocks and 146 forged-receipt refusals.
+
+The copied expectation generator and direct helper dependency are separately
+pinned in `native/tablespec/nullability-runtime/sources.json`, including their
+license. Great Expectations 1.15.1, Spark 4.0.1 and Java 21.0.2 execute the generated
+not-null rules on an explicit string/null row schema. Ten cases establish five
+executed checks, four cases with no availability constraint, and one native syntax
+refusal. Required global metadata finds four absent values among seven rows;
+routed MD metadata finds two among four. All three present values pass. Empty
+strings and the literal string `null` remain present values.
+
+The controls limit the execution claim: omitted members become Spark null under
+the supplied row schema; absent routing makes mixed-context requiredness global;
+raw null context entries and normalized empty maps generate different rules; and
+an apostrophe in the context name produces an unescaped native rule that Spark
+refuses. GX stores that refusal inside nested metric exception information. The
+oracle checks the specific parse error rather than accepting any native failure.
+The native execution harness requires a compatible JVM; this evidence uses Java 21.0.2.
+Metadata projection therefore does not promise arbitrary GX/Spark execution or
+JSON omission/null equivalence.
+
+All 170 core/core-ideals regression tests pass with 11,347 assertions;
+the separate Field conformance tests also pass. All 31 prior Field native/browser
+commands, the three core Nullability browser probes, both TableSpec binding
+matrices and native row oracle were rerun before source fingerprints were refreshed.
+TypeScript, 217 schemas, 33 packages and the browser build pass. This supersedes
+the earlier stale-Field-gate status above. The expanded TableSpec bead acceptance
+is satisfied within these published subsets; it does not complete US-041 or admit
+Nullability from one native binding. PostgreSQL, SQL Server, Avro and Parquet remain.
+
+`fixtures/validation/tablespec-nullability-acceptance-evidence.json` links the
+commands, versions, matrix/native/browser evidence, regression and current Field
+gate fingerprints. The TableSpec execution checks assess availability only; other
+generated expectations and whole pipelines remain outside this support claim.

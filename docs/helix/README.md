@@ -17,11 +17,11 @@ Field ideal admission and qualified five-system delivery have passed their
 separate gate; no native equivalence is claimed. Nullability core implementation
 has passed its core-task acceptance: experimental 0.3.0 validation, typed authoring,
 migration/rollback, selection and versioned Field APIs are implemented. The prior
-Field native/browser evidence passed at that acceptance checkpoint. TableSpec
-Nullability up-classification now has selected-context metadata and native/browser
-recovery evidence; down-projection and native absence-carrier tests remain pending.
-Its new library exports make the prior Field fingerprints stale until revalidation.
-The five native Nullability binding tasks and Nullability admission remain unfinished.
+Field native/browser evidence has now been rerun after TableSpec binding work,
+and current fingerprints pass. TableSpec Nullability classification, authored
+projection, both recovery directions and qualified native row checks have passed
+binding acceptance. The other four native bindings and Nullability admission
+remain unfinished.
 Cardinality, facets and key follow Nullability. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

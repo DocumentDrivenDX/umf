@@ -1,0 +1,15 @@
+import base from '../../spec/core/field-tablespec-projection.schema.json';
+const schema:any=structuredClone(base);
+schema.$id='urn:umf:core:nullability-tablespec-projection:1.0.0';schema.title='Authored availability projection to an explicitly selected TableSpec profile';
+schema.properties.operation.const='project-nullability-tablespec';
+schema.properties.source.$ref='urn:umf:core:0.3.0';
+schema.properties.author.$ref='urn:umf:core:nullability-operation:1.0.0#/$defs/declaration';
+schema.properties.binding.const={id:'umf.core.nullability.tablespec',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Single authored Field availability; explicit profile/context/null-value carrier; no omitted-member or native execution equivalence'};
+const req=schema.properties.request;
+for(const name of ['tableName','columnName'])req.properties[name]={type:'string',minLength:1,maxLength:128,pattern:'^[A-Za-z][A-Za-z0-9_]*$'};
+Object.assign(req.properties,{profile:{enum:['runtime-model','checked-schema','unresolved']},context:{anyOf:[{type:'string',minLength:1},{type:'null'}]},carrier:{enum:['null-value','unresolved']}});req.required.push('profile','context','carrier');
+const mapping=schema.properties.mapping;mapping.properties.idealPath={type:'string',minLength:1};mapping.properties.nativePath={anyOf:[{type:'string',minLength:1},{type:'null'}]};
+Object.assign(mapping.properties,{nullability:{enum:['required','absent-allowed','unspecified']},encoding:{enum:['boolean','context-map','omitted']},context:req.properties.context,carrier:req.properties.carrier,profile:req.properties.profile});mapping.required.push('nullability','encoding','context','carrier','profile');
+schema.properties.profileNotes={type:'array',items:{type:'object',additionalProperties:false,required:['profile','code','message'],properties:{profile:{const:'checked-schema'},code:{const:'SCALAR_BOOLEAN_REJECTED'},message:{type:'string',minLength:1}}}};
+schema.required.push('profileNotes');if(!schema.required.includes('diagnostics'))schema.required.push('diagnostics');
+await Bun.write('spec/core/nullability-tablespec-projection.schema.json',JSON.stringify(schema,null,2)+'\n');

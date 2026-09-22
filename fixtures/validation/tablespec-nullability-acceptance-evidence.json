@@ -1,0 +1,266 @@
+{
+  "version": "1.0.0",
+  "bead": "umf-97221618-f316ff75",
+  "scope": "Qualified TableSpec Nullability metadata classification and authored projection, retained scope/refinements, both receipt recovery directions, and separately scoped native row availability evidence",
+  "outcome": "expanded TableSpec binding acceptance passed; remaining four native bindings and Nullability admission/delivery are open",
+  "criteria": {
+    "bead-AC1": "Both binding test files pass inside the current complete core/core-ideals regression, including author/scope conflicts, source preservation and both recovery directions.",
+    "bead-AC2": "Current corpora and pinned native profile checks pass: 504 classifications and 204 authored projections.",
+    "bead-AC3": "Pinned native-generated not-null rules execute in GX/Spark under explicit routing and row schemas; expected normalization/routing differences and quoted-context parse refusal are verified.",
+    "bead-AC4": "Both Chromium probes reproduce metadata decisions, serialization/recovery and forged-receipt refusals without host globals or external requests.",
+    "bead-AC5": "TypeScript, schema/package audits, browser build and freshly rerun five-system Field evidence/gate pass.",
+    "bead-AC6": "TD-041 and CONTRACT-040 state versions, metadata/execution boundaries, unresolved scope and four remaining bindings."
+  },
+  "results": {
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 217,
+    "packages": 33,
+    "browserBuildBytes": 10205712,
+    "regression": {
+      "tests": 170,
+      "assertions": 11347,
+      "files": 48,
+      "failures": 0,
+      "scope": "All tests/core and tests/core-ideals test files except field-conformance.test.ts, which is run separately after refreshing evidence.",
+      "log": "fixtures/validation/tablespec-nullability-field-refresh-regression.log"
+    },
+    "fieldGateTests": {
+      "tests": 3,
+      "assertions": 24,
+      "failures": 0
+    },
+    "classification": {
+      "cases": 504,
+      "declared": 40,
+      "nativeRecoveries": 544
+    },
+    "projection": {
+      "cases": 204,
+      "nativeTargets": 146,
+      "idealRecoveries": 292,
+      "scalarBooleanDisagreements": 26
+    },
+    "browser": {
+      "classification": {
+        "scope": "Selected-context classification and exact native recovery; no down-projection or row enforcement claim",
+        "browser": "148.0.7778.0",
+        "checks": {
+          "cases": 504,
+          "recoveries": 544,
+          "blocks": 232,
+          "tampered": 272
+        },
+        "externalRequests": []
+      },
+      "projection": {
+        "scope": "Authored availability projection and ideal receipt recovery; no row execution claim",
+        "browser": "148.0.7778.0",
+        "checks": {
+          "cases": 204,
+          "recoveries": 292,
+          "blocks": 58,
+          "tampered": 146
+        },
+        "externalRequests": []
+      }
+    },
+    "nativeExecution": {
+      "greatExpectations": "1.15.1",
+      "spark": "4.0.1",
+      "java": "21.0.2",
+      "cases": 10,
+      "executed": 5,
+      "noAvailabilityConstraint": 4,
+      "nativeRefusals": 1
+    },
+    "fieldGate": {
+      "scope": "Qualified Field ideal gate; native evidence retained and fingerprint-checked, not rerun by this command",
+      "idealAdmission": {
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "usefulBindings": 5,
+        "meaning": "CONTRACT-040 / Element.kind",
+        "nativeEquivalence": false
+      },
+      "delivery": {
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ],
+        "scope": "Published Field binding subsets only; not general native-language conformance"
+      },
+      "evidence": {
+        "records": [
+          {
+            "path": "fixtures/validation/field-core-acceptance-evidence.json",
+            "sha256": "29f27f67f60149d5f03b0f2fdf6d71aaae5a51889f4208b4148123e9a8c44258"
+          },
+          {
+            "path": "fixtures/validation/field-tablespec-acceptance-evidence.json",
+            "sha256": "0728fa3309f69a1e71de16c87fa8da76a10d1bad3334f7b34226af675944b7ae"
+          },
+          {
+            "path": "fixtures/validation/field-postgresql-acceptance-evidence.json",
+            "sha256": "db07fc4f43ac14c0a056efa1612a0adb775cfa1265a8125891d2b34447d5d87f"
+          },
+          {
+            "path": "fixtures/validation/remaining-field-bindings-acceptance-evidence.json",
+            "sha256": "154d8ad284d80415aa52af78bdf1561e221bf9886251cbd875cc24dd84bd09a6"
+          }
+        ],
+        "fingerprints": 2469,
+        "systems": [
+          "tablespec",
+          "postgresql",
+          "sqlserver",
+          "avro",
+          "parquet"
+        ]
+      },
+      "roundTrips": {
+        "tablespec": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "postgresql": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "sqlserver": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "avro": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        },
+        "parquet": {
+          "usefulTargets": 2,
+          "strictBlocks": 1,
+          "reportResiduals": 1,
+          "idealRecoveries": 6,
+          "nativeRecoveries": 2,
+          "conflictBlocks": 2
+        }
+      }
+    }
+  },
+  "commandsEvidence": "fixtures/validation/field-gate-refresh-evidence.json",
+  "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "pydantic": "2.11.10",
+  "limits": [
+    "Omitted value members become Spark null under the explicit schema; this is not a general JSON omission/null equivalence.",
+    "No availability rule is generated for absent-allowed/unspecified; this does not validate unrelated constraints.",
+    "Without a routing column, native mixed-context generation applies the most restrictive constraint globally.",
+    "Raw null context and normalized empty map produce different native rules.",
+    "The pinned generator does not escape quoted context values for Spark SQL; the native engine refuses that rule.",
+    "String row-condition API is deprecated in GX 1.15.1; later GX versions are not claimed.",
+    "A metadata-exact projection is qualified to its selected runtime/checked-schema profile; it is not native concept replacement or general row execution equivalence.",
+    "Native classification interprets exact declared booleans only; coercions/defaults and unknown refinements remain residual or blocked.",
+    "Existing context scope and authored intent cannot be silently overwritten.",
+    "Other source members, namespaces, properties and extensions outside single-Field projection receive explicit residuals; strict mode blocks loss.",
+    "Core 0.3.0 and Nullability remain experimental; one binding does not satisfy the two-system ideal admission gate or the five-system delivery gate."
+  ],
+  "sha256": {
+    "fixtures/validation/core-nullability-browser.json": "6093c1cc46ea4ee64e1155773acab3adc750481d0fa471c48ce5ae5dbfd7b84c",
+    "fixtures/validation/field-conformance.json": "3dbcfa7625a21a014abe17e46786821ce89c56e6ce3a8d03a6284523c7a4287d",
+    "fixtures/validation/field-gate-refresh-evidence.json": "360cee6bca8ae9adb0a42e6f401f9697a5c37787b0eec6f1631e4ee38521e43f",
+    "fixtures/validation/field-gate-regression.log": "03912424dee7f6dda77d470480a36032df6db2f7227b737ba00f1e3a6c4362ca",
+    "fixtures/validation/field-postgresql-browser.json": "d4209160ebfbeab7105ea09599cee0cdad3ebb0ca8c666145bd63e428e241ea4",
+    "fixtures/validation/field-postgresql-native.json": "dac218a1f30f651966d96e5082b0b724bba543d5004ef52a94fa0f4ea39545bc",
+    "fixtures/validation/field-postgresql-projection-browser.json": "e369a0ed2da32f30ec9ae8f3c523c0ed25e54c3d418d15b51ef2f04f97bd7863",
+    "fixtures/validation/field-postgresql-projection-native.json": "8a665b0b72ea9b9a320aed4ce10d84fc49289b3809f6822dae79a2b3c6953cdd",
+    "fixtures/validation/field-sqlserver-browser.json": "902d5e6dc609e9d203ab725072d01712bc504e7b9a495feb22350392fb96822d",
+    "fixtures/validation/field-sqlserver-native.json": "8527d58fb7e180e8a19dd1fbd8b3ec8db684d51030fc3f639c44aea89b7fcbc3",
+    "fixtures/validation/field-sqlserver-projection-browser.json": "97934076eb522d181412d51f529f870e5481f78c6de2843a828a807c80295756",
+    "fixtures/validation/field-sqlserver-projection-native.json": "767e9a5bd9b32f534e669c84f9facd9ce8e3803a172292b32abf1b00fb6c8b8b",
+    "fixtures/validation/nullability-field-operations-browser.json": "fef1cb818a3fbb187b7f34c86899d87cb83e1c55d2f3e5a8e3ed9951ebd0759a",
+    "fixtures/validation/nullability-field-refresh-regression.log": "ab1366fc9bd50f9196e8e48f55c726ce6166ec033a8848ddd9a8a668d5fc0ace",
+    "fixtures/validation/nullability-selection-browser.json": "66519fb54b027dc7b91e46b6947ee154ae05863407a1f16c3c2fd35c475f6a10",
+    "fixtures/validation/nullability-tablespec-classification-browser.json": "ba55f6f340186fd8227abb57c3284d0731b9027deaec50c87bb9944d3924cab6",
+    "fixtures/validation/nullability-tablespec-classification-native.json": "4311389c103b2938c50260936b9d2b8bee8815cd8e7a330c427c6d3e4c1c28f9",
+    "fixtures/validation/nullability-tablespec-classification.json": "0ea253630dc06294eba8339a6a4bf6a5e003092fc9628bce0e6cf9d59c2a631e",
+    "fixtures/validation/nullability-tablespec-execution-native.json": "34c7f746796249f316b37225168714c5e6e886e61625c5961a826337e8031274",
+    "fixtures/validation/nullability-tablespec-execution.log": "db0adb4a560edf37c5c9946ae195558bf9f513e969df67028bacc331894db61f",
+    "fixtures/validation/nullability-tablespec-profile-browser.json": "c640cc5da2b9ebce45fcbbe29c2feb9366672a174aba5c8b25eedaa282f64375",
+    "fixtures/validation/nullability-tablespec-profile-native.json": "85b10f5808262587c8847bcf6551a41de08c91f0590410b4119b5dffc3522fc4",
+    "fixtures/validation/nullability-tablespec-profile.json": "a84e6b6408aee4c6c84e7f902f94014153684a9fddfdfb06a0b243c353e21a25",
+    "fixtures/validation/nullability-tablespec-projection-browser.json": "260c6cdc54eea23e946b5be35cc0484c0532e26296cf464f400cccb3444f7224",
+    "fixtures/validation/nullability-tablespec-projection-native.json": "946bb05a637b855f032daa1d388bb927819c7283fa0b9ef6d2d4d5aad2b0e483",
+    "fixtures/validation/nullability-tablespec-projection-tests.log": "c2bb971a0e7c2df46022542acbf1dec616e8b659abe93bea87076b5a20861cab",
+    "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
+    "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
+    "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
+    "fixtures/validation/tablespec-nullability-field-gate-tests.log": "e8c825f56220939992f34d193e365a931bcad6fd398df85e6c1caedd6d615bd3",
+    "fixtures/validation/tablespec-nullability-field-refresh-regression.log": "45608bc86a98842c15ad9ba130c889ae4511d382477f7edc9716c986b45fddc0",
+    "native/tablespec/nullability-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/nullability-runtime/format_utils.py": "a50f9ed9f7292434b04cec57863b02b67f47ab8bd3bd781c3900ef60dc584fa2",
+    "native/tablespec/nullability-runtime/gx_baseline.py": "083b545c0a0632cab834aacd278f728e144f57f03591141f7465117f04ee5d5c",
+    "native/tablespec/nullability-runtime/sources.json": "b0f2538e84104dd570bf4831aaaba633227b0592f46df04d49a0afa363bf078c",
+    "scripts/core-ideals/field-conformance.ts": "f9c2b4ebc9beb6fd1d652465d1f57a399c0af15e90479248cb074ad65e20aa0c",
+    "scripts/core-ideals/nullability-tablespec-cases.ts": "20c1955abb3157a9593be8d1b871f7886f236df2652867d04fd79ac3ec59eaf7",
+    "scripts/core-ideals/nullability-tablespec-classification-browser.ts": "cedba5e53f3d057c75792e4e9232300036a97e118663a161ab067251b85ebb82",
+    "scripts/core-ideals/nullability-tablespec-classification-oracle.py": "432428e2be1024e48f8a0ff61ff43a1b815976e0e3b2df0893ddafd42e62a2ad",
+    "scripts/core-ideals/nullability-tablespec-corpus.ts": "eb7aa861a0e7702a5d95c668e50cd8ac9072a88ab65c89c9cb5d9273276e0697",
+    "scripts/core-ideals/nullability-tablespec-execution-oracle.py": "a75a3762870670b5bdc5b5366ac7474be148fc029466f0b488a47cdb1d349b8f",
+    "scripts/core-ideals/nullability-tablespec-package.ts": "4dd8b1a2e6b8bc7ad18ec13e473fb0d1f831690c67dbf19e9178ea5c20862b0d",
+    "scripts/core-ideals/nullability-tablespec-profile-browser.ts": "0b725a70e15834788eb7c13dad6885e32d05f38f862c803ca6f70355d4910529",
+    "scripts/core-ideals/nullability-tablespec-profile-oracle.py": "397fd775821360510139aa2626e0bc8a2bac19f6b63e40bcab46f746e6b8cf4e",
+    "scripts/core-ideals/nullability-tablespec-profile.ts": "4d08642ec71c04cf5c84ec618b956f6cd2a8779675752ce2899f4eee5fa89d10",
+    "scripts/core-ideals/nullability-tablespec-projection-browser.ts": "3aa44e4d673da00da5e07a3ad1fc6ee54cef16ca53a0d46b013b9905092473e8",
+    "scripts/core-ideals/nullability-tablespec-projection-cases.ts": "14ad4efa46220ab28c2dd9dc0cf927199e16264d4bcdbf6a0dffdb15d13b672a",
+    "scripts/core-ideals/nullability-tablespec-projection-corpus.ts": "d1e24d999a322fb162d382f0a62b2aca878b946f0b07eccaebc9d217d3d27fe7",
+    "scripts/core-ideals/nullability-tablespec-projection-oracle.py": "c280b9b587fa3f9a0daaf490c5cf20deb84eee43410e2fe766521a28914a9834",
+    "scripts/core-ideals/nullability-tablespec-projection-schema.ts": "ee8b5e860f0be8c9f7328ce4f61db9d585142ae9db5c5c5606cce142dceb7695",
+    "scripts/core-ideals/nullability-tablespec-schema.ts": "aead3d0cf01442c70d460152cc42799776819129ab1fe1da4d9bf50b519a3230",
+    "spec/core/kind-operation-v2.schema.json": "6178c17dcfff69d517ce7e2cb3eaa75e62910fce82c10b7413532a276f87501b",
+    "spec/core/nullability-document.schema.json": "59a257972471d501ff4432047a6b1b630e86b35d7939648bfa8dce0dfeb88e10",
+    "spec/core/nullability-operation.schema.json": "3d4ee6971ce6a09e71af643917d13cbf04e2fee3c643ca34f9411e4fd78cba77",
+    "spec/core/nullability-selection.schema.json": "0d00b993d9f205326bf8879d9d659aac7d9bb4c34d886c5c966a86a1f7e3d47f",
+    "spec/core/nullability-tablespec-projection.schema.json": "990b20a054b0ef643ad1b4c0deeb0760bf64c4ca9a093747a31c346c227135a2",
+    "spec/core/nullability-transition.schema.json": "7c2cd58a09f38503e14d69977c68fc9748b595aed7ec1761867b337ed3aaa68b",
+    "spec/core/record-type-operation-v2.schema.json": "972607c0cb34bf5d8db5cf11575f07a9a28f3537489ea2df0c79c3c3979beff9",
+    "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
+    "spec/extensions/tablespec-nullability/package.json": "e6b5492cdf2496ef68d9845c06f89473c42c7bf27d1069c1c257fbce3fad1420",
+    "spec/extensions/tablespec-nullability/schema.json": "d911296b88ccdc17afd557a38c921c7f8a63a9e2c852399e77a522576282bf59",
+    "src/core-ideals/nullability-tablespec-projection.ts": "609c6339210a319a0cb7cc12f4d58e8450df63eb9500a632c2ef67cf19d6ae97",
+    "src/core-ideals/nullability-tablespec.ts": "884b3f5c10a58e745a883179518718c8fd8808d061956724ec0799c5396d899b",
+    "src/index.ts": "0daa4b5674d29dbed96ec031af94fceb743de9d772481bc1ffc1ba2e09096863",
+    "src/model/field-kind.ts": "bea35248aaee0603026d0b772ce12f58416847f025ed882e6c88a2ffc2692fbf",
+    "src/model/nullability-transition.ts": "dd81a1fe2005f8b470730e6940aa5c543e95ed5a7649562161c8b0d34d1c53ef",
+    "src/model/nullability.ts": "fd256ac187f845168bb15849c269b7a171a097d7d8b124fa942b930644f90c26",
+    "src/model/record-type.ts": "67d486d3f87b5b78755e2a02dae35d89a5404efdaabb3589f9cd19c9b37524e0",
+    "src/model/selection-verification.ts": "8497e9c734a691b16774df7b39ae517dfdb47424938d021142ae0b9c5dffd160",
+    "src/model/types.ts": "68ab29ccfcd07c4add8fec8506184452ce97fafe53e125c4b575b9fdb65aedfd",
+    "src/validation/document.ts": "a2c7e7992f2365ab60e5651ab797a2a2a7c5e140745d2ab95564c6e3967e9b7c",
+    "src/validation/schema.ts": "1bcf83123ddec50c3df5704aed3bc144718c0f8f4250288141a3ae4f4d49ade6",
+    "tests/core-ideals/field-conformance.test.ts": "be4f1942612afd9c007c4fbd03220b9774f6a9e16be3e31f71bf4136cc4d0fc2",
+    "tests/core-ideals/nullability-tablespec-projection.test.ts": "45c25e0dfba03ba8cb1cafd082408e60a31fd8fe2104ec6f27353aea64e86fbd",
+    "tests/core-ideals/nullability-tablespec.test.ts": "85d8c062500fa8d19f0694b40e0c18801e6146c94157593d084284894be0a306"
+  }
+}
