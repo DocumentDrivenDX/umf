@@ -1422,3 +1422,38 @@ without a supported flat mapping refuse or retain residuals. No row-domain,
 coercion, default, nullability, cardinality, facet, key or execution equivalence is
 claimed. This satisfies the scoped binding bead, not the two-system admission
 record or all-five Field gate.
+
+### PostgreSQL Field binding acceptance
+
+`umf-97221618-920262ff` passes its scoped bidirectional acceptance. The refreshed
+record is `fixtures/validation/field-postgresql-acceptance-evidence.json` with
+source, schema, test, native-fixture and runtime fingerprints. All three native
+oracles reran in separate disposable, network-isolated containers using the pinned
+PostgreSQL 17.4 image. Four parser artifacts match the 17.6.10 package manifest.
+No user database was used.
+
+Catalog evidence covers 20 columns, four tables and four standalone composite
+types, with 56 exact capture-text recoveries. Native DDL execution accepts 15
+single-Field and four flat-record projections; the resulting catalog independently
+checks names, ordered members, builtin type identities and comments. Native-only
+reimport classifies 24 columns without inventing author intent. Twelve raw DDL
+examples produce 14 declaration classifications and ten explicit blocks across
+strict/report modes, including unresolved namespace, inherited/LIKE expansion,
+duplicate members and later ALTER differences.
+
+Chromium 148 reproduces the catalog checks and both JSON/YAML recovery paths;
+projection checks include 30 Field recoveries, eight record recoveries, four
+namespace recoveries, loss policies and four unsafe identifier refusals. The DDL
+browser run recovers 28 source texts and agrees on all ten blocks. No browser run
+uses Bun/Node globals or external requests. The final acceptance suite passes
+31 tests and 1,623 assertions across eleven files; typecheck, 208 schemas, 32
+packages, browser build and the optional PostgreSQL WASM build pass.
+
+Catalog resolution and declared DDL remain separate. Composite formatted types
+are retained without scalar guessing; table classification refuses views; source
+DDL does not resolve search_path or fold later ALTER statements. Projection is
+limited to explicit builtin carriers and flat membership, with namespace and
+other metadata losses reported. No row-domain, native coercion, default execution,
+nullability, cardinality, facet or key equivalence follows from Field kind. This
+closes the qualified PostgreSQL binding task only; admission and all-five delivery
+remain separate Field-gate work.

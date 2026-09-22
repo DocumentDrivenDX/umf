@@ -1,0 +1,59 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/field-postgresql.test.ts:
+(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [8340.22ms]
+(pass) native text formatting and unknown numeric metadata survive both receipt formats [1187.27ms]
+(pass) verified authored conflict blocks both modes without a partial target [639.01ms]
+(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [827.57ms]
+
+tests/core-ideals/record-postgresql.test.ts:
+(pass) qualified relations remain distinct records and only selected members receive kinds [994.09ms]
+(pass) one member conflict blocks the whole record in both policies [513.09ms]
+(pass) ambiguous relations, unsupported kinds, collisions and stale receipts cannot imply record equivalence [1167.45ms]
+(pass) duplicate native member names and inconsistent ordinal order block whole-record publication [887.39ms]
+
+tests/core-ideals/field-postgresql-projection.test.ts:
+(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [1282.03ms]
+(pass) unsafe or truncating identifiers are rejected before parser invocation [11.82ms]
+(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [22.86ms]
+(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [33.54ms]
+
+tests/core-ideals/record-postgresql-projection.test.ts:
+(pass) record members compile in ideal order and recover source through both receipt formats [179.34ms]
+(pass) strict losses and missing bindings expose no partial SQL or target [118.77ms]
+(pass) name collisions, unknown bindings and unsafe identifiers fail without partial output [9.52ms]
+(pass) stale author declarations, native edits and changed receipts fail recovery [32.48ms]
+
+tests/core-ideals/postgresql-ddl-kinds.test.ts:
+(pass) declared records retain source SQL and distinguish unresolved namespace from catalog facts [3622.88ms]
+(pass) collisions, edited AST archives and stale receipts cannot silently publish new roles [250.19ms]
+(pass) composite attributes preserve collations and unresolved nested types without scalar flattening [426.54ms]
+
+tests/core-ideals/postgresql-composite.test.ts:
+(pass) catalog composites expose ordered fields without formatted-type guessing and recover exact source [3338.27ms]
+(pass) collisions, duplicate names/order, ambiguity and stale archives cannot publish false roles [1068.84ms]
+(pass) unknown composite refinements remain recoverable and future server versions are refused [210.61ms]
+
+tests/core-ideals/sql-namespace.test.ts:
+(pass) PostgreSQL and SQL Server schema moves disclose every selected namespace [75.98ms]
+
+tests/core-ideals/field-report.test.ts:
+(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [784.34ms]
+(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [186.60ms]
+
+tests/core-ideals/record-report.test.ts:
+(pass) common record reports retain ordered membership, member carriers and all blocked residuals [2779.42ms]
+(pass) member basis and source receipt tampering are rejected, and backend remains explicit [669.05ms]
+
+tests/core-ideals/classification-report.test.ts:
+(pass) five native classifiers retain classified provenance, exact fragments and conflict residuals [3792.66ms]
+(pass) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [946.55ms]
+
+tests/core-ideals/structured-report.test.ts:
+(pass) record, composite, type-link and raw DDL reports retain scoped ordered native evidence [12628.84ms]
+(pass) declared-only context and record mappings cannot be forged or silently resolved [3266.19ms]
+
+ 31 pass
+ 0 fail
+ 1623 expect() calls
+Ran 31 tests across 11 files. [51.27s]
