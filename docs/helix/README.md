@@ -47,8 +47,12 @@ PostgreSQL Cardinality also passes qualified binding acceptance: explicit type
 relationships, scalar classification, array/map residuals, checked native carriers
 and both retained recovery directions. See the
 [PostgreSQL acceptance record](../../fixtures/validation/postgresql-cardinality-acceptance-evidence.json).
-SQL Server, Avro and Parquet Cardinality bindings remain pending. Cardinality ideal
-admission and all-five delivery still require their separate conformance gate.
+SQL Server Cardinality also passes qualified binding acceptance: separate logical
+Fields retain physical storage metadata, explicit scalar/JSON carrier projection
+reports losses, and receipts recover both native and authored meaning. See the
+[SQL Server acceptance record](../../fixtures/validation/sqlserver-cardinality-acceptance-evidence.json).
+Avro and Parquet Cardinality remain pending. Cardinality ideal admission and
+all-five delivery still require their separate conformance gate.
 Core 0.4.0 is experimental; facets and key follow its five-system gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 

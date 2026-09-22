@@ -3885,3 +3885,15 @@ strict mode, and reports array rank/bounds, item/value and JSONB representation
 limits. Native-only reclassification does not reconstruct authored map intent.
 SQL Server, Avro and Parquet Cardinality and the separate concept gate remain
 unfinished. No native equivalence is claimed.
+
+
+### SQL Server Cardinality qualified binding acceptance
+
+SQL Server 16.0.4295.3 classification and explicit carrier projection pass qualified
+acceptance after 72 refresh steps, 383 priority tests / 35,600
+assertions across 124 files, and both existing conformance gates. See the
+[acceptance record](../../../fixtures/validation/sqlserver-cardinality-acceptance-evidence.json).
+Logical Fields retain the physical column family. Projection reports JSON item/value,
+key-uniqueness and availability limits, with strict refusal and retained native/ideal
+recovery. Avro, Parquet and the separate Cardinality gate remain unfinished.
+No native equivalence is claimed.

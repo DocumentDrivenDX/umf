@@ -1,46 +1,46 @@
 {
   "version": "1.0.0",
-  "bead": "umf-97221618-44b88700",
+  "bead": "umf-97221618-64883ce7",
   "bindingAccepted": true,
   "idealAdmitted": false,
   "nativeEquivalence": false,
-  "scope": "PostgreSQL 17.4 qualified Cardinality classification, explicit single-Field carriers and retained native/ideal recovery",
+  "scope": "SQL Server 16.0.4295.3 explicit logical representation, scalar/JSON carrier projection and retained native/ideal recovery",
   "results": {
     "regression": {
-      "tests": 377,
-      "assertions": 34807,
-      "files": 122,
+      "tests": 383,
+      "assertions": 35600,
+      "files": 124,
       "failures": 0,
       "scope": "All tests/core, tests/core-ideals, tests/postgresql, tests/sqlserver, tests/tablespec, tests/avro and tests/parquet test files except field-conformance.test.ts and nullability-conformance.test.ts, both run separately after evidence refresh.",
-      "log": "fixtures/validation/cardinality-postgresql-refresh-regression.log"
+      "log": "fixtures/validation/cardinality-sqlserver-refresh-regression.log"
     },
     "gates": {
       "field": {
         "tests": 3,
         "assertions": 25,
         "failures": 0,
-        "log": "fixtures/validation/cardinality-postgresql-field-gate-tests.log",
+        "log": "fixtures/validation/cardinality-sqlserver-field-gate-tests.log",
         "conformance": "fixtures/validation/field-conformance.json"
       },
       "nullability": {
         "tests": 2,
         "assertions": 17,
         "failures": 0,
-        "log": "fixtures/validation/cardinality-postgresql-nullability-gate-tests.log",
+        "log": "fixtures/validation/cardinality-sqlserver-nullability-gate-tests.log",
         "conformance": "fixtures/validation/nullability-conformance.json"
       }
     },
-    "refreshCommands": 70,
-    "schemas": 244,
-    "packages": 39,
+    "refreshCommands": 72,
+    "schemas": 247,
+    "packages": 40,
     "typecheck": "passed",
-    "browserBuildBytes": 10496225,
+    "browserBuildBytes": 10530970,
     "failures": 0
   },
   "criteria": {
     "AC1": "Classification and projection tests cover positive, refusal, approximation, unknown, nested/cyclic items and both recovery directions",
     "AC2": "Pinned native combined command executes scalar and array/JSON probes and composed capture/classification/recovery checks",
-    "AC3": "Real Chromium and pinned optional WASM syntax backend match native results and recover JSON/YAML receipts; no host globals or external requests",
+    "AC3": "Real Chromium reproduces native DDL/receipt results and recovers JSON/YAML receipts without host globals or external requests; SQL syntax/execution is verified by the pinned native server",
     "AC4": "All schemas pass audit; item references, container/member availability, unknown metadata and strict/report boundaries have explicit tests"
   },
   "commands": [
@@ -534,6 +534,20 @@
     {
       "command": [
         "bun",
+        "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
         "test",
         "./tests/avro/bundle.test.ts",
         "./tests/avro/candidate-edit.test.ts",
@@ -552,6 +566,8 @@
         "./tests/core-ideals/cardinality-postgresql-projection.test.ts",
         "./tests/core-ideals/cardinality-postgresql.test.ts",
         "./tests/core-ideals/cardinality-selection.test.ts",
+        "./tests/core-ideals/cardinality-sqlserver-projection.test.ts",
+        "./tests/core-ideals/cardinality-sqlserver.test.ts",
         "./tests/core-ideals/cardinality-tablespec-projection.test.ts",
         "./tests/core-ideals/cardinality-tablespec.test.ts",
         "./tests/core-ideals/classification-policy.test.ts",
@@ -692,13 +708,12 @@
     }
   ],
   "limits": [
-    "TableSpec and PostgreSQL qualification does not run the separate Cardinality ideal admission or all-five gate; SQL Server, Avro and Parquet remain pending.",
-    "Classification covers paired catalog/type observations on PostgreSQL 17.4; browser agreement does not authenticate database snapshot provenance.",
-    "Basic scalar shape is independent of value range, exactness, identity and availability.",
-    "Native arrays retain rank/lower-bound/domain refinements; checked sequence projection reports homogeneous item constraints.",
-    "JSONB object projection retains key/value-domain losses; native-only reclassification remains unspecified and cannot reconstruct author map intent.",
-    "Nested/cyclic item references, independent availability and unknown metadata remain in receipts with explicit residuals; no recursive native type or value conversion is fabricated.",
-    "Regression scope covers core and five priority systems, not the entire repository."
+    "TableSpec, PostgreSQL and SQL Server qualification does not run the separate Cardinality admission or all-five gate; Avro and Parquet remain pending.",
+    "Logical Fields are separately identified and linked to preserved physical columns; JSON representation selection is explicit and only the pinned enabled/trusted/non-replication-exempt constraint profile is recognized.",
+    "Scalar shape does not assert value-domain exactness, identity or availability.",
+    "JSON ARRAY/OBJECT checks establish outer shape, not item typing, unique object keys, or arbitrary value conversion.",
+    "Nested/cyclic item definitions, independent availability and unknown metadata remain in receipts with explicit residuals; no recursive conversion, row decoder or child-table layout is implemented.",
+    "Regression scope is core and five priority systems, not the full repository."
   ],
   "sha256": {
     "docs/helix/01-frame/user-stories/US-042-core-cardinality.md": "df9bad41db019cc156bd66d2b7f4078d7a23d7888ccdb791f99a9f33a4e46208",
@@ -810,6 +825,7 @@
     "fixtures/parquet/nullability/struct-1-1-present-1.parquet": "fe603c295def1f38ff3d945735d8946073f8c383954a586a4e3a1b5a26a33ffd",
     "fixtures/postgresql/cardinality-scalars.sql": "c0d311d5fdf922491b1edd52869d51fc608aaf1efd119af178c0f33afd139957",
     "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
+    "fixtures/sqlserver/cardinality.sql": "c348d6a4f4fc774919db246e1078c11724357e0e4185a4ab89fc9d5566cf4edb",
     "fixtures/validation/avro-nullability-field-refresh-regression.log": "afa31f0c2b9df0a8c31536fd7e01ed5802a0f7d77cf185bd5c2a03afafbeeaa6",
     "fixtures/validation/cardinality-core-acceptance-evidence.json": "f8b92578fa59ade74945f6cf2abe15107339c5ac5c4ae23039daaf9d323c02d2",
     "fixtures/validation/cardinality-core-refresh-regression.log": "4e4ebca3b561f9a824e742f93f90f76aa1038545402780824ba14f2385d3c284",
@@ -817,20 +833,23 @@
     "fixtures/validation/cardinality-postgresql-browser.json": "a2ad3d26e05ca3842fb4a31bb7c6010f69526c41fceb6b0b2fd004ca245e2bff",
     "fixtures/validation/cardinality-postgresql-catalog-browser.json": "21dad8823e89b9c2e8d965fa4d780f9c1f24c0a9b2726483f75a1f0be7d40a01",
     "fixtures/validation/cardinality-postgresql-catalog-native.json": "93cf4ed6f0ca4ce8b5e6088f57a59056eead20131b9b7b56340f702a5f7db579",
-    "fixtures/validation/cardinality-postgresql-field-gate-command.log": "9f64ec80e9652f34c179d1554e68a83a9e5e0db24769feb7e65c84b829f28665",
-    "fixtures/validation/cardinality-postgresql-field-gate-tests.log": "07e9604847f6c0e5d4d1046923fa8b2658319051c25c5d0c7f57a0c3d699ab30",
     "fixtures/validation/cardinality-postgresql-native.json": "4e8dcfefcce297ad06ea106681c4eb85d7a2db5aee34caa2ed2388bb2cc59c2f",
-    "fixtures/validation/cardinality-postgresql-nullability-gate-command.log": "7ac1d46fa9e9c9832fb7c01e562738091486c6e8df7372fdc575dd33203dafc7",
-    "fixtures/validation/cardinality-postgresql-nullability-gate-tests.log": "b87319392a9eb04ff562ff45b3aed0d1c256073abd02a61181d9ceacf5c57c62",
     "fixtures/validation/cardinality-postgresql-profile-native.json": "1c6b68b2f4f90a264c34c0d689c89cadd8208a96ef2261119952bcda011cf6d0",
     "fixtures/validation/cardinality-postgresql-projection-browser.json": "0a22bf97bc078a7e07763083911f26d5e08368d0e6e9a66b24b712265eae8a38",
     "fixtures/validation/cardinality-postgresql-projection-native.json": "3d38e283aab8ac72725a3b2a26e0d94db4c63d2e0b33ed46fb089f2acd5e61a3",
     "fixtures/validation/cardinality-postgresql-refresh-regression.log": "cfbf551d34d90a97bfeb36e23e8fdbfb3128fa3a044f67bf8c13e5e397651137",
     "fixtures/validation/cardinality-selection-browser.json": "6cad751e93e023865ec694ad2bcd03f1b7db096116ad89709a78c3f9b8a94206",
+    "fixtures/validation/cardinality-sqlserver-browser.json": "9966519fa219398a76ffef0046ee298262de824932bb919d5f9089ec0bea7953",
+    "fixtures/validation/cardinality-sqlserver-classification-browser.json": "1de741f5fb84479e93df386cc7b36fcdf696d5eb37ecea9a5f5c3aaabfacfc07",
     "fixtures/validation/cardinality-sqlserver-field-gate-command.log": "12f07b0d8b6a7baee9c5b78cc6c8c53718941cd636310eb813147a028c37f171",
     "fixtures/validation/cardinality-sqlserver-field-gate-tests.log": "22b2c3583609493cc148f0dd6cbe56b2c3f1b2f4f6c004a45a5940c01860c600",
+    "fixtures/validation/cardinality-sqlserver-native.json": "d06e95def13eef7d14a004f818d0dde7779b69ea0b96653e4d49db68ab4cc761",
     "fixtures/validation/cardinality-sqlserver-nullability-gate-command.log": "3c2c545949589452af4445ee7bf9bf75101d0f9d7e1ffea7f6d4010c38b41848",
     "fixtures/validation/cardinality-sqlserver-nullability-gate-tests.log": "b4e54b21073ce7c045b49a9c7179c7ebf3dc5dde5201ad9cd67fbae22a4551e9",
+    "fixtures/validation/cardinality-sqlserver-profile-native.json": "74dfd14a22d1fcb995f761550c3f71771f4ae6cc8c3f34bdc203e6d31aa4c758",
+    "fixtures/validation/cardinality-sqlserver-projection-browser.json": "969e62f0fe8795143da60c7d23a98cc80d5457e6d9fb651d8d06f826a47dfa81",
+    "fixtures/validation/cardinality-sqlserver-projection-native.json": "8fb97863874b8af1627bf5452b757f65fa04a8101be7723965e740bca331c446",
+    "fixtures/validation/cardinality-sqlserver-refresh-regression.log": "e36ff5062a88fae2203c4f3a7caface2c156f8628ed80e76bd57e523419bde55",
     "fixtures/validation/cardinality-tablespec-browser.json": "ec9770ce239a2b6d2d3d26317c5f29d2c85b41353b5e89b32457e7dacc70b1c7",
     "fixtures/validation/cardinality-tablespec-classification-browser.json": "4f7307248d15939688cdd12645a4f98db47a427b64aacf6620242fe4c80ed4f1",
     "fixtures/validation/cardinality-tablespec-classification-native.json": "12133a64a1da65cc4d9ab32f5a230db6f40e12b15f4e84d2f8cf72cbe3a87135",
@@ -894,6 +913,7 @@
     "fixtures/validation/nullability-tablespec-projection.json": "bdd40f22bf364441eefc9130118f6a27c78e58b4145a4463166d63d6c327648e",
     "fixtures/validation/parquet-nullability-field-refresh-regression.log": "9e0a4d2628a8215ddea709b6ab72a47c01501258337cecdb9d68147f68a9d949",
     "fixtures/validation/parquet-nullability-refresh-interrupted-attempt.json": "27454e5a335f282c390f211861e95e1e530c92b265b5ec6fb9c6b186ef6e48df",
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": "6653b22277d925c3df3be4b7fb5eeb77c9cfba13aaec8780eb4322e30b156d60",
     "fixtures/validation/postgresql-ddl-kinds-browser.json": "75802724f682303194763e0b5315cbdabe61eaa9b514cae67f2e5c7edc3cfc5e",
     "fixtures/validation/postgresql-ddl-kinds-native.json": "d1ad03fcecbc0ec9fb7a51acadb29c563da7403915af209a0240215ac056f906",
     "fixtures/validation/postgresql-nullability-field-refresh-regression.log": "925333e4fa2b7572f1a183e547a4515e97a808034ea4708270dae0a68a1c0194",
@@ -931,6 +951,15 @@
     "scripts/core-ideals/cardinality-selection-browser.ts": "4a1d4f761add3f98f04d1f1b782442e52c90e70f238980c67f9d505359509fd8",
     "scripts/core-ideals/cardinality-selection-cases.ts": "e3c69a7bfff001b6a3c28d8fe933a2ea20cfcd854d1c2c95f44781e157a0cef2",
     "scripts/core-ideals/cardinality-selection-schema.ts": "c918aa96e8ea507d65b023e0f90853e1793a9800be42002567e4ae920ca5a499",
+    "scripts/core-ideals/cardinality-sqlserver-browser.ts": "360c78cbfa4a207c010129b5f34d96643c344b4aa84d2ca843794748c9241861",
+    "scripts/core-ideals/cardinality-sqlserver-classification-browser.ts": "d85687cba0adb691dee5718fcaa532ada81f206ead648269b18c5520141e9c49",
+    "scripts/core-ideals/cardinality-sqlserver-oracle.ts": "f2e1e0906a97b9edb018562c06cae0f6f72eb78e874d13bf5579d5fc87a37555",
+    "scripts/core-ideals/cardinality-sqlserver-profile-oracle.ts": "d45afd3a6179cbfda4ca0ed543246e0ac914b01043ce6468553f89d2deec0fe8",
+    "scripts/core-ideals/cardinality-sqlserver-projection-browser.ts": "055478c83840a1de5e3af5b2b35ec8ef5ed64873a464ef0983ce18515f917e0e",
+    "scripts/core-ideals/cardinality-sqlserver-projection-cases.ts": "637f0fe6f702c8f9767be48cc34ced890f7e29a8cae5357fa1998746ed1926ae",
+    "scripts/core-ideals/cardinality-sqlserver-projection-oracle.ts": "d774c78b40458b49c3b9893c267565d9d2a6643a9bd40f752ca6a4d28138dfc1",
+    "scripts/core-ideals/cardinality-sqlserver-projection-schema.ts": "0344a801df88441ce5ca46bb1dc13ae4e3ef239ae540666d54174617a34dedcb",
+    "scripts/core-ideals/cardinality-sqlserver-schema.ts": "b145291e09a2a2d86561ab33e2e6314271569f424009c4217e7fe4b75127c58f",
     "scripts/core-ideals/cardinality-tablespec-browser.ts": "245f8e604b76ed8f74f00542a39711863d893b4962a6de11020be06e7803dcd3",
     "scripts/core-ideals/cardinality-tablespec-cases.ts": "5c0fcdb5b17495c7112a33b734d95608dce3ebd75c3d76711059861a23970bef",
     "scripts/core-ideals/cardinality-tablespec-classification-browser.ts": "7f2eea1bbfe443eeb220aa7550f1c0e5bf9676780abb5cfa1bd1ff09614d5e64",
@@ -992,6 +1021,7 @@
     "spec/core/cardinality-operation.schema.json": "d4110cace2e97c968d6b906515036c7a46a2007d6a45a79cbbd8d72967aa7560",
     "spec/core/cardinality-postgresql-projection.schema.json": "ab8754f6fa3cc08ff0c5ca8cf3c720d2306673970b6615e06549bf28e7a8eb6d",
     "spec/core/cardinality-selection.schema.json": "e21f2f375dc5a38e22107feb5cd5dc27e3ea3a6c808b3910b5ef9625badbbb46",
+    "spec/core/cardinality-sqlserver-projection.schema.json": "2078f923149696c5c8917e25de2287398a38fdc968a200d9b972e1446ab66024",
     "spec/core/cardinality-tablespec-projection.schema.json": "90295503a98d3e86d69a882cccc99bf961524d4ec6364d336863e49fd45e30a1",
     "spec/core/cardinality-transition.schema.json": "5ebf87ec95c193716add27bc17c5324050b60519b74fcc50c807ef7fca80e8db",
     "spec/core/kind-operation-v2.schema.json": "6178c17dcfff69d517ce7e2cb3eaa75e62910fce82c10b7413532a276f87501b",
@@ -1011,6 +1041,7 @@
     "spec/core/postgresql-nullability-classification.schema.json": "d665d8c558d77682a649caaf9765ef1230e89075fa97dbaf5232736e1e9d2872",
     "spec/core/record-type-operation-v2.schema.json": "972607c0cb34bf5d8db5cf11575f07a9a28f3537489ea2df0c79c3c3979beff9",
     "spec/core/record-type-operation-v3.schema.json": "20b19a83b6e61c3c8ed0a220f9295f13db27fa4f68dd3b83a11f4c6c13c84586",
+    "spec/core/sqlserver-cardinality-classification.schema.json": "669c52050ee28c8754923ea4ddd3487c5a568bc745a63dd7e4fa4015c7964a46",
     "spec/core/sqlserver-nullability-classification.schema.json": "ced4815baa519f401d386dad494cfb9ce2b421261e9bb2118a14224b3923e2b4",
     "spec/core/tablespec-cardinality-classification.schema.json": "43e08e8352b173239d35ec7dc709deb5aa35ff2c0742fa5dc956c281bf7183ae",
     "spec/core/tablespec-nullability-classification.schema.json": "debd279459d074869842eb3cb00e1a9cda9f139d4d1375ff7d7339ec8ef36eb4",
@@ -1023,6 +1054,8 @@
     "spec/extensions/postgresql-catalog/cardinality-v1.schema.json": "a3f37c4d48dae50f7459017c520dca231471b14d21cd5a0e9b6df9120d6a10d6",
     "spec/extensions/postgresql-nullability/package.json": "ae105063d50c5b7213b23a5cbe8dfec75cb3f9b41eb1d1e0d03352191232e53b",
     "spec/extensions/postgresql-nullability/schema.json": "2bc17a61ba27967d199bd3dc2dd175170841bd897b62f88dfb604e6b4426eea1",
+    "spec/extensions/sqlserver-cardinality/package.json": "eee8ae16bdece81fc3534a3ae78dfac683c9eedc48ab3cf31b7548458eb34591",
+    "spec/extensions/sqlserver-cardinality/schema.json": "27e0a63019e60cdda2bb2f5f34c5d4a7d43d0e744da4d659909d3759773abede",
     "spec/extensions/sqlserver-nullability/native.schema.json": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0",
     "spec/extensions/sqlserver-nullability/package.json": "302cbd60ba8cb4704cd1c35d433720e391e6e5cb97d31939e58f245bf0a8b3fa",
     "spec/extensions/sqlserver-nullability/schema.json": "e05d7cad7550802d9014958dd0664c75571de8f71554779ed3ca6a65a1bf65a7",
@@ -1034,6 +1067,8 @@
     "src/core-ideals/avro-availability-type.ts": "00189cee505d3d397d0b60b97560305b76035d412047fd385427a6b1f772c142",
     "src/core-ideals/cardinality-postgresql-projection.ts": "2a97aa3bec0dba48782119771c9b2e299d83971c713c3ff86250711e0e4355f5",
     "src/core-ideals/cardinality-postgresql.ts": "5fb1aaf67bd53611c66f9e56635c53fc7458705c466974475e4bda235391f608",
+    "src/core-ideals/cardinality-sqlserver-projection.ts": "474b1bcbbc8c7d8f5e6c0268d6ad360dfd342b88fe801c2d53218e2b668c9c8e",
+    "src/core-ideals/cardinality-sqlserver.ts": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756",
     "src/core-ideals/cardinality-tablespec-projection.ts": "f73c2429a75bf5a77ef7020a105975f11e78d5817dd03a4487a974e37c2c2052",
     "src/core-ideals/cardinality-tablespec.ts": "e63b7438c04f01d52996d9970cf242881fc3f00773fc5e78b24e4cc448de94c1",
     "src/core-ideals/nullability-avro-projection.ts": "2cd5ddfca2cc61571f6170ebd000cc274d8cb4962a67ae774c7b7c7fd2afaeff",
@@ -1063,6 +1098,8 @@
     "tests/core-ideals/cardinality-postgresql-projection.test.ts": "ceecf39247cb12cae75cc37da5e6bfb651f2c890e772f46f59fefed675886d7c",
     "tests/core-ideals/cardinality-postgresql.test.ts": "7b0fb3d8b92324472206c272780ed98c008410e69ffa63b5c6c75e048e713d9b",
     "tests/core-ideals/cardinality-selection.test.ts": "33b27b7a03d3a33496d4937eb84e75f3ac8d6d48684e5f4f4df57dbb25ff616a",
+    "tests/core-ideals/cardinality-sqlserver-projection.test.ts": "4c552f1c0e214d0ee46393339bc90b8d3dc4369ae17b78de56fd32f4bf3d4de6",
+    "tests/core-ideals/cardinality-sqlserver.test.ts": "0269226e76ef9af890bf90e86eb9bafc7b1b40aaf36d1226549e8d8c75a89fdc",
     "tests/core-ideals/cardinality-tablespec-projection.test.ts": "24107e498aa6e751f8f20484a535c525758191dae6ef0661fc05b5b646eb7c62",
     "tests/core-ideals/cardinality-tablespec.test.ts": "a660ea07fd851bc85a72b47d18258cc3888424289ce170f6aed781d86f6fb951",
     "tests/core-ideals/field-conformance.test.ts": "b285450d2069bb20932a906252c0fb2208f558694461b443ba26f62970e3f17e",
@@ -1077,58 +1114,5 @@
     "tests/core-ideals/nullability-sqlserver.test.ts": "07de42f5e625ff9aa9540153021c2e3be4f3bd0b70dbd5a32973469fce2c8fb3",
     "tests/core/cardinality-ideals.test.ts": "542fc37156602067ca4c6beb5cebb4abfaf754f6969fb7977b0f68842dc1ea5b",
     "tests/core/cardinality-operations.test.ts": "e1be48e863f741d8dbd2fa8197e7f211bcf03a8c8b69a62f98c47d92ac357d15"
-  },
-  "revalidation": {
-    "reason": "Existing claims rerun after SQL Server Cardinality implementation; fresh five-system checks, prior gates and documentation status update",
-    "evidence": "fixtures/validation/field-gate-refresh-evidence.json",
-    "gateResults": {
-      "field": {
-        "tests": 3,
-        "assertions": 25,
-        "failures": 0,
-        "log": "fixtures/validation/cardinality-sqlserver-field-gate-tests.log",
-        "conformance": "fixtures/validation/field-conformance.json"
-      },
-      "nullability": {
-        "tests": 2,
-        "assertions": 17,
-        "failures": 0,
-        "log": "fixtures/validation/cardinality-sqlserver-nullability-gate-tests.log",
-        "conformance": "fixtures/validation/nullability-conformance.json"
-      }
-    },
-    "previousFingerprints": {
-      "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "5492f0d1ad5975f300681824896df645f354ac6dba05987fdb0c0615403f2276",
-      "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "d634ed3c2615468443f0f5b3c22bbbcce92e07843e12f34260d694285f325c33",
-      "docs/helix/03-test/test-plan.md": "4578d49888eeb08473d58d15c74d0b2a54c3e828226fa905a9d05f5e43d0017e",
-      "docs/helix/04-build/implementation-plan.md": "69ec2b4aadcc8f3a9e0e54dc56b7bdfa1bc5496dff2040fb5962bac094ff17bc",
-      "docs/helix/README.md": "3785e2dc28ca15e079582f97a0efcf46a129782f2c54b4d2ad056aff0f1ecef9",
-      "fixtures/validation/cardinality-core-acceptance-evidence.json": "800afdb651c5f7dac11c5c3bcc4bfda48f90badd30a6662dfe57d8d7ee9bdfb2",
-      "fixtures/validation/cardinality-field-operations-browser.json": "168c65a67ce9b37f1dc4811209b499694d9dc35b74795cbf9186f4161d3a3af9",
-      "fixtures/validation/cardinality-postgresql-browser.json": "95086780878f5e68e221050319f264eedaed3e4cffa5677654c3244ad877fb96",
-      "fixtures/validation/cardinality-postgresql-catalog-browser.json": "47b59811b4e93162b487ea379d5cc18e6f604da09323653cb069de52d51cd809",
-      "fixtures/validation/cardinality-postgresql-projection-browser.json": "c5e264bb390b7737aeab45e289abe0a3cd17df1a6cef796e3594e6eadfe01d85",
-      "fixtures/validation/cardinality-selection-browser.json": "476d272360178dde50e63d5d985b3875e7241a0659e0e9afd40418c8f4fca277",
-      "fixtures/validation/cardinality-tablespec-browser.json": "0f2b25fbeca34c49a06690bf050e9632021e5d064b8b07d863e7963a87717797",
-      "fixtures/validation/core-cardinality-browser.json": "a8c55651de6cc4e96aa039ea6f3ab197aa4448b936973870f86d3a718c2bc8c8",
-      "fixtures/validation/core-cardinality-operations-browser.json": "5006cf6abf921c265315b5c0b0c1bd92b49504fadc201b6b9bcf39623b2fd02e",
-      "fixtures/validation/field-conformance.json": "a5b2da4a9eca471fc39e744619f3e42e956dcf886d894d784fe7b63bc15ef5be",
-      "fixtures/validation/field-gate-refresh-evidence.json": "dd0e0db666fedeb6a4ef1d7b3da6b311d35b778eec1cf5779d270cbdee675f10",
-      "fixtures/validation/nullability-avro-browser.json": "4167715a5f2681b33a462a72312e55ece521e2428533279ae16fdb1421f00439",
-      "fixtures/validation/nullability-avro-projection-browser.json": "379035a653f4acdedcdc756d34dab7a66a17b436f08ec5652a555045c5cc526b",
-      "fixtures/validation/nullability-avro-projection-native.json": "d77cbb23f39b28b84c5fe8629a81cad518be9eb797bd976977804d1781a9cb01",
-      "fixtures/validation/nullability-conformance.json": "74a5e8403b2c09f8050cd299c53cc5092223b1dacfcdd0969adb7f61d084cd93",
-      "fixtures/validation/nullability-gate-acceptance-evidence.json": "a4ccfd1386021db162c125e753db1016f3dedff62efc265bce3615e1ba1f7164",
-      "fixtures/validation/nullability-parquet-browser.json": "f3be2710c27c750b58f991d9d357bdef8af6ed575e3fcd2d5fa08ed9638d5f74",
-      "fixtures/validation/nullability-parquet-projection-browser.json": "1cf4b6680b6306b4b8731efb823826450d2f2c0967295b680354f59b4b64b25d",
-      "fixtures/validation/nullability-postgresql-browser.json": "1169f25a6a4675716580c73d2cf0e9ddb60b02703e5fbcd219aafa5e7781099c",
-      "fixtures/validation/nullability-postgresql-projection-browser.json": "6e61dcfc5d40fa16c593b2a5d4c1a775949ce96bbeb56c2abed8ced428e00575",
-      "fixtures/validation/nullability-sqlserver-browser.json": "c05fd6305803726a007fd65291b0a51375db885be7cf74384ffd05b281d67339",
-      "fixtures/validation/nullability-sqlserver-native.json": "69229b09efb18d198709eeeb7c6c926ef3b54c1dd1e8fb8d9688ef1e95ef2fd8",
-      "fixtures/validation/nullability-sqlserver-projection-browser.json": "3ae7ba473389887b64c1fde9f5fa95f4caf8c4aca4e99a25dcad7c90c556e0f7",
-      "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": "eed81080ee4ca754feb7089221ba0b916e2874f136d44335b6e16b1d495f80b5",
-      "src/index.ts": "e67d8cfe265f27edb9d9a31e0c746061fdce40cea82fa83c2c700c871508615d"
-    },
-    "note": "Original counts and limits remain historical; SQL Server acceptance is separate, with no native equivalence or Cardinality admission claim."
   }
 }

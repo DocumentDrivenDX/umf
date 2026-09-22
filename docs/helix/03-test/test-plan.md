@@ -2720,3 +2720,17 @@ independent availability, unknown metadata and forged receipts. The
 [acceptance record](../../../fixtures/validation/postgresql-cardinality-acceptance-evidence.json)
 records the five-system refresh and 377 priority regression tests. This is
 qualified PostgreSQL support, not Cardinality admission or all-five delivery.
+
+
+## SQL Server Cardinality acceptance
+
+Run `bun scripts/core-ideals/cardinality-sqlserver-oracle.ts` and
+`bun scripts/core-ideals/cardinality-sqlserver-browser.ts`. Native evidence covers
+82 discovery probes, 104 projections over all 14 declared scalar carriers,
+68 emitted candidates, 36 strict blocks and 68 composed native/ideal recoveries.
+Chromium projection checks include 136 serialized ideal recoveries and 68 forged
+receipt refusals. Classification checks cover 56 representation/policy cases with
+72 native-text recoveries while preserving physical column metadata. The
+[acceptance record](../../../fixtures/validation/sqlserver-cardinality-acceptance-evidence.json)
+records the five-system refresh and 383 priority regression tests.
+Avro, Parquet and the concept admission/delivery gate remain required.

@@ -1,0 +1,41 @@
+{
+  "scope": "Qualified declared shape and explicit native carrier projection; retained native/ideal recovery; no native equivalence",
+  "nativeVersion": "16.0.4295.3",
+  "nativeEquivalence": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-profile-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "proofs": [
+    "fixtures/validation/cardinality-sqlserver-profile-native.json",
+    "fixtures/validation/cardinality-sqlserver-projection-native.json"
+  ],
+  "sha256": {
+    "fixtures/sqlserver/cardinality.sql": "c348d6a4f4fc774919db246e1078c11724357e0e4185a4ab89fc9d5566cf4edb",
+    "fixtures/validation/cardinality-sqlserver-profile-native.json": "74dfd14a22d1fcb995f761550c3f71771f4ae6cc8c3f34bdc203e6d31aa4c758",
+    "fixtures/validation/cardinality-sqlserver-projection-native.json": "8fb97863874b8af1627bf5452b757f65fa04a8101be7723965e740bca331c446",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
+    "scripts/core-ideals/cardinality-sqlserver-oracle.ts": "f2e1e0906a97b9edb018562c06cae0f6f72eb78e874d13bf5579d5fc87a37555",
+    "scripts/core-ideals/cardinality-sqlserver-profile-oracle.ts": "d45afd3a6179cbfda4ca0ed543246e0ac914b01043ce6468553f89d2deec0fe8",
+    "scripts/core-ideals/cardinality-sqlserver-projection-cases.ts": "637f0fe6f702c8f9767be48cc34ced890f7e29a8cae5357fa1998746ed1926ae",
+    "scripts/core-ideals/cardinality-sqlserver-projection-oracle.ts": "d774c78b40458b49c3b9893c267565d9d2a6643a9bd40f752ca6a4d28138dfc1",
+    "spec/core/cardinality-sqlserver-projection.schema.json": "2078f923149696c5c8917e25de2287398a38fdc968a200d9b972e1446ab66024",
+    "spec/core/sqlserver-cardinality-classification.schema.json": "669c52050ee28c8754923ea4ddd3487c5a568bc745a63dd7e4fa4015c7964a46",
+    "spec/extensions/sqlserver-cardinality/package.json": "eee8ae16bdece81fc3534a3ae78dfac683c9eedc48ab3cf31b7548458eb34591",
+    "spec/extensions/sqlserver-cardinality/schema.json": "27e0a63019e60cdda2bb2f5f34c5d4a7d43d0e744da4d659909d3759773abede",
+    "src/core-ideals/cardinality-sqlserver-projection.ts": "474b1bcbbc8c7d8f5e6c0268d6ad360dfd342b88fe801c2d53218e2b668c9c8e",
+    "src/core-ideals/cardinality-sqlserver.ts": "834154ff26b4f92923794923737560628f9d19bb96faf9a3ccfeebd82e05c756"
+  }
+}

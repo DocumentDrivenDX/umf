@@ -602,3 +602,15 @@ and `bun scripts/core-ideals/cardinality-sqlserver-browser.ts`. Full acceptance
 requires their fresh results, the five-system refresh and the separate existing
 Field/Nullability conformance gates. SQL Server qualification does not complete
 Avro, Parquet, or the separate Cardinality admission/delivery gate.
+
+
+### SQL Server qualified binding acceptance
+
+The [acceptance record](../../../../fixtures/validation/sqlserver-cardinality-acceptance-evidence.json)
+supersedes SQL Server acceptance-pending notes above. All 72 refresh steps and
+383 priority regression tests (35,600 assertions, 124 files)
+pass, followed by the separate Field and Nullability conformance gates. Support
+remains limited to the explicit representation and carrier profiles documented
+above; no recursive item conversion, row decoder, unrestricted map equivalence or
+arbitrary constraint-expression interpreter is claimed. Avro, Parquet and the
+separate Cardinality admission/delivery gate remain unfinished.
