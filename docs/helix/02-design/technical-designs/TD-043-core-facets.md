@@ -883,3 +883,44 @@ This checkpoint is not exported from the public entrypoint and does not change
 the extension package's import-only capability. Independent native execution of
 emitted targets, real-browser projection evidence, composition and full binding
 acceptance remain required; no native-equivalence claim is made.
+
+### Parquet facet discovery requirements
+
+Before implementing the Parquet binding, separate declared footer domains, Arrow
+array construction, Parquet writing and decoded values. A successful array
+construction is not evidence that a value is exactly preserved or that Parquet
+can represent the Arrow type. Preserve the original file, logical and converted
+annotations, physical capacity, field IDs and embedded Arrow metadata throughout.
+
+The [Parquet logical-type specification](https://raw.githubusercontent.com/apache/parquet-format/master/LogicalTypes.md)
+defines signed and unsigned integer widths of 8, 16, 32 and 64 bits, but leaves
+reader behavior for out-of-range stored values implementation-dependent. Decimal
+precision must fit its carrier and scale must be nonnegative and no greater than
+precision. Pin a specification revision in the eventual binding evidence;
+the linked moving document is discovery context only.
+
+An exploratory PyArrow 21.0.0 probe covered 81 inputs, with 36 Arrow array
+constructions and 34 Parquet writes succeeding. These results are not acceptance
+evidence; promote them into governed fixtures and assertions before using them
+to qualify the binding. They identify required negative and conversion cases:
+
+- `pa.array([1.5], type=integer_type, safe=True)` produced integer 1 for each
+  tested signed/unsigned width. A safe-construction flag cannot establish an
+  arbitrary-input exactness claim.
+- Binary64 `1.0000000000000002` became binary32 `1.0`; retain the permanent
+  float counterexample independently of integer or decimal facets.
+- Arrow fixed binary width zero accepted empty bytes, but Parquet writing
+  rejected a zero-width `FIXED_LEN_BYTE_ARRAY`. Do not reuse Avro's fixed-zero
+  exact maximum-length mapping without a distinct Parquet representation.
+- Arrow decimal precision 3, scale -1 accepted 1000; Parquet writing rejected
+  the negative scale. Keep that Arrow refinement as native information and an
+  explicit unsupported ideal mapping, not a silently altered decimal pair.
+- Custom maximum-length metadata did not constrain strings. Native metadata
+  retention and native enforcement require separate assertions.
+
+The governed corpus must also cover conflicting logical/converted annotations,
+malformed exact numeric metadata, fixed-size lower bounds, unknown refinements,
+and explicit scalar-item selection within containers. Reuse prior carrier code
+only through a separately qualified facet profile; do not silently widen the
+accepted 0.4.0 Cardinality APIs to 0.5.0. Parquet facets remain unimplemented;
+this subsection changes neither core semantics nor the current acceptance state.
