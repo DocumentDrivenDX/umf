@@ -1,0 +1,30 @@
+{
+  "scope": "Full pre-refresh Bun regression after public Avro facet projection; not a passing acceptance record",
+  "tests": 1123,
+  "passed": 1120,
+  "failed": 3,
+  "assertions": 110822,
+  "files": 302,
+  "seconds": 2119.42,
+  "failures": [
+    {
+      "gate": "Field",
+      "cause": "Missing dist/facet-node-tree.js after public build cleaned generated helpers"
+    },
+    {
+      "gate": "Nullability",
+      "cause": "Missing dist/facet-node-tree.js after public build cleaned generated helpers"
+    },
+    {
+      "gate": "Cardinality",
+      "cause": "Stale dist/umf.js fingerprint after public API addition"
+    }
+  ],
+  "requiredResolution": "Rebuild and rerun qualified native/browser evidence, publish verified current records, then rerun all three conformance commands and tests. Do not treat this log as passing.",
+  "log": "fixtures/validation/avro-facets-compatibility-tests.log",
+  "sha256": {
+    "fixtures/validation/avro-facets-compatibility-tests.log": "a1c5e61b296cc4fb7e76596608e861bef8260b0703efbd5b4380ad7f00f0d256"
+  },
+  "bindingAccepted": false,
+  "nativeEquivalence": false
+}
