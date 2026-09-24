@@ -4781,3 +4781,18 @@ All 118 core tests pass across 25 files (4,116 assertions). Chromium's public
 recoveries and 44 refusals. Typechecking, build and 318-schema / 53-package
 audits pass. The native/browser compatibility replay and subsequent adapter
 regression remain before core-task acceptance.
+
+
+### Relationship name-scope correction
+
+Commit `842727cb` corrects CONTRACT-041 forward-name validation: names are
+unique within their containing module, so assertions in different modules may
+use the same forward name on the same source Record. Inverse presentation
+collisions still reject across modules. Two corpus cases exercise the distinction.
+All 118 core tests pass across 25 files (4,152 assertions); see the
+[name-scope regression record](../../fixtures/validation/relationship-name-scope-regression.json).
+Typechecking, the browser build and 318-schema / 53-package audits also pass.
+The incomplete compatibility run was deliberately cancelled after this source
+correction; a fresh 114-command replay is required before broad regression and
+the seven separate conformance/evidence test files. Core-task acceptance and
+relationship binding admission remain unclaimed.

@@ -1,0 +1,30 @@
+{
+  "scope": "Relationship forward-name module scope correction; focused core regression only, compatibility refresh and final core-task acceptance pending",
+  "executionCommit": "842727cbcb7b879d6e0fc9e1f361ee1e384ddf4c",
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "command": [
+    "bun",
+    "test",
+    "./tests/core/"
+  ],
+  "results": {
+    "tests": 118,
+    "files": 25,
+    "assertions": 4152,
+    "failures": 0
+  },
+  "regressions": [
+    "The same forward name on the same source Record is allowed in distinct containing modules.",
+    "Inverse presentation collisions on the same target Record still reject across modules."
+  ],
+  "logSha256": "d39c00508cec850910dbb772f4c06b0a9a27600d8b9633a33b5c0ca7980fec92",
+  "sha256": {
+    "src/validation/relationships.ts": "5d94c2df0847d0315b514a005407d6e95f34531d9822ae5b2db48f176673a932",
+    "scripts/core-relationship-cases.ts": "53c70e52f9f0780f8e25d967fe1d056e64423aac24063eada41967fd820e7809",
+    "fixtures/relationship/core-candidate.json": "ed7585b37556ba4318827aeac4d55a8a95d27cbc5d58583cf05776dc8016b1f1",
+    "tests/core/relationship-ideal.test.ts": "78a7911e1afa3a58ac29e4fe8f24e0c27ffd63231b165ac64c26021c52b753cb",
+    "tests/core/relationship-selection.test.ts": "2d25811bb982b77ae05fae9f47aee6a9240bbfd6027e6b6d48ec9ebd62c43336"
+  }
+}
