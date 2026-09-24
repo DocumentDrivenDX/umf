@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import {inspectBinding,projectBindingIndexes,readBindingDocument,writeBindingDocument,type Document} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectBinding,projectBindingIndexes,projectBindingToDelta,readBindingDocument,writeBindingDocument,type Document} from '../../src';
 
 const graph=await Bun.file('fixtures/projections/ddd-postgresql-tables/case.json').json();
 const delta=await Bun.file('fixtures/projections/ddd-postgresql-tables/delta-binding.json').json();
@@ -22,4 +22,32 @@ test('@covers US-046-AC1 @covers US-047-AC1: one authored graph has independent 
   expect(readBindingDocument(writeBindingDocument(binding,logical,format),logical,format)).toEqual(binding);
  }
  expect(logical).toEqual(before);expect(postgresql).toEqual(postgresqlBefore);
+});
+
+test('@covers US-046-AC2 @covers US-047-AC3: shared graph Delta clustering is native-readable and unsupported kinds retain residuals',async()=>{
+ const base='fixtures/projections/ddd-postgresql-tables/';
+ const source=await Bun.file(base+'delta-native.jsonl').text();
+ const candidate=await Bun.file(base+'delta-candidate.jsonl').text();
+ const oracle=await Bun.file(base+'delta-oracle.json').json();
+ const browser=await Bun.file(base+'delta-browser.json').json();
+ const native=captureDeltaLog(source,{id:'ddd-order-delta-source'});
+ const report=projectBindingToDelta(graph.logical as Document,delta as Document,native,'strict');
+ expect(report.status).toBe('projected');
+ expect(report.residuals).toEqual([]);
+ expect(report.candidate).toBe(candidate);
+ expect(exportDeltaLog(report.nativeArchive)).toBe(source);
+ expect(oracle.native.runtime).toBe('deltalake 1.6.4');
+ expect(oracle.native.sourceBytesRecovered).toBe(true);
+ expect(oracle.native.candidateBytesRecovered).toBe(true);
+ expect(browser.result.candidate).toBe(candidate);
+ expect(browser.result.strictBlocked).toBe(true);
+ expect(browser.result.reportResidualized).toBe(true);
+ const unsupported=structuredClone(delta) as Document;
+ const payload=(unsupported.extensions as Record<string,any>)['umf.binding'];
+ payload.indexes.push({name:'unsupported_gin',kind:'gin',on:[{field:{module:'sales',element:'Order',field:'tenant'}}],unique:false});
+ const strict=projectBindingToDelta(graph.logical as Document,unsupported,native,'strict');
+ const permissive=projectBindingToDelta(graph.logical as Document,unsupported,native,'report');
+ expect(strict.status).toBe('blocked');expect(strict.candidate).toBeUndefined();
+ expect(permissive.status).toBe('reported');
+ expect(permissive.residuals.some(row=>row.path.endsWith('/indexes/1'))).toBe(true);
 });

@@ -10,7 +10,11 @@ item semantics reported as residuals.
 `delta-binding.json` independently binds the same logical document to a Delta
 3.2 liquid-clustering choice for `Order.tenant`. The multi-target test checks
 both binding documents and their distinct index outcomes without changing the
-DDD model. It does not claim a Delta table-log projection for this graph.
+DDD model. `delta-native.jsonl` and `delta-candidate.jsonl` pin the Delta log
+proposal; `delta-oracle.json` records a native `deltalake 1.6.4` read, and
+`delta-browser.json` records Chromium parity and strict/report handling of an
+unsupported index. This covers one existing Order table log, not data-file
+clustering, multi-table generation or writer enforcement.
 `generated.sql` is the table-stage candidate; all indexes are residuals at
 that stage. The subsequent table-plus-index candidate, browser result and
 PostgreSQL oracle are under `../ddd-postgresql-tables-indexes/`. Four index

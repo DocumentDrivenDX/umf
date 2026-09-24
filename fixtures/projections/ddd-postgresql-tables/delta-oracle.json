@@ -1,0 +1,35 @@
+{
+  "scope": "Shared authored Order graph, separate Delta 3.2 binding and native domainMetadata proposal; no data-file clustering, multi-table generation or writer enforcement claim",
+  "native": {
+    "runtime": "deltalake 1.6.4",
+    "version": 1,
+    "sourceBytesRecovered": true,
+    "candidateBytesRecovered": true,
+    "schema": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "tenant",
+          "type": "string",
+          "nullable": false,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  "knownShapesValid": true,
+  "clusteringColumns": [
+    [
+      "tenant"
+    ]
+  ],
+  "sourceRecovered": true,
+  "sha256": {
+    "fixtures/projections/ddd-postgresql-tables/case.json": "6314d0cd46511a2a323a347b4b28a04745100f342a300c392398cce789944f91",
+    "fixtures/projections/ddd-postgresql-tables/delta-binding.json": "56f9ee0632e9a4d483f361268049b4dcdbab5c02fefda2e1c74438b031c03eef",
+    "fixtures/projections/ddd-postgresql-tables/delta-native.jsonl": "cf4af341923509b07024cb8b8170ed24be45df28c83f0b85a6399201b4fa9f8a",
+    "fixtures/projections/ddd-postgresql-tables/delta-candidate.jsonl": "7f1e0d46f2720b9f3b812d25f521bd204120cad693c4ccd797d23fc4558c4669",
+    "src/projections/binding-delta/index.ts": "186168d2cd2f2d80af16959acd9eb360b0fd14b7f126fae641f1e95c1f1e74a6",
+    "scripts/binding/multi-target-delta-native.py": "3c3ca566ac219d080aa5c0947b0c762e3351cc55ae5527e35e93fec16952fe99"
+  }
+}
