@@ -31,7 +31,7 @@ for row in rows:
  assert {k:v for k,v in after.items() if k!='outgoing'}=={k:v for k,v in before.items() if k!='outgoing'}
  assert {k:v for k,v in native.items() if k!='relationships'}=={k:v for k,v in original.items() if k!='relationships'}
  results.append({'case':row['name'],'runtimeAccepted':True,'checkedSchemaAccepted':True,'columnPairs':len(pairs),'metadataPreserved':True})
-assert len(results)==12
+assert len(results)==16
 refusal_path=Path('fixtures/validation/relationship-tablespec-native-refusals.json');paths.append(refusal_path)
 refusals=[]
 for row in json.loads(refusal_path.read_text()):
@@ -41,6 +41,6 @@ for row in json.loads(refusal_path.read_text()):
  else: refused=False
  assert refused, row['name']
  refusals.append({'case':row['name'],'checkedSchemaAccepted':True,'runtimeAccepted':False})
-assert len(refusals)==3
+assert len(refusals)==9
 proof={'nativeVersion':PIN,'scope':'Outgoing relationship metadata and explicit column pairs accepted by pinned native model/schema; no referential enforcement or join execution established','bindingAccepted':False,'nativeEquivalence':False,'versions':{p:importlib.metadata.version(p) for p in ['pydantic','jsonschema']},'rows':results,'refusals':refusals,'sha256':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(paths))}}
 Path('fixtures/validation/relationship-tablespec-projection-native.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps({'emitted':len(results),'nativeAccepted':len(results),'bindingAccepted':False}))

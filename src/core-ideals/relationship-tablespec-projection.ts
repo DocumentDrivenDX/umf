@@ -73,6 +73,26 @@ export function projectRelationshipToTableSpec(input:Document,authorInput:CoreRe
    const embedding=text(c.members.data_type)?.toUpperCase()==='EMBEDDING',dimension=c.members.dimension;
    if(embedding?dimension===undefined||dimension.kind==='null':dimension!==undefined&&dimension.kind!=='null')block('/'+label+'/columns/'+i,c,'Pinned native model requires dimension for EMBEDDING and forbids it on other native types');
   }
+  const config=node.members.source;
+  if(config?.kind==='object'){
+   const kind=text(config.members.kind);
+   const present=(n:NativeJson|undefined)=>n!==undefined&&n.kind!=='null';
+   if(kind==='jdbc'&&present(config.members.dbtable)===present(config.members.query))block('/'+label+'/source',config,'Pinned JDBC model requires exactly one of dbtable and query');
+   if(kind==='json'){
+    const projection=config.members.projection,entries=projection?.kind==='array'?projection.items:[];
+    const projected=entries.map(e=>e.kind==='object'?text(e.members.column):null);
+    // Match Python str.strip whitespace, rather than JavaScript trim (different for BOM/control characters).
+    const blank=/^[\u0009-\u000d\u001c-\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]*$/u;
+    if(!entries.length||new Set(projected).size!==entries.length||projected.some(n=>!n||!columnNames.has(n))||[...columnNames].some(n=>!projected.includes(n))||entries.some(e=>e.kind!=='object'||text(e.members.path)===null||blank.test(text(e.members.path)!)))block('/'+label+'/source',config,'Pinned JSON source requires exactly one nonblank-path projection for every native column');
+   }
+  }
+  for(const [i,c] of nativeColumns.entries())if(c.kind==='object'){
+   const derivation=c.members.derivation,candidates=derivation?.kind==='object'?derivation.members.candidates:undefined;
+   if(candidates?.kind==='array')for(const [j,candidate] of candidates.items.entries())if(candidate.kind==='object'){
+    const column=candidate.members.column,expression=candidate.members.expression;
+    if((!column||column.kind==='null')&&(!expression||expression.kind==='null'))block('/'+label+'/columns/'+i+'/derivation/candidates/'+j,candidate,'Pinned derivation candidate requires a column or expression');
+   }
+  }
   const names=[text(node.members.table_name),...(node.members.columns?.kind==='array'?node.members.columns.items.map(c=>c.kind==='object'?text(c.members.name):null):[])];
   if(names.some(n=>n===null||n.length>128||!/^[A-Za-z][A-Za-z0-9_]*(?![\s\S])/.test(n)))block('/'+label,node,'Pinned native model requires ASCII identifiers of at most 128 characters; no normalization is allowed');
  }

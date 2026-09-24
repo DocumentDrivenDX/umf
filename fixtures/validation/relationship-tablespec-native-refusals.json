@@ -10,5 +10,29 @@
   {
     "name": "invalid-native-dimension-report",
     "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"dimension\":3},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\",\"dimension\":3}]}"
+  },
+  {
+    "name": "invalid-native-jdbc-both-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"source\":{\"kind\":\"jdbc\",\"url\":\"jdbc:example:local\",\"dbtable\":\"orders\",\"query\":\"select 1\"}}"
+  },
+  {
+    "name": "invalid-native-jdbc-neither-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"source\":{\"kind\":\"jdbc\",\"url\":\"jdbc:example:local\"}}"
+  },
+  {
+    "name": "invalid-native-json-coverage-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"source\":{\"kind\":\"json\",\"projection\":[{\"column\":\"ref_0\",\"path\":\"ref_0\"}]}}"
+  },
+  {
+    "name": "invalid-native-json-duplicate-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"source\":{\"kind\":\"json\",\"projection\":[{\"column\":\"id\",\"path\":\"id\"},{\"column\":\"ref_0\",\"path\":\"ref_0\"},{\"column\":\"id\",\"path\":\"id\"}]}}"
+  },
+  {
+    "name": "invalid-native-json-path-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"source\":{\"kind\":\"json\",\"projection\":[{\"column\":\"id\",\"path\":\"\\u001c\"},{\"column\":\"ref_0\",\"path\":\"ref_0\"}]}}"
+  },
+  {
+    "name": "invalid-native-derivation-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"derivation\":{\"candidates\":[{\"table\":\"upstream\",\"priority\":1}]}},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\",\"derivation\":{\"candidates\":[{\"table\":\"upstream\",\"priority\":1}]}}]}"
   }
 ]

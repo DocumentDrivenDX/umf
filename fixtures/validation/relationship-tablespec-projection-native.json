@@ -91,6 +91,34 @@
       "checkedSchemaAccepted": true,
       "columnPairs": 1,
       "metadataPreserved": true
+    },
+    {
+      "case": "valid-jdbc-table-report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "columnPairs": 1,
+      "metadataPreserved": true
+    },
+    {
+      "case": "valid-jdbc-query-report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "columnPairs": 1,
+      "metadataPreserved": true
+    },
+    {
+      "case": "valid-json-source-report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "columnPairs": 1,
+      "metadataPreserved": true
+    },
+    {
+      "case": "valid-derivation-report",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true,
+      "columnPairs": 1,
+      "metadataPreserved": true
     }
   ],
   "refusals": [
@@ -108,12 +136,42 @@
       "case": "invalid-native-dimension-report",
       "checkedSchemaAccepted": true,
       "runtimeAccepted": false
+    },
+    {
+      "case": "invalid-native-jdbc-both-report",
+      "checkedSchemaAccepted": true,
+      "runtimeAccepted": false
+    },
+    {
+      "case": "invalid-native-jdbc-neither-report",
+      "checkedSchemaAccepted": true,
+      "runtimeAccepted": false
+    },
+    {
+      "case": "invalid-native-json-coverage-report",
+      "checkedSchemaAccepted": true,
+      "runtimeAccepted": false
+    },
+    {
+      "case": "invalid-native-json-duplicate-report",
+      "checkedSchemaAccepted": true,
+      "runtimeAccepted": false
+    },
+    {
+      "case": "invalid-native-json-path-report",
+      "checkedSchemaAccepted": true,
+      "runtimeAccepted": false
+    },
+    {
+      "case": "invalid-native-derivation-report",
+      "checkedSchemaAccepted": true,
+      "runtimeAccepted": false
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/relationship-tablespec-projection-oracle.py": "9732a9b427d7e437a3195b2b26860ede6ebef68a2a36661223281e04e78b8069",
-    "fixtures/validation/relationship-tablespec-native-refusals.json": "6fd6137fbaa59533492b41d585d1ca2a0ccd4a2a1d72b9889e9de5acc360404b",
-    "fixtures/validation/relationship-tablespec-projected-schemas.json": "8e6debaa4b9b42348871acaf9bbedab29a0c43ebd34491a26e9f365b534ebd70",
+    "/home/erik/Projects/umf/scripts/core-ideals/relationship-tablespec-projection-oracle.py": "50b190de5b4b547b7af29c46be414986fac0b0d77e277882eb99b519647dffb8",
+    "fixtures/validation/relationship-tablespec-native-refusals.json": "311f50ef40737772dd4e851b0a77b56c51daba59f8a5ade2e4c90b4692131255",
+    "fixtures/validation/relationship-tablespec-projected-schemas.json": "7372ac8129340ad7e7280bc3dcd0f77a7bdaa43c35269aa697ffb83d2878b1ff",
     "native/tablespec/sources/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "native/tablespec/sources/examples/providers.yaml": "d88a5076031afd12a1d953c0107dac339859c8e88d66de53d4dd7f34f5cdb3f8",
     "native/tablespec/sources/examples/synthea/umfs/providers/columns/GENDER.yaml": "7c1953ab3300460919f84f7f81c31088d458351f7e5474f2fb2a0cebc5153595",
@@ -132,9 +190,9 @@
     "native/tablespec/sources/tests/unit/test_umf_models.py": "80b4587721c060c913a1a073f705a7c9ed742351a3384b8223c2ec5c1c48b6ca",
     "native/tablespec/sources/tests/unit/test_umf_validator.py": "c6cf51ae211d723d4c1d3178820da30ff0001c3c4aac2ffc8e63dd84b6bf716a",
     "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
-    "scripts/core-ideals/relationship-tablespec-oracle.ts": "c40348cf477b23c9d52bc735d2fd4f7ec29e23257417977e898e0f620cec01ae",
-    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "718545bb2c21b94d4340ef66db059c964a4fb075e85aaf54eeb1cccbc1fb7144",
+    "scripts/core-ideals/relationship-tablespec-oracle.ts": "b0171420a50bb71997f910008670cfdd236d5d9d7e142b11ad8dbf9955e56066",
+    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "939c20e615f30cdbe1f708848da11828cc517e167a712455123afcd454c8c036",
     "spec/core/relationship-tablespec-projection.schema.json": "a65c41f20c9972102ca442c66a38d3139b9c8f112f1f4452884796989185d774",
-    "src/core-ideals/relationship-tablespec-projection.ts": "3620ed4f9bff2223ab00dee967b1b3e35e6ec09e94ee60db1189ea0daefc0f02"
+    "src/core-ideals/relationship-tablespec-projection.ts": "0cfab8907ae273b42f1a8dd1cdbf2ffcbc1394b2c83a81efbb9ecbb16ff14995"
   }
 }

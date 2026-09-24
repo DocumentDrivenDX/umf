@@ -31,7 +31,7 @@ try{
   if(getterCalls||'Bun'in globalThis||'process'in globalThis)throw Error('Host behavior leaked');
   return {cases:rows.length,projected,blocked,idealRecoveries,nativeSourcePairRecoveries,classifiedNativeRecoveries,refusals,getterCalls};
  });
- assert.deepEqual(checks,{cases:42,projected:12,blocked:30,idealRecoveries:24,nativeSourcePairRecoveries:24,classifiedNativeRecoveries:24,refusals:24,getterCalls:0});assert.deepEqual(externalRequests,[]);
+ assert.deepEqual(checks,{cases:62,projected:16,blocked:46,idealRecoveries:32,nativeSourcePairRecoveries:32,classifiedNativeRecoveries:32,refusals:32,getterCalls:0});assert.deepEqual(externalRequests,[]);
  const paths=['src/core-ideals/relationship-tablespec-projection.ts','src/core-ideals/relationship-tablespec.ts','src/index.ts','scripts/core-ideals/relationship-tablespec-projection-cases.ts','scripts/core-ideals/relationship-tablespec-projection-schema.ts','scripts/core-ideals/relationship-tablespec-projection-browser.ts','tests/core-ideals/relationship-tablespec-projection.test.ts','spec/core/relationship-tablespec-projection.schema.json','fixtures/validation/relationship-tablespec-projection-native.json','dist/umf.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/relationship-tablespec-projection-browser.json',JSON.stringify({scope:'Authored outgoing-metadata projection, fresh import/classification and retained logical/native recoveries; no execution enforcement, full binding acceptance or ideal admission',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));

@@ -4924,3 +4924,24 @@ execution counts in its history. Remaining native model validators, including
 source configuration and domain-specific column checks, still need review
 before broader binding acceptance; checked-schema acceptance alone cannot
 establish native runtime acceptance for arbitrary supplied tables.
+
+### TableSpec source-configuration checks
+
+The projection now checks the pinned runtime's JDBC table/query exclusivity,
+JSON projection coverage/duplicates/nonblank paths, and derivation candidate
+column-or-expression requirement. JSON path whitespace follows Python's native
+strip set, including its control-character differences from JavaScript trim.
+Six additional native probes demonstrate schema-accepted/runtime-rejected
+inputs; valid JDBC table/query, complete JSON projection and expression
+derivation controls remain projectable. The original configuration stays in
+the retained native archive and is never executed by UMF.
+
+The matrix now has 62 strict/report cases: sixteen emitted carriers and
+forty-six explicit blocks. All sixteen carriers pass the pinned model/schema;
+nine native schema/runtime disagreements are pinned. All 111 TableSpec tests
+pass 799 assertions. Chromium verifies 32 recoveries in each composed direction
+and 32 forged/stale refusals, alongside the refreshed classification suite.
+Typecheck and build pass. The checkpoint retains prior execution history.
+Domain-type compatibility still depends on the native registry, whose source
+and expected-type mapping must be pinned before that remaining validator can
+be qualified. Full binding acceptance and broader compatibility remain open.
