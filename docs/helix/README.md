@@ -108,8 +108,12 @@ classification, explicit authored constraints and retained recovery, with 260 sc
 compatibility tests, 137 generated-DDL insertion probes and current Chromium evidence.
 Unknown selected key/member/facet qualifiers remain unknown equality. See the
 [PostgreSQL Key acceptance](04-build/evidence/postgresql-key-acceptance.md).
-SQL Server, Avro and Parquet Key bindings and the separate Key ideal-admission
-gate remain unfinished. No native equivalence is claimed.
+The SQL Server Key binding also passes qualified acceptance: 19 generated tables,
+73 native write probes, 39 catalog-verified constraints and Chromium recovery.
+Explicit string/binary encoding preserves distinctions lost by native padding. See
+the [SQL Server Key acceptance](04-build/evidence/sqlserver-key-acceptance.md).
+Avro and Parquet Key bindings and the separate Key ideal-admission gate remain
+unfinished. No native equivalence is claimed.
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,

@@ -1,5 +1,5 @@
 {
-  "scope": "Pinned SQL Server native Key classification, exact retained source recovery and refusal parity only. Authored projection, full binding acceptance and ideal admission remain unfinished.",
+  "scope": "Pinned SQL Server native Key classification, exact retained source recovery and refusal parity only. Authored projection and binding acceptance have separate evidence; no ideal-admission claim.",
   "browser": "148.0.7778.0",
   "checks": {
     "observations": 25,
@@ -11,16 +11,16 @@
   },
   "externalRequests": [],
   "sha256": {
-    "scripts/core-ideals/key-sqlserver-browser.ts": "05c66ed38862d231c345ae2f0b694ca87bfaad46306ae0f660414837b80e4e91",
-    "scripts/core-ideals/key-sqlserver-schema.ts": "b5cdd64bb64edacd9da539bf0893b6a86460d4bfec627f65f50fef68e7f2ba6a",
+    "scripts/core-ideals/key-sqlserver-browser.ts": "0490c4740cbbb42042c1eee45916b2b10082baa7b6da17a216e8fb65e62c1ed2",
+    "scripts/core-ideals/key-sqlserver-schema.ts": "479b42a42f2617571687cae260ba15719d437e7f2e3f9aeb7f5ead890233bbe7",
     "src/core-ideals/key-sqlserver.ts": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5",
     "src/adapters/sqlserver/index.ts": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40",
-    "src/index.ts": "e45e0fadd248faf388a6984aafb67e359efa3892833f671f86ade3e281d39c39",
+    "src/index.ts": "23082ca32619fb68979611787b4498288f7876257f60dd92514969c5b8f6446d",
     "tests/core-ideals/key-sqlserver.test.ts": "df4a9f1823565f696b33b72befa4c7bf89118c96a0fcb2a0032c5b6c53a50616",
     "spec/core/sqlserver-key-classification.schema.json": "427aebea35e781a2b90c91c95704bffb68ff3c87230e6841fdbf3c4cb32fb097",
     "spec/extensions/sqlserver-keys/schema.json": "c3bd5ee83850740d56858620eb3411023c23f62d6b52d965fec2059c98d30f19",
-    "spec/extensions/sqlserver-keys/package.json": "0c6bf244e6ab93ca8a186209b0822d118d7be3b1df9f137c0563a993a48f1bab",
+    "spec/extensions/sqlserver-keys/package.json": "b9da11e76483b3737918ab6c8b29f3baf63f9d35d20532cc5268204a3eae5632",
     "fixtures/validation/key-sqlserver-discovery-native.json": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41",
-    "dist/umf.js": "99de8d5ee4329db40e5a987df7cc3effab603483051c9abf3f7df70a0f671f4e"
+    "dist/umf.js": "5e7ec4dc7d8889ebfa12d6bf7e5627d1c02c7548cadb4e3193e0067022281076"
   }
 }

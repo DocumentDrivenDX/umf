@@ -4,7 +4,7 @@ import type {Document} from '../../src/model/types';
 import type {KeySqlServerRequest} from '../../src/core-ideals/key-sqlserver-projection';
 export function sqlserverKeyAuthors(primary=true){
  const c=tableSpecKeyAuthors(primary);
- const request:KeySqlServerRequest={id:'pg-key-native',record:keyRecord,namespace:'umf_key_projection',tableName:'Orders',scope:'new-table-stored-values',mode:'report',columns:[{field:keyId,name:'order_id',nativeType:'int'},{field:keyCode,name:'external_code',nativeType:'nvarchar',nativeSize:32,encoding:{bytesColumn:'code_bytes',lengthColumn:'code_length'}}],keyNames:[{keyId:'stable-id',name:'order_identity'},{keyId:'stable-code',name:'external_identity'}]};
+ const request:KeySqlServerRequest={id:'sqlserver-key-native',record:keyRecord,namespace:'umf_key_projection',tableName:'Orders',scope:'new-table-stored-values',mode:'report',columns:[{field:keyId,name:'order_id',nativeType:'int'},{field:keyCode,name:'external_code',nativeType:'nvarchar',nativeSize:32,encoding:{bytesColumn:'code_bytes',lengthColumn:'code_length'}}],keyNames:[{keyId:'stable-id',name:'order_identity'},{keyId:'stable-code',name:'external_identity'}]};
  return {source:c.source,authors:c.authors,request};
 }
 export function sqlserverKeyProjectionCases(){
@@ -37,5 +37,7 @@ export function sqlserverKeyProjectionCases(){
  const primaryWide=sqlserverKeyAuthors();primaryWide.request.columns[1]!.nativeSize=449;
  const primary=declareCoreKey(primaryWide.authors[0]!.source,keyRecord,{id:'stable-code',name:'Code primary',fields:[keyCode],primary:true}),other=declareCoreKey(primary.target,keyRecord,{id:'stable-id',name:'Order identity',fields:[keyId]});
  rows.push({name:'primary-byte-budget',source:other.target,authors:[primary,other],request:primaryWide.request,expected:'blocked'});
+ const primaryBoundary=structuredClone(rows.find(r=>r.name==='primary-byte-budget')!);primaryBoundary.name='primary-byte-boundary';primaryBoundary.request.columns[1]!.nativeSize=448;primaryBoundary.expected='projected';rows.push(primaryBoundary);
+ for(const size of [848,849]){const c=sqlserverKeyAuthors();c.request.columns[1]!.nativeSize=size;rows.push({name:size===848?'alternate-byte-boundary':'alternate-byte-overflow',...c,expected:size===848?'projected':'blocked'});}
  return rows;
 }

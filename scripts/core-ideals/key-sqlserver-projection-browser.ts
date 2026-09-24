@@ -19,7 +19,7 @@ try{
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals present');return {projected,blocked,recoveries,refusals};
  });
- assert.equal(checks.projected,17);assert.equal(checks.blocked,6);assert.equal(checks.recoveries,34);assert.equal(checks.refusals,34);assert.deepEqual(externalRequests,[]);
+ assert.equal(checks.projected,19);assert.equal(checks.blocked,7);assert.equal(checks.recoveries,38);assert.equal(checks.refusals,38);assert.deepEqual(externalRequests,[]);
  const paths=['scripts/core-ideals/key-sqlserver-projection-browser.ts','scripts/core-ideals/key-sqlserver-projection-cases.ts','src/core-ideals/key-sqlserver-projection.ts','src/core-ideals/key-sqlserver-carriers.ts','spec/core/key-sqlserver-projection.schema.json','src/index.ts','dist/umf.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/key-sqlserver-projection-browser.json',JSON.stringify({scope:'Authored SQL Server Key projection host/browser parity, retained ideal recovery and altered-receipt refusal; native execution is covered separately.',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));

@@ -4629,3 +4629,17 @@ This closes only the PostgreSQL binding task. SQL Server, Avro and Parquet Key
 bindings and the separate Key admission/all-five delivery gate remain open.
 Historical conformance gates retain their original scope; native equivalence
 and arbitrary SQL input conversion are not claimed.
+
+
+SQL Server Key binding acceptance now passes for SQL Server 2022 16.0.4295.3.
+Native observations preserve conditional/disabled enforcement and padding
+counterexamples without inventing author identity. Authored projection retains
+explicit physical encodings, session preconditions, stable-ID and domain residuals.
+The generated-DDL oracle passes 73 probes on 19 tables, verifies 39 constraints
+and exercises the accepted primary/alternate byte limits. Chromium verifies
+38 ideal recoveries, two native archive recoveries and strict/forged/stale refusals.
+The [SQL Server Key acceptance](evidence/sqlserver-key-acceptance.md) records
+the scoped core/SQL Server regression command and source fingerprints.
+Avro and Parquet bindings remain before the separate Key admission/all-five gate.
+Earlier conformance gates retain their own execution scope; no native equivalence
+or exact arbitrary-input conversion is claimed.
