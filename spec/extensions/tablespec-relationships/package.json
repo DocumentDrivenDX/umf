@@ -1,0 +1,252 @@
+{
+  "id": "umf.tablespec.relationships",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Experimental TableSpec relationship metadata observations with retained native recovery",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:tablespec:relationship-binding:1.0.0",
+    "title": "TableSpec native relationship observations; not authored associations",
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "profile",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.tablespec.relationships",
+          "version": "1.0.0",
+          "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+          "subset": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement"
+        }
+      },
+      "profile": {
+        "const": "declared-metadata"
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nativePath",
+            "carrier",
+            "state",
+            "native",
+            "sourceColumn",
+            "targetTable",
+            "targetColumn",
+            "resolvedSource",
+            "enforcement",
+            "authorIntent",
+            "basis"
+          ],
+          "properties": {
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "carrier": {
+              "enum": [
+                "foreign_keys",
+                "outgoing",
+                "referenced_by",
+                "incoming",
+                "unknown"
+              ]
+            },
+            "state": {
+              "enum": [
+                "declared",
+                "invalid",
+                "unknown"
+              ]
+            },
+            "native": {
+              "$ref": "#/$defs/node"
+            },
+            "sourceColumn": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "targetTable": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "targetColumn": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "resolvedSource": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "module",
+                    "element"
+                  ],
+                  "properties": {
+                    "module": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              ]
+            },
+            "enforcement": {
+              "const": "unknown"
+            },
+            "authorIntent": {
+              "const": "unknown"
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-041 and TD-045; native observations only. Authored projection, binding acceptance, ideal admission and native equivalence remain unclaimed.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "TableSpec",
+      "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+      "subset": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement"
+    },
+    "evidence": [
+      "tests/core-ideals/relationship-tablespec.test.ts",
+      "fixtures/validation/relationship-tablespec-discovery-native.json"
+    ]
+  }
+}

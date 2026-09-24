@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 53,
-  "passed": 53,
+  "packages": 54,
+  "passed": 54,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -657,6 +657,19 @@
         "system": "TableSpec",
         "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
         "subset": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-relationships/package.json",
+      "id": "umf.tablespec.relationships",
+      "version": "1.0.0",
+      "native": {
+        "system": "TableSpec",
+        "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement"
       },
       "evidenceCount": 2,
       "passed": true,

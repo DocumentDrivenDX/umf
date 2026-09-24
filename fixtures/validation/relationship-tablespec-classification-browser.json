@@ -1,0 +1,25 @@
+{
+  "scope": "Native metadata classification and retained archive recovery only; authored projection, binding acceptance and ideal admission remain unclaimed",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 22,
+    "recoveries": 44,
+    "strictBlocks": 19,
+    "forgedRefusals": 22,
+    "staleRefusals": 22,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/core-ideals/relationship-tablespec.ts": "0f14cfa43cfe85fe5b0b921860b0042f22b69d4fe707b5ca95f87a6e80e07d3f",
+    "src/index.ts": "6d9c64161d33572dc49f8feff69db71b061bae37f79eb7c91be916a1712e3a46",
+    "scripts/core-ideals/relationship-tablespec-schema.ts": "92a9d2b6e4b4da935ce1794f8e3eb8e6cfcb984a7665ad8038949e19a50a3c9a",
+    "scripts/core-ideals/relationship-tablespec-browser.ts": "777ebc4ce5c7d132da9be5edf9002f1ce6e2d17569fce58ed1c43ea1659d5a33",
+    "tests/core-ideals/relationship-tablespec.test.ts": "2a7fbf595ce5432327db47f0d6a6880837b61ec5eb6be4be15bc41a0512bf5bd",
+    "spec/core/tablespec-relationship-classification.schema.json": "d9b2250b5fd2348fbca245482b55d63cb623d650455ff4a9a765ac1a47d513a1",
+    "spec/extensions/tablespec-relationships/package.json": "fc05512091679adcbea05088e0b14abffd0bc8b55cc6a1a80bd7a89393bf7888",
+    "spec/extensions/tablespec-relationships/schema.json": "0c0cceddf5033bfe8d42e2811b64a0511677d8ba2f197ed062471edd618f0681",
+    "fixtures/validation/relationship-tablespec-discovery-native.json": "9141882534bc53fb991a18e92747fa0ad4cdfa07bd9511c8428b3cd3dbd73a73",
+    "dist/umf.js": "3ce5f57f0d9b8431686a01f5ccdb24da1b9bd92c9bcd49574f9ea922c058c8f0"
+  }
+}

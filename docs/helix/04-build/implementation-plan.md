@@ -4849,3 +4849,21 @@ classification/projection APIs, complete extension/receipt schemas, strict/repor
 losses, both composed recoveries and Chromium evidence remain required before
 TableSpec binding acceptance. Source-native multiplicity strings and join
 expressions must remain attached even when a supported subset is classified.
+
+### TableSpec relationship classification checkpoint
+
+The public classification/verification/native-recovery API and the complete
+`umf.tablespec.relationships` package/receipt schemas are implemented under
+TD-045. Native observations retain raw refinements and source paths, resolve
+only local outward source columns and never invent target Key identity or
+authored relationship intent. Strict mode blocks unresolved meaning; report
+mode retains it alongside the complete copied source. Existing authored 0.7
+relationships remain unchanged.
+
+Discovery and classification tests pass together: 47 tests, 339 assertions,
+zero failures. Chromium 148 passes 22 classification cases, 44 source recoveries,
+19 strict blocks and 22 each forged/stale receipt refusals, with no getter calls
+or external requests. Typechecking, build and all 320 schemas / 54 packages pass.
+See the [browser record](../../../fixtures/validation/relationship-tablespec-classification-browser.json).
+Authored projection, composed ideal/native recovery and full binding acceptance
+remain before closing `umf-95881098`; no admission or equivalence is claimed.

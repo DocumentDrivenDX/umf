@@ -360,3 +360,4 @@ export {default as coreKeyTupleOperationV2Schema} from '../spec/core/key-tuple-o
 export {selectCoreRelationships,verifyCoreRelationshipSelection} from './model/relationship-selection';
 export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSelectionEntry} from './model/relationship-selection';
 export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection.schema.json';
+export * from './core-ideals/relationship-tablespec';

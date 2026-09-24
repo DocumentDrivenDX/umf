@@ -188,3 +188,27 @@ tests passed. The experimental core implementation task is accepted in
 53 extension packages. This supersedes the pending core-task status of the
 checkpoints above. Native relationship bindings and the separate ideal-admission
 and delivery gates remain required; US-045 is not complete.
+
+### Experimental TableSpec native classification
+
+`classifyTableSpecRelationships` observes the pinned TableSpec metadata profile
+without creating authored relationships or upgrading its source envelope.
+`umf.tablespec.relationships` has a complete observation payload schema; the
+separate classification receipt schema supports source envelopes 0.1–0.7.
+Foreign-key and outgoing metadata expose raw endpoint names and, where present,
+the exact local source-column identity. Reverse/incoming and unknown metadata
+remain native observations. Every observation retains its complete native tree.
+
+`declared` means metadata was present with the recognized endpoint shape; it
+does not mean the native schema, participation strings, confidence or join
+expressions are valid. The operation does not establish remote target resolution,
+stable target Key identity, enforcement or authored intent. Source-qualified
+residuals retain these unknowns. Strict mode emits no candidate when residuals
+remain; report mode retains them with a structurally valid copied target.
+Conflicting extension content/version blocks in both modes. Receipt verification
+recomputes the classification and rejects modified receipts or stale targets.
+Native text and split-file bundles recover exactly, including unknown sidecars.
+
+The [Chromium classification record](../../../../fixtures/validation/relationship-tablespec-classification-browser.json)
+and Bun tests qualify this classification stage only. Authored down-projection,
+ideal recovery, composition and full TableSpec binding acceptance remain required.
