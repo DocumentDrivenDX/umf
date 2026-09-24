@@ -1,5 +1,5 @@
 {
-  "scope": "Parquet Key native observation, exact file recovery and refusals only; authored projection and full binding acceptance remain unfinished.",
+  "scope": "Parquet Key native observation, exact file recovery and refusals only; authored projection and binding acceptance have separate evidence; no ideal-admission claim.",
   "browser": "148.0.7778.0",
   "checks": {
     "classified": 7,
@@ -11,14 +11,14 @@
   },
   "externalRequests": [],
   "sha256": {
-    "scripts/core-ideals/key-parquet-browser.ts": "1e552d86f143827296557a4e043d4a7605ae3720bb2affbbf4e92bae9f3b56a0",
-    "scripts/core-ideals/key-parquet-schema.ts": "9616c2787193fc7eb16920873ce6b86637ae9a36aeb64924a4e573618f6c9c13",
+    "scripts/core-ideals/key-parquet-browser.ts": "fa101cc60373a59f7f24adaa60c1723554f2649e296ed9ef79f59de2c9bb1e4f",
+    "scripts/core-ideals/key-parquet-schema.ts": "e1c2c5b184bda867eb36778cdc29fa6b6d2931a295e2f8dd0b12dc1b4fd402c7",
     "src/core-ideals/key-parquet.ts": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2",
-    "src/index.ts": "ced72fc2aa7bde938cd06b94f65817fa2e33d8ebccaeafb5e880720560dcb815",
+    "src/index.ts": "97468aa8d398979462a1c4427bd53327bbd0d8b3b5d63792dcfafafe33c4244a",
     "tests/core-ideals/key-parquet.test.ts": "aeadd2f756af29a5f5c35f406b54d8c2d2f5286ceaa3d5cbe6d2152a5df4dedf",
     "fixtures/validation/key-parquet-discovery-native.json": "2326e341fd1042851a6d701cff1909009359d75ffbf1fb46c3b76c7e08891ee8",
     "spec/core/parquet-key-classification.schema.json": "ef33915a6f2484dcd09a16e0dbea7186b35b27576267fa0478bb58ce55096b16",
-    "spec/extensions/parquet-keys/package.json": "655acec75b17cb539f20902a8091c7b857a5e41166251e823cd84ab9d397e2ca",
-    "dist/umf.js": "845aabc72a1141fc5174360f87766a0e93a9caf2f7ed71d7eadec3364852346b"
+    "spec/extensions/parquet-keys/package.json": "0222eb3436b926c9fac2faf8d6c636e1b823620651ad32f1dccf47186b5202c8",
+    "dist/umf.js": "ad36fe1587f24f10074f491f67550e017a3655e4f064a1e81e6b0ce9192d3161"
   }
 }

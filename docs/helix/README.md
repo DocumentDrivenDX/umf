@@ -116,7 +116,11 @@ The Avro Key binding passes qualified acceptance with retained native archives
 and per-key authored residuals: 228 scoped compatibility tests, both pinned codecs
 and Chromium checks. Encoding preserves duplicates; boolean null coercion remains
 an explicit loss. See [Avro Key acceptance](04-build/evidence/avro-key-acceptance.md).
-Parquet and the separate Key ideal-admission/all-five gate remain unfinished. No native equivalence is claimed.
+The Parquet Key binding passes qualified acceptance: 253 scoped compatibility
+tests, 21 generated schemas checked with PyArrow, exact native byte recovery
+and Chromium recovery checks. Collection identity remains an explicit per-key
+residual. See [Parquet Key acceptance](04-build/evidence/parquet-key-acceptance.md).
+The separate Key ideal-admission/all-five gate remains unfinished. No native equivalence is claimed.
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,

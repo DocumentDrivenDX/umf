@@ -4656,3 +4656,19 @@ and strict/forged/stale refusals. See the
 [Avro Key acceptance](evidence/avro-key-acceptance.md) for fingerprints and limits.
 Parquet remains before the separate Key admission/all-five gate. Avro does not
 enforce collection uniqueness; successful encoding is not native equivalence.
+
+
+Parquet Key binding acceptance passes with PyArrow 21.0.0 and the pinned
+parquet-format definition. Native observations retain original bytes and never
+infer authored identity; generated required scalar schemas retain each key as
+an explicit identity/enforcement residual. The scoped Parquet/core regression
+passes 253 tests / 18,469 assertions across 64 files. Native checks cover 21
+generated schemas and duplicate write/read cases, 21 required-null refusals
+and twelve integer-input truncations. Chromium verifies fourteen classified
+source recoveries, two blocked-source recoveries and 42 authored ideal recoveries.
+All 63 native/browser fingerprints match; typechecking, browser build and
+306 schemas / 53 packages pass. See
+[Parquet Key acceptance](evidence/parquet-key-acceptance.md).
+All five individual Key binding tasks now have qualified acceptance evidence.
+The separate Key ideal-admission/all-five gate remains open; collection
+uniqueness in Parquet and native equivalence are not claimed.
