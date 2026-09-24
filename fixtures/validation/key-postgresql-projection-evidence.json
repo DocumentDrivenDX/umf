@@ -1,0 +1,91 @@
+{
+  "scope": "Authored PostgreSQL Key projection, retained native/ideal recovery and scoped core/Key compatibility. Full PostgreSQL binding acceptance and Key ideal admission remain unfinished.",
+  "command": [
+    "bun",
+    "test",
+    "./tests/core/cardinality-ideals.test.ts",
+    "./tests/core/cardinality-operations.test.ts",
+    "./tests/core/core.test.ts",
+    "./tests/core/deep-json-equality.test.ts",
+    "./tests/core/facet-authoring.test.ts",
+    "./tests/core/facet-ideals.test.ts",
+    "./tests/core/facet-transition.test.ts",
+    "./tests/core/field-ideals.test.ts",
+    "./tests/core/field-kind.test.ts",
+    "./tests/core/field-transition.test.ts",
+    "./tests/core/key-ideals.test.ts",
+    "./tests/core/key-operations.test.ts",
+    "./tests/core/key-transition.test.ts",
+    "./tests/core/key-tuple.test.ts",
+    "./tests/core/native-json.test.ts",
+    "./tests/core/nullability-authoring.test.ts",
+    "./tests/core/nullability-ideals.test.ts",
+    "./tests/core/nullability-transition.test.ts",
+    "./tests/core/scalar.test.ts",
+    "./tests/core/selection.test.ts",
+    "./tests/core-ideals/key-postgresql-catalog.test.ts",
+    "./tests/core-ideals/key-postgresql-correlation.test.ts",
+    "./tests/core-ideals/key-postgresql.test.ts",
+    "./tests/core-ideals/key-postgresql-projection.test.ts",
+    "./tests/core-ideals/key-tablespec.test.ts",
+    "./tests/core-ideals/key-tablespec-projection.test.ts"
+  ],
+  "result": {
+    "tests": 206,
+    "assertions": 4155,
+    "files": 26,
+    "failures": 0
+  },
+  "native": {
+    "serverVersion": 170004,
+    "cases": 17,
+    "projected": 14,
+    "blocked": 3,
+    "insertionProbes": 116
+  },
+  "browser": {
+    "observations": 17,
+    "recoveries": 2,
+    "strictBlocked": true,
+    "unknownTokensPreserved": true,
+    "refusals": 32,
+    "accessorReads": 0,
+    "deepRecoveries": 2,
+    "projectionCases": 17,
+    "projected": 14,
+    "projectionBlocks": 3,
+    "idealRecoveries": 28,
+    "nativeRecoveries": 28
+  },
+  "checks": [
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "bun scripts/core-ideals/key-postgresql-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-postgresql-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-postgresql-catalog-browser.ts"
+  ],
+  "schemas": 297,
+  "extensionPackages": 50,
+  "limitations": [
+    "Stored values in a newly created ordinary table only; arbitrary SQL input conversion, descendant relations and deployed state are not guaranteed.",
+    "Stable key IDs/names, author intent, unknown qualifiers and unprojected metadata recover from explicit residual receipts. Strict mode blocks these losses.",
+    "Native B-tree tuple limits, text NUL restrictions and carrier ranges remain explicit residuals.",
+    "Historical all-system conformance gates and complete PostgreSQL adapter compatibility were not refreshed."
+  ],
+  "sha256": {
+    "src/core-ideals/key-postgresql-projection.ts": "744aea6c04b670ad4d521b7d5b67a52a0f769d64901198a1c1a8cc653bc10bda",
+    "scripts/core-ideals/key-postgresql-projection-schema.ts": "d08571c35ab041d1a3d09e1eda37ab238c0cd8437784717c385e91eb2f58c662",
+    "spec/core/key-postgresql-projection.schema.json": "5db68f9826e1ea079789e8bdac4a59e7d8fce2c9629c4d6e38b8876c7301c921",
+    "scripts/core-ideals/key-postgresql-projection-cases.ts": "306699abb31f6ef0157c0a3f9d1ed3cb8142c346c99ec8dd3ffb6bae6d410184",
+    "tests/core-ideals/key-postgresql-projection.test.ts": "864042e1f92b520dce95f062f10e18d2a50482497c425f1f652e6cd97d9cfc1f",
+    "spec/extensions/postgresql-keys/package.json": "1be13ff028c19d1fc8f9c6cdea7a8c9985f248bec7d5a94585cd4c36322a6952",
+    "fixtures/validation/key-postgresql-projection-native.json": "c6f38fe0eaf94f22aa894cfcc42816842a646b283e31de0ec24fb629e10a3b3a",
+    "fixtures/validation/key-postgresql-browser.json": "278f2ebee4f8310eee560d6587153824ece1b4594d43ad1cce9e981523b0b5d2",
+    "fixtures/validation/key-postgresql-catalog-browser.json": "8834ed39fb0808d58cbebc81ca59f30567f901e81ab864bad21cc8936b30e31c",
+    "fixtures/extension-package-audit.json": "aa1d73a8c8c0cdfe280c9050fdae0756aa738af238179155fdf4df3dcc2e282b",
+    "fixtures/json-schema-audit.json": "f2d6c7d7931c96d6629a13b2c623f9f4e6432d7624fd72529c01d85fc72f9e78",
+    "src/index.ts": "0497601e37d5fdefe00f0c592f3c01daf582547936918bff735ecd4d79c5a854"
+  }
+}

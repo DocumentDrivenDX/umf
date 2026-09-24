@@ -1,0 +1,382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:key-postgresql-projection:1.0.0",
+  "title": "Explicit authored Key projection to PostgreSQL constraints with retained ideal recovery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "authors",
+    "request",
+    "binding",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-keys-postgresql"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.6.0"
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "record",
+        "namespace",
+        "tableName",
+        "scope",
+        "keyNames",
+        "mode",
+        "columns"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "module",
+            "element"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "const": "new-table-stored-values"
+        },
+        "keyNames": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "keyId",
+              "name"
+            ],
+            "properties": {
+              "keyId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "field",
+              "name",
+              "nativeType"
+            ],
+            "properties": {
+              "field": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nativeType": {
+                "enum": [
+                  "boolean",
+                  "smallint",
+                  "integer",
+                  "bigint",
+                  "numeric",
+                  "real",
+                  "double precision",
+                  "text",
+                  "bytea",
+                  "date",
+                  "time",
+                  "time with time zone",
+                  "timestamp",
+                  "timestamp with time zone"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.postgresql.keys",
+        "version": "1.0.0",
+        "nativeVersion": "17.4",
+        "subset": "Authored keys on a newly created ordinary table; explicit NOT DEFERRABLE primary/alternate constraints and NOT NULL, deterministic C text equality, checked facets; stored representable values only, no input coercion, descendant or deployed-state guarantee"
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "nativeSql": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "keyId",
+          "keyName",
+          "idealPath",
+          "nativePath",
+          "columns",
+          "primary",
+          "constraintName",
+          "origin",
+          "enforcement",
+          "equality",
+          "outcome"
+        ],
+        "properties": {
+          "keyId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "keyName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idealPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "constraintName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "origin": {
+            "const": "authored"
+          },
+          "enforcement": {
+            "enum": [
+              "primary-key-not-null",
+              "unique-not-null"
+            ]
+          },
+          "equality": {
+            "const": "exact-on-representable-values"
+          },
+          "outcome": {
+            "const": "not-expressible"
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover authored source from retained receipt; native import alone does not recover authored identity"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target",
+          "nativeSql"
+        ],
+        "properties": {
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          },
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "nativeSql": false,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,2245 @@
+{
+  "scope": "Pinned generated PostgreSQL key DDL, constraint catalog and actual insertion controls; stored values only, no general input-conversion, descendant or deployed-state guarantee; full binding acceptance pending",
+  "serverVersion": 170004,
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "references": [
+    "https://www.postgresql.org/docs/17/limits.html",
+    "https://www.postgresql.org/docs/17/datatype-numeric.html",
+    "https://www.postgresql.org/docs/17/ddl-system-columns.html"
+  ],
+  "rows": [
+    {
+      "name": "primary-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "primary-report",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "trailing-space-distinct",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(3,'codeA ') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "precomposed-distinct",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(4,U&'\\00E9') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "decomposed-distinct",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(5,U&'e\\0301') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "native-nul-restriction",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(6,chr(0)) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "54000"
+        },
+        {
+          "id": "native-index-tuple-size",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(6,(SELECT string_agg(md5(i::text),'') FROM generate_series(1,300) AS g(i))) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "54000"
+        },
+        {
+          "id": "input-coercion-before-constraint",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.2::numeric,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        }
+      ]
+    },
+    {
+      "name": "no-primary-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "no-primary-report",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" UNIQUE (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "rename-and-reorder",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "boolean",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.bool NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "boolean",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "bool",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.bool_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(false,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(false,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(true,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(true,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(false,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(true,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "decimal",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.numeric NOT NULL CHECK (\"order_id\" OPERATOR(pg_catalog.>=) '-999.99'::pg_catalog.numeric AND \"order_id\" OPERATOR(pg_catalog.<=) '999.99'::pg_catalog.numeric AND \"order_id\" OPERATOR(pg_catalog.=) pg_catalog.trunc(\"order_id\", 2)),\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "numeric",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "numeric",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.numeric_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.23,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.23,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2.34,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2.34,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.23,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2.34,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "trailing-zero-same-identity",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.2300,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "no-rounding",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.235,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "nan",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('NaN','codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "infinity",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('Infinity','codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "precision-overflow",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1000,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        }
+      ]
+    },
+    {
+      "name": "binary",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.bytea NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "bytea",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "bytea",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.bytea_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('01','hex'),'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('01','hex'),'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('02','hex'),NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('02','hex'),'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('01','hex'),'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('02','hex'),'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "integer-width",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.numeric NOT NULL CHECK (\"order_id\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric) AND \"order_id\" OPERATOR(pg_catalog.=) pg_catalog.trunc(\"order_id\", 0) AND \"order_id\" OPERATOR(pg_catalog.>=) -128 AND \"order_id\" OPERATOR(pg_catalog.<=) 127),\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "numeric",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "numeric",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.numeric_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "width-upper",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(128,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "fraction",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1.5,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        }
+      ]
+    },
+    {
+      "name": "unsigned",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.numeric NOT NULL CHECK (\"order_id\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric) AND \"order_id\" OPERATOR(pg_catalog.=) pg_catalog.trunc(\"order_id\", 0) AND \"order_id\" OPERATOR(pg_catalog.>=) 0 AND \"order_id\" OPERATOR(pg_catalog.<=) 18446744073709551615),\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "numeric",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "numeric",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.numeric_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "unsigned-upper",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(18446744073709551616,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "unsigned-negative",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(-1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "unsigned-max",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(18446744073709551615,'codeX') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "string-length",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL CHECK (pg_catalog.char_length(\"order_id\") OPERATOR(pg_catalog.<=) 3),\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 1,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('a','codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('a','codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('b',NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('b','codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('a','codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('b','codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "length-overflow",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('abcd','codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        },
+        {
+          "id": "unicode-scalar-length",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES('😀ab','codeX') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "binary-length",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.bytea NOT NULL CHECK (pg_catalog.octet_length(\"order_id\") OPERATOR(pg_catalog.<=) 3),\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "bytea",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "bytea",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.bytea_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('01','hex'),'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('01','hex'),'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('02','hex'),NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('02','hex'),'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('01','hex'),'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('02','hex'),'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "byte-length-overflow",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(decode('00010203','hex'),'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23514"
+        }
+      ]
+    },
+    {
+      "name": "compound-ordered",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"external_code\", \"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 2,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            },
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 2,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (external_code, order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (external_code, order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 2,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "multiple-alternates",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE,\n  CONSTRAINT \"compound_identity\" UNIQUE (\"order_id\", \"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "compound_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 2,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            },
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 2,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "compound_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (order_id, external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX compound_identity ON umf_key_projection.\"Orders\" USING btree (order_id, external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 2,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "unknown-extension",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Orders\" (\n  \"order_id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"order_identity\" PRIMARY KEY (\"order_id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Orders\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "order_identity",
+          "ready": true,
+          "table": "Orders",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order_id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "order_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (order_id)"
+          },
+          "definition": "CREATE UNIQUE INDEX order_identity ON umf_key_projection.\"Orders\" USING btree (order_id)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Orders\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "name": "family-conflict",
+      "status": "blocked"
+    },
+    {
+      "name": "quoted-identifiers",
+      "status": "projected",
+      "nativeSql": "CREATE TABLE \"umf_key_projection\".\"Order \"\"世界\" (\n  \"order \"\" id\" pg_catalog.int4 NOT NULL,\n  \"external_code\" pg_catalog.text COLLATE pg_catalog.\"C\" NOT NULL,\n  CONSTRAINT \"identity \"\" 世界\" PRIMARY KEY (\"order \"\" id\") NOT DEFERRABLE,\n  CONSTRAINT \"external_identity\" UNIQUE (\"external_code\") NOT DEFERRABLE\n);\n",
+      "indexes": [
+        {
+          "live": true,
+          "index": "external_identity",
+          "ready": true,
+          "table": "Order \"世界",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": false,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "external_code",
+              "type": "text",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "text",
+              "attribute": 2,
+              "collation": {
+                "name": "C",
+                "locale": null,
+                "schema": "pg_catalog",
+                "version": null,
+                "provider": "c",
+                "deterministic": true
+              },
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.text_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "u",
+            "name": "external_identity",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "UNIQUE (external_code)"
+          },
+          "definition": "CREATE UNIQUE INDEX external_identity ON umf_key_projection.\"Order \"\"世界\" USING btree (external_code)",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        },
+        {
+          "live": true,
+          "index": "identity \" 世界",
+          "ready": true,
+          "table": "Order \"世界",
+          "valid": true,
+          "schema": "umf_key_projection",
+          "unique": true,
+          "parents": [],
+          "primary": true,
+          "children": [],
+          "keyCount": 1,
+          "immediate": true,
+          "predicate": null,
+          "components": [
+            {
+              "name": "order \" id",
+              "type": "integer",
+              "notNull": true,
+              "position": 1,
+              "typeKind": "b",
+              "typeName": "int4",
+              "attribute": 1,
+              "collation": null,
+              "typeSchema": "pg_catalog",
+              "operatorClass": "pg_catalog.int4_ops"
+            }
+          ],
+          "constraint": {
+            "kind": "p",
+            "name": "identity \" 世界",
+            "deferred": false,
+            "validated": true,
+            "deferrable": false,
+            "definition": "PRIMARY KEY (\"order \"\" id\")"
+          },
+          "definition": "CREATE UNIQUE INDEX \"identity \"\" 世界\" ON umf_key_projection.\"Order \"\"世界\" USING btree (\"order \"\" id\")",
+          "expressions": null,
+          "accessMethod": "btree",
+          "relationKind": "r",
+          "attributeCount": 1,
+          "nullsNotDistinct": false
+        }
+      ],
+      "probes": [
+        {
+          "id": "positive-control",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        },
+        {
+          "id": "duplicate-tuple",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(1,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "required-first-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(NULL,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "required-alternate-component",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(2,NULL) RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23502"
+        },
+        {
+          "id": "alternate-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(2,'codeA') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "first-key-duplicate",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(1,'codeX') RETURNING 'accepted'::text",
+          "value": null,
+          "sqlstate": "23505"
+        },
+        {
+          "id": "distinct-tuples",
+          "statement": "INSERT INTO \"umf_key_projection\".\"Order \"\"世界\" VALUES(2,'codeB') RETURNING 'accepted'::text",
+          "value": "accepted",
+          "sqlstate": "00000"
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/keys/query.sql": "9c3f20e923d6f090ef375f4cfd24af4eeb16675478e184422f98e5b001ff75d9",
+    "scripts/core-ideals/key-postgresql-oracle.ts": "ac6f0261514e2109062b87e954e362fac2e25ce0f6c4adf10c56c882d6bb6af2",
+    "scripts/core-ideals/key-postgresql-projection-cases.ts": "306699abb31f6ef0157c0a3f9d1ed3cb8142c346c99ec8dd3ffb6bae6d410184",
+    "src/core-ideals/key-postgresql-projection.ts": "744aea6c04b670ad4d521b7d5b67a52a0f769d64901198a1c1a8cc653bc10bda",
+    "scripts/core-ideals/key-postgresql-projection-schema.ts": "d08571c35ab041d1a3d09e1eda37ab238c0cd8437784717c385e91eb2f58c662",
+    "spec/core/key-postgresql-projection.schema.json": "5db68f9826e1ea079789e8bdac4a59e7d8fce2c9629c4d6e38b8876c7301c921"
+  }
+}
