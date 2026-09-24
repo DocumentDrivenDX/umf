@@ -224,3 +224,29 @@ composition, and emitted bytes must match the native-tested corpus. Typechecking
 passes. The full 87-stage compatibility refresh and priority regression are
 running; aggregate runtime acceptance and refreshed prior concept gates remain
 pending. This checkpoint does not close the Parquet binding.
+
+## Qualified binding acceptance
+
+The [acceptance record](../../../../fixtures/validation/parquet-facets-acceptance-evidence.json)
+supersedes the pending qualification checkpoints above. All 87 native/browser
+refresh stages and the priority regression pass: 531 tests, 53,416 assertions,
+164 files and zero failures. Typechecking and the 277-schema / 47-package audit
+pass. The refreshed Field, Nullability and Cardinality conformance commands and
+their seven tests also pass. All 2,746 acceptance fingerprints were verified.
+
+The Parquet aggregate passes four native stages under PyArrow 21.0.0 and four
+Chromium 148 stages. Of 177 emitted scalar schema files, PyArrow accepts 168 and
+refuses nine precision-77 declarations as expected. Both Bun and Chromium
+composition recover 354 authored ideals and 354 native byte sequences. The 165
+matching facet comparisons include six facetless controls; 159 compare nonempty
+author assertions. Twelve comparisons retain explicit residuals. Matching facets
+do not erase other losses or native refinements.
+
+This accepts the qualified scalar-leaf classification and authored schema-file
+projection binding. It does not authenticate arbitrary producers, validate all
+Parquet values, flatten containers, or make advisory length metadata enforceable.
+Strict mode blocks loss; report mode retains the source and residuals, including
+reader-unrepresentable declarations. Native payloads remain attached.
+
+The separate five-system facet admission/delivery gate remains required before
+Key implementation. Native-equivalence graduation remains unclaimed.
