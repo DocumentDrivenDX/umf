@@ -4587,3 +4587,17 @@ See the [public integration checkpoint](evidence/key-core-implementation.md#publ
 The broader regression and fresh native/browser compatibility qualification
 remain required before core-task acceptance. All five Key bindings and their
 separate ideal-admission gate remain unfinished; no native equivalence is claimed.
+
+
+Core Key task acceptance now passes for experimental 0.6.0 after the complete
+native/browser compatibility refresh and all four prior concept gates. The full
+repository test inventory contains 329 files: 324 regression files passed 1,213
+tests / 113,170 assertions; five separately executed gate/evidence files passed
+ten tests / 159 assertions. All 92 refresh commands, typechecking, the public
+build and 288 schemas / 48 packages pass. Named-key/membership authoring, lookup,
+exact tuple bytes, collision-preserving migration/rollback and versioned prior
+operations retain unknown content and browser parity. See the
+[core acceptance record](../../fixtures/validation/key-core-acceptance-evidence.json).
+This closes only the core implementation task. The five native Key binding tasks
+and their separate admission/delivery gate remain open; native equivalence is
+unclaimed. Older native binding qualifications retain their published profiles.

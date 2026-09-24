@@ -149,3 +149,28 @@ That failed run is retained separately. A fresh full repository regression acros
 324 test files is now required alongside the four separate conformance gates and
 facet evidence-negative tests. The refresh checkpoint does not close the Key core
 task, widen older native profiles to Key semantics or admit the Key ideal.
+
+## Core task acceptance
+
+Experimental core 0.6.0 now passes its core implementation acceptance. The public
+schema, typed membership/key authoring, inspection and stable-ID lookup, exact
+`umf-key-tuple-v1` encoding, explicit migration/rollback, versioned prior APIs and
+selection have Bun and Chromium evidence. The 54-case validator matrix, 58-case
+tuple matrix, 90 archived migration collisions and public entry-point checks all
+pass without getter execution or external browser requests.
+
+Qualification at commit `561f6a68` passed 92 native/browser refresh commands,
+1,213 regression tests / 113,170 assertions across 324 files, and ten separate
+conformance/evidence tests / 159 assertions across five files. The recorded
+inventory accounts for all 329 test files. Field, Nullability, Cardinality and
+Facet gates all pass, with native equivalence still unclaimed. Typechecking,
+declaration emission, the public browser build and the 288-schema / 48-package
+audit pass. Source/schema/script/test inputs remained unchanged during the run.
+
+The [acceptance record](../../../../fixtures/validation/key-core-acceptance-evidence.json)
+qualifies the core task, including the core portions of US-044-AC1/10/11/12.
+US-044 native binding, enforcement, five-system delivery and ideal-admission
+requirements remain open. No SQL index or native schema observation is promoted
+to authored key intent by this acceptance. Documentation status changes after the
+run have their own before/after fingerprint ledger and consistency verification;
+the original gate output and native execution counts remain historical evidence.

@@ -1,0 +1,510 @@
+{
+  "reason": "Documentation-only core Key status publication after the completed compatibility run at 561f6a68. Runtime source, schemas, native/browser proofs, counts and original gate outputs are unchanged. Current evidence consistency is checked separately.",
+  "executionCommit": "561f6a680981b9951adb39b28204af3cea888691",
+  "documents": {
+    "docs/helix/README.md": {
+      "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+      "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+    },
+    "docs/helix/04-build/implementation-plan.md": {
+      "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+      "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+    },
+    "docs/helix/04-build/evidence/key-core-implementation.md": {
+      "before": "ca6e07c0d8f19b2a05acdaf560c6ae437f84c19b9ebf10b8fe706a8c1d3c6b40",
+      "after": "2fb64170b981f50bf3bccec786b42cd29964065d08cf4e8a291519bb49368313"
+    }
+  },
+  "acceptanceRecords": {
+    "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+      "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+      "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        }
+      }
+    },
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+      "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+      "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        }
+      }
+    },
+    "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+      "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+      "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        }
+      }
+    },
+    "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+      "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+      "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+      "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+      "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+      "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+      "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+      "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+      "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+      "before": "36be25f7b2f5d4e0aa4f3872d52118a70068ea1cb04e8cad43b2a00926a142cb",
+      "after": "c996da5fa89d085bca6f536c6c4c959e593c64f473909a5efaba3cf2471c96bb",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+          "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/facet-core-acceptance-evidence.json": {
+      "before": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f",
+      "after": "527ee7ecf7eb26bd13b155d3dd3d67b265fd8aaf2ba2e54b62ed5ee472a86fa8",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "36be25f7b2f5d4e0aa4f3872d52118a70068ea1cb04e8cad43b2a00926a142cb",
+          "after": "c996da5fa89d085bca6f536c6c4c959e593c64f473909a5efaba3cf2471c96bb"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+          "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+      "before": "0ec7cb01ff1bd83cbd6737a7263870c76f9e97f088571f527fd982a0b2d5d2b9",
+      "after": "92112270ea206a95be2f639d19ec8f6dec7714388a456be0b91077ac5326a547",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "36be25f7b2f5d4e0aa4f3872d52118a70068ea1cb04e8cad43b2a00926a142cb",
+          "after": "c996da5fa89d085bca6f536c6c4c959e593c64f473909a5efaba3cf2471c96bb"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f",
+          "after": "527ee7ecf7eb26bd13b155d3dd3d67b265fd8aaf2ba2e54b62ed5ee472a86fa8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+          "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        }
+      }
+    },
+    "fixtures/validation/postgresql-facets-acceptance-evidence.json": {
+      "before": "05b0c91fd44014473579cf568217f169df522c76029f794ec6b908ab80f79734",
+      "after": "af2e883a26792e5be79a85d494daf936a4febd8ae59427166542c447c1912ba1",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "36be25f7b2f5d4e0aa4f3872d52118a70068ea1cb04e8cad43b2a00926a142cb",
+          "after": "c996da5fa89d085bca6f536c6c4c959e593c64f473909a5efaba3cf2471c96bb"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f",
+          "after": "527ee7ecf7eb26bd13b155d3dd3d67b265fd8aaf2ba2e54b62ed5ee472a86fa8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+          "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        },
+        "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+          "before": "0ec7cb01ff1bd83cbd6737a7263870c76f9e97f088571f527fd982a0b2d5d2b9",
+          "after": "92112270ea206a95be2f639d19ec8f6dec7714388a456be0b91077ac5326a547"
+        }
+      }
+    },
+    "fixtures/validation/sqlserver-facets-acceptance-evidence.json": {
+      "before": "ff23f48cbc706f00939730496da8b974560059a9726e8780ec52eed645be870a",
+      "after": "28805f236aea582935aef864fadca9d2aa4bfb6039a374fef2129474f9f89eb4",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "36be25f7b2f5d4e0aa4f3872d52118a70068ea1cb04e8cad43b2a00926a142cb",
+          "after": "c996da5fa89d085bca6f536c6c4c959e593c64f473909a5efaba3cf2471c96bb"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f",
+          "after": "527ee7ecf7eb26bd13b155d3dd3d67b265fd8aaf2ba2e54b62ed5ee472a86fa8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+          "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/postgresql-facets-acceptance-evidence.json": {
+          "before": "05b0c91fd44014473579cf568217f169df522c76029f794ec6b908ab80f79734",
+          "after": "af2e883a26792e5be79a85d494daf936a4febd8ae59427166542c447c1912ba1"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        },
+        "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+          "before": "0ec7cb01ff1bd83cbd6737a7263870c76f9e97f088571f527fd982a0b2d5d2b9",
+          "after": "92112270ea206a95be2f639d19ec8f6dec7714388a456be0b91077ac5326a547"
+        }
+      }
+    },
+    "fixtures/validation/facets-gate-acceptance-evidence.json": {
+      "before": "9730c9f2dd515a613dd5034fe6be15c8b0b6639605f7c1dcd0f67afa4cd8a6e9",
+      "after": "88567d25a3ce164dd40087065e47d5b6930dc8df6f7724b74ac217608613e8bf",
+      "fingerprints": {
+        "docs/helix/04-build/implementation-plan.md": {
+          "before": "ace0bd1edcbd7f4edd3e37ab8240fb667336db50a977ecabea3b9a0ebfab1099",
+          "after": "c9297fa099ba2767b7ae276dec92091dccbafa6eb848b0ce0ef069374083c4ec"
+        },
+        "docs/helix/README.md": {
+          "before": "09229964da7b421ecab48b48d6bc5b2fab96ffed49025614d267da0a273e5bec",
+          "after": "373271e30b48b629b190f5d34f12ba35fca0c699647b14f0d9322d357f7d1805"
+        },
+        "fixtures/validation/avro-cardinality-acceptance-evidence.json": {
+          "before": "9d6141f66cb9a3ef62d56b9d7485dd318755dab6460ff0caa6c4115201926e26",
+          "after": "351134068a2a1df04858bd7a4188ec6301bddc30bbd06d5aec7fda5522c25638"
+        },
+        "fixtures/validation/cardinality-core-acceptance-evidence.json": {
+          "before": "5324f4bc3969ccada36cf2fed9646f145e106e0ce6a000a908b7f41caafffa88",
+          "after": "e8eac9d88966a6050ce92c282a766628e596454e87e8bef3d330bdea70cd02e8"
+        },
+        "fixtures/validation/cardinality-gate-acceptance-evidence.json": {
+          "before": "36be25f7b2f5d4e0aa4f3872d52118a70068ea1cb04e8cad43b2a00926a142cb",
+          "after": "c996da5fa89d085bca6f536c6c4c959e593c64f473909a5efaba3cf2471c96bb"
+        },
+        "fixtures/validation/facet-core-acceptance-evidence.json": {
+          "before": "d36dbd60cb7a9fd252b4f8dd2ed85878e57c60c3e779e7424d93e1525cfc258f",
+          "after": "527ee7ecf7eb26bd13b155d3dd3d67b265fd8aaf2ba2e54b62ed5ee472a86fa8"
+        },
+        "fixtures/validation/nullability-gate-acceptance-evidence.json": {
+          "before": "34ef3bfc502a8b4861415eeae7f7380673c4dabd25e50f1f431f227356ca22d0",
+          "after": "37b06f27bdd15109c0e38f027b34b6b2a235539d1ba7bb41f09cd421ac8209eb"
+        },
+        "fixtures/validation/parquet-cardinality-acceptance-evidence.json": {
+          "before": "bcc3258f05e8ab18f2c87ed87f7b9060eb79504da02ec54874e5165938e88081",
+          "after": "960c2eea24b0c35d67593efff2fe92e66e0fc6ec81e3b6417eb97514188ffb09"
+        },
+        "fixtures/validation/postgresql-cardinality-acceptance-evidence.json": {
+          "before": "0af811fd10e7f1898a08d0d8172a03fb333f3dda3026daa1ecd40e487bba9fab",
+          "after": "7eb0a2385801f6f0d1bbc02d1a5b521a2d309b68cab724b0a49540427ade6330"
+        },
+        "fixtures/validation/postgresql-facets-acceptance-evidence.json": {
+          "before": "05b0c91fd44014473579cf568217f169df522c76029f794ec6b908ab80f79734",
+          "after": "af2e883a26792e5be79a85d494daf936a4febd8ae59427166542c447c1912ba1"
+        },
+        "fixtures/validation/sqlserver-cardinality-acceptance-evidence.json": {
+          "before": "1b62699bbdfcf7a65d4746ebbb07caa85ae446e9e9f36d3a3b709335e6398bac",
+          "after": "4b5e0058abff8947874820a0c8fb7f1b0f836335678a1aaf909a98617904c96c"
+        },
+        "fixtures/validation/sqlserver-facets-acceptance-evidence.json": {
+          "before": "ff23f48cbc706f00939730496da8b974560059a9726e8780ec52eed645be870a",
+          "after": "28805f236aea582935aef864fadca9d2aa4bfb6039a374fef2129474f9f89eb4"
+        },
+        "fixtures/validation/tablespec-cardinality-acceptance-evidence.json": {
+          "before": "c541a1b6fab9c54497a27fae1202c81f205856299613fa2f08e6bfd469fef24d",
+          "after": "6d4e1120140b95861b81d8309487b953cb757be1a894c3400c4908113cea9064"
+        },
+        "fixtures/validation/tablespec-facets-acceptance-evidence.json": {
+          "before": "0ec7cb01ff1bd83cbd6737a7263870c76f9e97f088571f527fd982a0b2d5d2b9",
+          "after": "92112270ea206a95be2f639d19ec8f6dec7714388a456be0b91077ac5326a547"
+        }
+      }
+    }
+  }
+}

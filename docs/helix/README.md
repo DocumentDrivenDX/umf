@@ -95,9 +95,12 @@ operations have versioned 0.6.0 receipts while older schemas remain unchanged.
 The public integration checkpoint passes 95 focused Bun tests / 3,424 assertions,
 Chromium checks, typechecking and the 288-schema / 48-package audit. See the
 [Key implementation evidence](04-build/evidence/key-core-implementation.md#public-key-integration-checkpoint).
-Core-task acceptance still requires fresh compatibility qualification; the five
-native Key bindings and separate ideal-admission gate remain unfinished. This
-checkpoint does not establish native equivalence.
+Core-task acceptance now passes after all 92 native/browser refresh commands,
+1,213 regression tests and ten separate conformance/evidence tests (1,223 tests
+across all 329 test files, 113,329 assertions, zero failures). See the
+[Key core acceptance record](../../fixtures/validation/key-core-acceptance-evidence.json).
+The five native Key bindings and separate Key ideal-admission gate remain
+unfinished. No native equivalence is claimed.
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,
