@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 274,
-  "passed": 274,
+  "schemas": 275,
+  "passed": 275,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -713,6 +713,13 @@
     {
       "path": "spec/extensions/avro/schema.json",
       "id": "urn:umf:avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/binding/schema.json",
+      "id": "urn:umf:binding:0.1.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

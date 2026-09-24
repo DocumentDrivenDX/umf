@@ -31,7 +31,9 @@ DDD and core relationship documents remain storage independent.
 Register `umf.binding` as a document-scoped extension in a separate UMF
 document. Require an explicitly supplied logical document and exact ID/version
 match. Validate per-element, field and relationship choices without mutating
-the model. Use copied source/result objects and target-qualified residuals.
+the model. Resolve a nested DDD field by its exact owner ID and DDD field key,
+without pretending it is a standalone core Field. Use copied source/result
+objects and target-qualified residuals.
 Start with PostgreSQL/SQL Server projection needs; add Delta/Iceberg/Parquet
 profiles only with their versioned evidence.
 

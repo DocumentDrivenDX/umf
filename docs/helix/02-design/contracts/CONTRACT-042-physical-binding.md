@@ -53,11 +53,14 @@ survive JSON/YAML read/write. The extension package permits document scope only.
 | `logical` | `{documentId, coreVersion}` | yes | Exact match to supplied logical document `id` and `umf`; no name/namespace inference. |
 | `target` | `{system, version, subset}` | yes | Nonempty target identifiers; one binding payload chooses one target. |
 | `elements` | ordered array of element bindings | yes | Each entry has exact `{module,element}`, optional `partition` family name or explicit `null`, optional `table` name; duplicates invalid. |
-| `fields` | ordered array of field bindings | yes | Each has exact `{module,element}` for a logical Field and `storage` of `column` or `embedded`; `embedded` also requires a containing document column and nonempty declared path. |
+| `fields` | ordered array of field bindings | yes | Each has exact `{module,element}` for a core Field, or `{module,element,field}` for a named field within that element's `umf.ddd` data-bearing payload. `storage` is `column` or `embedded`; `embedded` requires a containing document column and nonempty declared path. |
 | `relationships` | ordered array of relationship bindings | yes | Each has exact `{module,name}` for CONTRACT-041 and `storage` of `edge`, `foreign_key`, `junction` or `inline`. |
 | `indexes` | ordered array of index declarations | yes | Physical capability declarations described below; duplicate names within the binding target/table scope invalid. |
 
-An empty array means no authored choice, not a target default. Logical IDs are
+An empty array means no authored choice, not a target default. A DDD field
+reference resolves the owner by exact core IDs and the field by exact key in
+its versioned `umf.ddd` payload; no name similarity or implicit materialized
+core Field is assumed. Logical IDs are
 exact; target names are separate names and never replace them. An element with
 no table override requires an explicit generator naming policy; it cannot
 silently take a display name. A partition family names a physical layout
@@ -75,7 +78,7 @@ choices do not alter DDD aggregate/equality or CONTRACT-041 endpoint meaning.
 | --- | --- | --- | --- |
 | `name` | nonempty string | yes | Unique in its target table scope. |
 | `kind` | `btree`, `hash`, `gin`, `gist`, `expression`, `partial`, `unique`, `clustering` | yes | Target-shaped kind; no logical field implication. |
-| `on` | nonempty ordered array | yes | Each entry is either `{field:{module,element}}` for a storage column or `{documentPath:{field:{module,element},path:[segments]}}` for an embedded field. Duplicate ordered entries are invalid. |
+| `on` | nonempty ordered array | yes | Each entry is either `{field:{module,element,field?}}` for a storage column or `{documentPath:{field:{module,element,field?},path:[segments]}}` for an embedded field. Duplicate ordered entries are invalid. |
 | `predicate` | `{language,version,expression}` | no | Required for `partial`; forbidden otherwise. Text is opaque, declared and unenforced by UMF. |
 | `unique` | boolean | yes | `kind:unique` requires `true`; `true` with another kind requests unique enforcement under that access method and needs target proof. `clustering` cannot be unique. |
 | `include` | ordered array of field references | no | Included fields must have column storage in this binding; no duplicate or overlap with `on`. Target support is separate. |

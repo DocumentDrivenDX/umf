@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 46,
-  "passed": 46,
+  "packages": 47,
+  "passed": 47,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -91,6 +91,15 @@
         "subset": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation."
       },
       "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/binding/package.json",
+      "id": "umf.binding",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 1,
       "passed": true,
       "failures": []
     },
