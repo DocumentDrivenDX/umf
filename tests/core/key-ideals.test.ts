@@ -22,7 +22,7 @@ test('candidate Key checks membership, primary/alternate identities and componen
 test('key schema leaves cross-reference semantics to validator; old profiles stay opaque',()=>{
  const check=createValidator().compile(schema),d=keyCandidate();d.modules[0].elements[0].keys[1].id='pk';
  expect(check(d)).toBe(true);expect(validateKeyCandidate(d).valid).toBe(false);
- expect(validateDocument(keyCandidate()).valid).toBe(false); // Public version support is a later integration step.
+ expect(validateDocument(keyCandidate()).valid).toBe(true); // Explicit 0.6.0 public support now validates the same semantics.
  d.umf='0.5.0';d.modules[0].elements[0].keys={opaque:null};d.modules[0].elements[0].members=false;
  expect(validateDocument(d).valid).toBe(true);
  expect(validateDocument(d).diagnostics.some(d=>d.code==='UNKNOWN_CORE_FIELD'&&d.path.endsWith('/keys'))).toBe(true);

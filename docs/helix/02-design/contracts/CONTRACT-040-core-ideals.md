@@ -984,3 +984,34 @@ The operation bounds aggregate value text and encoded tuple bytes by the existin
 Very wide metadata does not allocate a mathematical domain. Existing JSON
 serialization limits still apply to a complete receipt; retaining a large source
 can make receipt serialization refuse even when its tuple alone fits the limit.
+
+### Key authoring, inspection and selection
+
+`declareCoreRecordMembers` explicitly sets an ordered membership list on a 0.6.0
+Record. Surviving identities retain unknown reference qualifiers; removing a
+member with unknown qualifiers blocks. Removing a known member also blocks if a
+key still refers to it. Ownership and duplicate checks apply atomically to the
+whole target. Generic references and native extensions remain unchanged.
+
+`declareCoreKey` adds or updates one key by stable ID. Updating an existing ID
+must preserve its ordered component identities; changing that tuple is a conflict,
+not a rename. Name and explicit primary changes are allowed subject to uniqueness
+and the single-primary rule. Omitting primary retains its previous state. Choosing
+a new primary does not implicitly demote another key. Existing unknown key and
+component qualifiers remain attached; author provenance covers the requested
+known assertions, not those unknown meanings. Both operations retain the full
+source and copied request and validate the complete target before returning.
+
+`inspectCoreKeys` exposes copied key metadata with missing, inapplicable, legacy,
+known or partial meaning; it never infers provenance. `lookupCoreKey` requires an
+explicit Record and stable key ID, returns unknown paths, and never substitutes
+a name, primary or list position. Verification recomputes any operation from its
+retained source/request and checks the supplied current target or inspection
+source. This establishes consistency, not authentication or cross-revision intent.
+Older profiles retain opaque key-shaped members without adopting them.
+
+Core 0.6.0 selection explicitly traverses Record membership and key component
+references in addition to generic references and item/value types. With traversal
+disabled it reports separate membership and key-component boundaries, including
+stable key IDs and source paths. Traversal is cycle-safe by element identity.
+These new edges do not change how older profiles interpret lookalike members.

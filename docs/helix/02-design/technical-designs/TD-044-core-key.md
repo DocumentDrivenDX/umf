@@ -225,3 +225,18 @@ evidence. Receipts are checked by recomputation; the original and later envelope
 remain separately recoverable. See the [implementation evidence](../../04-build/evidence/key-core-implementation.md#explicit-key-migration-and-rollback-candidate).
 Public activation and versioned operations remain pending; this checkpoint does
 not substitute for their compatibility refresh or native Key bindings.
+
+### Public integration boundary
+
+Publish key authoring/inspection and stable-ID lookup with complete operation
+schemas, then activate 0.6.0 document validation/serialization. Preserve custom
+Registry extension validation when checking the inherited 0.5.0 meanings. Keep
+old schemas immutable and add kind/record-type operation v5, nullability v4,
+cardinality v3 and facets v2 for 0.6.0. Target validation must reject older core
+operations that would invalidate a key component or Record membership.
+
+Add a 0.6.0 selection schema with separate membership and key-component boundary
+arrays. Export the key document, operation, transition, tuple and selection
+schemas/APIs through the public browser entry point. Verify new operations, older
+receipt compatibility and a real public browser build before reporting this
+integration; core-task acceptance still requires the compatibility/native refresh.

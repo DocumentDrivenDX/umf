@@ -1,3 +1,6 @@
+import keys from '../../spec/core/key-document.schema.json';
+import schemaV5 from '../../spec/core/kind-operation-v5.schema.json';
+export {default as coreKindOperationV5Schema} from '../../spec/core/kind-operation-v5.schema.json';
 import facets from '../../spec/core/facet-document.schema.json';
 import schemaV4 from '../../spec/core/kind-operation-v4.schema.json';
 export {default as coreKindOperationV4Schema} from '../../spec/core/kind-operation-v4.schema.json';
@@ -17,10 +20,10 @@ export {default as coreKindOperationV2Schema} from '../../spec/core/kind-operati
 export {default as coreKindOperationSchema} from '../../spec/core/kind-operation.schema.json';
 export interface CoreKindIdentity {module:string;element:string}
 export type CoreKindMeaning={state:'known';kind:ElementKind}|{state:'unspecified'}|{state:'legacy';value:Json}|{state:'unknown';value:string};
-export interface CoreKindInspection {operation:'inspect-core-kind';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0';source:Document;identity:CoreKindIdentity;path:string;meaning:CoreKindMeaning;provenance:'unverified'}
-export interface CoreKindDeclaration {operation:'declare-core-kind';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0';source:Document;target:Document;identity:CoreKindIdentity;provenance:{origin:'authored';idealPath:string;kind:ElementKind;binding:{id:'umf.core.kind.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'};basis:'explicit-author-declaration';nativePath:null}}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3),checkV4=validator.compile(schemaV4);
-const checker=(version:unknown)=>version==='4.0.0'?checkV4:version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;
+export interface CoreKindInspection {operation:'inspect-core-kind';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0';source:Document;identity:CoreKindIdentity;path:string;meaning:CoreKindMeaning;provenance:'unverified'}
+export interface CoreKindDeclaration {operation:'declare-core-kind';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0';source:Document;target:Document;identity:CoreKindIdentity;provenance:{origin:'authored';idealPath:string;kind:ElementKind;binding:{id:'umf.core.kind.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'|'5.0.0'};basis:'explicit-author-declaration';nativePath:null}}
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);validator.addSchema(keys);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3),checkV4=validator.compile(schemaV4),checkV5=validator.compile(schemaV5);
+const checker=(version:unknown)=>version==='5.0.0'?checkV5:version==='4.0.0'?checkV4:version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;
 function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_KIND_RESULT',JSON.stringify(check.errors));return result as T;}
 function locate(input:Document,identityInput:CoreKindIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreKindIdentity;
@@ -39,17 +42,17 @@ export function inspectCoreElementKind(input:Document,identity:CoreKindIdentity)
   else if((ELEMENT_KINDS as readonly unknown[]).includes(element.kind))meaning={state:'known',kind:element.kind as ElementKind};
   else meaning={state:'unknown',value:element.kind as string};
  }
- return finish({operation:'inspect-core-kind',version:source.umf==='0.5.0'?'4.0.0':source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
+ return finish({operation:'inspect-core-kind',version:source.umf==='0.6.0'?'5.0.0':source.umf==='0.5.0'?'4.0.0':source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
 }
 /** Explicit author action; archives previous meaning and makes no native classification claim. */
 export function declareCoreElementKind(input:Document,identity:CoreKindIdentity,kind:ElementKind):CoreKindDeclaration {
  const located=locate(input,identity);const {source,element,mi,ei,path}=located;
- if(source.umf!=='0.2.0'&&source.umf!=='0.3.0'&&source.umf!=='0.4.0'&&source.umf!=='0.5.0')throw new UmfError('CORE_KIND_VERSION','Explicit envelope migration is required before authoring kind');
+ if(source.umf!=='0.2.0'&&source.umf!=='0.3.0'&&source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0')throw new UmfError('CORE_KIND_VERSION','Explicit envelope migration is required before authoring kind');
  if(!(ELEMENT_KINDS as readonly unknown[]).includes(kind))throw new UmfError('CORE_KIND_VALUE','Expected field, record or group',path);
  if(Object.hasOwn(element,'kind')&&!(ELEMENT_KINDS as readonly unknown[]).includes(element.kind))throw new UmfError('CORE_KIND_UNKNOWN','Unknown kind cannot be overwritten by this operation',path);
  const target=copyJson(source) as unknown as Document;target.modules[mi]!.elements[ei]!.kind=kind;
  const validation=validateDocument(target);if(!validation.valid)throw new UmfError('CORE_KIND_CONFLICT',JSON.stringify(validation.diagnostics),path);
- return finish({operation:'declare-core-kind',version:source.umf==='0.5.0'?'4.0.0':source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0',source,target,identity:located.identity,provenance:{origin:'authored',idealPath:path,kind,binding:{id:'umf.core.kind.authoring',version:source.umf==='0.5.0'?'4.0.0':source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0'},basis:'explicit-author-declaration',nativePath:null}});
+ return finish({operation:'declare-core-kind',version:source.umf==='0.6.0'?'5.0.0':source.umf==='0.5.0'?'4.0.0':source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0',source,target,identity:located.identity,provenance:{origin:'authored',idealPath:path,kind,binding:{id:'umf.core.kind.authoring',version:source.umf==='0.6.0'?'5.0.0':source.umf==='0.5.0'?'4.0.0':source.umf==='0.4.0'?'3.0.0':source.umf==='0.3.0'?'2.0.0':'1.0.0'},basis:'explicit-author-declaration',nativePath:null}});
 }
 /** Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration. */
 export function verifyCoreKindDeclaration(input:CoreKindDeclaration,current:Document):CoreKindDeclaration {

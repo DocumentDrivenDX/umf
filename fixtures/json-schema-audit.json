@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 281,
-  "passed": 281,
+  "schemas": 288,
+  "passed": 288,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -62,6 +62,13 @@
     {
       "path": "spec/core/cardinality-operation-v2.schema.json",
       "id": "urn:umf:core:cardinality-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-operation-v3.schema.json",
+      "id": "urn:umf:core:cardinality-operation:3.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -132,6 +139,13 @@
     {
       "path": "spec/core/facet-document.schema.json",
       "id": "urn:umf:core:0.5.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-operation-v2.schema.json",
+      "id": "urn:umf:core:facet-operation:2.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -270,6 +284,20 @@
       "failures": []
     },
     {
+      "path": "spec/core/key-operation.schema.json",
+      "id": "urn:umf:core:key-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/key-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.6.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/key-transition.schema.json",
       "id": "urn:umf:core:key-transition:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -300,6 +328,13 @@
     {
       "path": "spec/core/kind-operation-v4.schema.json",
       "id": "urn:umf:core:kind-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/kind-operation-v5.schema.json",
+      "id": "urn:umf:core:kind-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -342,6 +377,13 @@
     {
       "path": "spec/core/nullability-operation-v3.schema.json",
       "id": "urn:umf:core:nullability-operation:3.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-operation-v4.schema.json",
+      "id": "urn:umf:core:nullability-operation:4.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -545,6 +587,13 @@
     {
       "path": "spec/core/record-type-operation-v4.schema.json",
       "id": "urn:umf:core:record-type-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-operation-v5.schema.json",
+      "id": "urn:umf:core:record-type-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

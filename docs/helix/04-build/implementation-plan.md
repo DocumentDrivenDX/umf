@@ -4576,3 +4576,14 @@ original and later envelopes separately. The combined candidate regression passe
 See the [transition checkpoint](evidence/key-core-implementation.md#explicit-key-migration-and-rollback-candidate).
 Public activation, authoring and versioned operations are next; the Key core task
 and all five native bindings remain unfinished.
+
+
+Core Key public integration now has focused Bun and public Chromium evidence:
+0.6.0 validation/serialization, membership/key authoring and inspection, stable-ID
+lookup, migration/rollback, exact tuple encoding, versioned earlier operations
+and selection are exported. The exact-file core suite passes 95 tests / 3,424
+assertions; typechecking, public build and 288 schemas / 48 packages pass.
+See the [public integration checkpoint](evidence/key-core-implementation.md#public-key-integration-checkpoint).
+The broader regression and fresh native/browser compatibility qualification
+remain required before core-task acceptance. All five Key bindings and their
+separate ideal-admission gate remain unfinished; no native equivalence is claimed.

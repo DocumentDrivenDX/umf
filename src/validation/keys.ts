@@ -11,7 +11,7 @@ const check = createValidator().compile(schema);
 const identity = (ref:CoreKeyFieldReference) => JSON.stringify([ref.module,ref.element]);
 
 /** Candidate-only 0.6.0 validation. No author provenance, migration or native enforcement is inferred. */
-export function validateKeyCandidate(input:unknown):Validation {
+export function validateKeyCandidate(input:unknown,validateBase=true):Validation {
  const diagnostics:Diagnostic[]=[];
  const add=(code:string,path:string,message:string,severity:'error'|'warning'='error')=>diagnostics.push({code,path,message,severity});
  let document:Candidate;
@@ -25,7 +25,7 @@ export function validateKeyCandidate(input:unknown):Validation {
  // retained; this is not an exported downgrade or reinterpretation of old data.
  const base=copyJson(document) as unknown as Document;base.umf='0.5.0';
  for(const m of base.modules)for(const e of m.elements){delete e.members;delete e.keys;}
- diagnostics.push(...validateDocument(base).diagnostics);
+ if(validateBase)diagnostics.push(...validateDocument(base).diagnostics);
  add('EXPERIMENTAL_CORE_KEYS','/umf','Candidate key profile; native uniqueness and author provenance are not inferred','warning');
  const unknown=(o:object,known:string[],path:string)=>{
   for(const key of Object.keys(o))if(!known.includes(key))add('UNKNOWN_KEY_QUALIFIER',path+'/'+pointer(key),'Qualifier retained without interpretation','warning');

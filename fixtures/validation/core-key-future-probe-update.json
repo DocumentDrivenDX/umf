@@ -1,0 +1,13 @@
+{
+  "reason": "0.6.0 is now explicitly supported; unsupported-future probes advance to 0.7.0 without weakening rejection assertions. The concurrently running broad prefix test had already executed these old probes.",
+  "before": {
+    "tests/core/field-ideals.test.ts": "bc321d28d225eda12842a7c13ab3d4407ba5b5ef8f99d1596c3a4221cb8abe4c",
+    "tests/core/nullability-ideals.test.ts": "88e434fbf1ccb7bd48754149c4126d57fd3a7567900941c73c6f7e81ca08d99d",
+    "tests/core/cardinality-ideals.test.ts": "5c227b1fb396de075804bb3ee32dff41a34e68cf743259998376730194c34e81"
+  },
+  "after": {
+    "tests/core/field-ideals.test.ts": "01384806daacf6a35101b01513f783b0d6f5a9acf8f1594b2e540a337c029736",
+    "tests/core/nullability-ideals.test.ts": "56c51f593b16568a363dbdb65e13815cddfb8d22cec79ff673158d00d6f398bf",
+    "tests/core/cardinality-ideals.test.ts": "6072c5bcac184a786321d96ff0ce06de558f134a4db413a8baeaa82847aadf53"
+  }
+}

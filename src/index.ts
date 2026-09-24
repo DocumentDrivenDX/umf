@@ -320,3 +320,12 @@ export * from './core-ideals/facets-avro-projection';
 
 export * from './core-ideals/facets-parquet';
 export * from './core-ideals/facets-parquet-projection';
+
+export * from './model/keys';
+export * from './model/key-transition';
+export * from './model/key-tuple';
+export type {CoreKeyDefinition,CoreKeyFieldReference} from './validation/keys';
+export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema.json';
+export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
+export {default as coreKeyTransitionSchema} from '../spec/core/key-transition.schema.json';
+export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation.schema.json';

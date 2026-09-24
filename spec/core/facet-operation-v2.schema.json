@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:facet-operation:2.0.0",
+  "title": "Experimental facet inspection and authoring receipts (Key envelope)",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.6.0"
+    },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max",
+            "unit"
+          ],
+          "properties": {
+            "max": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "unit": {
+              "enum": [
+                "unicode-scalar",
+                "byte"
+              ]
+            }
+          }
+        },
+        "precision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "scale": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "integerWidth": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bits",
+            "signed"
+          ],
+          "properties": {
+            "bits": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "signed": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "dependentRequired": {
+        "precision": [
+          "scale"
+        ],
+        "scale": [
+          "precision"
+        ]
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max",
+            "unit"
+          ],
+          "properties": {
+            "max": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "unit": {
+              "enum": [
+                "unicode-scalar",
+                "byte"
+              ]
+            }
+          }
+        },
+        "precision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "scale": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "integerWidth": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bits",
+            "signed"
+          ],
+          "properties": {
+            "bits": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "signed": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "dependentRequired": {
+        "precision": [
+          "scale"
+        ],
+        "scale": [
+          "precision"
+        ]
+      },
+      "minProperties": 1
+    },
+    "lookup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "meaning",
+        "provenance"
+      ],
+      "properties": {
+        "operation": {
+          "const": "inspect-core-facets"
+        },
+        "version": {
+          "const": "2.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "path": {
+          "type": "string"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "facets",
+                "interpreted",
+                "uninterpretedPaths"
+              ],
+              "properties": {
+                "state": {
+                  "const": "known"
+                },
+                "facets": {
+                  "$ref": "urn:umf:core:0.6.0#/$defs/facets"
+                },
+                "interpreted": {
+                  "$ref": "#/$defs/bounds"
+                },
+                "uninterpretedPaths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 0
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "facets",
+                "interpreted",
+                "uninterpretedPaths"
+              ],
+              "properties": {
+                "state": {
+                  "const": "partial"
+                },
+                "facets": {
+                  "$ref": "urn:umf:core:0.6.0#/$defs/facets"
+                },
+                "interpreted": {
+                  "$ref": "#/$defs/bounds"
+                },
+                "uninterpretedPaths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "const": "missing"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "const": "inapplicable"
+                }
+              }
+            }
+          ]
+        },
+        "provenance": {
+          "const": "unverified"
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "identity",
+        "request",
+        "provenance"
+      ],
+      "properties": {
+        "operation": {
+          "const": "declare-core-facets"
+        },
+        "version": {
+          "const": "2.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "origin",
+            "idealPath",
+            "binding",
+            "basis",
+            "nativePath"
+          ],
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "idealPath": {
+              "type": "string"
+            },
+            "binding": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "version"
+              ],
+              "properties": {
+                "id": {
+                  "const": "umf.core.facets.authoring"
+                },
+                "version": {
+                  "const": "2.0.0"
+                }
+              }
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            },
+            "nativePath": {
+              "type": "null"
+            }
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/lookup"
+    },
+    {
+      "$ref": "#/$defs/declaration"
+    }
+  ]
+}

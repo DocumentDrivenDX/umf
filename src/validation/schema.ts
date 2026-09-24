@@ -1,3 +1,4 @@
+import keys from '../../spec/core/key-document.schema.json';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import fields from '../../spec/core/field-document.schema.json';
@@ -29,3 +30,5 @@ export const checkCoreNullability = ajv.compile(nullability);
 export const checkCoreCardinality = ajv.compile(cardinality);
 export const checkCoreFacets = ajv.compile(facets);
 export const checkPackage = ajv.compile(manifest);
+
+export const checkCoreKeys = ajv.compile(keys);

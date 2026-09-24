@@ -100,3 +100,35 @@ These are internal candidate APIs. Public 0.6.0 document support, membership/key
 authoring, versioned prior operations and selection, compatibility refresh and
 all five native Key bindings remain required. This checkpoint does not close the
 core task or admit the Key ideal.
+
+## Public Key integration checkpoint
+
+Experimental core 0.6.0 is now available through the public browser entry point.
+Membership and named-key authoring, inspection and stable-ID lookup preserve
+unknown qualifiers and reject changes to an existing key's ordered tuple.
+Explicit migration, rollback and exact tuple encoding are exported. Public
+validation passes the original 0.6.0 document to extension Registry callbacks,
+so native payload validation sees membership and keys without a stripped view.
+
+Existing Field/record-type, Nullability, Cardinality and Facet operations have
+new receipt versions for 0.6.0; published older schemas remain unchanged.
+Target validation rejects changes that invalidate a key. Selection traverses
+explicit membership and key components, terminates on cycles and reports
+separate reference boundaries. Older profiles keep these members opaque.
+
+The exact-file core suite passes 95 tests / 3,424 assertions across 19 files.
+Three unsupported-future probes now use 0.7.0 because 0.6.0 is implemented.
+Typechecking, declaration emission and the 288-schema / 48-package audit pass.
+The public browser bundle is 11,285,437 bytes. Chromium 148 verifies eight
+operation recoveries, eight document recoveries, ten versioned-operation
+recoveries and four selection recoveries, with two Registry callbacks, zero
+getter execution and no external requests. It also checks retained unknowns,
+stable-ID conflict refusal, tuple verification, rollback and forged/stale refusal.
+The [public checkpoint record](../../../../fixtures/validation/key-public-implementation.json)
+retains commands, logs and source fingerprints.
+
+The broader core-ideals regression and fresh native/browser compatibility
+qualification remain pending. Earlier gate records describe their historical
+execution commits; they are not refreshed by copying current hashes. This
+checkpoint does not close the core task, admit the Key ideal, establish native
+equivalence or implement any of the five native Key bindings.
