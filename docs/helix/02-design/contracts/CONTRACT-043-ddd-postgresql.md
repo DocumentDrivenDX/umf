@@ -48,6 +48,10 @@ table-plus-index stage has pinned PostgreSQL 17.4 evidence for four supported
 indexes and explicit residuals for four unsupported choices. Neither stage is
 the complete projection defined below; relationship and Key composition still
 require their dependent beads.
+`fixtures/projections/ddd-authored-relationships/base.json` prepares the same
+DDD graph with Key 0.6.0 Record ownership and separate PostgreSQL/Delta
+bindings. The committed Key candidate validates it, but this preparatory
+fixture emits no relationship DDL and is not admission evidence.
 
 ## Scope and Boundaries
 
