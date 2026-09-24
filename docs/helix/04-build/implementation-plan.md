@@ -4643,3 +4643,16 @@ the scoped core/SQL Server regression command and source fingerprints.
 Avro and Parquet bindings remain before the separate Key admission/all-five gate.
 Earlier conformance gates retain their own execution scope; no native equivalence
 or exact arbitrary-input conversion is claimed.
+
+
+Avro Key binding acceptance passes with Apache Avro 1.12.0 and fastavro 1.12.2.
+Native record observations never invent keys; explicit authored scalar projection
+retains each primary/alternate identity and enforcement obligation separately.
+The scoped Avro/core compatibility command passes 228 tests / 10,168 assertions
+across 54 files. Generated schemas pass 32 writer cases, 64 cross-reads and 63
+missing/null refusals. Fastavro's boolean null-to-false coercion remains an explicit
+reported loss. Chromium verifies 26 native archive recoveries, 32 ideal recoveries
+and strict/forged/stale refusals. See the
+[Avro Key acceptance](evidence/avro-key-acceptance.md) for fingerprints and limits.
+Parquet remains before the separate Key admission/all-five gate. Avro does not
+enforce collection uniqueness; successful encoding is not native equivalence.

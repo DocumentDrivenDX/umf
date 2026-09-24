@@ -5,6 +5,9 @@ import {importAvroSchema} from '../../src/adapters/avro';
 import {classifyAvroKeys,type AvroKeyRequest} from '../../src/core-ideals/key-avro';
 const fixtures=(await Bun.file('fixtures/avro/key-discovery-cases.json').json()).cases;
 const cases=fixtures.map((c:any)=>{const source=importAvroSchema(c.schemaText,{id:c.id}),request:AvroKeyRequest={mode:'report',profile:'schema-declarations',nativeSource:{schema:c.schemaText,dependencies:[]}};return {source,request,expected:classifyAvroKeys(source,request)};});
+const bundleRequest:AvroKeyRequest={mode:'report',profile:'schema-declarations',nativeSource:{schema:' "sales.Order" \n',dependencies:[{id:'orders',schema:fixtures[0].schemaText}]}},bundleSource=importAvroSchema(bundleRequest.nativeSource.schema,{id:'bundle-browser',dependencies:bundleRequest.nativeSource.dependencies});
+bundleSource.vocabularies.future={version:'1.0.0'};bundleSource.extensions={future:{opaque:['retained', {lexical:'9007199254740993'}]}};
+cases.push({source:bundleSource,request:bundleRequest,expected:classifyAvroKeys(bundleSource,bundleRequest)});
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const p=new URL(req.url).pathname;if(p==='/cases')return Response.json(cases);if(p==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});return new Response('<!doctype html><title>Avro Key classification</title>',{headers:{'content-type':'text/html'}});}});
 let browser;
 try{
@@ -19,8 +22,8 @@ try{
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals present');return {cases:cases.length,recoveries,refusals,strictBlocks};
  });
- assert.deepEqual(checks,{cases:12,recoveries:24,refusals:12,strictBlocks:12});assert.deepEqual(externalRequests,[]);
+ assert.deepEqual(checks,{cases:13,recoveries:26,refusals:13,strictBlocks:13});assert.deepEqual(externalRequests,[]);
  const paths=['scripts/core-ideals/key-avro-browser.ts','scripts/core-ideals/key-avro-schema.ts','src/core-ideals/key-avro.ts','src/index.ts','tests/core-ideals/key-avro.test.ts','fixtures/avro/key-discovery-cases.json','fixtures/validation/key-avro-discovery-native.json','spec/core/avro-key-classification.schema.json','spec/extensions/avro-keys/package.json','dist/umf.js'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
- await Bun.write('fixtures/validation/key-avro-browser.json',JSON.stringify({scope:'Avro Key native observation, original archive recovery and refusal parity only; authored projection and full binding acceptance remain unfinished.',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
+ await Bun.write('fixtures/validation/key-avro-browser.json',JSON.stringify({scope:'Avro Key native observation, original archive recovery and refusal parity only; authored projection and binding acceptance have separate evidence; no ideal-admission claim.',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

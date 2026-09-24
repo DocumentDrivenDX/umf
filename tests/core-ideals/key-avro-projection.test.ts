@@ -40,3 +40,9 @@ test('reimport without retained authors cannot reconstruct core identity',async(
  const {classifyAvroKeys,recoverAvroKeySource}=await import('../../src/core-ideals/key-avro'),c=avroKeyAuthors(),r=projectKeysToAvro(c.source,c.authors,c.request),schema=exportAvroSchema(r.target!),nativeSource={schema,dependencies:[]};
  const observation=classifyAvroKeys(importAvroSchema(schema,{id:'native-only'}),{mode:'report',profile:'schema-declarations',nativeSource});expect(observation.observations.every(o=>o.authorIntent==='unknown'&&o.enforcement==='not-expressible')).toBe(true);expect(observation.target!.modules.every(m=>m.elements.every(e=>e.keys===undefined))).toBe(true);expect(recoverAvroKeySource(observation,observation.target!)).toEqual(nativeSource);
 });
+test('cross-record ownership, changed stable key IDs and duplicate physical mappings refuse',()=>{
+ const c=avroKeyAuthors(),cross=structuredClone(c.source);cross.modules[0]!.elements.push({id:'other-owner',kind:'record',members:[c.request.columns[0]!.field],extensions:{}});expect(()=>projectKeysToAvro(cross,c.authors,c.request)).toThrow();
+ const changed=structuredClone(c.source);(changed.modules[0]!.elements[0]!.keys as any[])[0].id='different';expect(()=>projectKeysToAvro(changed,c.authors,c.request)).toThrow();
+ const duplicate=structuredClone(c.request);duplicate.columns[1]!.name=duplicate.columns[0]!.name;expect(()=>projectKeysToAvro(c.source,c.authors,duplicate)).toThrow();
+ const missing=structuredClone(c.request);missing.columns.pop();expect(()=>projectKeysToAvro(c.source,c.authors,missing)).toThrow();
+});

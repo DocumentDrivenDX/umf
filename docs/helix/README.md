@@ -112,8 +112,11 @@ The SQL Server Key binding also passes qualified acceptance: 19 generated tables
 73 native write probes, 39 catalog-verified constraints and Chromium recovery.
 Explicit string/binary encoding preserves distinctions lost by native padding. See
 the [SQL Server Key acceptance](04-build/evidence/sqlserver-key-acceptance.md).
-Avro and Parquet Key bindings and the separate Key ideal-admission gate remain
-unfinished. No native equivalence is claimed.
+The Avro Key binding passes qualified acceptance with retained native archives
+and per-key authored residuals: 228 scoped compatibility tests, both pinned codecs
+and Chromium checks. Encoding preserves duplicates; boolean null coercion remains
+an explicit loss. See [Avro Key acceptance](04-build/evidence/avro-key-acceptance.md).
+Parquet and the separate Key ideal-admission/all-five gate remain unfinished. No native equivalence is claimed.
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,

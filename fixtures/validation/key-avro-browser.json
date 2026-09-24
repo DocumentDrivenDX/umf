@@ -1,23 +1,23 @@
 {
-  "scope": "Avro Key native observation, original archive recovery and refusal parity only; authored projection and full binding acceptance remain unfinished.",
+  "scope": "Avro Key native observation, original archive recovery and refusal parity only; authored projection and binding acceptance have separate evidence; no ideal-admission claim.",
   "browser": "148.0.7778.0",
   "checks": {
-    "cases": 12,
-    "recoveries": 24,
-    "refusals": 12,
-    "strictBlocks": 12
+    "cases": 13,
+    "recoveries": 26,
+    "refusals": 13,
+    "strictBlocks": 13
   },
   "externalRequests": [],
   "sha256": {
-    "scripts/core-ideals/key-avro-browser.ts": "3e85c0d29fdeaf7443f51976a9ece89b3325d3cfda6ceebaa95e42c1c10b3d8b",
-    "scripts/core-ideals/key-avro-schema.ts": "d16e2994dc638ef83f229a3240cbf48c722c74321557640c0848cadde244a41d",
+    "scripts/core-ideals/key-avro-browser.ts": "9243ab9508f5b3873cb9c7a39cec2a016647fcde0513748ee53220a6e430cb83",
+    "scripts/core-ideals/key-avro-schema.ts": "6d07f0f902d378dd9c02d0ce49c16bb558e1df7d29bb7f02b1f88b7fc1e15b3a",
     "src/core-ideals/key-avro.ts": "961e6034d943691d1c1a79a40c7ba41438b343ccc4877bd4237a5db9582dbfc6",
-    "src/index.ts": "d18f9f4b8a71b8dc6dece27ea9d324208d47be291171a6b9a6d6e08941b9c5f9",
+    "src/index.ts": "7be15f700e85472a9efd056e41ee53039101708d9c9f21bab6e200346c65d4b8",
     "tests/core-ideals/key-avro.test.ts": "c3daaea09eabd4dbdd9cbd9d4f48ade341c23ced3cbec4025f096f89ed7389db",
     "fixtures/avro/key-discovery-cases.json": "97ee172c126aa946de0331566a71dcf04b1487468e6995b9aee004d7a2be4aa7",
     "fixtures/validation/key-avro-discovery-native.json": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1",
     "spec/core/avro-key-classification.schema.json": "3964f8c9658de70aca1283eeeae2a930418edc32440a974aad5779cb1278d430",
-    "spec/extensions/avro-keys/package.json": "37a2b4d848e6bebccb642129bb7b3627577f8515809a58669c173753387f5226",
-    "dist/umf.js": "c668597ae4eab9692479877823288c4058799cf3528720bb791b24988fa4fe7e"
+    "spec/extensions/avro-keys/package.json": "39f351c8e66df635e927ea2987c1da8ba6fb4f762bcdbbe7c2ba695a683327cc",
+    "dist/umf.js": "345cf57ce9619fcd44c5a042cd9f4c83747b4864c09db2189b801a33efe01768"
   }
 }
