@@ -87,6 +87,18 @@ Avro facets also pass qualified binding acceptance; see the
 [Avro acceptance record](../../fixtures/validation/avro-facets-acceptance-evidence.json).
 Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
 [facet gate admission record](04-build/evidence/facet-gate-admission.md).
+
+Experimental core 0.6.0 now exposes named Key and Record membership authoring,
+inspection, stable-ID lookup, exact tuple encoding, collision-preserving
+migration/rollback and selection through the public browser API. Earlier core
+operations have versioned 0.6.0 receipts while older schemas remain unchanged.
+The public integration checkpoint passes 95 focused Bun tests / 3,424 assertions,
+Chromium checks, typechecking and the 288-schema / 48-package audit. See the
+[Key implementation evidence](04-build/evidence/key-core-implementation.md#public-key-integration-checkpoint).
+Core-task acceptance still requires fresh compatibility qualification; the five
+native Key bindings and separate ideal-admission gate remain unfinished. This
+checkpoint does not establish native equivalence.
+
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,
 including the native counterexamples that limit each qualified profile.
