@@ -212,3 +212,61 @@ Native text and split-file bundles recover exactly, including unknown sidecars.
 The [Chromium classification record](../../../../fixtures/validation/relationship-tablespec-classification-browser.json)
 and Bun tests qualify this classification stage only. Authored down-projection,
 ideal recovery, composition and full TableSpec binding acceptance remain required.
+
+### TableSpec authored outgoing-metadata projection design
+
+The next scoped operation consumes a logical core 0.7 document, one verified
+`declare-core-relationship` receipt, an existing native source-table document,
+an existing native target-table document and an explicit request. The request
+selects `{module,id}` relationship identity, `strict` or `report` mode, the
+`outgoing-metadata` profile and ordered column pairs. Each pair names a native
+source column, an exact logical target-Key Field identity and a native target
+column. It does not infer a Field from a display name, infer a foreign-key
+Field from the source Record's identity Key, or adopt native primary-key intent.
+This operation-local mapping does not implement or reinterpret `umf-binding-1`.
+
+Before emission, verify the author receipt and current relationship meaning,
+resolve exact keyed Record endpoints, and require the ordered pairs to cover
+the selected target Key's Fields once each in Key order. Resolve native column
+names exactly in the two supplied tables and retain both native sources. Check
+that target Key/component meaning has not changed since authoring. Duplicate
+or missing columns, incompatible scalar carriers, stale authors and conflicting
+native metadata must not produce a partial candidate. Unknown logical qualifiers
+remain retained and prevent a claim of exact interpretation.
+
+For one source and one target type, append one native `relationships.outgoing`
+entry. Emit source/target column names and additional ordered equality pairs as
+`join_conditions`; emit the logical participation bounds as explicit native
+multiplicity strings. Preserve existing relationship carriers and unrelated
+native content. Do not overwrite an existing outgoing entry or guess an
+expression, lookup join, join filter, table alias or join execution strategy.
+The native model/schema must accept each emitted carrier independently.
+
+The mapping is metadata-only. Native multiplicity strings do not establish
+checked bounds, referential enforcement, lifecycle, source/target identity or
+stable named-Key semantics. Each missing obligation has its own logical source
+path and retained value. Direction, inverse presentation and unknown qualifiers
+also require explicit outcomes. Strict mode blocks these non-exact obligations;
+report mode may emit only a complete carrier with those residuals. Heterogeneous
+endpoint sets and a separately keyed association Record require different
+physical layouts: this profile refuses them with retained source instead of
+selecting one endpoint or silently reducing the association Record to a bare
+join. Those refusals do not count as useful ideal-admission mappings.
+
+Recomputing a receipt must verify its logical/author/native inputs, request,
+mapping paths, output and residuals. Recovery compares the current native
+representation, including a fresh adapter import, against the emitted carrier;
+it recovers the original logical document only with the retained receipt.
+Native classification of the output remains unverified native observation.
+Separate recovery returns both untouched original native sources, preserving
+monolithic text or split bundles and sidecars. Changing either supplied native
+source or the emitted candidate invalidates the receipt rather than choosing
+implicit precedence.
+
+Acceptance must cover single/composite and alternate target Keys, self links,
+one-to-one, many-to-one, many-to-many metadata, bounded/required participation,
+undirected and inverse losses, heterogeneity and keyed `Enrollment` refusals,
+unknown qualifiers, pre-existing outgoing metadata, malformed bindings and
+forged/stale receipts. Each successful report projection must compose through
+native model/schema acceptance, fresh import, classification and both recovery
+directions under Bun and Chromium. Implementation and evidence are still pending.
