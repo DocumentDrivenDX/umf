@@ -1,0 +1,398 @@
+{
+  "scope": "Fresh Key native/browser qualification commands; separate conformance required",
+  "complete": true,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/1.log",
+      "logSha256": "b1a6cc0f4b7ea761f9223617aa029a27603b7b5f88c2452991d75c362d4f39b9"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/2.log",
+      "logSha256": "d10d432b836735b027c6ff7975efacb908748959ea6f2f45b73ec2a6f9cb28d5"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build:postgresql"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/3.log",
+      "logSha256": "2d3bb8aed105c807a7fe4f8a349a2c869c3013610095a265d145235a7354b789"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/4.log",
+      "logSha256": "c09586b8e343314dcea80b17f853eaab514438b27a9798ca12b3f9c8449b1457"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/5.log",
+      "logSha256": "c44dee8dcc7c38ff66d209e3d3ba7bcc0d47de5ff1d5b8c80a17113835c7c740"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-discovery.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/6.log",
+      "logSha256": "e9e255eee32c7109d4032a339242343db24b63efe464ae3cf603d39a74f16f79"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/7.log",
+      "logSha256": "3197f535bbd9fb9b49c983972cc4c394d932e8097d881151fcf42944578c014e"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-discovery.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/8.log",
+      "logSha256": "7ebcd31d4304ac3c72587d50fffa333748462d5cd56afba8fd06bf6dc14d8035"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-encoding-discovery.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/9.log",
+      "logSha256": "4cc7798be632dfc541ea97c04e6974b1534c6c1318e47cdb2290d3e9ab4fdc56"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/10.log",
+      "logSha256": "82322fd59e5ab3ecae9a7e03116e8b6b0e2b53a3b3be19fc134b2de3d2f29186"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/11.log",
+      "logSha256": "8af4bbf6811ffbc96bbb4b3ada1832928de048e9063ca507db9e00de3bcf7520"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/12.log",
+      "logSha256": "7af9bcf511861dcbacd1a43c2809c1bdaa92e05b7a19cc738ca42315464f77fc"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/13.log",
+      "logSha256": "3386057b1cfe442d4af41ec383d0b5aa1ddfa83da108278260acb088a33394a4"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-catalog-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/14.log",
+      "logSha256": "6183d10e90bd6fa46ce803ad651920d4af9a5d878a22d27baacd25bbb4141101"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/15.log",
+      "logSha256": "f3a787de485215d3d952a63ba0ca5220fcb0bec5a0c93c1b7a714cd242364759"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/16.log",
+      "logSha256": "9336ec06681818e0d461da29a77a81de63ea3634578e39f6ab86c4b32329d64b"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-encoding-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/17.log",
+      "logSha256": "3915957c5c8a7f867286199d7c983d91d6168acea330fef53833c957fd3d3bd9"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/18.log",
+      "logSha256": "6fa3c82c67c7479d75aaaf5ef9519599210f321aaa210fe09edad5d5b278df92"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/19.log",
+      "logSha256": "cfd487c0304037c3bac2f842114be33845d0706c82ccfa538295c54d1745e3da"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/20.log",
+      "logSha256": "8817d499eb5c7735dde79cbaabe15fcb815267572a4b2380a8ae28d9d168241d"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/21.log",
+      "logSha256": "30dfc0c001f094966974db1aa622a938dd8b843421f8b237b15366e84e77e8a5"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": ".cache/key-gate-refresh/22.log",
+      "logSha256": "9d3610668d8b9d1d3ad3cfbbc47d7b378fda62ebd218db4076fea144e0418b39"
+    }
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/key-parquet-discovery-native.py": "672a65bf06d6a537b5345742a8ac2aa41858cd077411de5276a37cd0dd73ea2a",
+    "/home/erik/Projects/umf/scripts/core-ideals/key-parquet-projection-native.py": "178f2f87a4c80c65910b8cb7d2ad730d1222d735442fad1a766d2920d44060c9",
+    "/home/erik/Projects/umf/scripts/core-ideals/key-tablespec-discovery-oracle.py": "081e00fe2e4ff8a7fed4cd0cb6b0e91c85f048e77b2bcdc6ce0268246e8539b2",
+    "/home/erik/Projects/umf/scripts/core-ideals/key-tablespec-projection-oracle.py": "b4c47171e6297851e162c1cc72c8a03f0a187f36355511bb84af2a6080b3c917",
+    "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
+    "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
+    "dist/umf.js": "ad36fe1587f24f10074f491f67550e017a3655e4f064a1e81e6b0ce9192d3161",
+    "fixtures/avro/key-discovery-cases.json": "97ee172c126aa946de0331566a71dcf04b1487468e6995b9aee004d7a2be4aa7",
+    "fixtures/avro/key-projection-generated.json": "7d9c881ded77d46ce4fce77ea92719a58a9f6fc13ff21720e452114c62c9fe95",
+    "fixtures/parquet/keys/binary-metadata.parquet": "695d17f5b8bbc8d94ad622c8e964b3b16388754e3d7549c16ac210dc8891c62b",
+    "fixtures/parquet/keys/float-narrowing.parquet": "f6c05727448129a745a134a1122622dd16f3bedbfd7fe1ed97729fa9e2216cb1",
+    "fixtures/parquet/keys/integer-input-truncation.parquet": "dd781b61ecbbcf528cc27ce7af66ab5248303067285d154a8357760a31c769f6",
+    "fixtures/parquet/keys/nullable.parquet": "54fea8fc461e24683421e4d101568c920d67b43572b7f8fb69368de6b2110cf1",
+    "fixtures/parquet/keys/projected-binary-length.parquet": "b2ca5a856baa8c9d48858d497648ce8df86b81bb80a94a63cb62d645d277c460",
+    "fixtures/parquet/keys/projected-binary.parquet": "b2ca5a856baa8c9d48858d497648ce8df86b81bb80a94a63cb62d645d277c460",
+    "fixtures/parquet/keys/projected-boolean.parquet": "cbb5307c42e1330a41c592c6c1924d7dffe03f8d84408432d071082d75fdf9bd",
+    "fixtures/parquet/keys/projected-compound-ordered.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-decimal-bytes.parquet": "cfdcd862d3a8af0abba3a8b78d8b589f01e6c209c7d872b94994835cba3743ba",
+    "fixtures/parquet/keys/projected-decimal-fixed.parquet": "2a9fb3721dca25ddce07bbf471ccba51ed028aea93df41edf0b7c041da707eb4",
+    "fixtures/parquet/keys/projected-decimal-int32.parquet": "410a168759b40517c7631406ae669800c3bb9c24d13649b28b169f853b1f809c",
+    "fixtures/parquet/keys/projected-decimal.parquet": "1daa975086fd62e6f371e9d37530ebec6189010fddd8afc195dac5665cec68c2",
+    "fixtures/parquet/keys/projected-fixed-binary.parquet": "42835ebf75bc8235d56a21ffc7087b181ea53a0e7e7ad50e88721f2c5cefffe5",
+    "fixtures/parquet/keys/projected-integer-width.parquet": "1bea17d11144a9858987cdffbea176ac93edf112fd0a56851b72f7932e26150c",
+    "fixtures/parquet/keys/projected-multiple-alternates.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-no-primary-report.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-primary-report.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-quoted-identifiers.parquet": "d2b929fdb79cd0fe192c5d758ec3a91f9f500f8241cb984a1323c1667bc39627",
+    "fixtures/parquet/keys/projected-rename-and-reorder.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-string-length.parquet": "8d677e9f84d6643ebae6eb409fe1410965965b8eea3cbe2f687497e0990b862f",
+    "fixtures/parquet/keys/projected-unknown-extension.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-facet-qualifier.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-key-qualifier.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unknown-member-qualifier.parquet": "371c6e0c602e9552ca78cd22de10cdd28eaee9aa1f2ed98b553e0a253861b3ca",
+    "fixtures/parquet/keys/projected-unsigned.parquet": "5db080d0306532a7935c36dc150aab11acbd5bf6fc6153558a9b5b2b0a4872b6",
+    "fixtures/parquet/keys/repeated-list.parquet": "f7326f8f1e2c246b2b6e42a3a355b050a747fa985c550a1cd52a74509417d839",
+    "fixtures/parquet/keys/required-embedded.parquet": "4c44b9bc9b30b07f3c6b19e8bf8de23b2f58374986298995ac43dc1d59446719",
+    "fixtures/parquet/keys/required-no-arrow.parquet": "86f28b4006ea72afaee9ddbdfeb08848e5ee023c0000dba30b33e9404c3d43ca",
+    "fixtures/parquet/keys/sorting-not-enforced.parquet": "b2122b361eda7ccbae9ffccd5d245c48e04999e29ccffa8ebfd3fa9dc35b384c",
+    "fixtures/postgresql/keys.sql": "e18dad5cf600c550db4c1749b6c3cfb81ef9a673b3237ed4765775fa13510310",
+    "fixtures/sqlserver/key-encodings.sql": "e2d4f081e94c38dd0dcf4c763302b81d7faec728017488f0cd1204696b9d6308",
+    "fixtures/sqlserver/keys.sql": "ea5234b7f9a5b1d8193302ca6c3272f70244b7742a298e533b5610f1b660c229",
+    "fixtures/validation/key-avro-browser.json": "dc8c087eadf60602130038df6520ebd1efa5c8c8be1ddc48416ce6388f621d83",
+    "fixtures/validation/key-avro-discovery-native.json": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1",
+    "fixtures/validation/key-avro-projection-browser.json": "77b5656d03f4333f5a3e85c3da424630d84dbf79b1e2d52950af777af1138f29",
+    "fixtures/validation/key-avro-projection-native.json": "e71e9dfa1f51c214a1d7146bb2f5dc67a06d0b132b571db4214a4caf1094d7a4",
+    "fixtures/validation/key-parquet-browser.json": "df6ef11d2d755e5e4969abd867d0ed7ce2259a18ceaccb027a4ca91683f3cef8",
+    "fixtures/validation/key-parquet-discovery-native.json": "2326e341fd1042851a6d701cff1909009359d75ffbf1fb46c3b76c7e08891ee8",
+    "fixtures/validation/key-parquet-projection-browser.json": "f761364311c4c9a316b8f31dba01c8075807dc4acbfc093e1a72f7e9d33663b2",
+    "fixtures/validation/key-parquet-projection-corpus.json": "8e814387d737f0085747ebed675de660f707cb5ad11c3001ff2698ef453621ff",
+    "fixtures/validation/key-parquet-projection-native.json": "091aecb76d66327fa7ab15066c226379ccb2b5308108615b46b6ae116905412f",
+    "fixtures/validation/key-postgresql-browser.json": "eeaa7c5378a12a9cdd6d4aa22fb191b4523789f0e48349a2b63eab6ea942eff1",
+    "fixtures/validation/key-postgresql-catalog-browser.json": "a4744d021c2268b0947fad563c9adb005855abd5f94660c32dbf48316956e767",
+    "fixtures/validation/key-postgresql-catalog-capture.json": "bb0a16aabaa67ba463a4f334e13de206e833c19d0220766375f1a6c5da2e4b50",
+    "fixtures/validation/key-postgresql-discovery-native.json": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9",
+    "fixtures/validation/key-postgresql-projection-native.json": "4869a6eb986f8283cd96c138893127846d89cc72ea1986fab66f6ed7018ed20d",
+    "fixtures/validation/key-sqlserver-browser.json": "eb1296ac33df5d7e0d39bc09fc034dbf89b7246628f14b628cfc2dfb4d7a2792",
+    "fixtures/validation/key-sqlserver-discovery-native.json": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41",
+    "fixtures/validation/key-sqlserver-encoding-browser.json": "ca88a2d1fb52df5b4e191d85f7a6a75d5fca63602f474490e074f166d1d5e229",
+    "fixtures/validation/key-sqlserver-encoding-native.json": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650",
+    "fixtures/validation/key-sqlserver-projection-browser.json": "5ce9e7b461c2d6888c6905e3760cee98ea1f3b2f59be93cb060086c8d064b147",
+    "fixtures/validation/key-sqlserver-projection-native.json": "90b9c918ea9aee84d50640be2356985b683366e38b27190e566f46009cd12bcd",
+    "fixtures/validation/key-tablespec-classification-browser.json": "a52da2ae6b495b00f7c6f1d5c34da04b749ebb85120b68b24a0fb84c034c0a8f",
+    "fixtures/validation/key-tablespec-discovery-native.json": "a45a803944fe29da218ceffb2ab62fc67382e66ff321f7b5fcbcadac7bfd749f",
+    "fixtures/validation/key-tablespec-projected-schemas.json": "29094378176b6a2e1f5bef8695e9f27c06a31fdb7c8853ed839dbc5c62a89f1c",
+    "fixtures/validation/key-tablespec-projection-native.json": "4e8ae230528352d78363d09f5667333fb1396ad5fb5931d09191957437816c7c",
+    "native/parquet/sources/Encodings.md": "b6b980c67acc14d3e9e4b592c582523b5dc2cc09ad9f90bc2b1912df461e5c88",
+    "native/parquet/sources/Encryption.md": "acba860c24ea5049b1123890b6e6e81fb44ed258a84fe042f808d32d1f642764",
+    "native/parquet/sources/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+    "native/parquet/sources/LogicalTypes.md": "01ad5a573ec5b6c3f4c5bba07f3ef708acf1ecca48d09d6edd566df554eeb837",
+    "native/parquet/sources/NOTICE": "28768ced5daf23a48a7fa7da0a16846c8c254e0a065cf29d5b17ef7fbad2e5fd",
+    "native/parquet/sources/manifest.json": "ff7b49a02e8ec39a048fb5cdd151784ab7cc8c603165fa72d729c4391d4303d9",
+    "native/parquet/sources/parquet.thrift": "e77109d446f5c436cc272d38be2f34238529abf9a8bd0361bb684387bb8e8736",
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
+    "native/postgresql/keys/query.sql": "9c3f20e923d6f090ef375f4cfd24af4eeb16675478e184422f98e5b001ff75d9",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
+    "native/tablespec/cardinality-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/sources/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/sources/examples/providers.yaml": "d88a5076031afd12a1d953c0107dac339859c8e88d66de53d4dd7f34f5cdb3f8",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/GENDER.yaml": "7c1953ab3300460919f84f7f81c31088d458351f7e5474f2fb2a0cebc5153595",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/Id.yaml": "24adc19e810ff8ae5c72b8c88980869ab6457c5a388ca32e4e5e295c1850f70d",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/NAME.yaml": "df6d2b18dbd7c9a792d5ead0e81d991b13f280c3f2187a2baaf97da4f5617af9",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/ORGANIZATION.yaml": "33eae4f4f3fd1630ee753ea8d1850f15bc5dd739254b7ff0133813c2aaa1b5e4",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/SPECIALITY.yaml": "383aac3ec261187bedf12c8b9901b8c03444c382e451df997d2cbdb396495e02",
+    "native/tablespec/sources/examples/synthea/umfs/providers/table.yaml": "96954af2775001f5e5596f830385e4fe8fcc415c9a43782014f3868460fbc776",
+    "native/tablespec/sources/pyproject.toml": "04679004a5690502b9f01e8180e16263aa0f95a3f8bff212aeab0d8c3ea5f910",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+    "native/tablespec/sources/src/tablespec/umf_loader.py": "1b133536ef2abede237889b3be07e3197cf1a33ba00b0b80bfc2a388ed2efefa",
+    "native/tablespec/sources/src/tablespec/umf_validator.py": "d1c59403361903fdffe2787a4aaf9d40e7aba86d6723b5dd4278d1232ef1c145",
+    "native/tablespec/sources/tests/unit/test_umf_loader.py": "9f39055e7fcf46a37011e6a1cf0178a28b747bef55f58d7a92a422d3d2f90fc6",
+    "native/tablespec/sources/tests/unit/test_umf_models.py": "80b4587721c060c913a1a073f705a7c9ed742351a3384b8223c2ec5c1c48b6ca",
+    "native/tablespec/sources/tests/unit/test_umf_validator.py": "c6cf51ae211d723d4c1d3178820da30ff0001c3c4aac2ffc8e63dd84b6bf716a",
+    "scripts/core-ideals/key-avro-browser.ts": "9243ab9508f5b3873cb9c7a39cec2a016647fcde0513748ee53220a6e430cb83",
+    "scripts/core-ideals/key-avro-discovery-native.py": "8efa0c5af1f6c5e1cb1bdddaddaa589f9e27181f927b32298997b10fabbe937b",
+    "scripts/core-ideals/key-avro-oracle.ts": "4f8c10fb29e2a1f165ae63be52b192f0ee1e9eb3193e7ae74884b349a03d1abb",
+    "scripts/core-ideals/key-avro-projection-browser.ts": "106a9dda6565f517c3358371d84ad1b2a93f8bebd1951b68e9b9b2b15c35b67b",
+    "scripts/core-ideals/key-avro-projection-cases.ts": "73aa0bace86f88afb97df8c30e5820563aa4ce081573bde012812d11d75cc84e",
+    "scripts/core-ideals/key-avro-projection-native.py": "7537dcea4da46a6a8134401ccfe188a136033347f49f04200badad9e6b74ee75",
+    "scripts/core-ideals/key-avro-projection-oracle.ts": "b413bf2bd0481490da8b4358bb7c2dd1606c9d2c1eaa8c3a16cd009784f59e43",
+    "scripts/core-ideals/key-avro-schema.ts": "6d07f0f902d378dd9c02d0ce49c16bb558e1df7d29bb7f02b1f88b7fc1e15b3a",
+    "scripts/core-ideals/key-gate-refresh.ts": "2ba39662d60b49f5f81daa1a2793732febd4adae101afd5d08b720fcacf2db69",
+    "scripts/core-ideals/key-parquet-browser.ts": "fa101cc60373a59f7f24adaa60c1723554f2649e296ed9ef79f59de2c9bb1e4f",
+    "scripts/core-ideals/key-parquet-oracle.ts": "1ba6266fd674632ea254cfdf0ec493ef29171d5536087abd0c9f78ec47646c25",
+    "scripts/core-ideals/key-parquet-projection-browser.ts": "a83301b044f9bb6ec72bb189204e34ba5aa5d351ac8d5289bb563de17356cbdc",
+    "scripts/core-ideals/key-parquet-projection-cases.ts": "881ca0cfff36b56d34e71efe6db92eefa2c6987961536876c03a0223986779c5",
+    "scripts/core-ideals/key-parquet-projection-oracle.ts": "f2b7153b1ffc219c5ac4dcc229b64fb753e0c83a82c57ee6253f4ba9ed24d0df",
+    "scripts/core-ideals/key-parquet-schema.ts": "e1c2c5b184bda867eb36778cdc29fa6b6d2931a295e2f8dd0b12dc1b4fd402c7",
+    "scripts/core-ideals/key-postgresql-browser.ts": "8dadacbdc3dd3598ca81793f4bdbe4f9746778ee314a7dd999a81744eb8c1787",
+    "scripts/core-ideals/key-postgresql-catalog-browser.ts": "16afb9245c1070c2482a6efc88539cb65cb38cf7e1d7c9bec6228f97c6a3a727",
+    "scripts/core-ideals/key-postgresql-catalog-schema.ts": "773d441ab042b557143c740aab1dbe90d8f913c6b49a385f1747a352e3b725d9",
+    "scripts/core-ideals/key-postgresql-discovery.ts": "050b57d524c23f7a18b59f0e806e372c177a82a7dd00fcc2cef24090030fb969",
+    "scripts/core-ideals/key-postgresql-oracle.ts": "49552585b89d39bdcd3fee83ec35b18a850901d6fea96f41e76f4484f68e551b",
+    "scripts/core-ideals/key-postgresql-projection-cases.ts": "6f074d32f6af648acf8d9aecc5c0778aca74b4d943f607ae69e04e35e61042fa",
+    "scripts/core-ideals/key-postgresql-projection-schema.ts": "9bae2fd0fac5c8629d9ef93fca924443ef372f799792075d96c3a1a22f825d89",
+    "scripts/core-ideals/key-postgresql-schema.ts": "ed9116a87bebca8aa6d41aaf0e35c4642d24778822e5ca7cc0903d1a69a447e6",
+    "scripts/core-ideals/key-sqlserver-browser.ts": "0490c4740cbbb42042c1eee45916b2b10082baa7b6da17a216e8fb65e62c1ed2",
+    "scripts/core-ideals/key-sqlserver-discovery-cases.ts": "bc247d9f1cbf2905bd731b5eb02674f631a7a257189a714c41025072d7d61edc",
+    "scripts/core-ideals/key-sqlserver-discovery.ts": "3bbc7002a84daf46a876f0d8cd2d7da7fd7fd40b5609dee1185f7f62262962fd",
+    "scripts/core-ideals/key-sqlserver-encoding-browser.ts": "ebaa2a1009f3dcf6d897e5e1ebee4f887de5755f63487b2bbbd3805f8b25e4f4",
+    "scripts/core-ideals/key-sqlserver-encoding-cases.ts": "54db004b2ea0ea321073c8506a67f1857d126621fc6c3aef8ce511d5389cfe60",
+    "scripts/core-ideals/key-sqlserver-encoding-discovery.ts": "66bb3ff278a900dc001b19f47b7c5a4c0cbf4c221cbae48308252c570427cc1d",
+    "scripts/core-ideals/key-sqlserver-oracle.ts": "fd2b298819c233a214202eaf826558a8b18b529c47eb0d8eeeb6cb273c7aff5d",
+    "scripts/core-ideals/key-sqlserver-projection-browser.ts": "655926844c969e8f855f4ced6c91d90327409be3142c5115200444190e36709d",
+    "scripts/core-ideals/key-sqlserver-projection-cases.ts": "06e471947ed85c4c433db4bc995e57eca206a1ee724b9c64909afff574ec9c03",
+    "scripts/core-ideals/key-sqlserver-schema.ts": "479b42a42f2617571687cae260ba15719d437e7f2e3f9aeb7f5ead890233bbe7",
+    "scripts/core-ideals/key-tablespec-browser.ts": "faf47556b85e7a653aca66ad9bd00940868bade92a52275fefe00cb75e52c484",
+    "scripts/core-ideals/key-tablespec-oracle.ts": "0a4a6663b0f6c19267e29a6131ea7e613b854ce32e97efe2a96cc2fe83abbd07",
+    "scripts/core-ideals/key-tablespec-projection-cases.ts": "e5ee2a0bf222486801f248eb6c6969b4fae66b2849ad36fb1717aa0d122fe8cb",
+    "scripts/core-ideals/key-tablespec-projection-schema.ts": "864f377cc33f1db84d47395be66e642d6bda9d789e700541c997e599190097fa",
+    "scripts/core-ideals/key-tablespec-schema.ts": "4d356f4988dfe3411e16b241a02ad4d4be03d1965fefa5f33a243977ca936894",
+    "spec/core/avro-key-classification.schema.json": "3964f8c9658de70aca1283eeeae2a930418edc32440a974aad5779cb1278d430",
+    "spec/core/key-avro-projection.schema.json": "09600e303c9e595d8f9c83ef6d3d3b163595fd2d4508b4ee5b6a0e08d21d912e",
+    "spec/core/key-parquet-projection.schema.json": "6f20b105839cb176c178ccec4add0c130b503ab80d280392a3388170874c9ff4",
+    "spec/core/key-postgresql-projection.schema.json": "b5cf3d0cab8e128ed225c855bec1ce1cd19d8ced578a65c291f4807d84c317fe",
+    "spec/core/key-sqlserver-projection.schema.json": "8350853615336e06bcaeeaf22ace1efa0e7431f2008610a8c7a2505ff8fc3a2c",
+    "spec/core/key-tablespec-projection.schema.json": "019d38b819c9bc288f428e43e9974c71c6d0fb9033e69f1bc3d429a460c59d62",
+    "spec/core/parquet-key-classification.schema.json": "ef33915a6f2484dcd09a16e0dbea7186b35b27576267fa0478bb58ce55096b16",
+    "spec/core/postgresql-key-catalog-correlation.schema.json": "96e6d77ad1dbc7701b201ffd38e21cf09d0ba24232030a7e366718f8e00e5ba4",
+    "spec/core/postgresql-key-catalog-inspection.schema.json": "200d3555e92f683b18a645094c1dd0b611e977e121d4fecf73a685df7d9ff199",
+    "spec/core/postgresql-key-classification.schema.json": "f58fd86e54c54925199d014a184fc6a5c9a8a6d5f92e354f171c8b9a6b95975e",
+    "spec/core/sqlserver-key-classification.schema.json": "427aebea35e781a2b90c91c95704bffb68ff3c87230e6841fdbf3c4cb32fb097",
+    "spec/core/tablespec-key-classification.schema.json": "eb7c4968e1e62e6b95e136b774b21e177f8e968a3d627260f444cc7d74b9ef98",
+    "spec/extensions/avro-keys/package.json": "39f351c8e66df635e927ea2987c1da8ba6fb4f762bcdbbe7c2ba695a683327cc",
+    "spec/extensions/parquet-keys/package.json": "0222eb3436b926c9fac2faf8d6c636e1b823620651ad32f1dccf47186b5202c8",
+    "spec/extensions/postgresql-catalog/key-observations-v1.schema.json": "ce18e948e15951c4b6e1c4bb3ded57ad0a6d3ec82a33a9949a24517035e2a0be",
+    "spec/extensions/postgresql-keys/package.json": "3b61f4840c8fe84a504584f0e96936c6f9eb90501f0d2285511bca81fa81b6f3",
+    "spec/extensions/postgresql-keys/schema.json": "1308e811c79022967e534e36a111e6096e714b47259feb212200c7d9075b6071",
+    "spec/extensions/sqlserver-keys/package.json": "b9da11e76483b3737918ab6c8b29f3baf63f9d35d20532cc5268204a3eae5632",
+    "spec/extensions/sqlserver-keys/schema.json": "c3bd5ee83850740d56858620eb3411023c23f62d6b52d965fec2059c98d30f19",
+    "spec/extensions/tablespec-keys/package.json": "67f6be76b9d484648cc80eb45c0c0901140607f1430f7ba3318a737a4ab428dd",
+    "spec/extensions/tablespec-keys/schema.json": "afdc2d48f8068953544717001c37c4ee916273cd6c953b8ca8388d038984cd3f",
+    "src/adapters/parquet/encode.ts": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
+    "src/adapters/postgresql/key-catalog.ts": "1cbec0d28b1ac07446c4668afe7f3dd4a4dfc74c258c77b8d6749b53aaa7dc46",
+    "src/adapters/postgresql/key-correlation.ts": "1c59de75fd8b1a0845f63944d018a3ddcb800251e06b338867a39b5e6291e652",
+    "src/adapters/sqlserver/index.ts": "e1edff77c6bfab3347b69373b4a9aead81cadb9123fbda7523f69138c662ed40",
+    "src/core-ideals/key-avro-projection.ts": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d",
+    "src/core-ideals/key-avro.ts": "961e6034d943691d1c1a79a40c7ba41438b343ccc4877bd4237a5db9582dbfc6",
+    "src/core-ideals/key-parquet-projection.ts": "902c4305942fc204d4d75d9e05a8a5351c46e434cffabdb3413500198b81a27c",
+    "src/core-ideals/key-parquet.ts": "0723f9e98312dd1daf7f2a76eb0a73dc1426635ec671731adf2b1f9b917f7cb2",
+    "src/core-ideals/key-postgresql-projection.ts": "fe2bdd229ae2078dc42ed3d65b9bcb824e1cdc8241395b3fe900eaaf93345ca8",
+    "src/core-ideals/key-postgresql.ts": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f",
+    "src/core-ideals/key-sqlserver-carriers.ts": "767b08efc49099e42eac058a37de19882ced5203fa945b342c9a8a54a5badee4",
+    "src/core-ideals/key-sqlserver-projection.ts": "8973415a4aa9b380b20e093cc78d125528f00cfc0a148d2f1e84600d6a9fe67d",
+    "src/core-ideals/key-sqlserver.ts": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5",
+    "src/core-ideals/key-tablespec-projection.ts": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef",
+    "src/core-ideals/key-tablespec.ts": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
+    "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
+    "src/core-ideals/parquet-key-carrier.ts": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
+    "src/index.ts": "97468aa8d398979462a1c4427bd53327bbd0d8b3b5d63792dcfafafe33c4244a",
+    "src/model/key-tuple.ts": "48606350149da3cc40c4606b35d11d11eef558efb6df7313404a40a2a636329d",
+    "src/validation/schema.ts": "8a695fe56f9864cdb4fa3b87c01e7c37681b708ec8ad254c520cf7942a7a4388",
+    "tests/core-ideals/key-avro.test.ts": "c3daaea09eabd4dbdd9cbd9d4f48ade341c23ced3cbec4025f096f89ed7389db",
+    "tests/core-ideals/key-parquet.test.ts": "aeadd2f756af29a5f5c35f406b54d8c2d2f5286ceaa3d5cbe6d2152a5df4dedf",
+    "tests/core-ideals/key-postgresql-correlation.test.ts": "5af7522cbedfd31fb8ce5f0005b77ccd802b31302795da3f61e8f17b6b8c7f2f",
+    "tests/core-ideals/key-postgresql-projection.test.ts": "4a17ec8b4bb11907c6f1ae146a5780ece36e2beb06523a7e4952e39c61fd5ad4",
+    "tests/core-ideals/key-postgresql.test.ts": "bc90d70ff832e181546a0e7523f7480fad1bae83f83cd8884778afbcfac8d107",
+    "tests/core-ideals/key-sqlserver-encoding.test.ts": "761f36efa0889721f7f6c49a2ad877a2570a2c729bc56e1d84670ae90d25e3f5",
+    "tests/core-ideals/key-sqlserver.test.ts": "df4a9f1823565f696b33b72befa4c7bf89118c96a0fcb2a0032c5b6c53a50616",
+    "tests/core-ideals/key-tablespec-projection.test.ts": "bf22e88c32bc29c8c8937b3efce94234d566b1d1a1dba8ae3e59481e7f085996",
+    "tests/core-ideals/key-tablespec.test.ts": "c3392e220dd46b5d097272d0ea1dd799e2bba6e218a158f98d59828e6281e342",
+    "tests/core/deep-json-equality.test.ts": "dc728f41eb281c755c3cdf285f7e3f3cad48bee989137b742d32dc091a75ebe4"
+  }
+}
