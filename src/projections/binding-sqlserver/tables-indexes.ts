@@ -2,7 +2,7 @@ import {renderTree} from '../../model/native-json';
 import {UmfError,type Document} from '../../model/types';
 import {getBinding,type BindingFieldRef} from '../../extensions/binding';
 import {getSqlServerColumnMetadata} from '../../adapters/sqlserver';
-import {projectBindingIndexesToSqlServer} from './indexes';
+import {projectBindingIndexesAgainstSqlServerPlan,projectBindingIndexesToSqlServer,type SqlServerPlannedColumn} from './indexes';
 import {projectBindingTablesToSqlServer,type SqlServerTablePolicy,type SqlServerTableProjection} from './tables';
 
 const key=(ref:BindingFieldRef)=>JSON.stringify([ref.module,ref.element,ref.field??null]);
@@ -43,6 +43,33 @@ export function projectBindingTablesAndIndexesToSqlServer(logical:Document,bindi
   const indexes=projectBindingIndexesToSqlServer(logical,binding,tables.nativeArchive,nativeSource,'report');
   const residuals=[...tables.residuals.filter(row=>!row.path.startsWith('/extensions/umf.binding/indexes/')),...indexes.residuals];
   const candidate=tables.candidate+(indexes.candidate??'');
+  const status=residuals.length?(lossPolicy==='strict'?'blocked':'reported'):'proposed';
+  return {...base,status,residuals,...(status==='blocked'?{}:{candidate})};
+}
+
+/** Generate relationship-independent SQL Server DDL from authored inputs; catalog evidence is optional. */
+export function projectBindingTablesAndIndexesFromPlanToSqlServer(logical:Document,binding:Document,policy:SqlServerTablePolicy,lossPolicy:'strict'|'report',nativeSource?:string):SqlServerTableProjection{
+  const tables=projectBindingTablesToSqlServer(logical,binding,policy,'report',nativeSource);
+  const {candidate:_tableCandidate,...base}=tables;
+  if(!tables.candidate)return {...base,status:'blocked'};
+  const payload=getBinding(binding,logical),types=new Map(policy.fieldTypes.map(row=>[key(row),nativeType(row.sqlType)]));
+  const planned:SqlServerPlannedColumn[]=[];
+  for(const [i,field] of payload.fields.entries()){
+    const owner=payload.elements.find(e=>e.module===field.module&&e.element===field.element),parts=owner?.table?.split('.');
+    const column=field.storage==='embedded'?field.documentColumn:field.column;
+    if(!parts||parts.length!==2||!column)continue;
+    if(!tables.mappings.some(row=>row.sourcePath===`/extensions/umf.binding/fields/${i}`&&row.target===owner!.table+'.'+column))continue;
+    const expected=field.storage==='embedded'?{name:'nvarchar',length:-1}:types.get(key(field));
+    if(!expected)throw new UmfError('SQLSERVER_TABLE_PLAN','Emitted field has no explicit SQL type');
+    if(!planned.some(row=>row.schema===parts[0]&&row.table===parts[1]&&row.column===column))planned.push({schema:parts[0]!,table:parts[1]!,column,maxLength:expected.length??0});
+  }
+  const indexes=projectBindingIndexesAgainstSqlServerPlan(logical,binding,planned,'report');
+  const residuals=[...tables.residuals.filter(row=>!row.path.startsWith('/extensions/umf.binding/indexes/')),...indexes.residuals];
+  const candidate=tables.candidate+(indexes.candidate??'');
+  if(nativeSource!==undefined){
+    const checked=projectBindingTablesAndIndexesToSqlServer(logical,binding,policy,nativeSource,'report');
+    if(checked.candidate!==candidate)throw new UmfError('SQLSERVER_TABLE_CATALOG','Catalog and generated plan disagree on index DDL');
+  }
   const status=residuals.length?(lossPolicy==='strict'?'blocked':'reported'):'proposed';
   return {...base,status,residuals,...(status==='blocked'?{}:{candidate})};
 }

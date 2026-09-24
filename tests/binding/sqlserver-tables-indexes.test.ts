@@ -1,9 +1,35 @@
 import {expect,test} from 'bun:test';
-import {exportSqlServerCatalog,projectBindingTablesAndIndexesToSqlServer,type Document} from '../../src';
+import {exportSqlServerCatalog,projectBindingTablesAndIndexesFromPlanToSqlServer,projectBindingTablesAndIndexesToSqlServer,type Document} from '../../src';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-tables-indexes/case.json').json();
 const nativeSource=await Bun.file('fixtures/binding/sqlserver-tables/catalog.json').text();
 const project=(binding=fixture.binding,source=nativeSource,loss:'strict'|'report'='report')=>projectBindingTablesAndIndexesToSqlServer(fixture.logical as Document,binding as Document,fixture.policy,source,loss);
+const fromPlan=(binding=fixture.binding,policy=fixture.policy,loss:'strict'|'report'='report',source?:string)=>projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical as Document,binding as Document,policy,loss,source);
+
+test('@covers US-046-AC2 @covers US-047-AC4: authored inputs alone generate the same native-valid DDL',()=>{
+  const report=fromPlan();
+  expect(report.status).toBe('reported');expect(report.nativeArchive).toBeUndefined();
+  expect(report.candidate).toBe(project().candidate);
+  expect(report.candidate?.match(/CREATE (?:UNIQUE )?NONCLUSTERED INDEX/g)).toHaveLength(3);
+  expect(report.residuals.filter(x=>x.path.startsWith('/extensions/umf.binding/indexes/'))).toHaveLength(3);
+  expect(fromPlan(fixture.binding,fixture.policy,'strict').candidate).toBeUndefined();
+  const checked=fromPlan(fixture.binding,fixture.policy,'report',nativeSource);
+  expect(checked.candidate).toBe(report.candidate);
+  expect(checked.nativeSource).toBe(nativeSource);
+});
+
+test('@covers US-046-AC3 @covers US-047-AC9: planned columns and predicates must be safe before index emission',()=>{
+  const missing=structuredClone(fixture.policy);missing.fieldTypes[0].sqlType='nvarchar(80)';
+  const partial=fromPlan(fixture.binding,missing);
+  expect(partial.residuals.some(x=>x.path==='/extensions/umf.binding/indexes/0')).toBe(true);
+  expect(partial.candidate).not.toContain('CREATE NONCLUSTERED INDEX [IX_Items_Id]');
+  const unbounded=structuredClone(fixture.policy);unbounded.fieldTypes[1].sqlType='nvarchar(max)';
+  const reported=fromPlan(fixture.binding,unbounded);
+  expect(reported.residuals.some(x=>x.path==='/extensions/umf.binding/indexes/1'&&x.reason.includes('Unbounded'))).toBe(true);
+  expect(reported.candidate).not.toContain('CREATE UNIQUE NONCLUSTERED INDEX [UX_Items_Email]');
+  const unsafe=structuredClone(fixture.binding);unsafe.extensions['umf.binding'].indexes[2].predicate.expression='[missing] = 1';
+  expect(fromPlan(unsafe).residuals.some(x=>x.reason.includes('predicate column'))).toBe(true);
+});
 
 test('@covers US-046-AC2 @covers US-047-AC4: generated tables and indexes compose with explicit catalog evidence',()=>{
   const strict=project(fixture.binding,nativeSource,'strict');

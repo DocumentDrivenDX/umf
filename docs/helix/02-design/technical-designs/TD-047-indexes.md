@@ -75,14 +75,15 @@ residual, SQL Server filtered/disabled counterexamples, strict/report pairs,
 both recoveries, invalid target paths, copied binding isolation and Chromium.
 
 The relationship-independent SQL Server composition stage combines the
-TD-046 table candidate with supported rowstore indexes against an explicitly
-retained catalog capture. It checks indexed columns against the generated
-table plan and observed types before returning DDL. The pinned SQL Server
-2022 oracle accepts two tables and three indexes (btree, unique and filtered);
-hash, document-path expression and clustering remain residuals. Native catalog
-recovery, strict blocking and Chromium parity are recorded under
-`fixtures/binding/sqlserver-tables-indexes/`. This stage still requires
-catalog evidence and does not cover relationship storage.
+TD-046 table candidate with supported rowstore indexes using emitted-column
+evidence from the authored plan. A prior database catalog is no longer needed
+to generate DDL. When supplied, a retained catalog is checked against the
+plan and kept as separate native evidence. The pinned SQL Server 2022 oracle
+accepts two tables and three indexes (btree, unique and filtered); hash,
+document-path expression and clustering remain residuals. Catalog recovery,
+strict blocking and Chromium parity are recorded under
+`fixtures/binding/sqlserver-tables-indexes/`. Relationship storage remains
+outside this stage.
 
 ## Migration & Rollback
 

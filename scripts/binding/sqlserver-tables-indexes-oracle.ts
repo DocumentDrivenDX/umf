@@ -1,14 +1,17 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingTablesAndIndexesToSqlServer,type Document} from '../../src';
+import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingTablesAndIndexesFromPlanToSqlServer,type Document} from '../../src';
 
 const directory='fixtures/binding/sqlserver-tables-indexes';
 const fixture=await Bun.file(`${directory}/case.json`).json();
 const source=await Bun.file('fixtures/binding/sqlserver-tables/catalog.json').text();
-const report=projectBindingTablesAndIndexesToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,source,'report');
+const report=projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,'report');
 assert.equal(report.status,'reported');assert.equal(report.residuals.length,13);
-assert.equal(report.nativeSource,source);
-assert.deepEqual(JSON.parse(exportSqlServerCatalog(report.nativeArchive!)),JSON.parse(source));
+assert.equal(report.nativeArchive,undefined);
+const checked=projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,'report',source);
+assert.equal(checked.candidate,report.candidate);
+assert.equal(checked.nativeSource,source);
+assert.deepEqual(JSON.parse(exportSqlServerCatalog(checked.nativeArchive!)),JSON.parse(source));
 await Bun.write(`${directory}/generated.sql`,report.candidate!);
 
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090';
@@ -37,7 +40,7 @@ try{
   assert.equal(indexes.find((x:any)=>x.name==='UX_Items_Email')?.unique,true);
   observed={indexes};
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}
-const files=[`${directory}/case.json`,`${directory}/generated.sql`,`${directory}/catalog.json`,'fixtures/binding/sqlserver-tables/catalog.json','src/projections/binding-sqlserver/tables-indexes.ts','native/sqlserver/catalog-v2.sql'];
+const files=[`${directory}/case.json`,`${directory}/generated.sql`,`${directory}/catalog.json`,'fixtures/binding/sqlserver-tables/catalog.json','src/projections/binding-sqlserver/tables-indexes.ts','src/projections/binding-sqlserver/indexes.ts','native/sqlserver/catalog-v2.sql'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
-await Bun.write(`${directory}/oracle.json`,JSON.stringify({scope:'Isolated SQL Server 2022 execution of DDD-derived tables plus three physical rowstore indexes; other index kinds and relationships remain residual',image,serverVersion:capturedVersion,observed,nativeRecovery:{inputCatalogRetained:true,outputCatalogRetained:true,adapterExport:'structurally equal JSON; escaped slash spelling may normalize'},residuals:report.residuals,sha256},null,2)+'\n');
+await Bun.write(`${directory}/oracle.json`,JSON.stringify({scope:'Isolated SQL Server 2022 execution of catalog-free DDD-derived tables plus three physical rowstore indexes; other index kinds and relationships remain residual',image,serverVersion:capturedVersion,observed,nativeRecovery:{optionalInputCatalogRetained:true,outputCatalogRetained:true,adapterExport:'structurally equal JSON; escaped slash spelling may normalize'},residuals:report.residuals,sha256},null,2)+'\n');
 console.log(JSON.stringify({indexes:(observed as any).indexes.length,residuals:report.residuals.length}));

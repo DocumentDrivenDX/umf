@@ -1,9 +1,9 @@
 import {chromium} from 'playwright';
-import {projectBindingTablesAndIndexesToSqlServer,type Document} from '../../src';
+import {projectBindingTablesAndIndexesFromPlanToSqlServer,type Document} from '../../src';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-tables-indexes/case.json').json();
 const nativeSource=await Bun.file('fixtures/binding/sqlserver-tables/catalog.json').text();
-const expected=projectBindingTablesAndIndexesToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,nativeSource,'report');
+const expected=projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical as Document,fixture.binding as Document,fixture.policy,'report');
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;
   if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});
   if(path==='/case')return Response.json({fixture,nativeSource,expected});
@@ -17,12 +17,14 @@ try{
   await page.goto(`http://127.0.0.1:${server.port}/`);
   const result=await page.evaluate(async()=>{
     const modulePath='/umf.js',u=await import(modulePath),{fixture,nativeSource,expected}=await(await fetch('/case')).json();
-    const report=u.projectBindingTablesAndIndexesToSqlServer(fixture.logical,fixture.binding,fixture.policy,nativeSource,'report');
+    const report=u.projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical,fixture.binding,fixture.policy,'report');
     if(JSON.stringify(report)!==JSON.stringify(expected))throw Error('Bun/Chromium SQL Server table/index report mismatch');
-    const strict=u.projectBindingTablesAndIndexesToSqlServer(fixture.logical,fixture.binding,fixture.policy,nativeSource,'strict');
+    const strict=u.projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical,fixture.binding,fixture.policy,'strict');
     if(strict.status!=='blocked'||strict.candidate)throw Error('Strict emitted partial DDL');
+    const checked=u.projectBindingTablesAndIndexesFromPlanToSqlServer(fixture.logical,fixture.binding,fixture.policy,'report',nativeSource);
+    if(checked.candidate!==report.candidate||checked.nativeSource!==nativeSource)throw Error('Optional catalog check changed generated DDL');
     if('Bun'in globalThis||'process'in globalThis)throw Error('Host global in browser');
-    return {status:report.status,indexes:(report.candidate?.match(/CREATE (?:UNIQUE )?NONCLUSTERED INDEX/g)??[]).length,residuals:report.residuals.length,strictBlocked:true};
+    return {status:report.status,indexes:(report.candidate?.match(/CREATE (?:UNIQUE )?NONCLUSTERED INDEX/g)??[]).length,residuals:report.residuals.length,strictBlocked:true,catalogFree:true};
   });
   if(external.length)throw Error('External browser request');
   await Bun.write('fixtures/binding/sqlserver-tables-indexes/browser.json',JSON.stringify({browser:browser.version(),result,externalRequests:external},null,2)+'\n');

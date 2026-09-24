@@ -90,6 +90,9 @@ JSON object carrier; it reports SQL scalar-domain narrowing, DDD identity,
 optional NULL, and embedded path non-enforcement. Relationship storage remains
 behind TD-045 and the full SQL Server binding bead. Evidence is in
 `fixtures/binding/sqlserver-tables/{case.json,generated.sql,oracle.json,browser.json}`.
+The subsequent table-plus-index stage can now generate from the authored
+logical document, binding and explicit policy alone; an observed catalog is
+optional verification and native recovery evidence, not a generation input.
 
 ## Migration & Rollback
 

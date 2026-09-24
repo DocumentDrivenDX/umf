@@ -1,5 +1,5 @@
 {
-  "scope": "Isolated SQL Server 2022 execution of DDD-derived tables plus three physical rowstore indexes; other index kinds and relationships remain residual",
+  "scope": "Isolated SQL Server 2022 execution of catalog-free DDD-derived tables plus three physical rowstore indexes; other index kinds and relationships remain residual",
   "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
   "serverVersion": "16.0.4295.3",
   "observed": {
@@ -25,7 +25,7 @@
     ]
   },
   "nativeRecovery": {
-    "inputCatalogRetained": true,
+    "optionalInputCatalogRetained": true,
     "outputCatalogRetained": true,
     "adapterExport": "structurally equal JSON; escaped slash spelling may normalize"
   },
@@ -208,7 +208,8 @@
     "fixtures/binding/sqlserver-tables-indexes/generated.sql": "3e9b785aac76cddc02294c8628b3a6f78e8c3f9b37b4eef148e5b2659ce96f48",
     "fixtures/binding/sqlserver-tables-indexes/catalog.json": "8a5ab38b5eab6cdda13370c4bc9b679c2b4ba1b69ace9571a8c42013e1b7beb1",
     "fixtures/binding/sqlserver-tables/catalog.json": "8a5ab38b5eab6cdda13370c4bc9b679c2b4ba1b69ace9571a8c42013e1b7beb1",
-    "src/projections/binding-sqlserver/tables-indexes.ts": "800b53fb5923db16e7b46694e0cfa4537eaa62b1d89ea09cb2786bc49f956283",
+    "src/projections/binding-sqlserver/tables-indexes.ts": "fbf5b3c85305f10281ad12a6fcd0399336f361b4d311f0726a0f68180b34ab17",
+    "src/projections/binding-sqlserver/indexes.ts": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98",
     "native/sqlserver/catalog-v2.sql": "c8e71f1bb434bc996e2e6650a341e4cb853947d6ad6434c4d35b237fc7bc18ca"
   }
 }
