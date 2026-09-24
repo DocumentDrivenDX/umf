@@ -3,6 +3,7 @@ import * as u from '../../src';
 import {relationshipCases,relationshipCandidate} from '../../scripts/core-relationship-cases';
 const resolve=(doc:any,path:string)=>path.split('/').slice(1).reduce((value,key)=>value[key.replace(/~1/g,'/').replace(/~0/g,'~')],doc);
 
+// @covers US-045-AC1 (exact endpoint, alternate-Key and association metadata)
 test('authored relationship selection resolves exact endpoint and alternate-key metadata with full source recovery',()=>{
  for(const row of relationshipCases().filter(r=>r.valid)){
   const before=structuredClone(row.document),r=u.selectCoreRelationships(row.document,{});expect(row.document).toEqual(before);expect(r.source).toEqual(before);
@@ -15,6 +16,7 @@ test('authored relationship selection resolves exact endpoint and alternate-key 
   for(const format of ['json','yaml'] as const){const stored=u.readJsonValue(u.writeJsonValue(r,format),format) as unknown as typeof r;expect(u.verifyCoreRelationshipSelection(stored)).toEqual(r);}
  }
 });
+// @covers US-045-AC1 (stable relationship identity and selection filters)
 test('filters use exact stable identities, set intersection and empty-filter semantics',()=>{
  const doc=relationshipCandidate(),r=doc.modules[0].relationships[0];
  doc.modules.push({id:'other',namespace:'same',elements:[],relationships:[{...structuredClone(r),source:[{module:'m',element:'Product'}],inverse:'otherOrders'}]});
@@ -26,6 +28,7 @@ test('filters use exact stable identities, set intersection and empty-filter sem
  expect(u.selectCoreRelationships(doc,{sources:[{module:'domain',element:'Order'}]}).selection).toEqual([]);
  doc.modules[0].relationships[0].name='renamed';expect(u.selectCoreRelationships(doc,{identities:[{module:'m',id:r.id}]}).selection[0]!.relationship.name).toBe('renamed');
 });
+// @covers US-045-AC1 (direction/inverse metadata; no instance enforcement)
 test('navigation is presentation metadata and retains undirected, inverse and association distinctions',()=>{
  const doc=relationshipCandidate(),r=doc.modules[0].relationships[0];delete r.inverse;
  expect(u.selectCoreRelationships(doc,{}).selection[0]!.navigation.reverse).toBeUndefined();

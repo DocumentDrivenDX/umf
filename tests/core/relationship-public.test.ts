@@ -2,11 +2,13 @@ import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 
+// @covers US-045-AC1 US-045-AC2 (public core validation/serialization)
 test('public 0.7.0 validation and document serialization retain authored relationships and reject broken targets',()=>{
  const d=relationshipCandidate();expect(u.validateDocument(d).valid).toBe(true);
  for(const format of ['json','yaml'] as const)expect(u.readDocument(u.writeDocument(d,format),format)).toEqual(d);
  d.modules[0].relationships[0].target[0].key='missing';expect(u.validateDocument(d).valid).toBe(false);expect(()=>u.writeDocument(d,'json')).toThrow();
 });
+// @covers US-045-AC1 US-045-AC2 (versioned core APIs and endpoint validity)
 test('earlier core operations use 0.7.0 receipts and refuse edits invalidating keyed endpoints',()=>{
  const doc=relationshipCandidate(),field={module:'m',element:'Order.id'},record={module:'m',element:'Order'};
  const kind=u.declareCoreElementKind(doc,field,'field'),availability=u.declareCoreNullability(doc,field,'required'),cardinality=u.declareCoreCardinality(doc,field,{cardinality:'one'}),facet=u.declareCoreFacets(doc,field,{integerWidth:{bits:32,signed:true}});
@@ -20,6 +22,7 @@ test('earlier core operations use 0.7.0 receipts and refuse edits invalidating k
  expect(()=>u.declareCoreElementKind(doc,record,'group')).toThrow();expect(()=>u.declareCoreNullability(doc,field,'absent-allowed')).toThrow();expect(()=>u.declareCoreCardinality(doc,field,{cardinality:'array'})).toThrow();expect(()=>u.declareCoreRecordMembers(doc,record,[])).toThrow();
  doc.modules[0].elements.push({id:'nested',kind:'field',extensions:{}});const r=u.declareCoreElementKind(doc,record,'record'),f=u.declareCoreElementKind(r.target,{module:'m',element:'nested'},'field'),typed=u.declareCoreRecordType(f,r);expect(typed.version).toBe('6.0.0');expect(u.verifyCoreRecordTypeDeclaration(typed,typed.target)).toEqual(typed);
 });
+// @covers US-045-AC1 (retained relationship metadata in element selection)
 test('0.7.0 element selection retains full relationship context and the explicitly declared element traversal scope',()=>{
  const d=relationshipCandidate(),r=u.selectCoreElements(d,{references:'transitive',identities:[{module:'m',element:'Order'}]});
  expect(r.selection.map(e=>e.element.id)).toEqual(['Order','Order.id']);expect(r.source.modules[0]!.relationships).toEqual(d.modules[0].relationships);
