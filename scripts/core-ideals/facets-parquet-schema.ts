@@ -1,0 +1,25 @@
+import core from '../../spec/core/facet-document.schema.json';
+const text={type:'string',minLength:1},pointer={type:'string'};
+const object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
+const location=object({index:{type:'integer',minimum:1,maximum:9007199254740991},scope:{const:'present-non-null-leaf'}});
+const binding={id:'umf.parquet.facets',version:'1.0.0',nativeVersion:'parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017 / PyArrow 21.0.0',subset:'Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate'};
+const profile={enum:['declared-schema','pyarrow-safe-array-input','unresolved']},obligation={enum:['value-domain','exact-input']};
+const outcome={enum:['exact','approximated','not-expressible','unknown']};
+const facets={...structuredClone(core.$defs.facets),additionalProperties:false};
+facets.properties.length={...facets.properties.length,additionalProperties:false,properties:{...facets.properties.length.properties,unit:{enum:['unicode-scalar','byte']}}} as never;
+facets.properties.integerWidth={...facets.properties.integerWidth,additionalProperties:false} as never;
+const observation=object({concept:{enum:['length','decimal','integerWidth','conversion','native']},idealPath:text,location,interpretation:{enum:['declared','inferred','unknown','unsupported']},outcome,basis:text});
+const recovery='Retain original native archive and authored facets; interpretation does not replace native meaning';
+const residual=object({path:text,location,targetPath:{type:['string','null']},value:{},reason:text,outcome:{enum:['approximated','not-expressible','unknown']},binding:{const:binding},recovery:{const:recovery}});
+const request=object({location,identity:object({module:text,element:text}),mode:{enum:['strict','report']},profile,obligation,author:{$ref:'urn:umf:core:facet-operation:1.0.0#/$defs/declaration'}},['location','identity','mode','profile','obligation']);
+const mapping=object({origin:{const:'classified'},idealPath:text,location,nativeFragment:{},facets,observations:{type:'array',items:observation}});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:parquet-facet-classification:1.0.0',title:'Parquet profile-qualified facet classification',...object({operation:{const:'classify-parquet-facets'},version:{const:'1.0.0'},status:{enum:['classified','blocked']},outcome,source:{$ref:'urn:umf:core:0.5.0'},target:{$ref:'urn:umf:core:0.5.0'},request,binding:{const:binding},mapping,residuals:{type:'array',items:residual},diagnostics:{type:'array',items:object({code:text,path:text,message:text,severity:{enum:['warning','error']}})}},['operation','version','status','outcome','source','request','binding','mapping','residuals','diagnostics']),allOf:[
+ {if:{properties:{status:{const:'classified'}}},then:{required:['target'],properties:{target:true,diagnostics:{type:'array',items:{type:'object',properties:{severity:{const:'warning'}}}}}},else:{properties:{target:false,residuals:{type:'array',minItems:1},diagnostics:{type:'array',minItems:1,items:{type:'object',properties:{severity:{const:'error'}}}}}}},
+ {if:{properties:{outcome:{const:'exact'}}},then:{properties:{residuals:{type:'array',maxItems:0}}},else:{properties:{residuals:{type:'array',minItems:1}}}},
+ {if:{properties:{status:{const:'classified'},request:{type:'object',properties:{mode:{const:'strict'}}}}},then:{properties:{outcome:{const:'exact'},residuals:{type:'array',maxItems:0}}}},
+]};
+await Bun.write('spec/core/parquet-facet-classification.schema.json',JSON.stringify(schema,null,2)+'\n');
+const payload={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:parquet:facet-binding:1.0.0',title:'Retained Parquet facet interpretation profile',...object({origin:{const:'classified'},location,binding:{const:{id:binding.id,version:binding.version}},profile,obligation,outcome,observations:{type:'array',items:observation}}),additionalProperties:true};
+await Bun.write('spec/extensions/parquet-facets/schema.json',JSON.stringify(payload,null,2)+'\n');
+await Bun.write('spec/extensions/parquet-facets/package.json',JSON.stringify({id:binding.id,version:binding.version,coreVersion:'0.1.0',description:'Experimental Parquet scalar facet classification with retained native semantics',schema:payload,semantics:'CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification is experimental; authored projection is not implemented; binding qualification is recorded separately in versioned acceptance evidence',scopes:['element'],capabilities:{validation:'structural',directions:['import'],native:{system:'Parquet',version:binding.nativeVersion,subset:binding.subset},evidence:['tests/core-ideals/facets-parquet.test.ts','fixtures/validation/facets-parquet-discovery-native.json','fixtures/validation/facets-parquet-type-browser.json']}},null,2)+'\n');
+export {};

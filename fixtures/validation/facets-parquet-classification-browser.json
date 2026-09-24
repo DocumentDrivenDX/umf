@@ -1,0 +1,104 @@
+{
+  "scope": "Experimental public Parquet facet classification and retained byte recovery; author projection and full binding acceptance remain separate",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 180,
+    "classified": 101,
+    "blocked": 79,
+    "nativeRecoveries": 202,
+    "forgedRejected": true,
+    "getterCalls": 0
+  },
+  "selections": [
+    {
+      "id": "int8-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "uint8-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "int16-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "uint16-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "int32-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "uint32-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "int64-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "uint64-min-plain",
+      "family": "integer"
+    },
+    {
+      "id": "int8-min-embedded",
+      "family": "integer"
+    },
+    {
+      "id": "float32-narrow-plain",
+      "family": "float"
+    },
+    {
+      "id": "fixed2-6162-plain",
+      "family": "binary"
+    },
+    {
+      "id": "decimal-3-2-59-plain",
+      "family": "decimal"
+    },
+    {
+      "id": "string-max1-1-embedded",
+      "family": "string"
+    },
+    {
+      "id": "../cardinality/array-duplicates-0",
+      "family": "integer",
+      "index": 1
+    },
+    {
+      "id": "../cardinality/array-duplicates-0",
+      "family": "integer",
+      "index": 3
+    }
+  ],
+  "externalRequests": [],
+  "bindingAccepted": false,
+  "nativeEquivalence": false,
+  "sha256": {
+    "dist/umf.js": "6e46688ab3ba109ddab6d910290042ceaf224a7c5b1914ce00f75c836d3c23cc",
+    "fixtures/parquet/facets/../cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
+    "fixtures/parquet/facets/decimal-3-2-59-plain.parquet": "ad726cdd34b7c830f96e130de3df44b8f6d60defd80b19acaa4ab009ea1fdc23",
+    "fixtures/parquet/facets/fixed2-6162-plain.parquet": "65e9d052acd3285947099af117def2a555918da047935cf2f0b4a90a70bf387a",
+    "fixtures/parquet/facets/float32-narrow-plain.parquet": "f4de1f1222de93f269db555818d43f1035a008d378c076661120bb9b28c14d4e",
+    "fixtures/parquet/facets/int16-min-plain.parquet": "669668fcb7e8416b94a76ce92cea1fe77524db35aa51b9b8d51c107d48482c19",
+    "fixtures/parquet/facets/int32-min-plain.parquet": "807a2f62c6da5b4da0ed2b1df36f3e8d897fcc02e16127efd6a3addbae504df6",
+    "fixtures/parquet/facets/int64-min-plain.parquet": "f8ccdce17b621b33be898bbf62da2cb056699fd336fcee781de25fc253a114f2",
+    "fixtures/parquet/facets/int8-min-embedded.parquet": "1498fe3755bf5ea11697245686b09cd1bbc670b484186a17f4e1abaaacee797d",
+    "fixtures/parquet/facets/int8-min-plain.parquet": "0de48c9ab915898a4f26d0307dcc3fcdf0f4f66b80283a59897ec1b733f59067",
+    "fixtures/parquet/facets/string-max1-1-embedded.parquet": "89fbff4a9d6762080d56c13e291bad4131b211d15e1ed7e6b1b7c624cc3f11dc",
+    "fixtures/parquet/facets/uint16-min-plain.parquet": "4bfea2e5a33636386747e39dee4ab673ca7d338711363b2293a8b269c6fb0cb8",
+    "fixtures/parquet/facets/uint32-min-plain.parquet": "04fcb314c1a07a60eab32c5d5c463d5975860920b181b6a8ab30fbbc5f9a7d62",
+    "fixtures/parquet/facets/uint64-min-plain.parquet": "731d18b44080bd98b48ab885c105ff12bc792f2436e7a8ba61a10b902c85d594",
+    "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
+    "scripts/core-ideals/facets-parquet-classification-browser.ts": "6c6fad4dc2bc459646eebfdb19c1237bf960f02b196508369d9dd3bead875edf",
+    "spec/core/parquet-facet-classification.schema.json": "44c479dbc8fcb66e87e9d75bc9aaa39bfa5bc7c180483b774ff1f9c395f8075e",
+    "spec/extensions/parquet-facets/package.json": "3bf84b17e65a32a3ca2aff3652d217d665d6e9c5e09d8f415373d9c0a6f76021",
+    "spec/extensions/parquet-facets/schema.json": "66203b4bf4b6f81eea926afc8e765809f67c686c12d90b445a14665c5e40dafa",
+    "src/adapters/parquet/facet-type.ts": "b634636284065f305ba10f49de55be46c0d36deda6ffbfa9748274903fdf7ecd",
+    "src/core-ideals/facets-parquet.ts": "68b0538bf077d339024f1cb10eb8a739643afdbbff44bf899bd95fdb21d35dcb",
+    "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
+    "src/index.ts": "195674227113be85332a657b25d79b67c4e6e1266202265f670eda3bb3a7bff7"
+  }
+}

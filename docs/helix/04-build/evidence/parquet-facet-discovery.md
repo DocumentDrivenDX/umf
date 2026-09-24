@@ -81,3 +81,45 @@ with matching outcomes, no host globals, no external requests and zero getter
 calls. See the [browser evidence](../../../../fixtures/validation/facets-parquet-type-browser.json).
 Public classification, author projection, both facet-level round trips and full
 binding qualification remain unfinished.
+
+
+## Experimental public classification checkpoint
+
+The public API now exposes `classifyParquetFacets`,
+`verifyParquetFacetClassification` and `recoverParquetFacetSource`, with a closed
+operation schema and the `umf.parquet.facets` extension package. Its current
+capability is import/classification only; authored projection is not implemented.
+The request requires an explicit schema index, present-non-null-leaf scope,
+logical scalar Field identity, strict/report mode, profile and obligation.
+
+Declared-schema classification publishes width or decimal facts while retaining
+the native representation. A fixed binary maximum is accompanied by an explicit
+residual for its exact lower bound. Unknown key/value metadata, including embedded
+Arrow schemas, stays attached and residualized without an enforcement claim.
+A PyArrow input profile does not authenticate the producer of a captured file.
+Fractional integer truncation and binary32 narrowing cannot satisfy arbitrary
+input exactness. Unresolved profiles do not publish interpreted facets.
+
+Array containers and physical wrappers do not become scalars; an explicitly
+selected scalar item may be classified in its retained container context.
+Existing author facets require a valid source-bound declaration receipt.
+Conflicting assertions block both modes; unsupported obligations block strict
+mode and remain explicit in report mode. Native byte recovery recomputes the
+receipt and rejects forged or stale targets.
+
+Nine Bun tests pass with 744 assertions across the interpreter and public
+classification suites. Typechecking, 276 schema/47 package audits and public plus
+optional PostgreSQL browser builds pass. Browser verification is recorded in the
+subsequent checkpoint when complete. This public-bundle change makes earlier
+conformance evidence historical until the required compatibility refresh runs.
+No full Parquet facet acceptance or ideal admission is claimed.
+
+
+The public Chromium classification matrix passes 180 cases: 101 classified,
+79 blocked and 202 byte-exact JSON/YAML native recoveries. Forged receipts refuse;
+getter calls and external requests are zero. The
+[classification browser record](../../../../fixtures/validation/facets-parquet-classification-browser.json)
+contains current source/schema/bundle fingerprints and the selected native cases.
+This completes the experimental classification checkpoint only. Authored
+projection, ideal recovery, composed native/ideal evidence and full compatibility
+acceptance remain required.
