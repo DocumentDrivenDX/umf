@@ -6,6 +6,14 @@ import {parseNativeJson} from '../../src/model/native-json';
 const base='fixtures/relationship-native/';
 const oracle=await Bun.file(base+'oracle-results.json').json();
 
+test('CONTRACT-041: native observations retain browser recovery evidence',async()=>{
+ const browser=await Bun.file(base+'browser-results.json').json();
+ expect(browser.cases).toEqual(['rdf','linkml','tablespec']);
+ expect(browser.recoveries).toBe(6);
+ expect(browser.nodeGlobalsAbsent).toBe(true);
+ expect(browser.sourceSha256).toEqual(oracle.sourceSha256);
+});
+
 test('CONTRACT-041: RDF domain and range remain native observations',async()=>{
  const raw=await Bun.file(base+'rdf-domain-range.nq').text();
  expect(createHash('sha256').update(raw).digest('hex')).toBe(oracle.sourceSha256.rdf);
