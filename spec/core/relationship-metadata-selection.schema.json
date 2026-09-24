@@ -1,0 +1,342 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:relationship-metadata-selection:1.0.0",
+  "title": "Authored relationship metadata selection",
+  "type": "object",
+  "properties": {
+    "operation": {
+      "const": "select-core-relationships"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.7.0"
+    },
+    "query": {
+      "$ref": "#/$defs/query"
+    },
+    "selection": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identity": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "module",
+              "id"
+            ],
+            "additionalProperties": false
+          },
+          "path": {
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "urn:umf:core:0.7.0#/$defs/relationship"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reference": {
+                  "$ref": "urn:umf:core:0.7.0#/$defs/relationshipEndpoint"
+                },
+                "recordPath": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "reference",
+                "recordPath"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reference": {
+                  "$ref": "urn:umf:core:0.7.0#/$defs/relationshipTarget"
+                },
+                "recordPath": {
+                  "type": "string"
+                },
+                "keyPath": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "reference",
+                "recordPath",
+                "keyPath"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "associationRecord": {
+            "type": "object",
+            "properties": {
+              "reference": {
+                "$ref": "urn:umf:core:0.7.0#/$defs/relationshipEndpoint"
+              },
+              "recordPath": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "reference",
+              "recordPath"
+            ],
+            "additionalProperties": false
+          },
+          "navigation": {
+            "type": "object",
+            "properties": {
+              "forward": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "from": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "urn:umf:core:0.7.0#/$defs/relationshipEndpoint"
+                    }
+                  },
+                  "to": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "urn:umf:core:0.7.0#/$defs/relationshipEndpoint"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "reverse": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "from": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "urn:umf:core:0.7.0#/$defs/relationshipEndpoint"
+                    }
+                  },
+                  "to": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "urn:umf:core:0.7.0#/$defs/relationshipEndpoint"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "forward"
+            ],
+            "additionalProperties": false
+          },
+          "uninterpretedPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "identity",
+          "path",
+          "relationship",
+          "sources",
+          "targets",
+          "navigation",
+          "uninterpretedPaths"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "provenance": {
+      "const": "unverified"
+    },
+    "navigationScope": {
+      "const": "authored-presentation-only"
+    }
+  },
+  "required": [
+    "operation",
+    "version",
+    "source",
+    "query",
+    "selection",
+    "diagnostics",
+    "residuals",
+    "provenance",
+    "navigationScope"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "query": {
+      "type": "object",
+      "properties": {
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "identities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "module",
+              "id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "description": "Retained-source metadata selection. Exact endpoint and key paths and filter results require semantic recomputation. Navigation is presentation, not instance edges or referential enforcement."
+}

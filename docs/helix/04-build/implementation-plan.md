@@ -4764,3 +4764,20 @@ evidence is refreshed. Typechecking, build and 317 schemas / 53 packages pass.
 See the [public integration record](../../fixtures/validation/relationship-public-integration.json).
 Relationship selection/navigation and broad native/adapter compatibility refresh
 remain before core-task acceptance; no relationship binding admission is claimed.
+
+
+### Relationship metadata selection checkpoint
+
+Public `selectCoreRelationships` now filters by exact module/relationship ID,
+name and source/target Record identity, preserving full source context. Each
+entry includes exact Record/target Key paths and a separate keyed association
+Record reference. Forward/reverse presentation metadata respects directed,
+inverse and undirected declarations without constructing instance edges or
+expanding endpoint sets. Recomputed receipts detect forged paths and filters.
+The existing element traversal scope is unchanged.
+
+All 118 core tests pass across 25 files (4,116 assertions). Chromium's public
+13-case matrix passes 78 operation recoveries, 26 relationship-selection
+recoveries and 44 refusals. Typechecking, build and 318-schema / 53-package
+audits pass. The native/browser compatibility replay and subsequent adapter
+regression remain before core-task acceptance.

@@ -357,3 +357,6 @@ export {default as coreRelationshipOperationSchema} from '../spec/core/relations
 export {default as coreRelationshipTransitionSchema} from '../spec/core/relationship-transition.schema.json';
 export {default as coreKeyOperationV2Schema} from '../spec/core/key-operation-v2.schema.json';
 export {default as coreKeyTupleOperationV2Schema} from '../spec/core/key-tuple-operation-v2.schema.json';
+export {selectCoreRelationships,verifyCoreRelationshipSelection} from './model/relationship-selection';
+export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSelectionEntry} from './model/relationship-selection';
+export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection.schema.json';

@@ -993,6 +993,6 @@ the separate facet admission/delivery gate and Key remain required.
 Relationship implementation has begun with an explicit experimental 0.7.0
 schema and semantic validator under TD-045. Public 0.7.0 validation,
 serialization, authoring/inspection, migration/rollback and versioned earlier
-operations now pass 114 core tests and Chromium integration checks. Broader
-compatibility, relationship selection/navigation and native binding admission
-remain pending. See the [candidate browser evidence](../../fixtures/validation/core-relationship-candidate-browser.json).
+operations now pass 114 core tests and Chromium integration checks. Relationship metadata selection and presentation navigation also pass
+Bun/Chromium checks. Broader compatibility and native binding admission remain
+pending. See the [candidate browser evidence](../../fixtures/validation/core-relationship-candidate-browser.json).

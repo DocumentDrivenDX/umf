@@ -223,3 +223,22 @@ attached by identity. Their presence blocks changes to participation/lifecycle
 meaning; presentation-only edits retain them. A future lifecycle value remains
 inspectable but cannot be authored or edited by this implementation. Inspection
 and lookup describe retained meaning and do not authenticate author provenance.
+
+
+### Relationship metadata selection
+
+`selectCoreRelationships` selects authored assertions using optional containing
+module IDs, presentation names, exact `(module,id)` identities and exact source
+or target Record filters. Filters combine by intersection; entries within each
+filter combine by union. Empty filters match nothing. Selection preserves the
+complete source document and returns exact relationship, endpoint Record and
+target Key paths. Association Record identity remains separate from endpoint
+pairs. Unknown qualifiers and their diagnostics remain attached.
+
+Navigation metadata describes presentation only: forward uses the source and
+target sets; reverse is present for an explicit inverse or an undirected
+assertion. An unnamed reverse on an undirected assertion has a null name. The
+sets are not expanded into instance edges or a Cartesian product. Selection
+performs no data query, inference or transitive traversal and cannot claim
+referential enforcement. Existing element selection keeps its declared traversal
+scope. Recomputing the selection verifies current retained consistency.

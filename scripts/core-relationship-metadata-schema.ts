@@ -1,0 +1,10 @@
+export {};
+const id={type:'string',minLength:1},shape=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
+const identity=shape({module:id,id}),endpoint=shape({module:id,element:id}),filter=(items:any)=>({type:'array',items});
+const query=shape({modules:filter(id),names:filter(id),identities:filter(identity),sources:filter(endpoint),targets:filter(endpoint)},[]);
+const reference={$ref:'urn:umf:core:0.7.0#/$defs/relationshipEndpoint'},target={$ref:'urn:umf:core:0.7.0#/$defs/relationshipTarget'};
+const navigation=shape({name:{anyOf:[id,{type:'null'}]},from:filter(reference),to:filter(reference)});
+const entry=shape({identity,path:{type:'string'},relationship:{$ref:'urn:umf:core:0.7.0#/$defs/relationship'},sources:filter(shape({reference,recordPath:{type:'string'}})),targets:filter(shape({reference:target,recordPath:{type:'string'},keyPath:{type:'string'}})),associationRecord:shape({reference,recordPath:{type:'string'}}),navigation:shape({forward:navigation,reverse:navigation},['forward']),uninterpretedPaths:filter({type:'string'})},['identity','path','relationship','sources','targets','navigation','uninterpretedPaths']);
+const diagnostic=shape({code:{type:'string'},path:{type:'string'},message:{type:'string'},severity:{enum:['error','warning']}});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:relationship-metadata-selection:1.0.0',title:'Authored relationship metadata selection',...shape({operation:{const:'select-core-relationships'},version:{const:'1.0.0'},source:{$ref:'urn:umf:core:0.7.0'},query:{$ref:'#/$defs/query'},selection:filter(entry),diagnostics:filter(diagnostic),residuals:{type:'array',maxItems:0},provenance:{const:'unverified'},navigationScope:{const:'authored-presentation-only'}}),$defs:{query},description:'Retained-source metadata selection. Exact endpoint and key paths and filter results require semantic recomputation. Navigation is presentation, not instance edges or referential enforcement.'};
+await Bun.write('spec/core/relationship-metadata-selection.schema.json',JSON.stringify(schema,null,2)+'\n');
